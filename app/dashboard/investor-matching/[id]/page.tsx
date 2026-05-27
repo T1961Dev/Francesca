@@ -1,0 +1,92 @@
+import { notFound } from "next/navigation"
+
+import { InvestorExportButtons } from "@/components/investors/investor-export-buttons"
+import { InvestorLockedState } from "@/components/investors/investor-locked-state"
+import { InvestorMatchesPanel } from "@/components/investors/investor-matches-panel"
+import { InvestorStatusCard } from "@/components/investors/investor-status-card"
+import { MatchProgress } from "@/components/investors/match-progress"
+import {
+  canViewInvestorOutreachTemplates,
+  getUserPlan,
+  limitInvestorMatchesForPlan,
+} from "@/lib/access"
+import { fetchInvestorMatchesForJob } from "@/lib/investors/queries.server"
+import { createClient } from "@/lib/supabase/server"
+
+export default async function InvestorMatchingResultPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const supabase = await createClient()
+  const plan = await getUserPlan()
+  const { data: job } = await supabase
+    .from("investor_matching_jobs")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle()
+
+  if (!job) notFound()
+
+  const deckAnalysisId = String(job.deck_analysis_id ?? "")
+  let deckLabel = "Pitch deck"
+
+  if (deckAnalysisId) {
+    const { data: deckAnalysis } = await supabase
+      .from("deck_analyses")
+      .select("deck_uploads(file_name)")
+      .eq("id", deckAnalysisId)
+      .maybeSingle()
+
+    const upload = Array.isArray(deckAnalysis?.deck_uploads)
+      ? deckAnalysis?.deck_uploads[0]
+      : deckAnalysis?.deck_uploads
+    const fileName =
+      upload && typeof upload === "object" && "file_name" in upload
+        ? String((upload as { file_name?: string }).file_name ?? "")
+        : ""
+    if (fileName) deckLabel = fileName
+  }
+
+  const { matches: savedMatches } = await fetchInvestorMatchesForJob(id)
+  const matches = limitInvestorMatchesForPlan(savedMatches, plan)
+  const canExport = canViewInvestorOutreachTemplates(plan)
+  const jobStatus = String(job.status)
+
+  return (
+    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-5 md:p-6">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
+            Investor matches
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Saved results for {deckLabel}. Ranked investor fit and outreach angles.
+          </p>
+        </div>
+        {canExport && jobStatus === "completed" ? (
+          <InvestorExportButtons jobId={id} />
+        ) : null}
+      </div>
+
+      <InvestorStatusCard
+        jobId={id}
+        status={jobStatus}
+        error={job.error as string | null}
+      />
+      {!["completed", "failed", "cancelled"].includes(jobStatus) ? (
+        <MatchProgress runId={id} initialStatus={jobStatus} />
+      ) : null}
+      {matches.length ? (
+        <InvestorMatchesPanel
+          jobId={id}
+          matches={matches}
+          title="Saved investor matches"
+          description={`Ranked leads for ${deckLabel}. Click any row to view the investor profile and outreach template.`}
+        />
+      ) : null}
+      {!canExport ? <InvestorLockedState /> : null}
+    </main>
+  )
+}

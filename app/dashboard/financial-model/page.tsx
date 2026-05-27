@@ -1,0 +1,30 @@
+import { FinancialModelForm } from "@/components/financial-model/financial-model-form"
+import {
+  FeatureEm,
+  FeaturePhotoCard,
+} from "@/components/feature-photo-card"
+
+export default function FinancialModelPage() {
+  return (
+    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+      <div>
+        <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
+          Financial Model
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Build a simple investor-facing 36-month projection.
+        </p>
+      </div>
+      <FeaturePhotoCard
+        eyebrow="Model"
+        title={
+          <>
+            Turn assumptions into a raise-ready <FeatureEm>forecast.</FeatureEm>
+          </>
+        }
+        description="Capture revenue, burn, runway, hiring, and customer assumptions in one clean model investors can actually follow."
+      />
+      <FinancialModelForm />
+    </main>
+  )
+}
