@@ -5,6 +5,8 @@ import { redirect } from "next/navigation"
 import { z } from "zod"
 
 import { bumpRateLimit } from "@/lib/security/rate-limit"
+import { isAuthEmailRegistered } from "@/lib/auth/email-registered"
+import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 
 async function rateLimit(scope: string, formEmail: FormDataEntryValue | null) {
@@ -83,7 +85,9 @@ export async function loginAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(input)
 
   if (error) {
-    const params = new URLSearchParams({ error: error.message })
+    const params = new URLSearchParams({
+      error: "Invalid email or password. Check your details or reset your password.",
+    })
     if (redirectTo) params.set("redirectTo", redirectTo)
     redirect(`/login?${params.toString()}`)
   }
@@ -121,9 +125,23 @@ export async function signupAction(formData: FormData) {
     )
   }
 
+  const email = input.email.trim().toLowerCase()
+
+  try {
+    if (await isAuthEmailRegistered(email)) {
+      redirect(
+        `/signup?error=${encodeURIComponent("An account with this email already exists. Sign in instead.")}`
+      )
+    }
+  } catch {
+    redirect(
+      `/signup?error=${encodeURIComponent("Could not complete signup. Try again shortly.")}`
+    )
+  }
+
   const supabase = await createClient()
   const { data, error } = await supabase.auth.signUp({
-    email: input.email,
+    email,
     password: input.password,
     options: {
       data: {
@@ -134,14 +152,25 @@ export async function signupAction(formData: FormData) {
   })
 
   if (error) {
-    redirect(`/signup?error=${encodeURIComponent(error.message)}`)
+    const message = error.message.toLowerCase().includes("already")
+      ? "An account with this email already exists. Sign in instead."
+      : error.message
+    redirect(`/signup?error=${encodeURIComponent(message)}`)
+  }
+
+  // Supabase may return a user with no identities when the email is taken
+  // (anti-enumeration). Treat that the same as a duplicate registration.
+  if (data.user && (!data.user.identities || data.user.identities.length === 0)) {
+    redirect(
+      `/signup?error=${encodeURIComponent("An account with this email already exists. Sign in instead.")}`
+    )
   }
 
   if (data.user) {
     await supabase.from("profiles").upsert(
       {
         id: data.user.id,
-        email: input.email,
+        email,
         full_name: input.fullName,
         company_name: input.companyName || null,
         plan: "free",
@@ -182,8 +211,9 @@ export async function resetPasswordAction(formData: FormData) {
     redirectTo: `${getAppUrl()}/auth/callback?type=recovery`,
   })
 
+  // Always show the same success screen to avoid email enumeration.
   if (error) {
-    redirect(`/forgot-password?error=${encodeURIComponent(error.message)}`)
+    captureError(error, { route: "forgot-password" })
   }
 
   redirect("/forgot-password?sent=true")

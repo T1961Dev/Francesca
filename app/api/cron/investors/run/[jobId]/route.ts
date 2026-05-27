@@ -2,14 +2,12 @@ import { NextResponse } from "next/server"
 
 import { runInvestorMatchingJob } from "@/lib/investors/run-job"
 import { captureError } from "@/lib/sentry/capture"
+import { authorizeCronRequest } from "@/lib/security/cron-auth"
 
 export const maxDuration = 300
 
 function authorize(request: Request) {
-  const secret = process.env.CRON_SECRET?.trim()
-  if (!secret) return false
-  const header = request.headers.get("authorization") ?? ""
-  return header === `Bearer ${secret}`
+  return authorizeCronRequest(request)
 }
 
 export async function POST(

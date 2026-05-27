@@ -1,21 +1,15 @@
 import { NextResponse } from "next/server"
 
 import { captureError } from "@/lib/sentry/capture"
+import { authorizeCronRequest } from "@/lib/security/cron-auth"
 import { getStripe } from "@/lib/stripe/client"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000
 
 async function handle(request: Request) {
-  const secret = process.env.CRON_SECRET
-  if (secret) {
-    const provided =
-      request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ||
-      request.headers.get("x-cron-secret") ||
-      ""
-    if (provided !== secret) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
-    }
+  if (!authorizeCronRequest(request)) {
+    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
   }
 
   try {

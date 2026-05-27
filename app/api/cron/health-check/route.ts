@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 import { getAdminEmails } from "@/lib/admin/auth"
 import { sendTrackedEmail } from "@/lib/resend/send"
 import { captureError } from "@/lib/sentry/capture"
+import { authorizeCronRequest } from "@/lib/security/cron-auth"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -16,15 +17,8 @@ const DAY_MS = 24 * 60 * 60 * 1000
  *   - External scheduler (e.g. cron-job.org)
  */
 async function handle(request: Request) {
-  const secret = process.env.CRON_SECRET
-  if (secret) {
-    const provided =
-      request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ||
-      request.headers.get("x-cron-secret") ||
-      ""
-    if (provided !== secret) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
-    }
+  if (!authorizeCronRequest(request)) {
+    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
   }
 
   try {

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 
+import { assertInvestorJobOwner } from "@/lib/investors/job-access"
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 
@@ -7,6 +8,16 @@ export async function GET(_: Request, { params }: { params: Promise<{ jobId: str
   try {
     const { jobId } = await params
     const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 })
+    }
+
+    await assertInvestorJobOwner(supabase, jobId, user.id)
+
     const { data: job } = await supabase
       .from("investor_matching_jobs")
       .select("*")
@@ -25,6 +36,16 @@ export async function GET(_: Request, { params }: { params: Promise<{ jobId: str
     return NextResponse.json({ success: true, data: { job, matchRows: count ?? 0 } })
   } catch (error) {
     captureError(error, { route: "investors-status" })
-    return NextResponse.json({ success: false, error: "Could not load job status" }, { status: 400 })
+    const status =
+      error instanceof Error && "status" in error && typeof error.status === "number"
+        ? error.status
+        : 400
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Could not load job status",
+      },
+      { status }
+    )
   }
 }

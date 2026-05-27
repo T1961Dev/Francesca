@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { canViewInvestorOutreachTemplates, getUserPlan } from "@/lib/access"
 import { requireAuth } from "@/lib/auth"
+import { assertInvestorMatchRowOwner } from "@/lib/investors/job-access"
 import { renderInvestorMatchesPdf } from "@/lib/pdf"
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
     }
 
     const url = new URL(request.url)
-    const jobId =
+    const rawJobId =
       url.searchParams.get("jobId") ??
       (await request
         .clone()
@@ -30,15 +31,15 @@ export async function POST(request: Request) {
         .catch(() => ({}))
         .then((b) => (b as Record<string, unknown>).jobId ?? null))
 
-    schema.parse({ jobId })
+    const { jobId } = schema.parse({ jobId: rawJobId })
 
     const supabase = await createClient()
-    const [{ data: row }, { data: profile }] = await Promise.all([
-      supabase.from("investor_matches").select("matches").eq("job_id", jobId).maybeSingle(),
+    const [row, { data: profile }] = await Promise.all([
+      assertInvestorMatchRowOwner(supabase, jobId, user.id),
       supabase.from("profiles").select("company_name, full_name").eq("id", user.id).maybeSingle(),
     ])
 
-    const matches = (row?.matches as Array<Record<string, unknown>> | null) ?? []
+    const matches = (row.matches as Array<Record<string, unknown>> | null) ?? []
     const pdf = await renderInvestorMatchesPdf({
       companyName: String(profile?.company_name ?? profile?.full_name ?? "Founder"),
       runDate: new Date().toLocaleDateString("en-GB"),

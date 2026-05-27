@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 
 import { sendTrackedEmail } from "@/lib/resend/send"
 import { captureError } from "@/lib/sentry/capture"
+import { authorizeCronRequest } from "@/lib/security/cron-auth"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 /**
@@ -14,15 +15,8 @@ import { createAdminClient } from "@/lib/supabase/admin"
  *   4. Otherwise mark cancelled_at and skip.
  */
 async function handle(request: Request) {
-  const secret = process.env.CRON_SECRET
-  if (secret) {
-    const provided =
-      request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ||
-      request.headers.get("x-cron-secret") ||
-      ""
-    if (provided !== secret) {
-      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
-    }
+  if (!authorizeCronRequest(request)) {
+    return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 })
   }
 
   try {
