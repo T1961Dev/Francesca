@@ -1,0 +1,1831 @@
+[
+  {
+    "spec": {
+      "label": "Mark Pal",
+      "pdfPath": "c:/Users/tomas/Downloads/Mark Pal  The Pitch Deck (1).pdf",
+      "profile": {
+        "sector": "SaaS",
+        "industry": "SaaS",
+        "stage": "seed",
+        "funding_stage": "seed",
+        "geography": "United Kingdom",
+        "location": "United Kingdom",
+        "target_raise": 500000,
+        "full_name": "Founder",
+        "company_name": "Mark Pal"
+      }
+    },
+    "text": "Mark PalTurn knowledge into top marks. An AI exam prep platform that teaches exam technique, not just content. -- 1 of 17 -- The Problem & Value Proposition Students don’t fail exams because they don’t know the content, they fail because they don’t know how to answer questions. Teachers spend months delivering content. Students revise for hundreds of hours. Yet every year, thousands still fall short - not because they’re unprepared, but because they write answers that don’t match the mark scheme. I know this firsthand. In my GCSE Chemistry, I went from a grade 4 to a grade 8 in just 8 months without learning new content. The only thing I changed was how I answered questions, using past papers to understand how examiners think. This insight changed my grade - Mark Pal scales that to millions. The Problem -- 2 of 17 -- The Solution MarkPal is an AI-powered exam preparation tool that shows students exactly how to answer questions the way examiners award marks. Upload or type an exam question Write your answer MarkPal scores it against the official mark scheme AI highlights why marks were lost and how to improve Students learn technique, not just content We turn knowledge into higher grades, bridging the gap that traditional revision tools leave wide open. Mark Pal doesn’t replace content platforms. It makes them effective. -- 3 of 17 -- The Product (MVP) Our MVP is completed. Students uploads a question, answer, and mark scheme, and MarkPal uses AI to grade and explain feedback step by step. It shows: ✅ Marks awarded per point 🔎 Where marks were lost 🧠 How to improve next time It’s simple, fast, and designed to feel like a real exam, with AI acting as the examiner. Student uploads → AI grades → feedback → improved attempt. Next 3 Features: multi-subject support, universal question bank adaptive question sets. -- 4 of 17 -- Mark Pal In Action (Product Demo) https://www.youtube.com/watch?v=zto7WQ8enBw -- 5 of 17 -- Why Now? MarkPal’s AI now marks student answers like a real examiner, awarding points, highlighting lost marks, and showing how to improve. Exam pressure is at record highs, and grade boundaries are tightening yearly. Yet platforms still focus on what to learn, not how to answer. Grand View Research -- 6 of 17 -- Market Size Total Addressable Market: 2024: $163.5B 2030 (projected): $348.8B CAGR (2025-30): 13.3% Source: Grand View Research Serviceable Available Market (AI in Education): 2024: $5.88B 2030 (projected): $32.27B CAGR (2025-30): 31.2% Source: Grand View Research Serviceable Obtainable Market (UK Secondary & College Education): Target Audience: 3M+ students (GCSE/A-Level) Initial Focus: Students and parents seeking affordable, effective exam preperation tools Capturing just 10% of UK GCSE/A-Level students (~300,000 users) at £18 ARPU = £65M ARR. Even a 0.5% wedge (~15,000 users) creates £3.2M ARR - enough to become a valuable acquisition target for Seneca, Quizlet, or tutoring platforms This UK wedge is Phase 1. The long-term play is global: English-speaking markets (US, CA, AUS, etc.) follow the same structured exam format with technique-driven outcomes. TAM expands 10x with product localisation. -- 7 of 17 -- The Business Model Freemium to paid subscriptions: Basic, Pro, Pro+ Pricing Strategy: Pro+ slightly above Pro (£5 difference) to encourage upsell Added 1-account-creation-cap-per-device system to prevent abuse Future B2B: school licenses, high-margin recurring revenue We expect 4–5% of free users to convert to paid (benchmarking against Duolingo and Quizlet freemium rates). -- 8 of 17 -- Tier Monthly Price Share of Paid Users Notes Basic £10 30% Entry-level, core access Pro £20 50% Most common upgrade Pro+ £25 20% Live AI Analysis & Improvement System Pricing Tiers & ARPU Strategy Blended ARPU: ~£18/month Churn is aligned with the academic calendar. Students typically stay active for 5–6 months leading up to exams. However, new cohorts reset the user base every year, creating a predictable, repeatable acquisition cycle and some students choose to start exam practice early (up to 3 years). Upsell strategy focuses on driving Pro+ adoption with exclusive, high-utility features like personalised question uploads and AI feedback. Based on usage patterns and ARPU, we estimate an average LTV of ~£90–£108 per user. This supports a target CAC of < £10, delivering a healthy LTV:CAC ratio of 9:1 at scale. -- 9 of 17 -- Phase Timeline Users Paid Users MRR Goal Notes MVP Beta Month 0–2 5,000 250 £5.2K Facebook Ads Community Growth Month 3–6 25,000 1250 £26K TikTok, FB Mums, GCSE creators Paid Acquisition Month 6–9 60,000 3000 £63K Targeted Instagram & YouTube ads B2B Pilots Month 9–12 120,000 6000 £126K Begin school deals, group access Expansion Month 12–18 200,000 10,000 £210K Strong referral loops kick in Strategic Growth Month 18–24 300,000 15,000 £315K Strong MRR + product defensibility Go-To-Market Strategy Target CAC: < £10 Target LTV: ~£100 (5–6 month average lifetime) In early stages, marketing is led by the founder (Tomas) through Facebook Ads. A growth intern will be brought on within the first 3 months (see Hiring Plan). -- 10 of 17 -- Period Active Users Paid Users MRR (£) ARR (£) Burn (£/mo) Month 0–2 5,000 200–250 £4.2K-£5.25K £50K–£63K £2.5K Month 3–6 25,000 1,000-1,250 £21K-£26K £252K-£315K £3.5K Month 6–9 60,000 2,400-3,000 £50K-63K £605K-£756K £5K Month 9–12 120,000 4,800-6,000 £100K-£126K £1.2M-£1.5M £6K Month 12–18 200,000 8,000-10,000 £168K-£210K £2.0M-£2.5M £7K Month 18–24 300,000 12,000-15,000 £252K-£315K £3.0M-£3.8M £8K Financial Projections With a low price point (£21/month), high-stakes problem (exam performance), and real AI differentiation, we expect 4–5% conversion rates - 2–3x industry averages. Primary Milestone: Prove 4-5% free to paid conversion at small scale (5K-10K users). Secondary Milestone: Reach £20K-30K MRR with repeatable paid acquisition. -- 11 of 17 -- Quarter Feature Release Q3 2026 Subject & Question Bank Expansion – Add heavily essay-based subjects: English, History, Business. Launch feedback tuning engine for long-form answers, and a universal question bank with real exam questions, already preloaded from official exam boards Develop a Mobile-Native App - Deliver fully featured mobile experience to expand usage among younger students and widen accessibility. Q4 2026 B2B Pilot Launch - Roll out MarkPal to schools and private tutors via group accounts and management dashboards. Begin onboarding early education partners. Q4 2026 Feature Deepening + Global Prep - Improve AI grading accuracy via feedback data. Add performance tracking dashboard. Prep for localisation. Q1 2027 International Localisation - Launch tailored versions for SAT, IB, and Australian exam boards. Adapt feedback to regional mark schemes. Roadmap -- 12 of 17 -- MarkPal is the only platform focused on exam technique, not content. Total Addressable Market: Seneca, Quizlet, traditional tutoring platforms Our Wedge: Entry point is high-stakes UK GCSE & A-Level exams, where mark schemes, not knowledge, determine outcomes. Our Moat: AI trained directly on mark schemes. Feedback engine improves with every student answer Dataset becomes proprietary and difficult to replicate Feature set focused on technique - not just recall Feature Seneca Quizlet MarkPal Content revision ✅ ✅ ✅ AI feedback on answers ❌ ❌ ✅ Mark scheme-based grading ❌ ❌ ✅ Personalised technique tips ❌ ❌ ✅ Technique-focused progress ❌ ❌ ✅ Competitors & Our Defensible Wedge Expansion Strategy Once the wedge is proven in UK secondary exams, we expand by: Adding more subjects (Science, Maths, etc.) Entering other structured-exam markets (US SAT, IB, Australia, India) Licensing AI feedback engine to schools (B2B) -- 13 of 17 -- Role Purpose Timeline Growth Intern / Lead Run TikTok, Discord, Reddit growth 0–3 months Curriculum Advisor Align with GCSE/A-Level mark schemes Advisory (in progress) Freelance UI/UX Designer Improve onboarding + mobile flow 3–6 months Part-time Support User feedback + scale ops 6–9 months Founder & Hiring Plan Tomas Jones (Founder & CEO) Exited Scrapr.io, a B2B SaaS built solo and sold at 17 Built 5+ AI-powered apps end-to-end across SaaS, EdTech, and finance Most recently: a quantitative FX research LLM built in Python Full-stack + ML developer (Python, Next.js, LangChain, OpenAI, Postgres) GCSE student turned founder, solving the exam technique gap from experience Hiring Plan (Next 6-12 Months) -- 14 of 17 -- Financials We’re raising £250K pre-seed on a SEIS/EIS-eligible SAFE at a £2.5M post-money valuation cap. Implied investor ownership at cap: 10% Target: £200K+ MRR within 18 months. £300K+ MRR by month 24. Open to strategic equity or convertible note if aligned. Use of funds: £100K - Product development (AI, new subjects) £100K - Go-to-market and user growth £50K - Content, operations, and hires This raise funds validtion of the conversion model, paid acquisition channels, and product retention before aggressive scale. -- 15 of 17 -- Exit Strategy MarkPal is built for strategic acquisition by incumbent EdTech platforms once the UK GCSE and A-Level wedge is proven. By Month 18 to 24, MarkPal is projected to reach 12,000 to 15,000 paid users, generating £252K to £315K MRR, equivalent to £3.0M to £3.8M ARR. At this scale, MarkPal becomes a natural acquisition target for revision platforms, tutoring marketplaces, and school software providers seeking AI-driven assessment and exam-marking capability. The company’s value is driven by a defensible focus on exam technique, AI trained on official mark schemes, and a growing proprietary feedback dataset. Comparable EdTech SaaS acquisitions at this stage typically transact at 5x to 8x ARR, implying a target exit valuation of £15M to £30M. At a £15M exit, a 10% stake returns £1.5M (6x), and at a £30M exit, a 10% stake returns £3M (12x). The expected exit window is 24 to 36 months following the pre-seed raise -- 16 of 17 -- Next Steps We’re raising £250K pre-seed to launch MarkPal to hundreds of thousands of students and prove what’s possible when AI teaches exam technique, not just content. We’ve built the MVP, and now we’re ready to go to market. Let’s chat if you want to help 3M+ UK students turn knowledge into top marks. Email: tomasjonesdev@gmail.com LinkedIn: https://www.linkedin.com/in/tomas-jones1/ -- 17 of 17 --",
+    "analysis": {
+      "overallScore": 78,
+      "summary": "MarkPal presents a well-articulated problem and innovative AI-driven solution focused uniquely on exam technique rather than content. The MVP is developed with clear future roadmap and realistic monetization plans. Strong market opportunity and traction plans are defined, with a credible founder and team hiring plan given. However, the deck lacks detailed traction data to support assumptions, competitive landscape and risk mitigation could be deeper, and financial projections rely heavily on optimistic conversion benchmarks without historic evidence. The fundraising ask is clear but valuation rationale and milestones need more quantification. Overall, MarkPal is promising but requires validation in early traction and competitive defensibility.",
+      "categoryScores": [
+        {
+          "category": "Problem",
+          "score": 85,
+          "feedback": "The problem is well defined, focusing on a nuanced issue in exam preparation that traditional content-centric platforms miss. Founder’s personal story adds credibility."
+        },
+        {
+          "category": "Solution",
+          "score": 80,
+          "feedback": "Solution is clearly described and compelling. The AI-powered exam technique feedback addresses the stated problem convincingly."
+        },
+        {
+          "category": "Market",
+          "score": 75,
+          "feedback": "Market size is well-researched with segmentation and clear initial UK focus. However, TAM may be over-optimistic without proven product-market fit."
+        },
+        {
+          "category": "Product",
+          "score": 78,
+          "feedback": "MVP is complete with functional AI grading, and demo provided. Next features outlined show good planning. User experience descriptions could be deeper."
+        },
+        {
+          "category": "Traction",
+          "score": 60,
+          "feedback": "Roadmap and user acquisition goals are clear, but current traction metrics are early and lack validation. Conversion rate assumptions are optimistic compared to industry benchmarks."
+        },
+        {
+          "category": "Business model",
+          "score": 80,
+          "feedback": "Freemium subscription model with tiered pricing is logical and supported by reasonable ARPU and LTV:CAC projections."
+        },
+        {
+          "category": "Go-to-market",
+          "score": 70,
+          "feedback": "Initial channels identified including social ads and founder-led growth. Plan to hire growth intern is positive but GTM strategy lacks diversity and proven acquisition data."
+        },
+        {
+          "category": "Competition",
+          "score": 65,
+          "feedback": "Key competitors identified with differentiation explained, but competitive analysis is relatively shallow considering established players. Moat based on AI training and dataset proprietary nature is plausible but unproven."
+        },
+        {
+          "category": "Team",
+          "score": 75,
+          "feedback": "Founder has strong relevant technical and domain expertise. Hiring plan addresses skill gaps but team beyond founder is in early stages."
+        },
+        {
+          "category": "Financials",
+          "score": 68,
+          "feedback": "Financial projection and unit economics provided, showing good LTV:CAC ratio. However, assumptions are optimistic without actual conversion evidence. Burn rate and runway not detailed fully."
+        },
+        {
+          "category": "Fundraising ask",
+          "score": 80,
+          "feedback": "Raise amount, valuation, and use of funds are clearly stated along with expected milestones, though more detailed financial forecasts would support credibility."
+        }
+      ],
+      "strengths": [
+        "Clear articulation of a unique and real problem in exam prep.",
+        "Innovative AI solution with functioning MVP and demo.",
+        "Well segmented and sizable market opportunity, especially UK GCSE/A-Level focus.",
+        "Sound business model with freemium to subscription tiers and thoughtful pricing.",
+        "Founder has credible background with prior success and relevant experience."
+      ],
+      "weaknesses": [
+        "Lack of current validated traction data to underpin growth assumptions.",
+        "Limited competitive analysis depth and defensibility proof beyond claims.",
+        "Financials appear optimistic without real user data or historic metrics.",
+        "Go-to-market lacks breadth and proven acquisition channel validation.",
+        "Team beyond founder is nascent, with reliance on future hires.",
+        "Absence of detailed risk analysis or contingency plans."
+      ],
+      "missingSections": [
+        "Detailed traction data with metrics and user feedback.",
+        "Comprehensive competitive landscape analysis with threats and mitigation.",
+        "Detailed financial projections including cash flow and burn schedule.",
+        "Risk assessment and mitigation strategies.",
+        "Customer testimonials or case studies."
+      ],
+      "investorReadiness": "The company is moderately investor-ready with a solid concept, MVP, and market understanding but requires validation of user acquisition, conversion, financial assumptions, and deeper competitive defensibility for stronger investor confidence.",
+      "suggestedFixes": [
+        {
+          "title": "Add Real Traction Metrics and Early User Feedback",
+          "explanation": "Collect and present concrete user data from the MVP beta, including conversion rates, retention, and qualitative feedback to de-risk assumptions and demonstrate market fit.",
+          "priority": "high"
+        },
+        {
+          "title": "Expand Competitive Analysis",
+          "explanation": "Deepen competitive landscape assessment by including direct and indirect competitors' strengths/weaknesses, potential substitutes, and how MarkPal’s AI and feedback dataset moats hold up under scrutiny.",
+          "priority": "medium"
+        },
+        {
+          "title": "Detail Financial Projections and Cashflow",
+          "explanation": "Include detailed monthly financial forecasts with burn rate, runway, and customer acquisition costs based on actual data or conservative estimates to improve financial transparency.",
+          "priority": "high"
+        },
+        {
+          "title": "Broaden Go-To-Market Strategy",
+          "explanation": "Diversify acquisition channels and include pilot performance, referral mechanics, partnerships, and a structured marketing plan beyond founder-led ads to show go-to-market scalability.",
+          "priority": "medium"
+        },
+        {
+          "title": "Develop Risk and Mitigation Plan",
+          "explanation": "Explicitly state key business risks (e.g., AI accuracy, competition, market adoption) and outline mitigation strategies to instill investor confidence in risk management.",
+          "priority": "medium"
+        }
+      ],
+      "priorityActions": [
+        {
+          "action": "Validate Product-Market Fit with Early Users",
+          "reason": "To confirm conversion assumptions and refine product based on real feedback, reducing risk and strengthening traction signals.",
+          "priority": "high"
+        },
+        {
+          "action": "Enhance Financial Modeling Accuracy",
+          "reason": "Improving financial transparency and realism supports better fundraising valuation discussions and investor trust.",
+          "priority": "high"
+        },
+        {
+          "action": "Develop Comprehensive Competitive Positioning",
+          "reason": "Establishing defensible differentiation and preparing responses to competitive threats will support long-term viability and exit potential.",
+          "priority": "medium"
+        }
+      ],
+      "fundraisingRisks": [
+        "Reliance on optimistic 4-5% conversion rates without proof could lead to slower growth than projected.",
+        "Early stage team with founder-led growth may struggle to scale marketing effectively.",
+        "AI grading accuracy and scalability at broader subject and geography levels remain unproven.",
+        "Competitive entrants with more resources or established user bases could erode market share.",
+        "Dependence on a single product feature (AI exam technique feedback) may risk obsolescence if rivals replicate technology quickly."
+      ]
+    },
+    "founderProfile": {
+      "userId": "test-user",
+      "deckId": "deck-Mark Pal",
+      "company": {
+        "name": "Mark Pal",
+        "oneLiner": "MarkPal presents a well-articulated problem and innovative AI-driven solution focused uniquely on exam technique rather than content. The MVP is developed with clear future roadmap and realistic monetization plans. Strong market opportunity and traction plans are defined, with a credible founder and team hiring plan given. However, the deck lacks detailed traction data to support assumptions, competitive landscape and risk mitigation could be deeper, and financial projections rely heavily on optimistic conversion benchmarks without historic evidence. The fundraising ask is clear but valuation rationale and milestones need more quantification. Overall, MarkPal is promising but requires validation in early traction and competitive defensibility.",
+        "sector": "FinTech",
+        "businessModel": "b2b-saas",
+        "sectorRaw": "SaaS",
+        "subSector": "SaaS",
+        "businessModelRaw": "b2b-saas",
+        "stage": "seed",
+        "geography": "United Kingdom"
+      },
+      "traction": {},
+      "team": {
+        "founders": [
+          {
+            "name": "Founder",
+            "role": "Founder",
+            "background": ""
+          }
+        ]
+      },
+      "raise": {
+        "amount": 500000,
+        "use_of_funds": [
+          "Validate Product-Market Fit with Early Users",
+          "Enhance Financial Modeling Accuracy",
+          "Develop Comprehensive Competitive Positioning"
+        ]
+      },
+      "deckSignals": {
+        "overallScore": 78,
+        "summary": "MarkPal presents a well-articulated problem and innovative AI-driven solution focused uniquely on exam technique rather than content. The MVP is developed with clear future roadmap and realistic monetization plans. Strong market opportunity and traction plans are defined, with a credible founder and team hiring plan given. However, the deck lacks detailed traction data to support assumptions, competitive landscape and risk mitigation could be deeper, and financial projections rely heavily on optimistic conversion benchmarks without historic evidence. The fundraising ask is clear but valuation rationale and milestones need more quantification. Overall, MarkPal is promising but requires validation in early traction and competitive defensibility.",
+        "categoryScores": [
+          {
+            "category": "Problem",
+            "score": 85,
+            "feedback": "The problem is well defined, focusing on a nuanced issue in exam preparation that traditional content-centric platforms miss. Founder’s personal story adds credibility."
+          },
+          {
+            "category": "Solution",
+            "score": 80,
+            "feedback": "Solution is clearly described and compelling. The AI-powered exam technique feedback addresses the stated problem convincingly."
+          },
+          {
+            "category": "Market",
+            "score": 75,
+            "feedback": "Market size is well-researched with segmentation and clear initial UK focus. However, TAM may be over-optimistic without proven product-market fit."
+          },
+          {
+            "category": "Product",
+            "score": 78,
+            "feedback": "MVP is complete with functional AI grading, and demo provided. Next features outlined show good planning. User experience descriptions could be deeper."
+          },
+          {
+            "category": "Traction",
+            "score": 60,
+            "feedback": "Roadmap and user acquisition goals are clear, but current traction metrics are early and lack validation. Conversion rate assumptions are optimistic compared to industry benchmarks."
+          },
+          {
+            "category": "Business model",
+            "score": 80,
+            "feedback": "Freemium subscription model with tiered pricing is logical and supported by reasonable ARPU and LTV:CAC projections."
+          },
+          {
+            "category": "Go-to-market",
+            "score": 70,
+            "feedback": "Initial channels identified including social ads and founder-led growth. Plan to hire growth intern is positive but GTM strategy lacks diversity and proven acquisition data."
+          },
+          {
+            "category": "Competition",
+            "score": 65,
+            "feedback": "Key competitors identified with differentiation explained, but competitive analysis is relatively shallow considering established players. Moat based on AI training and dataset proprietary nature is plausible but unproven."
+          },
+          {
+            "category": "Team",
+            "score": 75,
+            "feedback": "Founder has strong relevant technical and domain expertise. Hiring plan addresses skill gaps but team beyond founder is in early stages."
+          },
+          {
+            "category": "Financials",
+            "score": 68,
+            "feedback": "Financial projection and unit economics provided, showing good LTV:CAC ratio. However, assumptions are optimistic without actual conversion evidence. Burn rate and runway not detailed fully."
+          },
+          {
+            "category": "Fundraising ask",
+            "score": 80,
+            "feedback": "Raise amount, valuation, and use of funds are clearly stated along with expected milestones, though more detailed financial forecasts would support credibility."
+          }
+        ],
+        "strengths": [
+          "Clear articulation of a unique and real problem in exam prep.",
+          "Innovative AI solution with functioning MVP and demo.",
+          "Well segmented and sizable market opportunity, especially UK GCSE/A-Level focus.",
+          "Sound business model with freemium to subscription tiers and thoughtful pricing.",
+          "Founder has credible background with prior success and relevant experience."
+        ],
+        "weaknesses": [
+          "Lack of current validated traction data to underpin growth assumptions.",
+          "Limited competitive analysis depth and defensibility proof beyond claims.",
+          "Financials appear optimistic without real user data or historic metrics.",
+          "Go-to-market lacks breadth and proven acquisition channel validation.",
+          "Team beyond founder is nascent, with reliance on future hires.",
+          "Absence of detailed risk analysis or contingency plans."
+        ],
+        "missingSections": [
+          "Detailed traction data with metrics and user feedback.",
+          "Comprehensive competitive landscape analysis with threats and mitigation.",
+          "Detailed financial projections including cash flow and burn schedule.",
+          "Risk assessment and mitigation strategies.",
+          "Customer testimonials or case studies."
+        ],
+        "priorityActions": [
+          "Validate Product-Market Fit with Early Users",
+          "Enhance Financial Modeling Accuracy",
+          "Develop Comprehensive Competitive Positioning"
+        ],
+        "fundraisingRisks": [
+          "Reliance on optimistic 4-5% conversion rates without proof could lead to slower growth than projected.",
+          "Early stage team with founder-led growth may struggle to scale marketing effectively.",
+          "AI grading accuracy and scalability at broader subject and geography levels remain unproven.",
+          "Competitive entrants with more resources or established user bases could erode market share.",
+          "Dependence on a single product feature (AI exam technique feedback) may risk obsolescence if rivals replicate technology quickly."
+        ],
+        "investorReadiness": "The company is moderately investor-ready with a solid concept, MVP, and market understanding but requires validation of user acquisition, conversion, financial assumptions, and deeper competitive defensibility for stronger investor confidence.",
+        "keywords": [
+          "The MVP",
+          "Innovative AI",
+          "UK GCSE",
+          "Business model",
+          "Fundraising ask"
+        ]
+      }
+    },
+    "cacheKey": "75182886afde2452",
+    "leadsFinderInput": {
+      "fetch_count": 250,
+      "email_status": [
+        "validated"
+      ],
+      "contact_job_title": [
+        "General Partner",
+        "Managing Partner",
+        "Partner",
+        "Principal",
+        "Investment Partner",
+        "Venture Partner",
+        "Investment Director"
+      ],
+      "contact_not_job_title": [
+        "Limited Partner",
+        "Analyst",
+        "Associate"
+      ],
+      "company_industry": [
+        "venture capital & private equity"
+      ],
+      "contact_location": [
+        "united kingdom",
+        "united states"
+      ],
+      "company_keywords": [
+        "SaaS",
+        "FinTech",
+        "b2b-saas",
+        "The MVP",
+        "Innovative AI",
+        "UK GCSE"
+      ]
+    },
+    "rawLeadCount": 248,
+    "firmCount": 233,
+    "shortlistCount": 40,
+    "crunchbaseCount": 2,
+    "linkedinPostCount": 222,
+    "rankedAll": [
+      {
+        "fitScore": 88,
+        "firm": {
+          "name": "Pretiosum Ventures",
+          "website": "https://www.pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/company/pretiosum-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "artificial intelligence",
+            "fintech",
+            "saas",
+            "b2b",
+            "enterprise saas",
+            "financial model",
+            "unit economics",
+            "fundraising strategies"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Yana Abramova",
+          "title": "Founder & Gp",
+          "email": "ayana@pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/in/yana-abramova"
+        },
+        "matchRationale": "MarkPal's innovative AI-driven solution complements Pretiosum's focus on SaaS and AI. The company's UK base aligns with Yana Abramova's geographical interest. MarkPal's challenge with traction data could benefit from Pretiosum's expertise in unit economics and fundraising strategies.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 85,
+        "firm": {
+          "name": "Creator Ventures",
+          "website": "https://www.creator.ventures",
+          "linkedin": "https://www.linkedin.com/company/creatorventuresofficial",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "creative tools",
+            "consumer internet",
+            "saas",
+            "financial services"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sasha Kaletsky",
+          "title": "Co-founder And Managing Partner",
+          "email": "sasha@creator.ventures",
+          "linkedin": "https://www.linkedin.com/in/sasha-kaletsky-48a10378"
+        },
+        "matchRationale": "Creator Ventures, with its focus on SaaS and the UK market, fits well with MarkPal's B2B SaaS model and geographical presence. Sasha Kaletsky's lack of recent activity suggests potential for a fresh portfolio addition like MarkPal's AI exam technique solution.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 83,
+        "firm": {
+          "name": "Infinity Ventures",
+          "website": "https://www.infinityvc.capital",
+          "linkedin": "https://www.linkedin.com/company/infinity-vc",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "fintech",
+            "b2b fintech",
+            "commerce enablement",
+            "digital commerce"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jeremy Jonker",
+          "title": "Co-founder And Managing Partner",
+          "email": "jeremy@infinityvc.capital",
+          "linkedin": "https://www.linkedin.com/in/jeremyjonker"
+        },
+        "matchRationale": "MarkPal’s focus on financial projections and monetization models aligns with Infinity Ventures’ expertise in fintech and financial technology. Jeremy Jonker's interest in commerce enablement could benefit from MarkPal's subscription model.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 81,
+        "firm": {
+          "name": "Equal Ventures",
+          "website": "https://www.equal.vc",
+          "linkedin": "https://www.linkedin.com/company/equal-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "technology adaptation",
+            "seed rounds",
+            "investment insights",
+            "disruption"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Rick Zullo",
+          "title": "Founder And Managing Partner",
+          "email": "zullo@equal.vc",
+          "linkedin": "https://www.linkedin.com/in/rickzullo"
+        },
+        "matchRationale": "Equal Ventures' focus on disruptive technologies aligns with MarkPal's innovative AI solution. Rick Zullo’s interest in educational solutions paired with MarkPal's exam technique specificity highlights potential synergies.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 80,
+        "firm": {
+          "name": "Fpv Ventures",
+          "website": "https://www.fpvventures.com",
+          "linkedin": "https://www.linkedin.com/company/fpvventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "ai & machine learning",
+            "education technology",
+            "data empowerment"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Pegah Ebrahimi",
+          "title": "Co-founder & Managing Partner",
+          "email": "pegah@fpvventures.com",
+          "linkedin": "https://www.linkedin.com/in/pegahebrahimi"
+        },
+        "matchRationale": "FPV Ventures’ strong focus on AI and education technology complements MarkPal's AI examination technique tool. Pegah Ebrahimi will find MarkPal’s data-driven focus and machine learning application compelling for educational advancements.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 78,
+        "firm": {
+          "name": "Founderville.vc",
+          "website": "https://www.founderville.vc",
+          "linkedin": "https://www.linkedin.com/company/founderville",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "b2b saas",
+            "product market fit",
+            "scalable software"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Shaler Houser",
+          "title": "Co-founder And Partner",
+          "email": "shay@founderville.vc",
+          "linkedin": "https://www.linkedin.com/in/shaler-houser-801187"
+        },
+        "matchRationale": "MarkPal’s early-stage SaaS offering aligns with Founderville's expertise in B2B SaaS and achieving product-market fit. Shaler Houser’s focus on scalable software and business development could support MarkPal's growth ambitions.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 77,
+        "firm": {
+          "name": "Storyhouse Ventures",
+          "website": "https://www.storyhousevc.com",
+          "linkedin": "https://www.linkedin.com/company/storyhouse-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "early-stage investment",
+            "entrepreneur resources",
+            "fintech solutions"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Miles Bird",
+          "title": "Founder & General Partner",
+          "email": "miles@storyhousevc.com",
+          "linkedin": "https://www.linkedin.com/in/bird"
+        },
+        "matchRationale": "MarkPal's need for enhanced financial modeling resonates with Storyhouse Ventures' focus on fintech solutions. Miles Bird’s initiatives in founder support might aid MarkPal in developing comprehensive competitive positioning.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 76,
+        "firm": {
+          "name": "Channel Equity Partners",
+          "website": "https://www.channelep.com",
+          "linkedin": "https://www.linkedin.com/company/channelep",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "b2b software",
+            "saas metrics",
+            "market research"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Andrew Albert",
+          "title": "Managing Partner / Co-founder",
+          "email": "aalbert@channelep.com",
+          "linkedin": "https://www.linkedin.com/in/andrewalbert"
+        },
+        "matchRationale": "Channel Equity’s expertise in SaaS metrics and B2B software strongly complements MarkPal's SaaS business model. Andrew Albert's analytical focus on market research can provide valuable insights for MarkPal's competitive landscape evaluation.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 75,
+        "firm": {
+          "name": "Rethink Impact, Lp",
+          "website": "https://www.rethinkimpact.com",
+          "linkedin": "https://www.linkedin.com/company/rethink-impact-lp",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "impact investing",
+            "technology solutions",
+            "education technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jenny Abramson",
+          "title": "Founder & Managing Partner",
+          "email": "jenny@rethinkimpact.com",
+          "linkedin": "https://www.linkedin.com/in/jenny-abramson-bb75297"
+        },
+        "matchRationale": "MarkPal’s educational focus through a technological lens aligns well with Rethink Impact’s technology and education sectors. Jenny Abramson’s work with impact-driven entrepreneurs offers meaningful opportunities for MarkPal’s societal contribution angles.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 74,
+        "firm": {
+          "name": "Primary Venture Partners",
+          "website": "https://www.primary.vc",
+          "linkedin": "https://www.linkedin.com/company/primary-venture-partners",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "saas solutions",
+            "consumer finance",
+            "fintech innovation"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Benjamin Sun",
+          "title": "Co-founder And General Partner",
+          "email": "ben@primary.vc",
+          "linkedin": "https://www.linkedin.com/in/benjaminsun"
+        },
+        "matchRationale": "MarkPal's SaaS model and financial projections can benefit from Primary’s focus on SaaS and fintech innovation. Benjamin Sun's expert guidance in market validation may bridge MarkPal's financial projection challenges.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 73,
+        "firm": {
+          "name": "Pathbreaker Ventures",
+          "website": "https://www.pathbreakervc.com",
+          "linkedin": "https://www.linkedin.com/company/pathbreaker-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "artificial intelligence",
+            "machine learning",
+            "information technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Ryan Gembala",
+          "title": "Managing Partner & Founder",
+          "email": "ryan@pathbreakervc.com",
+          "linkedin": "https://www.linkedin.com/in/ryangembala"
+        },
+        "matchRationale": "MarkPal's AI-powered solution aligns with Pathbreaker Ventures' focus on AI and machine learning. Ryan Gembala’s insights into education technology will support MarkPal in enhancing their AI application within the education sector.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 72,
+        "firm": {
+          "name": "Innovation Endeavors",
+          "website": "https://www.innovationendeavors.com",
+          "linkedin": "https://www.linkedin.com/company/innovation-endeavors",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "technology startups",
+            "artificial intelligence",
+            "education technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Dror Berman",
+          "title": "Founder, Managing Partner",
+          "email": "dror@innovationendeavors.com",
+          "linkedin": "https://www.linkedin.com/in/drorberman"
+        },
+        "matchRationale": "Innovation Endeavors' support of AI advancements and education tech fits MarkPal’s model. Dror Berman’s strategic advice can guide MarkPal in addressing its current traction data weakness for a more robust market footing.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 71,
+        "firm": {
+          "name": "Bruckner Ventures",
+          "website": "https://www.bruckner.ventures",
+          "linkedin": "https://www.linkedin.com/company/bruckner-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "deep tech",
+            "ai",
+            "b2b saas"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Erik Bruckner",
+          "title": "Founder, General Partner",
+          "email": "erik@brucknerventures.com",
+          "linkedin": "https://www.linkedin.com/in/erik-bruckner"
+        },
+        "matchRationale": "Bruckner Ventures’ focus on AI and B2B SaaS matches well with MarkPal’s offering. Erik Bruckner could provide significant mentorship in proving MarkPal's AI grading technology’s scalability in broader markets.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 70,
+        "firm": {
+          "name": "Riverwood Capital",
+          "website": "https://www.riverwoodcapital.com",
+          "linkedin": "https://www.linkedin.com/company/riverwood-capital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "technology investment",
+            "scalable businesses",
+            "saas"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jeff Parks",
+          "title": "Co-founder And Managing Partner",
+          "email": "jeff@rwcm.com",
+          "linkedin": "https://www.linkedin.com/in/jeff-parks"
+        },
+        "matchRationale": "MarkPal’s focus on scaling its SaaS product aligns with Riverwood’s focus on scalable technology investment. Jeff Parks’ expertise in global market expansion could guide MarkPal’s initial UK-focused strategy.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 69,
+        "firm": {
+          "name": "Cortado Ventures",
+          "website": "https://www.cortado.ventures",
+          "linkedin": "https://www.linkedin.com/company/cortadoventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "fintech",
+            "b2b",
+            "early-stage investment",
+            "b2b technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Mike Moradi",
+          "title": "Co-founder & General Partner",
+          "email": "mmoradi@cortado.ventures",
+          "linkedin": "https://www.linkedin.com/in/mikemoradi"
+        },
+        "matchRationale": "Cortado Ventures’ expertise in fintech and early-stage B2B technology complements MarkPal’s business model. Mike Moradi’s focus on innovative education technology could be instrumental for the MarkPal platform scaling and validation strategy.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 68,
+        "firm": {
+          "name": "Capitalize Vc",
+          "website": "https://www.capitalizevc.com",
+          "linkedin": "https://www.linkedin.com/company/capitalize-vc",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "fintech solutions",
+            "community building",
+            "investment capital"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Tessa Flippin",
+          "title": "Founder And Managing Partner",
+          "email": "tessa@capitalizevc.com",
+          "linkedin": "https://www.linkedin.com/in/tessaflippin"
+        },
+        "matchRationale": "Capitalize VC’s emphasis on fintech solutions aligns with MarkPal's monetization strategies. Tessa Flippin’s experience with diverse founders might provide a supportive network for overcoming MarkPal’s team expansion requirement.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 67,
+        "firm": {
+          "name": "Ballistic Ventures",
+          "website": "https://www.ballisticventures.com",
+          "linkedin": "https://www.linkedin.com/company/ballistic-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "ai security",
+            "data protection",
+            "venture capital"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jake Seid",
+          "title": "Co-founder And General Partner",
+          "email": "js822s@ballisticvc.com",
+          "linkedin": "https://www.linkedin.com/in/jake1"
+        },
+        "matchRationale": "Ballistic Ventures’ focus on AI aligns with MarkPal’s technological foundation. Jake Seid’s expertise in data protection can further bolster MarkPal’s offering in enhancing security around AI grading systems.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 66,
+        "firm": {
+          "name": "Fusion Fund",
+          "website": "https://www.fusionfund.com",
+          "linkedin": "https://www.linkedin.com/company/fusion-fund",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "healthcare technology",
+            "enterprise ai",
+            "industrial technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Lu Zhang",
+          "title": "Founder And Managing Partner",
+          "email": "luzhang@fusionfund.com",
+          "linkedin": "https://www.linkedin.com/in/luzhangvc"
+        },
+        "matchRationale": "Fusion Fund's interest in enterprise AI complements MarkPal’s AI capabilities. Lu Zhang’s dedication to founder mentorship could guide MarkPal in refining its roadmap and addressing its financial projection challenges.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 65,
+        "firm": {
+          "name": "Euclid Ventures",
+          "website": "https://www.euclid.vc",
+          "linkedin": "https://www.linkedin.com/company/euclidventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "saas",
+            "ai-powered solutions",
+            "founder support"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Omar El-ayat",
+          "title": "Founder & General Partner",
+          "email": "omar@euclid.vc",
+          "linkedin": "https://www.linkedin.com/in/oelayat"
+        },
+        "matchRationale": "Euclid Ventures’ focus on vertical SaaS and AI solutions suits MarkPal’s product structure. Omar El-ayat’s emphasis on founder support can help MarkPal improve team formation and strategic planning.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 64,
+        "firm": {
+          "name": "Sentinel Global",
+          "website": "https://www.sentinelglobal.xyz",
+          "linkedin": "https://www.linkedin.com/company/sentinel-global",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "enterprise technologies",
+            "ai",
+            "financial technology"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jeremy Kranz",
+          "title": "Managing Partner",
+          "email": "jeremy@sentinelglobal.xyz",
+          "linkedin": "https://www.linkedin.com/in/jeremykranz"
+        },
+        "matchRationale": "MarkPal’s technology platform can gain from Sentinel Global’s focus on AI and fintech. Jeremy Kranz’s management knowledge could assist MarkPal's integration into larger educational ecosystems.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 63,
+        "firm": {
+          "name": "Venture Forward Capital",
+          "website": "https://www.ventureforwardcapital.com",
+          "linkedin": "https://www.linkedin.com/company/ventureforwardcapital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "venture capital",
+            "entrepreneur support",
+            "impact investing"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Mike Schatzman",
+          "title": "Founder And Managing Partner",
+          "email": "mike@ventureforwardcapital.com",
+          "linkedin": "https://www.linkedin.com/in/mikeschatzman"
+        },
+        "matchRationale": "Venture Forward’s focus on entrepreneur support agrees with MarkPal’s need for strategic guidance. Mike Schatzman’s network in impact investing could be valuable for MarkPal’s societal impact considerations.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 62,
+        "firm": {
+          "name": "Whitney Ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "software",
+            "ai",
+            "early-stage investment"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Whitney Christopher",
+          "title": "Managing Partner",
+          "email": "whitney@whitneyventures.com",
+          "linkedin": "https://www.linkedin.com/in/whitneychristopher"
+        },
+        "matchRationale": "Whitney Ventures’ tech-driven focus supports MarkPal's AI-led solution. Whitney Christopher's early-stage investment experience offers MarkPal a potential pathway for addressing its financial and technical milestones.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 61,
+        "firm": {
+          "name": "Peakspan Capital",
+          "website": "https://www.peakspancapital.com",
+          "linkedin": "https://www.linkedin.com/company/peakspan-capital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "business software",
+            "saas",
+            "scalable businesses"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Philip Dur",
+          "title": "Co-founder And Managing Partner",
+          "email": "philip@peakspancapital.com",
+          "linkedin": "https://www.linkedin.com/in/philipdur"
+        },
+        "matchRationale": "Peaksan's B2B software expertise aligns with MarkPal’s SaaS offering. Philip Dur’s experience in scaling businesses complements MarkPal’s growth trajectory within the educational technology landscape.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 60,
+        "firm": {
+          "name": "Album",
+          "website": "https://www.album.vc",
+          "linkedin": "https://www.linkedin.com/company/albumvc",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "technology investments",
+            "early-stage startups",
+            "customer success"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sid Krommenhoek",
+          "title": "Founder & General Partner",
+          "email": "sid@album.vc",
+          "linkedin": "https://www.linkedin.com/in/sidkrommenhoek"
+        },
+        "matchRationale": "Album's focus on tech investments resonates with MarkPal’s SaaS solution. Sid Krommenhoek's insights into customer success frameworks can aid MarkPal in strengthening its user acquisition and engagement strategies.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      }
+    ],
+    "rankedTop": [
+      {
+        "rank": 1,
+        "fitScore": 88,
+        "firm": {
+          "name": "Pretiosum Ventures",
+          "website": "https://www.pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/company/pretiosum-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "artificial intelligence",
+            "fintech",
+            "saas",
+            "b2b",
+            "enterprise saas",
+            "financial model",
+            "unit economics",
+            "fundraising strategies"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Yana Abramova",
+          "title": "Founder & Gp",
+          "email": "ayana@pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/in/yana-abramova"
+        },
+        "matchRationale": "MarkPal's innovative AI-driven solution complements Pretiosum's focus on SaaS and AI. The company's UK base aligns with Yana Abramova's geographical interest. MarkPal's challenge with traction data could benefit from Pretiosum's expertise in unit economics and fundraising strategies.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "Reaching out about MarkPal's progress in AI-driven exam prep",
+          "body": "Hi Yana, I saw that Pretiosum focuses on SaaS and AI, and I believe MarkPal’s unique solution for exam techniques might resonate with your investment thesis. We're currently in our seed stage, based in the UK, and ready to validate product-market fit with early users. I’d love to share our deck and discuss how your expertise in unit economics and fundraising strategies could help us with our journey. Would you be open to a quick 15-minute call? Thanks,"
+        }
+      },
+      {
+        "rank": 2,
+        "fitScore": 85,
+        "firm": {
+          "name": "Creator Ventures",
+          "website": "https://www.creator.ventures",
+          "linkedin": "https://www.linkedin.com/company/creatorventuresofficial",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "creative tools",
+            "consumer internet",
+            "saas",
+            "financial services"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sasha Kaletsky",
+          "title": "Co-founder And Managing Partner",
+          "email": "sasha@creator.ventures",
+          "linkedin": "https://www.linkedin.com/in/sasha-kaletsky-48a10378"
+        },
+        "matchRationale": "Creator Ventures, with its focus on SaaS and the UK market, fits well with MarkPal's B2B SaaS model and geographical presence. Sasha Kaletsky's lack of recent activity suggests potential for a fresh portfolio addition like MarkPal's AI exam technique solution.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "Exciting AI-driven Exam Solution",
+          "body": "Sasha, I noticed Creator Ventures' focus on SaaS and your interest in innovative technology. At MarkPal, we're tackling exam preparation with our unique AI-driven solution that emphasizes exam techniques rather than just content. We're currently raising £500,000 at the seed stage to validate our product-market fit and refine our financial modeling. I’d love to share our deck and see if there's room for a quick 15-minute call to discuss this further. Let me know your availability."
+        }
+      },
+      {
+        "rank": 3,
+        "fitScore": 83,
+        "firm": {
+          "name": "Infinity Ventures",
+          "website": "https://www.infinityvc.capital",
+          "linkedin": "https://www.linkedin.com/company/infinity-vc",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "fintech",
+            "b2b fintech",
+            "commerce enablement",
+            "digital commerce"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jeremy Jonker",
+          "title": "Co-founder And Managing Partner",
+          "email": "jeremy@infinityvc.capital",
+          "linkedin": "https://www.linkedin.com/in/jeremyjonker"
+        },
+        "matchRationale": "MarkPal’s focus on financial projections and monetization models aligns with Infinity Ventures’ expertise in fintech and financial technology. Jeremy Jonker's interest in commerce enablement could benefit from MarkPal's subscription model.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "Quick chat about MarkPal and its funding strategy",
+          "body": "Jeremy, I noticed Infinity Ventures has a strong focus on fintech and digital commerce, which resonates with our model at MarkPal. We're developing an AI-driven solution specifically for exam technique, and we're raising £500k to validate product-market fit with early users. I’d love to share our deck and get your thoughts on our monetization plans and competitive strategy. Could we set up a quick 15-minute chat?"
+        }
+      }
+    ],
+    "timings": {
+      "pdf_extract": 2266,
+      "deck_analysis": 53720,
+      "leads_finder": 52324,
+      "crunchbase": 8335,
+      "linkedin": 50342,
+      "ranking": 46180,
+      "outreach": 3984
+    }
+  },
+  {
+    "spec": {
+      "label": "Standen Capital",
+      "pdfPath": "c:/Users/tomas/Downloads/standen_capital_pitch_deck.pdf",
+      "profile": {
+        "sector": "SaaS",
+        "industry": "SaaS",
+        "stage": "seed",
+        "funding_stage": "seed",
+        "geography": "United Kingdom",
+        "location": "United Kingdom",
+        "target_raise": 500000,
+        "full_name": "Founder",
+        "company_name": "Standen Capital"
+      }
+    },
+    "text": "MAY 2026 INVESTOR PRESENTATION A disciplined plan to acquire and operate small recurring-revenue software products. Prepared by Tomas Jones Basingstoke, United Kingdom CONFIDENTIAL -- 1 of 15 -- 02 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 01 · CONTEXT The Opportunity Small software products are mispriced. The fix is execution, not invention. THE INEFFICIENCY — Too small for institutional private equity. Too operationally detailed for passive buyers. — Founders are tired. Products are neglected. Revenue is real and recurring. — Weak onboarding, stale pricing, no analytics, bloated tooling, high support load. — The work is practical. Not a rebuild. Not speculation. Just better execution. MARKET REFERENCE POINTS $23.8B UK SAAS MARKET 2024 Grand View Research $40.4B FORECAST UK SAAS BY 2030 8.5% CAGR · 2025-30 3.9x MEDIAN SAAS SALE MULTIPLE Acquire.com · 2024-25 The model is built around operating leverage, not speculative venture outcomes. -- 2 of 15 -- 03 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 02 · THESIS Five Operating Levers We buy under-managed profit streams and make them cleaner. 01 Cost Control Remove redundant tools. Optimise hosting. Automate first-line support. 02 Retention Add onboarding flows. Track usage. Renewal prompts. At-risk flags. 03 Pricing Replace flat plans with clear tiers. Annual billing. Higher-value packages. 04 Product Quality Fix high-friction workflows. Improve activation points. No rebuilds. 05 Exit Readiness Monthly reporting. Documented systems. Clean data room. Buyer narrative. ECONOMIC RESULT Higher operating margin Longer customer lifetime Higher ARPU & cash flow Higher conversion & retention Higher buyer confidence -- 3 of 15 -- 04 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 03 · FILTER Acquisition Criteria What the first deal looks like — and what it cannot be. REQUIRED Total spend cap £50,000 all-in MRR range £2,000 — £5,000 Customer count 50+ paying customers Customer concentration No single customer > 15% Revenue history 12+ months verified Monthly logo churn Below 7% Technology Modern, maintainable stack Reason for sale Founder fatigue or new project REJECT × Unclear IP ownership × Heavy paid-acquisition dependence × Products needing a full rebuild × Major customer concentration × Weak payment evidence × Large support debt × Platform dependency risk × Unclear compliance status The first deal must be boring enough to underwrite and small enough to improve without external rescue capital. -- 4 of 15 -- 05 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 04 · SOURCING Finding the Deal Before the Auction Marketplaces give coverage. The edge is direct outreach to neglected products. EXPECTED FIRST-ACQUISITION FUNNEL SCREENED 120 DILIGENCED 24 OFFERS MADE 10 LOIS SIGNED 4 CLOSED 1 SOURCING CHANNELS Marketplaces Acquire.com, Flippa, brokers. Fast access to listed assets and price benchmarks. Direct outreach Founders with neglected products, stale updates, multiple projects. Lower competition. Directory research Niche tools with paying users but weak positioning. Found before they are listed. Standen network Existing software conversations. Higher trust and technical credibility. -- 5 of 15 -- 06 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 05 · CAPITAL The First-Deal Envelope A strict £50,000 all-in cap. No hidden second budget. Acquisition consideration £42,000 84% Purchase of product, codebase, domain, customer accounts, brand, operating assets. Legal & administration £3,000 6% Asset purchase agreement, IP assignment, data processing review, accounting setup. Technical migration £2,000 4% Hosting, analytics, monitoring, support documentation, tooling switchovers. Operating reserve £3,000 6% Short reserve for first 60-90 days while systems are stabilised. Total maximum spend £50,000 If a target cannot be bought and stabilised within this limit, it is not the right first target. -- 6 of 15 -- 07 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 06 · WORKED EXAMPLE BriefStack A fictional target showing exactly the profile Standen Capital wants to acquire. A simple client brief and approval platform for small marketing teams. The founder built it as a side project, grew it through content and referrals, then stopped actively improving it after taking a full-time role. Not broken. Has customers. Has recurring revenue. The founder has left value on the table. BRIEFSTACK AT ACQUISITION £3,250 MRR £39,000 ARR 108 CUSTOMERS £30.09 ARPU / MONTH 4.8% MONTHLY LOGO CHURN £1,820 MONTHLY COSTS £1,430 MONTHLY PROFIT 2.45x ENTRY MULTIPLE Proposed acquisition price: £42,000 Total first-deal spend within £50,000 cap -- 7 of 15 -- 08 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 07 · EXECUTION The First 100 Days Control before growth. Four phases. Clear outputs. 01 DAYS 1—14 Control & Handover Receive all access: code, hosting, payments, analytics. Record walkthroughs. Build asset register and baseline operating report. 02 DAYS 15—45 Cost & Infrastructure Reset Remove avoidable spend. Simplify support tooling. Install monitoring. Reduce monthly costs from £1,820 to ~£1,150. 03 DAYS 46—75 Retention & Onboarding Structured onboarding. Activation checklist. Health scores. At-risk alerts. Cancellation surveys. Fix activation gaps. 04 DAYS 76—100 Pricing & Packaging Replace flat pricing with Starter, Growth, Studio tiers. Introduce annual billing. Increase ARPU without losing customers. -- 8 of 15 -- 09 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 08 · FINANCIAL MODEL BriefStack Operating Plan — 18 Months Conservative assumptions. Operating profit improves faster than revenue. MRR & MONTHLY PROFIT (£/MONTH) £0 £1K £2K £3K £4K £5K £6K £7K M0 M3 M6 M9 M12 M15 M18 MRR Monthly operating profit QUARTERLY SNAPSHOT MONTH MRR COSTS PROFIT DRIVER M0 £3,250 £1,820 £1,430 Acquisition baseline M3 £3,450 £1,150 £2,300 Cost reset M6 £4,100 £1,150 £2,950 Onboarding + pricing M9 £4,800 £1,300 £3,500 Lower churn, annual billing M12 £5,500 £1,500 £4,000 Tier migration M15 £6,000 £1,650 £4,350 Retention & expansion M18 £6,500 £1,850 £4,650 Exit readiness -- 9 of 15 -- 10 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 09 · RETURNS Underwritten Against Four Scenarios The £50,000 cap keeps a bad first acquisition survivable rather than fatal. EXIT VALUE & GROSS MOIC BY SCENARIO £50K invested £36,720 0.73x UGLY GROSS MOIC £68,400 1.37x DOWNSIDE GROSS MOIC £125,550 2.51x BASE GROSS MOIC £169,920 3.40x UPSIDE GROSS MOIC WHY THE UGLY CASE MATTERS An investor will not trust a plan that only models attractive outcomes. In the ugly case, revenue falls after transfer, support volume rises, and the product cannot be sold quickly. The asset must be held while issues are repaired. The capital loss is still capped at £50,000. That is the purpose of the hard cap. -- 10 of 15 -- 11 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 10 · OPERATING SYSTEM A Repeatable Process Not a capital plan. A system to source, underwrite, acquire, improve, report, and exit. WEEKLY OPERATING DASHBOARD MRR & ARR Revenue base. Whether growth is real. Logo churn Rate at which customers leave. Net revenue retention Expansion + contraction + churn together. ARPU Pricing and customer mix improvement. Activation rate New customers reaching core value. Support volume Product friction. Manual workload. Infrastructure cost Margin protection. Waste exposure. Operating profit Main asset quality measure. OPERATING PRINCIPLES — Feature work must link to retention, activation, conversion, pricing, support reduction, or buyer confidence. — Product roadmap is intentionally limited. Acquired products are not treated as venture-backed startups. — Monthly investor reports cover acquisition status, product metrics, cash position, risks, and management commentary. — First acquisition uses a deal-specific SPV, not a blind fund. Investor backs a specific strategy with a hard cap. — Any Standen agency work charged to the vehicle is documented and kept within the £50,000 envelope. -- 11 of 15 -- 12 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 11 · RISK Risks Are Real. Mitigations Are Specific. Every risk has a corresponding test before completion. RISK HOW IT SHOWS UP MITIGATION Overpaying The product cannot support the purchase price. Buy on verified profit, not seller story. Cap total spend at £50,000. Hidden churn Customers cancel after acquisition. Review cohorts, cancellation reasons, support history, and usage before signing. Technical debt The codebase needs more work than expected. Full code review before completion. Reject rebuild candidates. Seller dependency The product only works with founder intervention. Require process walkthroughs. Identify manual tasks before completion. Compliance IP, data, or terms are unclear. Use legal review and require seller warranties before signing. No exit buyer Market appetite is weak when ready to sell. Underwrite as cash-flow hold first, exit second. Operator capacity The first asset takes too much time. Use narrow product criteria and standard operating routines. -- 12 of 15 -- 13 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 12 · SCALING Staged Growth. Proof Before Scale. If the first acquisition works, Standen Capital earns the right to raise more. STAGE 1 £50,000 Complete first acquisition. Prove the operating playbook. 2026 — 2027 STAGE 2 £150K — £250K Acquire 2-4 related products. Centralise reporting. 2027 — 2028 STAGE 3 £500K — £1M Build repeatable acquisition vehicle with external reporting. 2028 — 2029 STAGE 4 £2M+ Software holding company. Consider related service assets. 2029 onward If the first acquisition reaches the base case, Standen Capital raises more capital on better terms. If it does not, the loss is capped and the strategy is revised before scaling. -- 13 of 15 -- 14 / 15 STANDEN CAPITAL · CONFIDENTIAL May 2026 Standen Capital · Basingstoke, UK 13 · INVESTMENT CASE Why This Makes Sense A specific acquisition strategy with defined downside, clear levers, and a hard cap. Defined downside — Hard £50,000 cap on total spend — No hidden second budget — Ugly case modelled and survivable — Capital loss capped, not open-ended Clear operating levers — Buy on verified profit, not story — Improve cost, retention, pricing — Hands-on software execution — Monthly investor reporting Credible path to scale — First deal proves the system — Next raise backed by real evidence — Repeatable acquisition engine — Compound learning across deals USE OF FUNDS ACQUISITION £42,000 LEGAL & ADMIN £3,000 MIGRATION & TOOLING £2,000 OPERATING RESERVE £3,000 -- 14 of 15 -- MAY 2026 STANDEN CAPITAL NEXT STEPS Begin the First Acquisition Process 01 Finalise investor materials and target criteria. 02 Build pipeline of 100+ small recurring-revenue products. 03 Run diligence on shortlisted targets within the £50,000 cap. 04 Negotiate the first LOI and complete legal transfer. 05 Execute the first 100 days. Report monthly. Tomas Jones Standen Capital · Basingstoke, United Kingdom tomasjonesdev@gmail.com CONFIDENTIAL -- 15 of 15 --",
+    "analysis": {
+      "overallScore": 78,
+      "summary": "The pitch deck presents a well-thought-out strategy to acquire and operate small, recurring-revenue SaaS products with a clear acquisition and operating model focusing on execution rather than invention. It transparently outlines operating levers, risk mitigations, financials, and scaling plans, demonstrating discipline and conservatism. However, the deck lacks detailed team background, clear fundraising ask specifics beyond the first deal envelope, and detailed product demonstrations or market validation. Financial projections are conservative but limited in scope and granularity. The lack of competitive analysis and traction on current assets (beyond the example) weakens investor confidence.",
+      "categoryScores": [
+        {
+          "category": "Problem",
+          "score": 85,
+          "feedback": "Clearly defines inefficiencies in the marketplace: neglected small SaaS products with real recurring revenues but operational weaknesses."
+        },
+        {
+          "category": "Solution",
+          "score": 80,
+          "feedback": "The solution is concise: disciplined acquisition and hands-on operational improvements focusing on cost control, retention, pricing, product quality, and exit readiness."
+        },
+        {
+          "category": "Market",
+          "score": 75,
+          "feedback": "Market size and growth are presented with credible references but lack segmentation or customer personas."
+        },
+        {
+          "category": "Product",
+          "score": 65,
+          "feedback": "No current product is being sold; the focus is on acquiring existing products. The example product is fictional. No demo or deep product detail provided."
+        },
+        {
+          "category": "Traction",
+          "score": 60,
+          "feedback": "No actual acquisitions have been completed yet; the funnel metrics are projected. The worked example is fictional."
+        },
+        {
+          "category": "Business model",
+          "score": 85,
+          "feedback": "Clear acquisition criteria, financial caps, and operating models justify sustainability; revenue and profit model is logical and conservative."
+        },
+        {
+          "category": "Go-to-market",
+          "score": 70,
+          "feedback": "Sourcing approach covers multiple channels with funnel metrics, but lacks evidence of past success or external validation."
+        },
+        {
+          "category": "Competition",
+          "score": 40,
+          "feedback": "No detailed competitive landscape or direct competitors are analyzed in the deck."
+        },
+        {
+          "category": "Team",
+          "score": 30,
+          "feedback": "No information on the founder's background, skills, or team composition is provided."
+        },
+        {
+          "category": "Financials",
+          "score": 70,
+          "feedback": "Provides a reasonable 18-month financial model on the example acquisition with conservative assumptions but limited detail on cash flow, unit economics, or sensitivity."
+        },
+        {
+          "category": "Fundraising ask",
+          "score": 50,
+          "feedback": "First deal capped at £50,000 with capital breakdown, but lacks broader fundraising goals, investor terms, or round details."
+        }
+      ],
+      "strengths": [
+        "Clear articulation of market inefficiency and opportunity.",
+        "Disciplined acquisition criteria and operating model with specific levers.",
+        "Realistic financial projections with downside scenario analysis."
+      ],
+      "weaknesses": [
+        "No actual traction or completed acquisitions to validate the model.",
+        "Lacks competitive analysis and differentiation.",
+        "No team credentials or biographies included."
+      ],
+      "missingSections": [
+        "Team details and experience.",
+        "Competitive analysis.",
+        "Detailed fundraising ask and investor terms.",
+        "Real acquisition case studies or customer testimonials."
+      ],
+      "investorReadiness": "The deck is at an early stage with a credible strategy but insufficient concrete traction, team information, and competitive analysis for full investor confidence. More evidence of execution and team capability is needed before being considered investor-ready.",
+      "suggestedFixes": [
+        {
+          "title": "Add Team Section",
+          "explanation": "Include detailed backgrounds, expertise, and relevant experience of the founders and core team to build investor trust.",
+          "priority": "high"
+        },
+        {
+          "title": "Incorporate Competitive Analysis",
+          "explanation": "Provide a clear overview of competitors and Standen Capital's competitive advantage to contextualize market positioning.",
+          "priority": "high"
+        },
+        {
+          "title": "Clarify Fundraising Details",
+          "explanation": "Specify investment sought, terms, expected use beyond first deal, and potential return timelines to provide investors clarity.",
+          "priority": "medium"
+        },
+        {
+          "title": "Present Real Traction or Case Studies",
+          "explanation": "Include actual acquisition(s) or pilot results demonstrating execution success instead of only fictional examples.",
+          "priority": "high"
+        }
+      ],
+      "priorityActions": [
+        {
+          "action": "Add detailed team profiles to the deck.",
+          "reason": "Investors require confidence in the people executing the strategy.",
+          "priority": "high"
+        },
+        {
+          "action": "Conduct and present a competitive landscape analysis.",
+          "reason": "To demonstrate market understanding and defend the business model.",
+          "priority": "high"
+        },
+        {
+          "action": "Provide concrete traction data or case study from a real acquisition.",
+          "reason": "To prove that the strategy can be executed successfully.",
+          "priority": "high"
+        }
+      ],
+      "fundraisingRisks": [
+        "Lack of team and operational track record undermines investor confidence.",
+        "Unclear fundraising terms and future capital requirements create ambiguity.",
+        "No competitive analysis may expose vulnerability to better-capitalized buyers.",
+        "Absence of real traction increases perceived execution risk.",
+        "Potential reliance on assumptions without sufficient validation risks overoptimism."
+      ]
+    },
+    "founderProfile": {
+      "userId": "test-user",
+      "deckId": "deck-Standen Capital",
+      "company": {
+        "name": "Standen Capital",
+        "oneLiner": "The pitch deck presents a well-thought-out strategy to acquire and operate small, recurring-revenue SaaS products with a clear acquisition and operating model focusing on execution rather than invention. It transparently outlines operating levers, risk mitigations, financials, and scaling plans, demonstrating discipline and conservatism. However, the deck lacks detailed team background, clear fundraising ask specifics beyond the first deal envelope, and detailed product demonstrations or market validation. Financial projections are conservative but limited in scope and granularity. The lack of competitive analysis and traction on current assets (beyond the example) weakens investor confidence.",
+        "sector": "FinTech",
+        "businessModel": "b2b-saas",
+        "sectorRaw": "SaaS",
+        "subSector": "SaaS",
+        "businessModelRaw": "holdco / acquisitions",
+        "stage": "seed",
+        "geography": "United Kingdom"
+      },
+      "traction": {},
+      "team": {
+        "founders": [
+          {
+            "name": "Founder",
+            "role": "Founder",
+            "background": ""
+          }
+        ]
+      },
+      "raise": {
+        "amount": 500000,
+        "use_of_funds": [
+          "Add detailed team profiles to the deck.",
+          "Conduct and present a competitive landscape analysis.",
+          "Provide concrete traction data or case study from a real acquisition."
+        ]
+      },
+      "deckSignals": {
+        "overallScore": 78,
+        "summary": "The pitch deck presents a well-thought-out strategy to acquire and operate small, recurring-revenue SaaS products with a clear acquisition and operating model focusing on execution rather than invention. It transparently outlines operating levers, risk mitigations, financials, and scaling plans, demonstrating discipline and conservatism. However, the deck lacks detailed team background, clear fundraising ask specifics beyond the first deal envelope, and detailed product demonstrations or market validation. Financial projections are conservative but limited in scope and granularity. The lack of competitive analysis and traction on current assets (beyond the example) weakens investor confidence.",
+        "categoryScores": [
+          {
+            "category": "Problem",
+            "score": 85,
+            "feedback": "Clearly defines inefficiencies in the marketplace: neglected small SaaS products with real recurring revenues but operational weaknesses."
+          },
+          {
+            "category": "Solution",
+            "score": 80,
+            "feedback": "The solution is concise: disciplined acquisition and hands-on operational improvements focusing on cost control, retention, pricing, product quality, and exit readiness."
+          },
+          {
+            "category": "Market",
+            "score": 75,
+            "feedback": "Market size and growth are presented with credible references but lack segmentation or customer personas."
+          },
+          {
+            "category": "Product",
+            "score": 65,
+            "feedback": "No current product is being sold; the focus is on acquiring existing products. The example product is fictional. No demo or deep product detail provided."
+          },
+          {
+            "category": "Traction",
+            "score": 60,
+            "feedback": "No actual acquisitions have been completed yet; the funnel metrics are projected. The worked example is fictional."
+          },
+          {
+            "category": "Business model",
+            "score": 85,
+            "feedback": "Clear acquisition criteria, financial caps, and operating models justify sustainability; revenue and profit model is logical and conservative."
+          },
+          {
+            "category": "Go-to-market",
+            "score": 70,
+            "feedback": "Sourcing approach covers multiple channels with funnel metrics, but lacks evidence of past success or external validation."
+          },
+          {
+            "category": "Competition",
+            "score": 40,
+            "feedback": "No detailed competitive landscape or direct competitors are analyzed in the deck."
+          },
+          {
+            "category": "Team",
+            "score": 30,
+            "feedback": "No information on the founder's background, skills, or team composition is provided."
+          },
+          {
+            "category": "Financials",
+            "score": 70,
+            "feedback": "Provides a reasonable 18-month financial model on the example acquisition with conservative assumptions but limited detail on cash flow, unit economics, or sensitivity."
+          },
+          {
+            "category": "Fundraising ask",
+            "score": 50,
+            "feedback": "First deal capped at £50,000 with capital breakdown, but lacks broader fundraising goals, investor terms, or round details."
+          }
+        ],
+        "strengths": [
+          "Clear articulation of market inefficiency and opportunity.",
+          "Disciplined acquisition criteria and operating model with specific levers.",
+          "Realistic financial projections with downside scenario analysis."
+        ],
+        "weaknesses": [
+          "No actual traction or completed acquisitions to validate the model.",
+          "Lacks competitive analysis and differentiation.",
+          "No team credentials or biographies included."
+        ],
+        "missingSections": [
+          "Team details and experience.",
+          "Competitive analysis.",
+          "Detailed fundraising ask and investor terms.",
+          "Real acquisition case studies or customer testimonials."
+        ],
+        "priorityActions": [
+          "Add detailed team profiles to the deck.",
+          "Conduct and present a competitive landscape analysis.",
+          "Provide concrete traction data or case study from a real acquisition."
+        ],
+        "fundraisingRisks": [
+          "Lack of team and operational track record undermines investor confidence.",
+          "Unclear fundraising terms and future capital requirements create ambiguity.",
+          "No competitive analysis may expose vulnerability to better-capitalized buyers.",
+          "Absence of real traction increases perceived execution risk.",
+          "Potential reliance on assumptions without sufficient validation risks overoptimism."
+        ],
+        "investorReadiness": "The deck is at an early stage with a credible strategy but insufficient concrete traction, team information, and competitive analysis for full investor confidence. More evidence of execution and team capability is needed before being considered investor-ready.",
+        "keywords": [
+          "Realistic",
+          "Business model"
+        ]
+      }
+    },
+    "cacheKey": "a66c6aa4765f72d2",
+    "leadsFinderInput": {
+      "fetch_count": 250,
+      "email_status": [
+        "validated"
+      ],
+      "contact_job_title": [
+        "General Partner",
+        "Managing Partner",
+        "Partner",
+        "Principal",
+        "Investment Partner",
+        "Venture Partner",
+        "Investment Director"
+      ],
+      "contact_not_job_title": [
+        "Limited Partner",
+        "Analyst",
+        "Associate"
+      ],
+      "company_industry": [
+        "venture capital & private equity"
+      ],
+      "contact_location": [
+        "united kingdom",
+        "united states"
+      ],
+      "company_keywords": [
+        "SaaS",
+        "FinTech",
+        "holdco / acquisitions",
+        "Realistic",
+        "Business model",
+        "Standen Capital"
+      ]
+    },
+    "rawLeadCount": 243,
+    "firmCount": 234,
+    "shortlistCount": 40,
+    "crunchbaseCount": 7,
+    "linkedinPostCount": 207,
+    "rankedAll": [
+      {
+        "fitScore": 85,
+        "firm": {
+          "name": "Pretiosum Ventures",
+          "website": "https://www.pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/company/pretiosum-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "artificial intelligence, fintech, saas, passion economy, marketplaces, web3, b2b, early stage, preseed, seed, infrastructure, enterprise, venture capital & private equity principals, venture capital, investment thesis, seed-stage, enterprise saas, financial model, unit economics, fundraising strategies, investor relations, pitch development, market analysis, sales playbook, webinars, legal frameworks, safe agreements, convertible notes, equity compensation, startup ecosystem, financial planning, networking strategies, investor profiles, early-stage financing, strategic investors, pr strategies, web3 investment, fintech infrastructure, innovative startups, growth potential, data room preparation, due diligence, fractional recruitment, masterclass, funding playbook, web3 marketing, capital management, investor selection, economic insights, startup resources, community building, support for founders, investment reports, investor education, tech entrepreneurship, capital access, market research, risk management, startup strategies, entrepreneurship development, portfolio management, information technology & services, finance technology, financial services, computer software"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Yana Abramova",
+          "title": "Founder & Gp",
+          "email": "ayana@pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/in/yana-abramova"
+        },
+        "matchRationale": "Standen Capital's focus on acquiring and operating SaaS products aligns with Pretiosum's interest in SaaS and early-stage investments. Yana Abramova's expertise in financial model development and due diligence complements the founder's disciplined acquisition model. Both are based in the UK, facilitating collaboration.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 82,
+        "firm": {
+          "name": "Creator Ventures",
+          "website": "https://www.creator.ventures",
+          "linkedin": "https://www.linkedin.com/company/creatorventuresofficial",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, early-stage investment, technology investments, consumer internet, social media, startups, saas, creative tools, marketplaces, influencer marketing, talent management, private equity, innovation funding, digital marketing, app development, portfolio management, business accelerator, consumer applications, internet culture, financial services, equity funding, market analysis, investment strategy, founder support, growth capital, entrepreneurship, media ventures, startup ecosystem, business partnerships, digital growth, community engagement, content creation, investment insights, scalability, market trends, brand development, social engagement, technology trends, product development, b2b solutions, e-commerce, user experience design, data analytics, influencer partnerships, team building, capital raising, performance marketing, strategic investments, consumers, information technology & services, internet, computer software, marketing & advertising, apps, software development"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sasha Kaletsky",
+          "title": "Co-founder And Managing Partner",
+          "email": "sasha@creator.ventures",
+          "linkedin": "https://www.linkedin.com/in/sasha-kaletsky-48a10378"
+        },
+        "matchRationale": "Creator Ventures' focus on early-stage SaaS investments is a fit for Standen Capital's acquisition model. Sasha Kaletsky's interest in technology and market analysis aligns with the founder's need to embed competitive landscape research. Both operate from the UK, enhancing communication and strategic alignment.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 80,
+        "firm": {
+          "name": "Fjor",
+          "website": "https://www.fjor.co",
+          "linkedin": "https://www.linkedin.com/company/fjorco",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, ai investment, enterprise software, fintech, startup acceleration, financial markets, institutional framework, digital banking, business analytics, project management software, procurement platform, dilution-free funding, customer loyalty programs, ai-driven solutions, cloud platform, marketplaces, data protection, e-commerce financing, payment management, expense management, b2b payments, digital twins, liquid staking protocol, autonomous technology, membership management, revenue growth, employee engagement, collaboration software, financial workflows, accounting solutions, capital platforms, turnkey solutions, risk mitigation, inventory management, customer experience, financial optimization, financial technology, startup launch platforms, embedded software, native digital solutions, software integration, business intelligence, workforce automation, payment processing, mobile networking, cloud-based applications, enterprises, computer software, information technology & services, b2b, finance technology, financial services, analytics"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Tatijana Janko",
+          "title": "Founder And General Partner",
+          "email": "tatijana@fjor.co",
+          "linkedin": "https://www.linkedin.com/in/tatijana-janko-936ab213"
+        },
+        "matchRationale": "Fjor's expertise in fintech and SaaS investment connects with Standen Capital's business model. Tatijana Janko's background in project management software supports the founder's roadmap to operational readiness. Though based in the US, Fjor's global approach aligns with the founder's market aspirations.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 78,
+        "firm": {
+          "name": "Ballistic Ventures",
+          "website": "https://www.ballisticventures.com",
+          "linkedin": "https://www.linkedin.com/company/ballistic-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, cybersecurity, ai security, deepfake detection, cloud security, identity management, application security, data protection, risk management, iot security, security automation, devsecops, threat detection, supply chain security, startup incubation, cyber resilience, workload protection, zero trust, security posture management, malicious content detection, real-time protection, continuous monitoring, security governance, incident response, data privacy, open-source security, machine learning security, ransomware defense, cross-cloud security, security orchestration, cybersecurity startup support, ai development lifecycle, malicious ai content, security integration, cyber threat intelligence, saas security, app security solutions, security visibility, compliance management, cybersecurity leadership, network security, cloud-native security, security frameworks, security engineering, entrepreneurship in cybersecurity, cyber risk assessment, endpoint security, computer security, security best practices, privacy, information technology & services"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Barmak Meftah",
+          "title": "Co-founder And General Partner",
+          "email": "bm555v@ballisticvc.com",
+          "linkedin": "https://www.linkedin.com/in/barmakmeftah"
+        },
+        "matchRationale": "Though Ballistic Ventures specializes in cybersecurity, their SaaS security focus aligns with Standen Capital's asset class. Barmak Meftah's security governance background complements the founder's risk mitigation frameworks. Global reach may provide network opportunities for Standen Capital.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 77,
+        "firm": {
+          "name": "Cherryrock Capital",
+          "website": "https://www.cherryrockcapital.com",
+          "linkedin": "https://www.linkedin.com/company/cherryrockcapital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, investment, capital management, startup funding, entrepreneur support, financial services, venture capital, investment strategy, funding solutions, business financing, equity investments, financial consulting, risk management, asset management, portfolio management, financial planning, corporate finance, business growth, capital raising, fund distribution, market analysis, financial advisory, investment opportunities, business development, fund management, client services, wealth management, legal compliance, business strategy, fundraising, economic growth, venture financing, financial returns, strategic investment, capital allocation, investment analysis, market trends, business partnerships, investment portfolio, investor relations, financial reporting, debt investments, private equity, financial instruments, capital markets, financial performance, fund viability, investment risk, management consulting, consulting, b2b, investment management, fund-raising"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Stacy Brown-philpot",
+          "title": "Founder & Managing Partner",
+          "email": "stacy@cherryrockcapital.com",
+          "linkedin": "https://www.linkedin.com/in/stacyphilpot"
+        },
+        "matchRationale": "Cherryrock Capital's broad focus on venture financing aligns with Standen Capital's financial growth goals. Stacy Brown-Philpot's experience in risk management relates to the founder's strategic doubling down on diligent acquisition and risk mitigation models.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 75,
+        "firm": {
+          "name": "Ballistic Ventures",
+          "website": "https://www.ballisticventures.com",
+          "linkedin": "https://www.linkedin.com/company/ballistic-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, cybersecurity, ai security, deepfake detection, cloud security, identity management, application security, data protection, risk management, iot security, security automation, devsecops, threat detection, supply chain security, startup incubation, cyber resilience, workload protection, zero trust, security posture management, malicious content detection, real-time protection, continuous monitoring, security governance, incident response, data privacy, open-source security, machine learning security, ransomware defense, cross-cloud security, security orchestration, cybersecurity startup support, ai development lifecycle, malicious ai content, security integration, cyber threat intelligence, saas security, app security solutions, security visibility, compliance management, cybersecurity leadership, network security, cloud-native security, security frameworks, security engineering, entrepreneurship in cybersecurity, cyber risk assessment, endpoint security, computer security, security best practices, privacy, information technology & services"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Jake Seid",
+          "title": "Co-founder And General Partner",
+          "email": "js822s@ballisticvc.com",
+          "linkedin": "https://www.linkedin.com/in/jake1"
+        },
+        "matchRationale": "Although focused on cybersecurity, Ballistic Ventures supports SaaS models, offering possible synergies for Standen Capital. Jake Seid's experience with security infrastructure aligns with the founder's focus on operational discipline and execution.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 74,
+        "firm": {
+          "name": "Mountain State Capital",
+          "website": "https://www.mountainstatecapital.com",
+          "linkedin": "https://www.linkedin.com/company/mountain-state-capital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, investment, venture capital, early-stage funding, portfolio management, technology investment, life sciences funding, software investment, hardware investment, seed round investments, disruptive innovations, market validation, product-market fit, financial advisory, strategic partnerships, regulatory pathway, development costs, investor relations, capital reserves, ai technology, machine learning solutions, 3d printing, bioprinting, functional organs, data aggregation, mobility insights, ride-sharing analytics, sales process understanding, market trends, early adopters, investment strategy, regional investment, acquisition strategy, founders fund, investment rounds, follow-on funding, performance metrics, comprehensive analysis, financial executives, community investment, leading technology, investment opportunities, capital allocation, patented technology, innovation funding, business development, growth strategy, fund management, expert advisory, team leadership, financial consulting, financial services, consulting, management consulting, b2b"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sam Harrold",
+          "title": "Owner/partner",
+          "email": "sam@mountainstatelaw.com",
+          "linkedin": "https://www.linkedin.com/in/sam-harrold-b6476595"
+        },
+        "matchRationale": "Mountain State Capital's investment in disruptive solutions aligns with Standen Capital's conservative yet innovative approach. Sam Harrold's strategic partnership focus may provide valuable opportunities through capital and industry connections.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 73,
+        "firm": {
+          "name": "3cc | Third Culture Capital",
+          "website": "https://www.thirdculturecapital.com",
+          "linkedin": "https://www.linkedin.com/company/thirdculturecapital",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "healthcare, biotech, digital health, health it, medical devices, healthcare services, platform technologies, materials science, venture capital & private equity principals, healthcare investment, early-stage startups, third culture entrepreneurship, diverse leadership, global healthcare solutions, patient outcomes, digital health technology, innovative business models, biotech investments, healthcare equity, cross-cultural innovation, predictive analytics, care delivery optimization, healthcare disruption, agile business practices, risk mitigation, financial strategies, human capital, operational expertise, investor syndicate building, startup mentorship, culture-driven investment, healthcare payment processing, virtual care solutions, biomanufacturing, microbiome platforms, healthcare ai, cross-disciplinary approaches, healthtech ecosystem, clinical expertise, scaling startups, healthcare innovation, alternative care models, multilingual leadership, transformative solutions, medical technology, community-focused healthcare, behavior change in healthcare, maternal health initiatives, third culture kids, speech recognition technology, patient care services, gut-immune axis mapping, global talent acquisition, founder-led investment, third culture philosophy, cultural agility in business, experience-driven investment, innovative market entry strategies, neuro-cognitive science research, health care, health, wellness & fitness, hospital & health care, information technology & services, enterprise software, enterprises, computer software, b2b"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Julien Pham",
+          "title": "Founder & Managing Partner",
+          "email": "j@3cc.io",
+          "linkedin": "https://www.linkedin.com/in/julienpham"
+        },
+        "matchRationale": "3cc's focus on innovative business models complements Standen Capital's acquisition strategy. Julien Pham's emphasis on risk mitigation aligns with the disciplined approach highlighted in the founder's deck, despite differences in primary industry focus.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      },
+      {
+        "fitScore": 71,
+        "firm": {
+          "name": "Primary Venture Partners",
+          "website": "https://www.primary.vc",
+          "linkedin": "https://www.linkedin.com/company/primary-venture-partners",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Investment Management",
+            "venture capital, startups, entrepreneurship, technology, early stage vc, operational support, founder support, portfolio companies, sales strategy, go-to-market, customer acquisition, team building, network access, fundraising success, market validation, financial modeling, pipeline management, sales coaching, hiring best practices, startup culture, capital investment, business strategy, mentorship, financial technology, healthcare innovation, ai integration, product development, mental health access, consumer finance, saas solutions, data analytics, logistics technology, e-commerce solutions, wellness technology, community building, vertical integration, remote workforce support, employee development, talent acquisition, software infrastructure, healthcare services, direct-to-consumer, financial operations, business growth, market trends, performance marketing, retail technology, operations management, business intelligence, employee engagement, millennial banking, workplace savings, identity verification, early-stage investments, seed funding, series a success, enterprise saas, smb saas, fintech, healthcare technology, consumer products, infrastructure, cybersecurity, frontier technology, startup incubation, go-to-market strategy, strategic partnerships, new york city startups, portfolio impact, founder-centric approach, low-volume high-conviction, technology operators network, growth support, market positioning, innovative solutions, data advantages, scaling businesses, startup ecosystem, mentoring, finance technology, information technology & services, financial services, consumer internet, consumers, internet, health care, health, wellness & fitness, hospital & health care, marketing & advertising, enterprise software, enterprises, computer software, b2b, analytics, consumer goods"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Brad Svrluga",
+          "title": "Co-founder & General Partner",
+          "email": "bradsvrluga@primary.vc",
+          "linkedin": "https://www.linkedin.com/in/bradsvrluga"
+        },
+        "matchRationale": "Primary Venture Partners' interest in SaaS and enterprise solutions connects with Standen Capital's model. Brad Svrluga's focus on operational strategies can enhance the founder's go-to-market and scaling plans, creating potential for shared insights.",
+        "recentLinkedInSignals": [],
+        "limitedData": false
+      }
+    ],
+    "rankedTop": [
+      {
+        "rank": 1,
+        "fitScore": 85,
+        "firm": {
+          "name": "Pretiosum Ventures",
+          "website": "https://www.pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/company/pretiosum-ventures",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "artificial intelligence, fintech, saas, passion economy, marketplaces, web3, b2b, early stage, preseed, seed, infrastructure, enterprise, venture capital & private equity principals, venture capital, investment thesis, seed-stage, enterprise saas, financial model, unit economics, fundraising strategies, investor relations, pitch development, market analysis, sales playbook, webinars, legal frameworks, safe agreements, convertible notes, equity compensation, startup ecosystem, financial planning, networking strategies, investor profiles, early-stage financing, strategic investors, pr strategies, web3 investment, fintech infrastructure, innovative startups, growth potential, data room preparation, due diligence, fractional recruitment, masterclass, funding playbook, web3 marketing, capital management, investor selection, economic insights, startup resources, community building, support for founders, investment reports, investor education, tech entrepreneurship, capital access, market research, risk management, startup strategies, entrepreneurship development, portfolio management, information technology & services, finance technology, financial services, computer software"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Yana Abramova",
+          "title": "Founder & Gp",
+          "email": "ayana@pretiosum.vc",
+          "linkedin": "https://www.linkedin.com/in/yana-abramova"
+        },
+        "matchRationale": "Standen Capital's focus on acquiring and operating SaaS products aligns with Pretiosum's interest in SaaS and early-stage investments. Yana Abramova's expertise in financial model development and due diligence complements the founder's disciplined acquisition model. Both are based in the UK, facilitating collaboration.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "Quick intro to Standen Capital",
+          "body": "Hi Yana, I noticed Pretiosum’s focus on early-stage SaaS investments, which aligns perfectly with what we’re doing at Standen Capital. We’re acquiring and operating small recurring-revenue SaaS products here in the UK. Our strategy emphasizes a disciplined execution model, but I know we need to tighten our deck on team backgrounds and competitive analysis. I’d love to share a quick overview and get your thoughts. Would you be open to a 15-minute chat?"
+        }
+      },
+      {
+        "rank": 2,
+        "fitScore": 82,
+        "firm": {
+          "name": "Creator Ventures",
+          "website": "https://www.creator.ventures",
+          "linkedin": "https://www.linkedin.com/company/creatorventuresofficial",
+          "type": "Venture Capital Investor",
+          "country": "United Kingdom",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, early-stage investment, technology investments, consumer internet, social media, startups, saas, creative tools, marketplaces, influencer marketing, talent management, private equity, innovation funding, digital marketing, app development, portfolio management, business accelerator, consumer applications, internet culture, financial services, equity funding, market analysis, investment strategy, founder support, growth capital, entrepreneurship, media ventures, startup ecosystem, business partnerships, digital growth, community engagement, content creation, investment insights, scalability, market trends, brand development, social engagement, technology trends, product development, b2b solutions, e-commerce, user experience design, data analytics, influencer partnerships, team building, capital raising, performance marketing, strategic investments, consumers, information technology & services, internet, computer software, marketing & advertising, apps, software development"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Sasha Kaletsky",
+          "title": "Co-founder And Managing Partner",
+          "email": "sasha@creator.ventures",
+          "linkedin": "https://www.linkedin.com/in/sasha-kaletsky-48a10378"
+        },
+        "matchRationale": "Creator Ventures' focus on early-stage SaaS investments is a fit for Standen Capital's acquisition model. Sasha Kaletsky's interest in technology and market analysis aligns with the founder's need to embed competitive landscape research. Both operate from the UK, enhancing communication and strategic alignment.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "SaaS Acquisition Model Discussion",
+          "body": "Hi Sasha, I saw that Creator Ventures is focused on early-stage SaaS investments. At Standen Capital, we’re building a strategy to acquire and operate small, recurring-revenue SaaS products in the UK. Our aim is to establish a disciplined acquisition and operating model, but I recognize the need to enhance our deck with team profiles and a competitive landscape analysis. I’d love to share our pitch deck and get your thoughts. Could we schedule a quick call for 15 minutes?"
+        }
+      },
+      {
+        "rank": 3,
+        "fitScore": 80,
+        "firm": {
+          "name": "Fjor",
+          "website": "https://www.fjor.co",
+          "linkedin": "https://www.linkedin.com/company/fjorco",
+          "type": "Venture Capital Investor",
+          "country": "United States",
+          "focusAreas": [
+            "Venture Capital & Private Equity",
+            "venture capital & private equity principals, venture capital, ai investment, enterprise software, fintech, startup acceleration, financial markets, institutional framework, digital banking, business analytics, project management software, procurement platform, dilution-free funding, customer loyalty programs, ai-driven solutions, cloud platform, marketplaces, data protection, e-commerce financing, payment management, expense management, b2b payments, digital twins, liquid staking protocol, autonomous technology, membership management, revenue growth, employee engagement, collaboration software, financial workflows, accounting solutions, capital platforms, turnkey solutions, risk mitigation, inventory management, customer experience, financial optimization, financial technology, startup launch platforms, embedded software, native digital solutions, software integration, business intelligence, workforce automation, payment processing, mobile networking, cloud-based applications, enterprises, computer software, information technology & services, b2b, finance technology, financial services, analytics"
+          ],
+          "investmentStages": [
+            "Seed",
+            "Series A"
+          ],
+          "recentInvestments": []
+        },
+        "partner": {
+          "name": "Tatijana Janko",
+          "title": "Founder And General Partner",
+          "email": "tatijana@fjor.co",
+          "linkedin": "https://www.linkedin.com/in/tatijana-janko-936ab213"
+        },
+        "matchRationale": "Fjor's expertise in fintech and SaaS investment connects with Standen Capital's business model. Tatijana Janko's background in project management software supports the founder's roadmap to operational readiness. Though based in the US, Fjor's global approach aligns with the founder's market aspirations.",
+        "recentLinkedInSignals": [],
+        "limitedData": false,
+        "outreach": {
+          "subject": "Inspired by your focus on SaaS and fintech",
+          "body": "Tatijana, I saw that Fjor emphasizes enterprise software and SaaS investments. At Standen Capital, we're working on acquiring and operating small, recurring-revenue SaaS products. We're currently seed-stage and looking to raise £500,000 to strengthen our team profiles and enhance our competitive analysis. I believe a quick chat could be valuable. Would you be open to a 15-minute call?"
+        }
+      }
+    ],
+    "timings": {
+      "pdf_extract": 97,
+      "deck_analysis": 17074,
+      "leads_finder": 61945,
+      "crunchbase": 9082,
+      "linkedin": 44342,
+      "ranking": 48327,
+      "outreach": 7494
+    }
+  }
+]

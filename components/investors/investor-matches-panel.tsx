@@ -15,13 +15,13 @@ export function InvestorMatchesPanel({
   if (!matches.length) return null
 
   return (
-    <Card className="min-h-0 flex-1 overflow-hidden">
-      <CardHeader>
+    <Card className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <CardHeader className="shrink-0">
         <CardTitle>{title}</CardTitle>
         {description ? <CardDescription>{description}</CardDescription> : null}
       </CardHeader>
-      <CardContent>
-        <InvestorTable jobId={jobId} matches={matches} />
+      <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden pb-6">
+        <InvestorTable jobId={jobId} matches={matches} scrollable />
       </CardContent>
     </Card>
   )

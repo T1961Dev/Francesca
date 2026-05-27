@@ -18,7 +18,9 @@ export const OPENAI_RATES: Record<string, { input: number; output: number }> = {
 export const APIFY_RATES: Record<string, number> = {
   "davidsharadbhatt/crunchbase-company-scraper---no-api-limits": 0.6,
   "code_crafter/leads-finder": 0.0015,
-  "harvestapi/linkedin-profile-posts": 0.4,
+  "harvestapi/linkedin-profile-posts": 0.002,
+  "harvestapi/linkedin-profile-scraper": 0.004,
+  "fatihtahta/email-verifier-validator-pro": 0.00089,
 }
 
 export async function logOpenAiCost({

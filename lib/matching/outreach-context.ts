@@ -130,8 +130,29 @@ export function buildOutreachPromptPayload({
   improvements?: string
   currentDraft?: { subject: string; body: string }
 }) {
+  const signals = profile.deckSignals
   return {
-    founder: profile,
+    founder: {
+      company: {
+        name: profile.company.name,
+        oneLiner: profile.company.oneLiner,
+        sector: profile.company.sectorRaw || profile.company.sector,
+        subSector: profile.company.subSector,
+        businessModel: profile.company.businessModelRaw,
+        stage: profile.company.stage,
+        geography: profile.company.geography,
+      },
+      traction: profile.traction,
+      raise: profile.raise,
+      team: profile.team,
+      deck: signals
+        ? {
+            summary: signals.summary,
+            topStrengths: signals.strengths.slice(0, 3),
+            keywords: signals.keywords,
+          }
+        : null,
+    },
     investor: {
       fitScore: match.fitScore,
       firm: match.firm,

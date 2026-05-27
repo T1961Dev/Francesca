@@ -1,5 +1,6 @@
 import "server-only"
 
+import { isInvestorPipelineV2 } from "@/lib/apify/actors"
 import {
   buildCrunchbaseFirmInput,
   fetchCrunchbaseResults,
@@ -19,11 +20,17 @@ import { generateOutreachEmail } from "@/lib/matching/outreach"
 import { buildOutreachApifyContext } from "@/lib/matching/outreach-context"
 import { prefilterFirms } from "@/lib/matching/prefilter"
 import { buildFounderProfile } from "@/lib/matching/profile"
+import { startInvestorMatchingJobV2 } from "@/lib/matching/pipeline-v2"
 import { rankInvestorsWithGPT } from "@/lib/matching/rank"
+import {
+  getInvestorMatchPipelineSizing,
+  hasInvestorMatching,
+} from "@/lib/stripe/plans"
 import { hashProfile } from "@/lib/utils/hash-profile"
 import { createAdminClient } from "@/lib/supabase/admin"
 import type { CrunchbaseCompany, JohnVCFirm, LeadsFinderContact, LinkedInPost } from "@/types/apify"
 import type { FounderProfile, InvestorMatch } from "@/types/profile"
+import type { Plan } from "@/types/app"
 
 type SupabaseAdmin = ReturnType<typeof createAdminClient>
 type SupabaseLike = {
@@ -32,8 +39,6 @@ type SupabaseLike = {
 
 const CRUNCHBASE_ACTOR = "davidsharadbhatt/crunchbase-company-scraper---no-api-limits"
 const LINKEDIN_ACTOR = "harvestapi/linkedin-profile-posts"
-const SHORTLIST_TARGET = 40
-const MIN_FIRMS_BEFORE_BROAD_PASS = 20
 
 export async function startInvestorMatchingJob({
   supabase,
@@ -49,6 +54,12 @@ export async function startInvestorMatchingJob({
   logJob(jobId, "Starting investor matching pipeline")
   const job = await loadJob(supabase, jobId)
   await ensureNotCancelled(supabase, jobId)
+
+  if (isInvestorPipelineV2()) {
+    logJob(jobId, "Routing to investor matching pipeline v2")
+    return startInvestorMatchingJobV2({ supabase, jobId, profile, deckAnalysis })
+  }
+
   const deckAnalysisId = String(job.deck_analysis_id ?? "")
   const context = await loadContext({
     supabase,
@@ -57,6 +68,29 @@ export async function startInvestorMatchingJob({
     deckAnalysis,
     deckAnalysisId,
   })
+
+  // Re-check the user's current plan at execution time. If they were
+  // downgraded between enqueue and worker start, abort the job rather than
+  // silently delivering Pro-tier results to a Free/Starter user.
+  if (!hasInvestorMatching(context.plan)) {
+    logJob(jobId, "Aborting: user no longer has investor-matching access", {
+      plan: context.plan,
+    })
+    await markJobFailed(
+      supabase,
+      jobId,
+      new Error("Plan no longer includes investor matching"),
+      "plan_downgraded"
+    )
+    return { jobId, cacheHit: false, aborted: true as const }
+  }
+
+  // Plan-aware pipeline sizing. Drives Apify fetch budget, shortlist depth,
+  // partners per firm, and the final ranker cap. We compute this once and
+  // pass it through so every stage stays consistent. Asserted non-null
+  // because `hasInvestorMatching` already passed.
+  const sizing = getInvestorMatchPipelineSizing(context.plan)!
+  logJob(jobId, "Pipeline sizing computed", { plan: context.plan, ...sizing })
   const profileHash = String(job.cache_key ?? hashProfile(context.profile))
   logJob(jobId, "Profile prepared", {
     company: context.profile.company.name,
@@ -94,41 +128,51 @@ export async function startInvestorMatchingJob({
       .eq("id", jobId)
       .throwOnError()
 
-    const leadsFinderInput = buildLeadsFinderInput(context.profile)
+    const leadsFinderInput = buildLeadsFinderInput(context.profile, {
+      fetchCount: sizing.leadsFinderFetchCount,
+    })
     logJob(jobId, "Starting Leads Finder actor", {
       actor: LEADS_FINDER_ACTOR_ID,
       input: leadsFinderInput,
     })
 
-    let rawLeads = await discoverVCPartners(context.profile)
+    let rawLeads = await discoverVCPartners(context.profile, {
+      fetchCount: sizing.leadsFinderFetchCount,
+    })
     await logApifyCost({
       userId: String(job.user_id),
       runId: jobId,
       runType: "investor_match",
       actorId: LEADS_FINDER_ACTOR_ID,
-      units: rawLeads.length || Number(process.env.LEADS_FINDER_FETCH_COUNT ?? 250),
+      units: rawLeads.length || sizing.leadsFinderFetchCount,
     })
     logJob(jobId, "Leads Finder actor completed", { itemCount: rawLeads.length })
     await ensureNotCancelled(supabase, jobId)
 
     let groupedFirms = groupLeadsIntoFirms(rawLeads, context.profile)
-    let shortlistedFirms = prefilterFirms(groupedFirms, context.profile, SHORTLIST_TARGET)
+    let shortlistedFirms = prefilterFirms(groupedFirms, context.profile, sizing.shortlistTarget)
 
-    if (shortlistedFirms.length < MIN_FIRMS_BEFORE_BROAD_PASS) {
+    // Only widen if we're materially under the target — a second Apify call
+    // is costly, so it must actually be needed to hit the plan cap.
+    if (shortlistedFirms.length < sizing.targetMatchCount) {
       logJob(jobId, "Broadening Leads Finder search (validated emails only)", {
         firmCount: shortlistedFirms.length,
+        targetMatchCount: sizing.targetMatchCount,
       })
-      const broadLeads = await discoverVCPartners(context.profile, { broad: true })
+      const broadLeads = await discoverVCPartners(context.profile, {
+        broad: true,
+        fetchCount: sizing.leadsFinderFetchCount,
+      })
       await logApifyCost({
         userId: String(job.user_id),
         runId: jobId,
         runType: "investor_match",
         actorId: LEADS_FINDER_ACTOR_ID,
-        units: broadLeads.length || Number(process.env.LEADS_FINDER_FETCH_COUNT ?? 250),
+        units: broadLeads.length || sizing.leadsFinderFetchCount,
       })
       rawLeads = dedupeLeads([...rawLeads, ...broadLeads])
       groupedFirms = groupLeadsIntoFirms(rawLeads, context.profile)
-      shortlistedFirms = prefilterFirms(groupedFirms, context.profile, SHORTLIST_TARGET)
+      shortlistedFirms = prefilterFirms(groupedFirms, context.profile, sizing.shortlistTarget)
     }
 
     await supabase
@@ -196,7 +240,7 @@ export async function startInvestorMatchingJob({
       .throwOnError()
 
     const partnerUrls = shortlist.flatMap((firm) =>
-      firm.Contacts.slice(0, 3)
+      firm.Contacts.slice(0, sizing.partnersPerFirm)
         .map((contact) => contact.LinkedIn)
         .filter((url): url is string => Boolean(url))
     )
@@ -253,6 +297,7 @@ export async function startInvestorMatchingJob({
       supabase,
       job: { ...job, cache_key: profileHash },
       profile: context.profile,
+      plan: context.plan,
       shortlist,
       rawLeads,
       groupedFirms,
@@ -352,8 +397,17 @@ export async function processCrunchbaseWebhook({
       .eq("id", jobId)
       .throwOnError()
 
+    // Webhook paths run with the user's CURRENT plan, which may have changed
+    // since enqueue. Default to the smallest cap if plan no longer qualifies.
+    const sizing = getInvestorMatchPipelineSizing(context.plan) ?? {
+      targetMatchCount: 0,
+      leadsFinderFetchCount: 0,
+      shortlistTarget: 0,
+      partnersPerFirm: 3,
+    }
+
     const partnerUrls = shortlist.flatMap((firm) =>
-      firm.Contacts.slice(0, 3)
+      firm.Contacts.slice(0, sizing.partnersPerFirm)
         .map((contact) => contact.LinkedIn)
         .filter((url): url is string => Boolean(url))
     )
@@ -365,6 +419,7 @@ export async function processCrunchbaseWebhook({
         supabase,
         job,
         profile: context.profile,
+        plan: context.plan,
         shortlist,
         rawLeads: [],
         groupedFirms,
@@ -443,6 +498,7 @@ export async function processLinkedInWebhook({
       supabase,
       job,
       profile: context.profile,
+      plan: context.plan,
       shortlist,
       crunchbaseResults,
       rawLeads: [],
@@ -463,6 +519,7 @@ async function completeInvestorMatching({
   supabase,
   job,
   profile,
+  plan,
   shortlist,
   rawLeads,
   groupedFirms,
@@ -474,6 +531,7 @@ async function completeInvestorMatching({
   supabase: SupabaseLike
   job: Record<string, unknown>
   profile: FounderProfile
+  plan: Plan
   shortlist: MergedFirm[]
   rawLeads: LeadsFinderContact[]
   groupedFirms: JohnVCFirm[]
@@ -486,8 +544,14 @@ async function completeInvestorMatching({
   await ensureNotCancelled(supabase, jobId)
   const deckAnalysisId = String(job.deck_analysis_id ?? "")
   const profileHash = String(job.cache_key ?? hashProfile(profile))
+  const sizing = getInvestorMatchPipelineSizing(plan) ?? {
+    targetMatchCount: 0,
+    leadsFinderFetchCount: 0,
+    shortlistTarget: 0,
+    partnersPerFirm: 3,
+  }
   const partnerUrls = shortlist.flatMap((firm) =>
-    firm.Contacts.slice(0, 3)
+    firm.Contacts.slice(0, sizing.partnersPerFirm)
       .map((contact) => contact.LinkedIn)
       .filter((url): url is string => Boolean(url))
   )
@@ -507,10 +571,33 @@ async function completeInvestorMatching({
     limitedData,
   })
 
-  const ranked = shortlist.length
-    ? await rankInvestorsWithGPT({ profile, firms: shortlist, partnerSignals: linkedinPosts, limitedData })
+  const targetMatchCount = sizing.targetMatchCount
+  const rankedFromGpt = shortlist.length && targetMatchCount > 0
+    ? await rankInvestorsWithGPT({
+        profile,
+        firms: shortlist,
+        partnerSignals: linkedinPosts,
+        limitedData,
+        targetMatchCount,
+      })
     : []
-  logJob(jobId, "OpenAI ranking completed", { rankedCount: ranked.length })
+  // Safety net: the plan promises N matches. If GPT was selective and
+  // returned fewer than N, top up from the shortlist remainder using a
+  // deterministic fallback so the user always sees their plan's cap.
+  const ranked = backfillFromShortlist({
+    ranked: rankedFromGpt,
+    shortlist,
+    linkedinPosts,
+    targetMatchCount,
+    limitedData,
+  })
+  logJob(jobId, "OpenAI ranking completed", {
+    rankedFromGpt: rankedFromGpt.length,
+    backfilled: ranked.length - rankedFromGpt.length,
+    finalCount: ranked.length,
+    plan,
+    targetMatchCount,
+  })
   await ensureNotCancelled(supabase, jobId)
 
   logJob(jobId, "Generating outreach emails", { rankedCount: ranked.length })
@@ -607,14 +694,21 @@ async function loadContext({
 
   if (deckError) throw deckError
 
+  const profileRecord = (storedProfile ?? {}) as Record<string, unknown>
+  // Read the plan from the profile row we already loaded (single source of
+  // truth). Defaults to "free" if missing so we never up-tier a misconfigured
+  // user accidentally.
+  const plan = (profileRecord.plan as Plan | undefined) ?? "free"
+
   return {
     profile: buildFounderProfile({
       userId: String(job.user_id),
       deckAnalysisId,
-      profile: (storedProfile ?? {}) as Record<string, unknown>,
+      profile: profileRecord,
       deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
     }),
     deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
+    plan,
   }
 }
 
@@ -792,4 +886,108 @@ function dedupeLeads(leads: LeadsFinderContact[]) {
     seen.add(key)
     return true
   })
+}
+
+type RankedMatch = Omit<InvestorMatch, "rank" | "outreachEmail">
+
+/**
+ * Safety net for the funnel: GPT's ranker can be too selective (we have
+ * seen it return 5 matches when asked for 35). The user's plan promises
+ * `targetMatchCount` matches per run, so we always top up the GPT output
+ * with deterministic firm-data fallbacks until we hit the cap or run out
+ * of partners.
+ *
+ * Filler matches:
+ * - Pull from shortlist firms NOT already in the GPT output
+ * - Use the firm's first contact with a valid name as the partner
+ * - Score 35-50 (clearly weaker than GPT picks; sorted to the end)
+ * - Rationale is built from firm focus + stage + geography (no GPT call)
+ * - Marked `limitedData: true` so the UI can render them differently
+ */
+function backfillFromShortlist({
+  ranked,
+  shortlist,
+  linkedinPosts,
+  targetMatchCount,
+  limitedData,
+}: {
+  ranked: RankedMatch[]
+  shortlist: MergedFirm[]
+  linkedinPosts: LinkedInPost[]
+  targetMatchCount: number
+  limitedData: boolean
+}): RankedMatch[] {
+  if (ranked.length >= targetMatchCount) return ranked
+
+  const usedPartnerLinkedIns = new Set(
+    ranked.map((match) => match.partner.linkedin.trim().toLowerCase())
+  )
+  const usedFirmNames = new Set(
+    ranked.map((match) => match.firm.name.trim().toLowerCase())
+  )
+
+  const fillers: RankedMatch[] = []
+
+  for (const firm of shortlist) {
+    if (ranked.length + fillers.length >= targetMatchCount) break
+
+    const firmKey = firm.Firm_Name.trim().toLowerCase()
+    if (usedFirmNames.has(firmKey)) continue
+
+    const contact = firm.Contacts.find(
+      (c) => c.Name && c.Email && !usedPartnerLinkedIns.has((c.LinkedIn ?? "").trim().toLowerCase())
+    )
+    if (!contact) continue
+
+    const partnerLinkedIn = contact.LinkedIn ?? ""
+    const signals = linkedinPosts
+      .filter((post) => post.profileUrl === partnerLinkedIn)
+      .slice(0, 2)
+      .map((post) => ({
+        postText: post.postText,
+        postedAt: post.postedAt,
+        relevance: "low" as const,
+      }))
+
+    const focus = firm.Focus_Areas.slice(0, 2).join(" / ") || "general venture"
+    const stage = firm.Investment_Stages[0] ?? "early-stage"
+    const country = firm.Country || "Unknown geography"
+
+    fillers.push({
+      fitScore: Math.max(35, 50 - fillers.length), // 50, 49, 48, ...
+      firm: {
+        name: firm.Firm_Name,
+        website: firm.Website,
+        linkedin: firm.LinkedIn,
+        type: firm.Firm_Type || "Venture Capital",
+        country,
+        focusAreas: firm.Focus_Areas,
+        investmentStages: firm.Investment_Stages,
+        recentInvestments: (firm.recentDealCompanies ?? []).slice(0, 3).map((deal) => ({
+          company: deal.name,
+          stage: deal.stage ?? "Unknown",
+          announcedDate: deal.date ?? "",
+        })),
+      },
+      partner: {
+        name: contact.Name,
+        title: contact.Title ?? "Partner",
+        email: contact.Email ?? undefined,
+        linkedin: partnerLinkedIn,
+      },
+      matchRationale: `Worth a look: ${firm.Firm_Name} invests in ${focus} at ${stage} stage out of ${country}. Sector and stage overlap is plausible based on the founder's profile, but this candidate was outside the AI ranker's top picks — review the firm's portfolio before reaching out.`,
+      recentLinkedInSignals: signals,
+      limitedData: true,
+    })
+
+    usedFirmNames.add(firmKey)
+    usedPartnerLinkedIns.add(partnerLinkedIn.trim().toLowerCase())
+  }
+
+  if (fillers.length === 0) return ranked
+
+  // Suppress the "void" reference to limitedData; it informs future telemetry.
+  void limitedData
+
+  return [...ranked, ...fillers]
 }

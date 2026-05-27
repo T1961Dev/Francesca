@@ -4,10 +4,12 @@ import { zodTextFormat } from "openai/helpers/zod"
 import { z } from "zod"
 
 import { logOpenAiCost } from "@/lib/costs/track"
+import { loadPrompt } from "@/lib/matching/loadPrompt"
 import {
   buildOutreachPromptPayload,
   type OutreachApifyContext,
 } from "@/lib/matching/outreach-context"
+import { OPENAI_MODELS } from "@/lib/openai/client"
 import { getOpenAIClient } from "@/lib/openai/client"
 import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
@@ -57,14 +59,18 @@ export async function generateOutreachEmail({
   userId?: string | null
   runId?: string | null
 }) {
-  const model = process.env.OPENAI_INVESTOR_OUTREACH_MODEL?.trim() || "gpt-4o-mini"
+  const model =
+    process.env.OPENAI_INVESTOR_OUTREACH_MODEL?.trim() || OPENAI_MODELS.standard
+  const systemPrompt = await loadPrompt("writeOutreachEmail.md").catch(
+    () => OUTREACH_SYSTEM_PROMPT
+  )
   const openai = getOpenAIClient()
   const response = await openai.responses.parse({
     model,
     input: [
       {
         role: "system",
-        content: OUTREACH_SYSTEM_PROMPT,
+        content: systemPrompt,
       },
       {
         role: "user",

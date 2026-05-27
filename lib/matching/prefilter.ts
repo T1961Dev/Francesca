@@ -6,7 +6,7 @@ type PrefilterFirm = JohnVCFirm & {
   recentDealCompanies?: Array<{ name: string; stage?: string; date?: string }>
 }
 
-export function prefilterFirms(firms: PrefilterFirm[], profile: FounderProfile, limit = 40) {
+export function prefilterFirms(firms: PrefilterFirm[], profile: FounderProfile, limit = 80) {
   return firms
     .filter((firm) => firm.Firm_Name && firm.Firm_Name !== "Unknown firm")
     .map((firm) => ({ firm, score: scoreFirm(firm, profile) }))

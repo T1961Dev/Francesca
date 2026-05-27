@@ -31,6 +31,7 @@ export const plans: StripePlan[] = [
       deckUploadsPerMonth: 10,
       financialModelRunsPerMonth: 10,
       investorMatchRunsPerMonth: 0,
+      investorMatchesPerRun: 0,
     },
   },
   {
@@ -47,7 +48,7 @@ export const plans: StripePlan[] = [
     },
     features: [
       "Everything in Starter",
-      "25 ranked investors per run",
+      "Up to 35 ranked investors per run",
       "Personalised outreach emails",
       "CSV and PDF export of matches",
     ],
@@ -55,6 +56,7 @@ export const plans: StripePlan[] = [
       deckUploadsPerMonth: 25,
       financialModelRunsPerMonth: 25,
       investorMatchRunsPerMonth: 10,
+      investorMatchesPerRun: 35,
     },
   },
   {
@@ -71,6 +73,7 @@ export const plans: StripePlan[] = [
     },
     features: [
       "Everything in Pro",
+      "Up to 50 ranked investors per run",
       "Pay once, no subscription",
       "Hard-capped at 50 founders globally",
       "Priority support",
@@ -79,6 +82,7 @@ export const plans: StripePlan[] = [
       deckUploadsPerMonth: 5,
       financialModelRunsPerMonth: 5,
       investorMatchRunsPerMonth: 10,
+      investorMatchesPerRun: 50,
     },
   },
 ]
@@ -141,4 +145,49 @@ export function hasFullDeckAnalysis(planId: string): boolean {
 
 export function hasFinancialModel(planId: string): boolean {
   return isPaidPlan(planId)
+}
+
+/**
+ * How many ranked investors should the matching pipeline aim to return for
+ * this plan? Used to size the GPT ranker schema cap and prompt target.
+ * Free / Starter return 0 — they don't get investor matching at all.
+ */
+export function getInvestorMatchesPerRun(planId: string): number {
+  const plan = getPlan(planId)
+  return plan?.limits.investorMatchesPerRun ?? 0
+}
+
+/**
+ * Per-run pipeline sizing for the investor matching funnel. We tune the
+ * Apify fetch + shortlist budget around the plan's match cap so we don't
+ * over-scrape (expensive) or under-scrape (can't hit the cap). All values
+ * include a healthy buffer for dedup, filter, and ranker losses.
+ *
+ * Returns null for plans without investor matching.
+ */
+export function getInvestorMatchPipelineSizing(planId: string): {
+  targetMatchCount: number
+  leadsFinderFetchCount: number
+  shortlistTarget: number
+  partnersPerFirm: number
+} | null {
+  const target = getInvestorMatchesPerRun(planId)
+  if (target <= 0) return null
+
+  // ~3x fetch buffer covers: (a) leads without validated emails, (b) leads
+  // that dedup into the same firm, (c) firms that fail Crunchbase/LinkedIn
+  // enrichment, (d) firms the ranker rates as misfits.
+  const leadsFinderFetchCount = Math.max(80, target * 3)
+
+  // We enrich ~1.5x the target so the ranker has runway to pick the best.
+  // 3 partners per firm gives ~targetMatchCount * 4.5 candidates entering
+  // the ranker — plenty without blowing up LinkedIn cost.
+  const shortlistTarget = Math.max(50, Math.ceil(target * 1.5))
+
+  return {
+    targetMatchCount: target,
+    leadsFinderFetchCount,
+    shortlistTarget,
+    partnersPerFirm: 3,
+  }
 }

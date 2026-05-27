@@ -13,9 +13,12 @@ type Match = Record<string, unknown>
 export function InvestorTable({
   matches,
   jobId,
+  scrollable = false,
 }: {
   matches: Match[]
   jobId?: string | null
+  /** Constrain height and scroll rows (saved matches lists). */
+  scrollable?: boolean
 }) {
   const [selected, setSelected] = useState<Match | null>(null)
   const [rows, setRows] = useState<Match[]>(matches)
@@ -40,9 +43,8 @@ export function InvestorTable({
     setSelected((m) => (m && Number(m.rank) === rank ? { ...m, ...patch } : m))
   }
 
-  return (
-    <>
-      <Table className="table-fixed w-full">
+  const table = (
+    <Table className="table-fixed w-full">
         <colgroup>
           <col className="w-[19%]" />
           <col className="w-[14%]" />
@@ -53,7 +55,11 @@ export function InvestorTable({
           <col className="w-[7%]" />
           <col className="w-[6%]" />
         </colgroup>
-        <TableHeader>
+        <TableHeader
+          className={cn(
+            scrollable && "sticky top-0 z-10 bg-card [&_tr]:border-b [&_th]:bg-card"
+          )}
+        >
           <TableRow>
             <TableHead>Investor</TableHead>
             <TableHead>Role</TableHead>
@@ -126,6 +132,22 @@ export function InvestorTable({
           })}
         </TableBody>
       </Table>
+  )
+
+  return (
+    <>
+      {scrollable ? (
+        <div
+          className={cn(
+            "min-h-0 flex-1 overflow-auto overscroll-contain rounded-lg border border-border/60",
+            "max-h-[min(36rem,calc(100dvh-13rem))]"
+          )}
+        >
+          {table}
+        </div>
+      ) : (
+        table
+      )}
       <InvestorProfileDialog
         jobId={jobId ?? null}
         match={selected}

@@ -21,5 +21,7 @@ export type StripePlan = {
     deckUploadsPerMonth: number
     financialModelRunsPerMonth: number
     investorMatchRunsPerMonth: number
+    /** Max ranked investors returned per matching run (0 = feature disabled). */
+    investorMatchesPerRun: number
   }
 }

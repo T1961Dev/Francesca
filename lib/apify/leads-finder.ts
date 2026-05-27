@@ -1,25 +1,17 @@
 import "server-only"
 
 import { apify } from "@/lib/apify/client"
+import { buildDeckDiscoveryConfig } from "@/lib/matching/deck-discovery"
 import type { LeadsFinderContact } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
 
 export const LEADS_FINDER_ACTOR_ID =
   process.env.APIFY_LEADS_FINDER_ACTOR?.trim() || "code_crafter/leads-finder"
 
-const DEFAULT_FETCH_COUNT = Number(process.env.LEADS_FINDER_FETCH_COUNT ?? 250)
-
-const VC_JOB_TITLES = [
-  "General Partner",
-  "Managing Partner",
-  "Partner",
-  "Principal",
-  "Investment Partner",
-  "Venture Partner",
-  "Investment Director",
-]
-
-const EXCLUDED_JOB_TITLES = ["Limited Partner", "Analyst", "Associate"]
+// Conservative default for callers that don't pass a fetch budget. The
+// pipeline overrides this with a plan-aware sizing (Pro ~110, Lifetime
+// ~160) so this only kicks in for ad-hoc dev calls.
+const DEFAULT_FETCH_COUNT = Number(process.env.LEADS_FINDER_FETCH_COUNT ?? 120)
 
 export type LeadsFinderInputOptions = {
   fetchCount?: number
@@ -33,28 +25,19 @@ export function buildLeadsFinderInput(
 ) {
   const fetchCount = options.fetchCount ?? DEFAULT_FETCH_COUNT
   const locations = buildContactLocations(profile.company.geography)
+  const discovery = buildDeckDiscoveryConfig(profile)
 
   const input: Record<string, unknown> = {
     fetch_count: fetchCount,
     email_status: ["validated"],
-    contact_job_title: VC_JOB_TITLES,
-    contact_not_job_title: EXCLUDED_JOB_TITLES,
-    company_industry: ["venture capital & private equity"],
+    contact_job_title: discovery.contactJobTitles,
+    contact_not_job_title: discovery.contactNotJobTitles,
+    company_industry: discovery.companyIndustries,
     contact_location: locations,
   }
 
-  if (!options.broad) {
-    const keywords = [
-      profile.company.subSector,
-      profile.company.sector,
-      profile.company.name,
-    ]
-      .map((value) => value?.trim())
-      .filter((value): value is string => Boolean(value && value.length > 1))
-
-    if (keywords.length) {
-      input.company_keywords = [...new Set(keywords)]
-    }
+  if (!options.broad && discovery.thesisKeywords.length) {
+    input.company_keywords = discovery.thesisKeywords
   }
 
   return input
