@@ -63,8 +63,8 @@ export function DangerZone() {
           <DialogHeader>
             <DialogTitle>Delete your account?</DialogTitle>
             <DialogDescription>
-              This will permanently delete your account and all your data after 30 days.
-              Any active subscription will be cancelled. This cannot be undone.
+              This will permanently delete your account and all your data immediately.
+              Any active subscription is cancelled first. This cannot be undone.
             </DialogDescription>
           </DialogHeader>
           {error ? <p className="text-sm text-destructive">{error}</p> : null}

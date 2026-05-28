@@ -1,7 +1,5 @@
 import "server-only"
 
-import { createAdminClient } from "@/lib/supabase/admin"
-
 export type RateLimitResult = {
   allowed: boolean
   remaining: number
@@ -28,6 +26,7 @@ export async function bumpRateLimit({
   const now = Date.now()
   const windowStart = new Date(Math.floor(now / windowMs) * windowMs)
 
+  const { createAdminClient } = await import("@/lib/supabase/admin")
   const supabase = createAdminClient()
   const { data, error } = await supabase.rpc("bump_rate_limit_bucket", {
     p_bucket_key: key,

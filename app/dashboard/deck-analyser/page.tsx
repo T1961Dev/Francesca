@@ -18,10 +18,12 @@ import { fetchUsageState } from "@/lib/usage/track"
 
 export default async function DeckAnalyserPage() {
   const user = await requireAuth()
-  const plan = await getUserPlan()
-  const usage = await fetchUsageState(user.id)
-  const currency = await detectCurrencyFromRequest()
-  const analyses = await listDeckAnalyses(8)
+  const [plan, usage, currency, analyses] = await Promise.all([
+    getUserPlan(),
+    fetchUsageState(user.id),
+    detectCurrencyFromRequest(),
+    listDeckAnalyses(8),
+  ])
   const showFullPreviews = canViewFullDeckAnalysis(plan)
 
   return (

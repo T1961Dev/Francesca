@@ -26,11 +26,13 @@ export default async function BillingPage({
   searchParams: Promise<{ checkout?: string }>
 }) {
   const params = await searchParams
-  const profile = await getProfile()
+  const [profile, currency, lifetime] = await Promise.all([
+    getProfile(),
+    detectCurrencyFromRequest(),
+    fetchLifetimeInventory(),
+  ])
   const plan = (profile?.plan as Plan | undefined) ?? "free"
   const planMeta = getPlan(plan)
-  const currency = await detectCurrencyFromRequest()
-  const lifetime = await fetchLifetimeInventory()
   const checkoutState = params.checkout
 
   const upgradeOptions = plans.filter((option) => {

@@ -3,8 +3,12 @@ import {
   FeatureEm,
   FeaturePhotoCard,
 } from "@/components/feature-photo-card"
+import { getProfile } from "@/lib/auth"
+import { buildFinancialModelPrefill } from "@/lib/profile/prefill"
 
-export default function FinancialModelPage() {
+export default async function FinancialModelPage() {
+  const profile = await getProfile()
+  const initialValues = buildFinancialModelPrefill(profile)
   return (
     <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
       <div>
@@ -24,7 +28,7 @@ export default function FinancialModelPage() {
         }
         description="Capture revenue, burn, runway, hiring, and customer assumptions in one clean model investors can actually follow."
       />
-      <FinancialModelForm />
+      <FinancialModelForm initialValues={initialValues} />
     </main>
   )
 }

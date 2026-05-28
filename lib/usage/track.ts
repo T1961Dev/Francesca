@@ -1,7 +1,6 @@
 import "server-only"
 
 import { nextMonthlyResetAt, resolveUsageLimit, type UsageAction } from "@/lib/usage/limits"
-import { createAdminClient } from "@/lib/supabase/admin"
 import type { Plan } from "@/types/app"
 
 export type LimitReachedReason = {
@@ -41,6 +40,7 @@ export async function attemptUsageIncrement({
   plan: Plan
   action: UsageAction
 }): Promise<{ ok: true } | { ok: false; reason: LimitReachedReason }> {
+  const { createAdminClient } = await import("@/lib/supabase/admin")
   const supabase = createAdminClient()
 
   const { data: usage } = await supabase
@@ -117,6 +117,7 @@ export async function rollbackUsageIncrement({
   userId: string
   action: UsageAction
 }) {
+  const { createAdminClient } = await import("@/lib/supabase/admin")
   const supabase = createAdminClient()
   try {
     await supabase.rpc("decrement_usage", {
@@ -133,6 +134,7 @@ export async function rollbackUsageIncrement({
 }
 
 export async function fetchUsageState(userId: string): Promise<UsageState | null> {
+  const { createAdminClient } = await import("@/lib/supabase/admin")
   const supabase = createAdminClient()
   const { data } = await supabase
     .from("user_usage")
@@ -155,6 +157,7 @@ export async function fetchUsageState(userId: string): Promise<UsageState | null
 }
 
 export async function markWhatsappBonusUsed(userId: string) {
+  const { createAdminClient } = await import("@/lib/supabase/admin")
   const supabase = createAdminClient()
   await supabase
     .from("user_usage")

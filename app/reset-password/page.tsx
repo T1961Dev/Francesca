@@ -1,5 +1,4 @@
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +8,8 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { updatePasswordAction } from "@/lib/auth/actions"
+import { SubmitButton } from "@/components/ui/submit-button"
+import { updatePasswordAction } from "@/lib/auth/update-password-action"
 
 export default async function ResetPasswordPage({
   searchParams,
@@ -47,9 +47,11 @@ export default async function ResetPasswordPage({
                 minLength={8}
               />
             </div>
-            <Button className="w-full" type="submit">
-              Update password
-            </Button>
+            <SubmitButton
+              className="w-full"
+              idleText="Update password"
+              pendingText="Updating..."
+            />
             <p className="text-center text-sm text-muted-foreground">
               <a
                 href="/login"

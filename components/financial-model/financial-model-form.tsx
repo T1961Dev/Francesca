@@ -65,12 +65,17 @@ const steps = [
 
 type FieldName = (typeof steps)[number]["fields"][number][0] | "notes"
 
-export function FinancialModelForm() {
+export function FinancialModelForm({
+  initialValues = {},
+}: {
+  /** Prefilled from onboarding / settings profile; user can edit. */
+  initialValues?: Record<string, string>
+}) {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [stepIndex, setStepIndex] = useState(0)
-  const [values, setValues] = useState<Record<string, string>>({})
+  const [values, setValues] = useState<Record<string, string>>(() => initialValues)
 
   const step = steps[stepIndex]
   const isFirst = stepIndex === 0

@@ -5,7 +5,7 @@ import {
   FeatureEm,
   FeaturePhotoCard,
 } from "@/components/feature-photo-card"
-import { ensureProfile, getProfile } from "@/lib/auth"
+import { getProfile } from "@/lib/auth"
 import type { Plan } from "@/types/app"
 
 function queryParam(
@@ -30,14 +30,13 @@ export default async function SettingsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const params = await searchParams
-  await ensureProfile()
   const profile = await getProfile()
 
   const savedRaw = queryParam(params.saved)
   const errorRaw = queryParam(params.error)
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-5 md:p-6">
       <div>
         <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
           Settings
@@ -55,20 +54,22 @@ export default async function SettingsPage({
         }
         description="Your saved profile powers deck analysis, models, and investor matching context across the app."
       />
-      <ProfileForm
-        profile={profile}
-        saved={savedRaw === "1"}
-        errorMessage={
-          errorRaw ? safeDecodeURIComponent(errorRaw) : undefined
-        }
-      />
-      <BillingSummary
-        plan={(profile?.plan as Plan | undefined) ?? "free"}
-        hasCustomer={Boolean(profile?.stripe_customer_id)}
-        subscriptionStatus={profile?.subscription_status ?? null}
-        cancelsAt={profile?.plan_cancels_at ?? null}
-      />
-      <DangerZone />
+      <div className="space-y-4 pb-6">
+        <ProfileForm
+          profile={profile}
+          saved={savedRaw === "1"}
+          errorMessage={
+            errorRaw ? safeDecodeURIComponent(errorRaw) : undefined
+          }
+        />
+        <BillingSummary
+          plan={(profile?.plan as Plan | undefined) ?? "free"}
+          hasCustomer={Boolean(profile?.stripe_customer_id)}
+          subscriptionStatus={profile?.subscription_status ?? null}
+          cancelsAt={profile?.plan_cancels_at ?? null}
+        />
+        <DangerZone />
+      </div>
     </main>
   )
 }

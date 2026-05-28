@@ -63,7 +63,6 @@ export function InvestorMatchLauncher({
 
       setMessage("Investor matching started. Track progress below.")
       router.push(`/dashboard/investor-matching/${json.data.jobId}`)
-      router.refresh()
     } catch {
       setError("Could not start investor matching")
     } finally {

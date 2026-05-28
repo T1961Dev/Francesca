@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 import { requireAuth } from "@/lib/auth"
+import { mirrorProfileFields } from "@/lib/profile/prefill"
 import { createClient } from "@/lib/supabase/server"
 
 function parseOptionalNumber(value: FormDataEntryValue | null): number | null {
@@ -22,18 +23,20 @@ export async function updateProfileAction(formData: FormData) {
   const user = await requireAuth()
   const supabase = await createClient()
 
-  const payload = {
+  const payload = mirrorProfileFields({
     full_name: str(formData, "full_name"),
     company_name: str(formData, "company_name"),
     website: str(formData, "website"),
     role: str(formData, "role"),
     industry: str(formData, "industry"),
+    sector: str(formData, "industry"),
     stage: str(formData, "stage"),
     location: str(formData, "location"),
+    geography: str(formData, "location"),
     funding_stage: str(formData, "funding_stage"),
     target_raise: parseOptionalNumber(formData.get("target_raise")),
     description: str(formData, "description"),
-  }
+  })
 
   const { data: updated, error: updateError } = await supabase
     .from("profiles")

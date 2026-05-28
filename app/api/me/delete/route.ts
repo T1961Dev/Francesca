@@ -2,22 +2,39 @@ import { NextResponse } from "next/server"
 
 import { requireAuth } from "@/lib/auth"
 import { captureError } from "@/lib/sentry/capture"
+import { getStripe } from "@/lib/stripe/client"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClient } from "@/lib/supabase/server"
 
 /**
- * Soft-delete the calling user. Sets profiles.deleted_at and signs them out.
- * A daily cron hard-deletes anyone past 30 days.
+ * Permanently delete the calling user and all dependent app rows.
+ * Uses Supabase Auth Admin `deleteUser` (hard delete) so FK cascades
+ * remove related public rows (`profiles`, decks, models, matches, etc.).
  */
 export async function POST() {
   try {
     const user = await requireAuth()
     const admin = createAdminClient()
 
-    await admin
+    const { data: profile } = await admin
       .from("profiles")
-      .update({ deleted_at: new Date().toISOString() })
+      .select("stripe_subscription_id")
       .eq("id", user.id)
+      .maybeSingle()
+
+    const subscriptionId = profile?.stripe_subscription_id
+      ? String(profile.stripe_subscription_id)
+      : null
+
+    if (subscriptionId) {
+      try {
+        await getStripe().subscriptions.cancel(subscriptionId)
+      } catch (error) {
+        captureError(error, { route: "me-delete-cancel-sub", userId: user.id })
+      }
+    }
+
+    await admin.auth.admin.deleteUser(user.id)
 
     const supabase = await createClient()
     await supabase.auth.signOut()

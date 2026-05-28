@@ -1,15 +1,23 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { LockIcon } from "lucide-react"
 
 import { DeckLockedSection } from "@/components/deck/deck-locked-section"
-import { PaywallModal } from "@/components/billing/paywall-modal"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FREE_DECK_PREVIEW_TAGLINE } from "@/lib/deck/preview"
 import type { Currency, StripePlan } from "@/types/billing"
+
+const PaywallModal = dynamic(
+  () =>
+    import("@/components/billing/paywall-modal").then(
+      (mod) => mod.PaywallModal
+    ),
+  { loading: () => null }
+)
 
 type LockedView = {
   analysisId: string
@@ -113,14 +121,16 @@ export function DeckLockedView({
         </Button>
       </div>
 
-      <PaywallModal
-        open={paywallOpen}
-        onOpenChange={setPaywallOpen}
-        plans={plans}
-        currency={currency}
-        returnPath={`/dashboard/deck-analyser/${analysisId}`}
-        onDismiss={onDismiss}
-      />
+      {paywallOpen ? (
+        <PaywallModal
+          open={paywallOpen}
+          onOpenChange={setPaywallOpen}
+          plans={plans}
+          currency={currency}
+          returnPath={`/dashboard/deck-analyser/${analysisId}`}
+          onDismiss={onDismiss}
+        />
+      ) : null}
     </main>
   )
 }

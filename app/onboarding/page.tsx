@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
+import { SubmitButton } from "@/components/ui/submit-button"
 import {
   Select,
   SelectContent,
@@ -202,9 +203,10 @@ export default async function OnboardingPage({
               ) : (
                 <span />
               )}
-              <Button type="submit">
-                {step === TOTAL_STEPS ? "Finish" : "Next"}
-              </Button>
+              <SubmitButton
+                idleText={step === TOTAL_STEPS ? "Finish" : "Next"}
+                pendingText="Saving..."
+              />
             </div>
           </form>
         </CardContent>

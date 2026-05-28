@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation"
+import type { User } from "@supabase/supabase-js"
+import { cache } from "react"
 
 import { createClient } from "@/lib/supabase/server"
 
-export async function getCurrentUser() {
+const getCurrentUserCached = cache(async () => {
   const supabase = await createClient()
   const {
     data: { user },
@@ -14,6 +16,10 @@ export async function getCurrentUser() {
   }
 
   return user
+})
+
+export async function getCurrentUser() {
+  return getCurrentUserCached()
 }
 
 export async function requireAuth() {
@@ -26,7 +32,7 @@ export async function requireAuth() {
   return user
 }
 
-export async function getProfile() {
+const getProfileCached = cache(async () => {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -41,13 +47,19 @@ export async function getProfile() {
     .maybeSingle()
 
   return data
+})
+
+export async function getProfile() {
+  return getProfileCached()
 }
 
 export async function ensureProfile(input?: {
   fullName?: string
   companyName?: string
+}, opts?: {
+  user?: User
 }) {
-  const user = await requireAuth()
+  const user = opts?.user ?? await requireAuth()
   const supabase = await createClient()
 
   const { data: existing } = await supabase

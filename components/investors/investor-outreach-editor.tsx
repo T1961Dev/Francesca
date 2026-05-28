@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { Toaster } from "@/components/ui/sonner"
 import { Textarea } from "@/components/ui/textarea"
 
 type Match = Record<string, unknown>
@@ -133,7 +134,9 @@ export function InvestorOutreachEditor({
   }, [match.outreachGeneratedAt, match.outreachUpdatedAt])
 
   return (
-    <section className="space-y-4 rounded-xl border border-border/60 bg-muted/15 p-4">
+    <>
+      <Toaster />
+      <section className="space-y-4 rounded-xl border border-border/60 bg-muted/15 p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
@@ -209,8 +212,9 @@ export function InvestorOutreachEditor({
         </Button>
       </div>
 
-      {error ? <p className="text-xs text-destructive">{error}</p> : null}
-    </section>
+        {error ? <p className="text-xs text-destructive">{error}</p> : null}
+      </section>
+    </>
   )
 }
 

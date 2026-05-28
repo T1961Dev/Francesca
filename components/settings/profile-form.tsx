@@ -1,6 +1,6 @@
 import { updateProfileAction } from "@/app/dashboard/settings/actions"
+import { getProfileFieldValue } from "@/lib/profile/prefill"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { SubmitButton } from "@/components/ui/submit-button"
 import { Textarea } from "@/components/ui/textarea"
 
 const groups = [
@@ -43,7 +44,7 @@ const groups = [
 ] as const
 
 function fieldValue(profile: Record<string, unknown> | null, field: string) {
-  return String(profile?.[field] ?? "")
+  return getProfileFieldValue(profile, field)
 }
 
 export function ProfileForm({
@@ -56,7 +57,7 @@ export function ProfileForm({
   errorMessage?: string
 }) {
   return (
-    <form action={updateProfileAction} className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.82fr_1.18fr]">
+    <form action={updateProfileAction} className="grid gap-3 lg:grid-cols-[0.82fr_1.18fr]">
       {saved ? (
         <Alert className="lg:col-span-2">
           <AlertTitle>Saved</AlertTitle>
@@ -95,9 +96,11 @@ export function ProfileForm({
               These details power deck reports, models, and investor matching.
             </p>
           </div>
-          <Button className="w-full" type="submit">
-            Save settings
-          </Button>
+          <SubmitButton
+            className="w-full"
+            idleText="Save settings"
+            pendingText="Saving..."
+          />
         </CardContent>
       </Card>
 

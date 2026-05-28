@@ -2,11 +2,10 @@
 
 import { useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import dynamic from "next/dynamic"
 import { FileTextIcon, LoaderCircleIcon, UploadCloudIcon } from "lucide-react"
 
-import { LimitReachedModal, type LimitReachedPayload } from "@/components/billing/limit-reached-modal"
-import { PaywallModal } from "@/components/billing/paywall-modal"
-import { WhatsAppCaptureModal } from "@/components/deck/whatsapp-capture-modal"
+import type { LimitReachedPayload } from "@/components/billing/limit-reached-modal"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,6 +14,30 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import type { Plan } from "@/types/app"
 import type { Currency, StripePlan } from "@/types/billing"
+
+const LimitReachedModal = dynamic(
+  () =>
+    import("@/components/billing/limit-reached-modal").then(
+      (mod) => mod.LimitReachedModal
+    ),
+  { loading: () => null }
+)
+
+const PaywallModal = dynamic(
+  () =>
+    import("@/components/billing/paywall-modal").then(
+      (mod) => mod.PaywallModal
+    ),
+  { loading: () => null }
+)
+
+const WhatsAppCaptureModal = dynamic(
+  () =>
+    import("@/components/deck/whatsapp-capture-modal").then(
+      (mod) => mod.WhatsAppCaptureModal
+    ),
+  { loading: () => null }
+)
 
 type DeckUploadCardProps = {
   plan: Plan
@@ -186,35 +209,41 @@ export function DeckUploadCard({
         </CardContent>
       </Card>
 
-      <WhatsAppCaptureModal
-        open={whatsappOpen}
-        onOpenChange={setWhatsappOpen}
-        onContinue={continueAfterWhatsapp}
-        onUpgradeInstead={openPaywallInstead}
-      />
+      {whatsappOpen ? (
+        <WhatsAppCaptureModal
+          open={whatsappOpen}
+          onOpenChange={setWhatsappOpen}
+          onContinue={continueAfterWhatsapp}
+          onUpgradeInstead={openPaywallInstead}
+        />
+      ) : null}
 
-      <PaywallModal
-        open={paywallOpen}
-        onOpenChange={(open) => {
-          setPaywallOpen(open)
-          if (!open) setPendingFormData(null)
-        }}
-        plans={plans}
-        currency={currency}
-        returnPath="/dashboard/deck-analyser"
-      />
+      {paywallOpen ? (
+        <PaywallModal
+          open={paywallOpen}
+          onOpenChange={(open) => {
+            setPaywallOpen(open)
+            if (!open) setPendingFormData(null)
+          }}
+          plans={plans}
+          currency={currency}
+          returnPath="/dashboard/deck-analyser"
+        />
+      ) : null}
 
-      <LimitReachedModal
-        open={Boolean(limit)}
-        onOpenChange={(open) => {
-          if (!open) setLimit(null)
-        }}
-        payload={limit}
-        onUpgradeClick={() => {
-          setLimit(null)
-          setPaywallOpen(true)
-        }}
-      />
+      {limit ? (
+        <LimitReachedModal
+          open={Boolean(limit)}
+          onOpenChange={(open) => {
+            if (!open) setLimit(null)
+          }}
+          payload={limit}
+          onUpgradeClick={() => {
+            setLimit(null)
+            setPaywallOpen(true)
+          }}
+        />
+      ) : null}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import {
   Card,
   CardContent,
@@ -14,7 +14,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { signupAction } from "@/lib/auth/actions"
+import { SubmitButton } from "@/components/ui/submit-button"
+import { signupAction } from "@/lib/auth/signup-action"
 
 type SignupFormProps = React.ComponentProps<typeof Card> & {
   error?: string | null
@@ -68,9 +69,12 @@ export function SignupForm({ error, ...props }: SignupFormProps) {
             </Field>
             <FieldGroup>
               <Field>
-                <Button type="submit">Create Account</Button>
+                <SubmitButton
+                  idleText="Create Account"
+                  pendingText="Creating account..."
+                />
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <a href="/login">Sign in</a>
+                  Already have an account? <Link href="/login">Sign in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

@@ -1,5 +1,4 @@
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,7 +8,8 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { resetPasswordAction } from "@/lib/auth/actions"
+import { SubmitButton } from "@/components/ui/submit-button"
+import { resetPasswordAction } from "@/lib/auth/reset-password-action"
 
 export default async function ForgotPasswordPage({
   searchParams,
@@ -61,9 +61,11 @@ export default async function ForgotPasswordPage({
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" name="email" type="email" required />
               </div>
-              <Button className="w-full" type="submit">
-                Send reset link
-              </Button>
+              <SubmitButton
+                className="w-full"
+                idleText="Send reset link"
+                pendingText="Sending..."
+              />
               <p className="text-center text-sm text-muted-foreground">
                 <a
                   href="/login"

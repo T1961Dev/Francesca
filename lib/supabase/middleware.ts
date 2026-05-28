@@ -79,9 +79,11 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(dashboardUrl)
   }
 
-  // Force onboarding on first dashboard visit (or any protected page) until
-  // the founder profile is populated.
-  if (user && isProtected && !isExemptFromOnboarding(pathname)) {
+  const isAppPage = pathname.startsWith("/dashboard") || pathname.startsWith("/admin")
+
+  // Force onboarding only on app pages. Skipping this DB check for API calls
+  // keeps button clicks and background requests fast.
+  if (user && isAppPage && !isExemptFromOnboarding(pathname)) {
     const { data: profile } = await supabase
       .from("profiles")
       .select(

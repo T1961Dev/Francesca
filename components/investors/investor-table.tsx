@@ -1,14 +1,22 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
 
-import { InvestorProfileDialog } from "@/components/investors/investor-profile-dialog"
 import { InvestorIdentityCell } from "@/components/investors/investor-identity-cell"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 
 type Match = Record<string, unknown>
+
+const InvestorProfileDialog = dynamic(
+  () =>
+    import("@/components/investors/investor-profile-dialog").then(
+      (mod) => mod.InvestorProfileDialog
+    ),
+  { loading: () => null }
+)
 
 export function InvestorTable({
   matches,
@@ -148,15 +156,17 @@ export function InvestorTable({
       ) : (
         table
       )}
-      <InvestorProfileDialog
-        jobId={jobId ?? null}
-        match={selected}
-        open={Boolean(selected)}
-        onOpenChange={(open) => {
-          if (!open) setSelected(null)
-        }}
-        onMatchUpdated={applyUpdate}
-      />
+      {selected ? (
+        <InvestorProfileDialog
+          jobId={jobId ?? null}
+          match={selected}
+          open
+          onOpenChange={(open) => {
+            if (!open) setSelected(null)
+          }}
+          onMatchUpdated={applyUpdate}
+        />
+      ) : null}
     </>
   )
 }

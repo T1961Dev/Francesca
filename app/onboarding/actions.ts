@@ -5,6 +5,7 @@ import { z } from "zod"
 
 import { requireAuth } from "@/lib/auth"
 import { CURRENCIES, SECTORS, STAGES } from "@/lib/onboarding"
+import { mirrorProfileFields } from "@/lib/profile/prefill"
 import { createClient } from "@/lib/supabase/server"
 import type { Database } from "@/types/database"
 
@@ -40,7 +41,7 @@ export async function saveOnboardingStep(formData: FormData) {
   const supabase = await createClient()
   const { error } = await supabase
     .from("profiles")
-    .update(parsed)
+    .update(mirrorProfileFields(parsed))
     .eq("id", user.id)
 
   if (error) {
