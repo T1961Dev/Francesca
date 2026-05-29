@@ -10,9 +10,11 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -66,8 +68,10 @@ const steps = [
 type FieldName = (typeof steps)[number]["fields"][number][0] | "notes"
 
 export function FinancialModelForm({
+  className,
   initialValues = {},
 }: {
+  className?: string
   /** Prefilled from onboarding / settings profile; user can edit. */
   initialValues?: Record<string, string>
 }) {
@@ -112,8 +116,8 @@ export function FinancialModelForm({
   }
 
   return (
-    <Card className="bg-muted/20">
-      <CardHeader>
+    <Card className={cn("flex h-full min-h-0 flex-col bg-muted/20", className)}>
+      <CardHeader className="shrink-0">
         <div className="flex items-start justify-between gap-4">
           <div>
             <CardTitle>Financial model inputs</CardTitle>
@@ -132,110 +136,111 @@ export function FinancialModelForm({
           />
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {error ? (
-          <Alert variant="destructive">
-            <AlertTitle>Could not generate model</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        ) : null}
+      <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
+        <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
+          {error ? (
+            <Alert variant="destructive">
+              <AlertTitle>Could not generate model</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : null}
 
-        <div className="grid gap-3 md:grid-cols-[0.58fr_1.42fr]">
-          <aside className="space-y-2">
-            {steps.map((item, index) => (
-              <button
-                key={item.title}
-                type="button"
-                disabled={loading}
-                onClick={() => setStepIndex(index)}
-                className="flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-sidebar-accent disabled:cursor-not-allowed disabled:opacity-50 data-[active=true]:bg-sidebar-accent"
-                data-active={index === stepIndex}
-              >
-                <span>{item.title}</span>
-                <span className="text-xs text-muted-foreground">
-                  {index + 1}
-                </span>
-              </button>
-            ))}
-          </aside>
-
-          <section className="rounded-xl bg-card p-3.5 ring-1 ring-border/55">
-            <div className="mb-3">
-              <h3 className="font-heading text-2xl leading-none">
-                {step.title}
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {step.description}
-              </p>
-            </div>
-            <div className="grid gap-3 md:grid-cols-2">
-              {step.fields.map(([name, label, type]) => (
-                <div key={name} className="space-y-2">
-                  <Label htmlFor={name}>{label}</Label>
-                  <Input
-                    id={name}
-                    name={name}
-                    type={type}
-                    value={values[name] ?? ""}
-                    onChange={(event) => updateField(name, event.target.value)}
-                    required
-                  />
-                </div>
+          <div className="grid gap-3 md:grid-cols-[0.58fr_1.42fr]">
+            <aside className="space-y-2">
+              {steps.map((item, index) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  disabled={loading}
+                  onClick={() => setStepIndex(index)}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-sidebar-accent disabled:cursor-not-allowed disabled:opacity-50 data-[active=true]:bg-sidebar-accent"
+                  data-active={index === stepIndex}
+                >
+                  <span>{item.title}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {index + 1}
+                  </span>
+                </button>
               ))}
-              {isLast ? (
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="notes">Notes</Label>
-                  <Textarea
-                    id="notes"
-                    name="notes"
-                    value={values.notes ?? ""}
-                    onChange={(event) =>
-                      updateField("notes", event.target.value)
-                    }
-                    className="min-h-10 resize-none py-1.5"
-                    placeholder="Add anything investors should know about your model."
-                  />
-                </div>
-              ) : null}
-            </div>
-          </section>
-        </div>
+            </aside>
 
-        <div className="flex items-center justify-between gap-3 border-t border-border/60 pt-3">
-          <Button
-            type="button"
-            variant="outline"
-            disabled={isFirst || loading}
-            onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
-          >
-            Back
-          </Button>
-          {isLast ? (
-            <Button
-              type="button"
-              disabled={loading}
-              onClick={submit}
-              aria-label={loading ? "Generating model" : undefined}
-            >
-              {loading ? (
-                <LoaderCircleIcon className="size-4 animate-spin" />
-              ) : (
-                "Generate model"
-              )}
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              disabled={loading}
-              onClick={() =>
-                setStepIndex((index) => Math.min(steps.length - 1, index + 1))
-              }
-            >
-              Continue
-            </Button>
-          )}
+            <section className="rounded-xl bg-card p-3.5 ring-1 ring-border/55">
+              <div className="mb-3">
+                <h3 className="font-heading text-2xl leading-none">
+                  {step.title}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {step.description}
+                </p>
+              </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                {step.fields.map(([name, label, type]) => (
+                  <div key={name} className="space-y-2">
+                    <Label htmlFor={name}>{label}</Label>
+                    <Input
+                      id={name}
+                      name={name}
+                      type={type}
+                      value={values[name] ?? ""}
+                      onChange={(event) => updateField(name, event.target.value)}
+                      required
+                    />
+                  </div>
+                ))}
+                {isLast ? (
+                  <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="notes">Notes</Label>
+                    <Textarea
+                      id="notes"
+                      name="notes"
+                      value={values.notes ?? ""}
+                      onChange={(event) =>
+                        updateField("notes", event.target.value)
+                      }
+                      className="min-h-10 resize-none py-1.5"
+                      placeholder="Add anything investors should know about your model."
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </section>
+          </div>
         </div>
       </CardContent>
+      <CardFooter className="shrink-0 justify-between gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          disabled={isFirst || loading}
+          onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
+        >
+          Back
+        </Button>
+        {isLast ? (
+          <Button
+            type="button"
+            disabled={loading}
+            onClick={submit}
+            aria-label={loading ? "Generating model" : undefined}
+          >
+            {loading ? (
+              <LoaderCircleIcon className="size-4 animate-spin" />
+            ) : (
+              "Generate model"
+            )}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            disabled={loading}
+            onClick={() =>
+              setStepIndex((index) => Math.min(steps.length - 1, index + 1))
+            }
+          >
+            Continue
+          </Button>
+        )}
+      </CardFooter>
     </Card>
   )
 }
