@@ -1,6 +1,7 @@
 import "server-only"
 
 import { apify } from "@/lib/apify/client"
+import { buildLeadsFinderContactLocations } from "@/lib/apify/leads-finder-locations"
 import { buildDeckDiscoveryConfig } from "@/lib/matching/deck-discovery"
 import type { LeadsFinderContact } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
@@ -24,7 +25,7 @@ export function buildLeadsFinderInput(
   options: LeadsFinderInputOptions = {}
 ) {
   const fetchCount = options.fetchCount ?? DEFAULT_FETCH_COUNT
-  const locations = buildContactLocations(profile.company.geography)
+  const locations = buildLeadsFinderContactLocations(profile.company.geography)
   const discovery = buildDeckDiscoveryConfig(profile)
 
   const input: Record<string, unknown> = {
@@ -49,7 +50,15 @@ export async function discoverVCPartners(
 ): Promise<LeadsFinderContact[]> {
   const input = buildLeadsFinderInput(profile, options)
   console.log("[apify:leads-finder] Starting actor", { actorId: LEADS_FINDER_ACTOR_ID, input })
-  const run = await apify.actor(LEADS_FINDER_ACTOR_ID).call(input)
+
+  let run
+  try {
+    run = await apify.actor(LEADS_FINDER_ACTOR_ID).call(input)
+  } catch (error) {
+    console.error("[apify:leads-finder] Actor call failed", error)
+    throw error
+  }
+
   console.log("[apify:leads-finder] Actor finished", {
     actorId: LEADS_FINDER_ACTOR_ID,
     runId: run.id,
@@ -69,19 +78,4 @@ export async function discoverVCPartners(
   })
 
   return validated
-}
-
-function buildContactLocations(geography: string) {
-  const normalised = geography.trim().toLowerCase()
-  const locations = new Set<string>()
-
-  if (normalised) {
-    locations.add(normalised)
-  }
-
-  if (!normalised.includes("united states") && normalised !== "us" && normalised !== "usa") {
-    locations.add("united states")
-  }
-
-  return [...locations]
 }

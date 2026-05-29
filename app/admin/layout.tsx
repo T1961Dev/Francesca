@@ -15,8 +15,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   await requireAdmin()
 
   return (
-    <div className="grid min-h-svh grid-cols-[220px_1fr]">
-      <aside className="border-r border-border/55 bg-muted/30 p-4">
+    <div className="grid h-svh min-h-0 grid-cols-[220px_1fr] overflow-hidden">
+      <aside className="overflow-y-auto border-r border-border/55 bg-muted/30 p-4">
         <p className="mb-4 font-heading text-sm font-medium tracking-tight">Admin</p>
         <nav className="grid gap-1 text-sm">
           {NAV.map((item) => (
@@ -30,7 +30,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           ))}
         </nav>
       </aside>
-      <main className="overflow-y-auto p-6">{children}</main>
+      <main className="min-h-0 overflow-y-auto p-6">{children}</main>
     </div>
   )
 }

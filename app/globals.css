@@ -168,16 +168,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    height: 100%;
+    overflow: hidden;
+  }
   body {
     @apply bg-background text-foreground;
     background-image:
       radial-gradient(34rem 24rem at 4% 100%, rgb(201 168 76 / 0.16), transparent 60%),
       radial-gradient(42rem 30rem at 94% 0%, rgb(26 60 42 / 0.08), transparent 58%),
       linear-gradient(180deg, #eef5f1 0%, #e8f0eb 100%);
-    overflow: hidden;
-  }
-  html {
-    @apply font-sans;
     height: 100%;
     overflow: hidden;
   }

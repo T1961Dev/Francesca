@@ -2,6 +2,7 @@ import {
   buildDeckAwareSectorTerms,
   inferInvestorAudience,
 } from "@/lib/matching/deck-discovery"
+import { normaliseFounderGeographyForRanking } from "@/lib/apify/leads-finder-locations"
 import type { LeadsFinderContact } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
 
@@ -26,7 +27,7 @@ export function preFilterPeople(
   profile: FounderProfile,
   limit: number
 ): LeadsFinderContact[] {
-  const geo = profile.company.geography.trim().toLowerCase()
+  const geo = normaliseFounderGeographyForRanking(profile.company.geography)
   const audience = inferInvestorAudience(profile)
   const sectorKeywords = buildDeckAwareSectorTerms(profile)
 
@@ -59,7 +60,7 @@ export function preFilterPeople(
 function scoreLead(
   lead: LeadsFinderContact,
   profile: FounderProfile,
-  geo: string,
+  geo: string | null,
   sectorKeywords: string[]
 ) {
   let score = 0
@@ -72,9 +73,10 @@ function scoreLead(
   }
 
   const leadGeo = `${lead.country ?? ""} ${lead.company_country ?? ""}`.toLowerCase()
-  if (geo && leadGeo.includes(geo)) score += 25
-  else if (leadGeo.includes("united kingdom") && geo.includes("uk")) score += 20
-  else if (leadGeo.includes("united states")) score += 8
+  if (geo) {
+    if (leadGeo.includes(geo)) score += 25
+    else if (leadGeo.includes("united kingdom") && geo.includes("united kingdom")) score += 20
+  }
 
   const focusText = [
     lead.industry,

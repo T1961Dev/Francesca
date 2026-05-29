@@ -26,6 +26,7 @@ import { preFilterPeople } from "@/lib/matching/preFilterPeople"
 import { rankInvestorsWithGPT } from "@/lib/matching/rank"
 import { getInvestorPipelineV2Sizing } from "@/lib/matching/v2-sizing"
 import { toStoredMatch } from "@/lib/investors/persist-matches"
+import { markInvestorJobFailed } from "@/lib/investors/job-errors"
 import { buildFounderProfile } from "@/lib/matching/profile"
 import { hasInvestorMatching } from "@/lib/stripe/plans"
 import { hashProfile } from "@/lib/utils/hash-profile"
@@ -65,7 +66,7 @@ export async function startInvestorMatchingJobV2({
   const context = await loadContext({ supabase, job, profile, deckAnalysis, deckAnalysisId })
 
   if (!hasInvestorMatching(context.plan)) {
-    await markJobFailed(supabase, jobId, new Error("Plan no longer includes investor matching"), "plan_downgraded")
+    await markInvestorJobFailed(supabase, jobId, new Error("Plan no longer includes investor matching"), "plan_downgraded")
     return { jobId, cacheHit: false, aborted: true as const }
   }
 
@@ -361,8 +362,8 @@ export async function startInvestorMatchingJobV2({
     return { jobId, cacheHit: false }
   } catch (error) {
     logJob(jobId, "Pipeline v2 failed", error)
-    await markJobFailed(supabase, jobId, error, "v2_pipeline_failed")
-    throw error
+    await markInvestorJobFailed(supabase, jobId, error, "v2_pipeline_failed")
+    return { jobId, cacheHit: false, failed: true as const }
   }
 }
 
@@ -476,23 +477,4 @@ async function copyCachedUserMatch({
     })
     .eq("id", jobId)
     .throwOnError()
-}
-
-async function markJobFailed(
-  supabase: SupabaseLike,
-  jobId: string,
-  error: unknown,
-  pipelineStage: string
-) {
-  const job = await loadJob(supabase, jobId).catch(() => null)
-  if (String(job?.status) === "cancelled") return
-
-  await supabase
-    .from("investor_matching_jobs")
-    .update({
-      status: "failed",
-      pipeline_stage: pipelineStage,
-      error: error instanceof Error ? error.message : "Investor matching failed",
-    })
-    .eq("id", jobId)
 }

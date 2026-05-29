@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { CancelInvestorJobButton } from "@/components/investors/cancel-investor-job-button"
+import { RetryInvestorJobButton } from "@/components/investors/retry-investor-job-button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
@@ -28,6 +30,7 @@ export function MatchProgress({
 }) {
   const router = useRouter()
   const [status, setStatus] = useState(initialStatus)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const current = statusCopy[status] ?? { label: `Investor matching status: ${status}`, progress: 15 }
 
   useEffect(() => {
@@ -36,8 +39,13 @@ export function MatchProgress({
     const interval = window.setInterval(async () => {
       const response = await fetch(`/api/investors/status/${runId}`, { cache: "no-store" })
       const json = await response.json().catch(() => null)
-      const nextStatus = String(json?.data?.job?.status ?? status)
+      const job = json?.data?.job as { status?: string; error?: string | null } | undefined
+      const nextStatus = String(job?.status ?? status)
       setStatus(nextStatus)
+
+      if (nextStatus === "failed" && job?.error) {
+        setErrorMessage(String(job.error))
+      }
 
       if (nextStatus === "completed" || nextStatus === "failed" || nextStatus === "cancelled") {
         router.refresh()
@@ -46,6 +54,30 @@ export function MatchProgress({
 
     return () => window.clearInterval(interval)
   }, [router, runId, status])
+
+  if (status === "failed") {
+    return (
+      <Alert variant="destructive">
+        <AlertTitle>Investor matching failed</AlertTitle>
+        <AlertDescription className="space-y-3">
+          <p>{errorMessage ?? "Something went wrong while finding investors."}</p>
+          <RetryInvestorJobButton jobId={runId} variant="default" label="Try again" />
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
+  if (status === "cancelled") {
+    return (
+      <Alert>
+        <AlertTitle>Investor matching cancelled</AlertTitle>
+        <AlertDescription className="space-y-3">
+          <p>This run was cancelled. You can start a new matching run when ready.</p>
+          <RetryInvestorJobButton jobId={runId} variant="outline" label="Retry" />
+        </AlertDescription>
+      </Alert>
+    )
+  }
 
   return (
     <Card>

@@ -12,7 +12,7 @@ import {
 import { MatchProgress } from "@/components/investors/match-progress"
 import { RetryInvestorJobButton } from "@/components/investors/retry-investor-job-button"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollableListCard } from "@/components/ui/scrollable-list-card"
 import { getUserPlan } from "@/lib/access"
 import { requireAuth } from "@/lib/auth"
 import { listDeckAnalyses } from "@/lib/deck/queries.server"
@@ -82,44 +82,41 @@ export default async function InvestorMatchingPage() {
 
   return (
     <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
-      <PageIntro />
+      <div className="shrink-0 space-y-4">
+        <PageIntro />
 
-      <InvestorMatchLauncher
-        plan={plan}
-        decks={deckOptions}
-        matchesUsed={usage?.investorMatchRunsThisMonth ?? 0}
-        matchesLimit={matchesLimit}
-      />
+        <InvestorMatchLauncher
+          plan={plan}
+          decks={deckOptions}
+          matchesUsed={usage?.investorMatchRunsThisMonth ?? 0}
+          matchesLimit={matchesLimit}
+        />
 
-      {activeJob ? (
-        <MatchProgress runId={String(activeJob.id)} initialStatus={String(activeJob.status)} />
-      ) : null}
+        {activeJob ? (
+          <MatchProgress runId={String(activeJob.id)} initialStatus={String(activeJob.status)} />
+        ) : null}
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent jobs</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {(jobs ?? []).map((job) => (
-            <div
-              key={String(job.id)}
-              className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/30 p-3"
-            >
-              <div>
-                <p className="text-sm font-medium">
-                  {deckLabelById.get(String(job.deck_analysis_id ?? "")) ?? "Pitch deck"}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {String(job.status)}
-                  {job.limited_data ? " · Limited data" : ""}
-                </p>
-              </div>
-              <JobActions job={job} terminalStatuses={terminalStatuses} />
+      <ScrollableListCard title="Recent jobs" contentClassName="space-y-3">
+        {(jobs ?? []).map((job) => (
+          <div
+            key={String(job.id)}
+            className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/30 p-3"
+          >
+            <div>
+              <p className="text-sm font-medium">
+                {deckLabelById.get(String(job.deck_analysis_id ?? "")) ?? "Pitch deck"}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {String(job.status)}
+                {job.limited_data ? " · Limited data" : ""}
+              </p>
             </div>
-          ))}
-          {!jobs?.length ? <p className="text-sm text-muted-foreground">No jobs yet.</p> : null}
-        </CardContent>
-      </Card>
+            <JobActions job={job} terminalStatuses={terminalStatuses} />
+          </div>
+        ))}
+        {!jobs?.length ? <p className="text-sm text-muted-foreground">No jobs yet.</p> : null}
+      </ScrollableListCard>
     </main>
   )
 }

@@ -36,39 +36,43 @@ export default async function SettingsPage({
   const errorRaw = queryParam(params.error)
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-5 md:p-6">
-      <div>
-        <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
-          Settings
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Update profile, company, and funding details.
-        </p>
-      </div>
-      <FeaturePhotoCard
-        eyebrow="Profile"
-        title={
-          <>
-            Keep the founder profile sounding like <FeatureEm>you.</FeatureEm>
-          </>
-        }
-        description="Your saved profile powers deck analysis, models, and investor matching context across the app."
-      />
-      <div className="space-y-4 pb-6">
-        <ProfileForm
-          profile={profile}
-          saved={savedRaw === "1"}
-          errorMessage={
-            errorRaw ? safeDecodeURIComponent(errorRaw) : undefined
+    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+      <div className="shrink-0 space-y-4">
+        <div>
+          <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
+            Settings
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Update profile, company, and funding details.
+          </p>
+        </div>
+        <FeaturePhotoCard
+          eyebrow="Profile"
+          title={
+            <>
+              Keep the founder profile sounding like <FeatureEm>you.</FeatureEm>
+            </>
           }
+          description="Your saved profile powers deck analysis, models, and investor matching context across the app."
         />
-        <BillingSummary
-          plan={(profile?.plan as Plan | undefined) ?? "free"}
-          hasCustomer={Boolean(profile?.stripe_customer_id)}
-          subscriptionStatus={profile?.subscription_status ?? null}
-          cancelsAt={profile?.plan_cancels_at ?? null}
-        />
-        <DangerZone />
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto pb-6">
+        <div className="space-y-4">
+          <ProfileForm
+            profile={profile}
+            saved={savedRaw === "1"}
+            errorMessage={
+              errorRaw ? safeDecodeURIComponent(errorRaw) : undefined
+            }
+          />
+          <BillingSummary
+            plan={(profile?.plan as Plan | undefined) ?? "free"}
+            hasCustomer={Boolean(profile?.stripe_customer_id)}
+            subscriptionStatus={profile?.subscription_status ?? null}
+            cancelsAt={profile?.plan_cancels_at ?? null}
+          />
+          <DangerZone />
+        </div>
       </div>
     </main>
   )

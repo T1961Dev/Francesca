@@ -1,5 +1,6 @@
 import "server-only"
 
+import { markInvestorJobFailed } from "@/lib/investors/job-errors"
 import { captureError } from "@/lib/sentry/capture"
 
 /**
@@ -19,9 +20,23 @@ export function dispatchInvestorMatchingRun(jobId: string) {
       method: "POST",
       headers: { Authorization: `Bearer ${secret}` },
       cache: "no-store",
-    }).catch((error) => {
-      captureError(error, { route: "investors-dispatch", jobId })
     })
+      .then(async (response) => {
+        if (response.ok) return
+
+        const body = (await response.json().catch(() => null)) as {
+          error?: string
+        } | null
+        throw new Error(
+          body?.error ?? `Investor matching worker failed (${response.status})`
+        )
+      })
+      .catch(async (error) => {
+        captureError(error, { route: "investors-dispatch", jobId })
+        const { createAdminClient } = await import("@/lib/supabase/admin")
+        const admin = createAdminClient()
+        await markInvestorJobFailed(admin, jobId, error, "dispatch_failed")
+      })
     return
   }
 
@@ -31,13 +46,6 @@ export function dispatchInvestorMatchingRun(jobId: string) {
       captureError(error, { route: "investors-dispatch-inline", jobId })
       const { createAdminClient } = await import("@/lib/supabase/admin")
       const admin = createAdminClient()
-      await admin
-        .from("investor_matching_jobs")
-        .update({
-          status: "failed",
-          pipeline_stage: "dispatch_failed",
-          error: error instanceof Error ? error.message : "Could not start investor matching",
-        })
-        .eq("id", jobId)
+      await markInvestorJobFailed(admin, jobId, error, "dispatch_failed")
     })
 }

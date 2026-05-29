@@ -20,6 +20,7 @@ import { generateOutreachEmail } from "@/lib/matching/outreach"
 import { buildOutreachApifyContext } from "@/lib/matching/outreach-context"
 import { prefilterFirms } from "@/lib/matching/prefilter"
 import { buildFounderProfile } from "@/lib/matching/profile"
+import { markInvestorJobFailed } from "@/lib/investors/job-errors"
 import { startInvestorMatchingJobV2 } from "@/lib/matching/pipeline-v2"
 import { rankInvestorsWithGPT } from "@/lib/matching/rank"
 import {
@@ -76,7 +77,7 @@ export async function startInvestorMatchingJob({
     logJob(jobId, "Aborting: user no longer has investor-matching access", {
       plan: context.plan,
     })
-    await markJobFailed(
+    await markInvestorJobFailed(
       supabase,
       jobId,
       new Error("Plan no longer includes investor matching"),
@@ -310,7 +311,7 @@ export async function startInvestorMatchingJob({
     return { jobId, cacheHit: false }
   } catch (error) {
     logJob(jobId, "Pipeline failed", errorToLog(error))
-    await markJobFailed(supabase, jobId, error, "pipeline_failed")
+    await markInvestorJobFailed(supabase, jobId, error, "pipeline_failed")
     throw error
   }
 }
@@ -455,7 +456,7 @@ export async function processCrunchbaseWebhook({
 
     return { jobId, completed: false, limitedData: failed }
   } catch (stageError) {
-    await markJobFailed(supabase, jobId, stageError, "crunchbase_webhook_failed")
+    await markInvestorJobFailed(supabase, jobId, stageError, "crunchbase_webhook_failed")
     throw stageError
   }
 }
@@ -510,7 +511,7 @@ export async function processLinkedInWebhook({
 
     return { jobId, completed: true, limitedData: failed }
   } catch (stageError) {
-    await markJobFailed(supabase, jobId, stageError, "linkedin_webhook_failed")
+    await markInvestorJobFailed(supabase, jobId, stageError, "linkedin_webhook_failed")
     throw stageError
   }
 }
@@ -778,28 +779,6 @@ async function copyCachedMatch({
     })
     .eq("id", jobId)
     .throwOnError()
-}
-
-async function markJobFailed(
-  supabase: SupabaseLike,
-  jobId: string,
-  error: unknown,
-  pipelineStage: string
-) {
-  const job = await loadJob(supabase, jobId).catch(() => null)
-  if (String(job?.status) === "cancelled") {
-    logJob(jobId, "Skipping failed status update because job is cancelled")
-    return
-  }
-
-  await supabase
-    .from("investor_matching_jobs")
-    .update({
-      status: "failed",
-      pipeline_stage: pipelineStage,
-      error: error instanceof Error ? error.message : "Investor matching failed",
-    })
-    .eq("id", jobId)
 }
 
 async function ensureNotCancelled(supabase: SupabaseLike, jobId: string) {
