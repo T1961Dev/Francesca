@@ -16,10 +16,25 @@ Use your real staging/production URL in deployed environments.
 
 **Authentication → URL configuration**
 
-| Setting | Local dev | Production |
-|---------|-----------|------------|
-| **Site URL** | `http://localhost:3000` | `https://your-domain.com` |
+| Setting | Local dev | Production (Render) |
+|---------|-----------|---------------------|
+| **Site URL** | `http://localhost:3000` | `https://francesca-sy16.onrender.com` (your live host) |
 | **Redirect URLs** | Add each line below | Same with production host |
+
+**Critical:** If **Site URL** is still `https://localhost:10000` (or any localhost), confirmation links will open the wrong host even when Render env vars are correct. Update Site URL to match production.
+
+## Render environment variables
+
+Set on the Render service (not only locally):
+
+```env
+NEXT_PUBLIC_APP_URL=https://francesca-sy16.onrender.com
+APP_URL=https://francesca-sy16.onrender.com
+```
+
+Render also sets `RENDER_EXTERNAL_URL` automatically; the app uses it as a fallback in production if `NEXT_PUBLIC_APP_URL` still points at localhost.
+
+After changing env vars, **redeploy** and **sign up again** so the new confirmation email contains the correct `redirect_to` URL.
 
 Add these **Redirect URLs** (wildcards help for query strings):
 
@@ -27,9 +42,9 @@ Add these **Redirect URLs** (wildcards help for query strings):
 http://localhost:3000/auth/callback
 http://localhost:3000/auth/callback/**
 http://localhost:3000/reset-password
-https://your-domain.com/auth/callback
-https://your-domain.com/auth/callback/**
-https://your-domain.com/reset-password
+https://francesca-sy16.onrender.com/auth/callback
+https://francesca-sy16.onrender.com/auth/callback/**
+https://francesca-sy16.onrender.com/reset-password
 ```
 
 If redirect URLs are missing, Supabase falls back to **Site URL** (`/`), which is why reset links can land on the landing page.
@@ -40,6 +55,16 @@ If redirect URLs are missing, Supabase falls back to **Site URL** (`/`), which i
 2. Email link → Supabase verify → `http://localhost:3000/auth/callback?type=recovery&next=/reset-password&code=...`
 3. App exchanges `code` for a session and redirects to `/reset-password`
 4. User sets a new password → sign in at `/login`
+
+## Signup confirmation (`otp_expired`)
+
+If you see `error_code=otp_expired` or “Email link is invalid or has expired”:
+
+1. Fix **Site URL** and **Redirect URLs** above (must be your Render host, not localhost).
+2. Fix **Render** `NEXT_PUBLIC_APP_URL`, redeploy, and **create a new signup** (old emails still point at the old URL).
+3. Open the **latest** email link in a **private/incognito** window (Gmail/Outlook often prefetch links and burn one-time tokens).
+
+With confirm email enabled, the link should hit `/auth/callback?type=signup&code=...` then `/onboarding`.
 
 ## Email link preloading
 

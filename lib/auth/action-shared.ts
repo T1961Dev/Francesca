@@ -1,6 +1,7 @@
 import { headers } from "next/headers"
 import { z } from "zod"
 
+import { getPublicAppUrl } from "@/lib/app-url"
 import { bumpRateLimit } from "@/lib/security/rate-limit"
 
 export const emailPasswordSchema = z.object({
@@ -34,16 +35,7 @@ export async function rateLimit(scope: string, formEmail: FormDataEntryValue | n
 }
 
 export function getAppUrl() {
-  const url =
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    ""
-
-  if (!url) {
-    throw new Error("Missing NEXT_PUBLIC_APP_URL or APP_URL env var")
-  }
-
-  return url.replace(/\/$/, "")
+  return getPublicAppUrl()
 }
 
 export function safeRedirectPath(value: FormDataEntryValue | null) {

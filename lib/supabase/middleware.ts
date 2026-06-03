@@ -72,18 +72,43 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(legacyUrl)
   }
 
-  const authCode = request.nextUrl.searchParams.get("code")
-  if (authCode && !pathname.startsWith("/auth/callback")) {
+  if (!pathname.startsWith("/auth/callback")) {
     const callbackUrl = request.nextUrl.clone()
-    callbackUrl.pathname = "/auth/callback"
-    if (
-      !callbackUrl.searchParams.get("type") &&
-      !callbackUrl.searchParams.get("next")
-    ) {
-      callbackUrl.searchParams.set("type", "recovery")
-      callbackUrl.searchParams.set("next", "/reset-password")
+    let shouldRedirect = false
+
+    const authError =
+      request.nextUrl.searchParams.get("error_code") ??
+      request.nextUrl.searchParams.get("error")
+    if (authError) {
+      shouldRedirect = true
     }
-    return NextResponse.redirect(callbackUrl)
+
+    const authCode = request.nextUrl.searchParams.get("code")
+    if (authCode) {
+      shouldRedirect = true
+      if (
+        !callbackUrl.searchParams.get("type") &&
+        !callbackUrl.searchParams.get("next")
+      ) {
+        callbackUrl.searchParams.set("type", "signup")
+      }
+    }
+
+    const tokenHash = request.nextUrl.searchParams.get("token_hash")
+    if (tokenHash) {
+      shouldRedirect = true
+      if (!callbackUrl.searchParams.get("type")) {
+        callbackUrl.searchParams.set(
+          "type",
+          request.nextUrl.searchParams.get("type") ?? "email"
+        )
+      }
+    }
+
+    if (shouldRedirect) {
+      callbackUrl.pathname = "/auth/callback"
+      return NextResponse.redirect(callbackUrl)
+    }
   }
 
   rememberAuthReturnPage(request, response, pathname)

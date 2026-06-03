@@ -1,9 +1,7 @@
+import { getPublicAppUrl } from "@/lib/app-url"
+
 export function appUrl(path = "") {
-  const base = (
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    "https://raisewise.app"
-  ).replace(/\/$/, "")
+  const base = getPublicAppUrl()
   if (!path) return base
   return `${base}${path.startsWith("/") ? path : `/${path}`}`
 }

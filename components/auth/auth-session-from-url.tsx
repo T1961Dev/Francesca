@@ -2,13 +2,13 @@
 
 import { useEffect } from "react"
 
+import { formatSupabaseCallbackError } from "@/lib/auth/supabase-callback-errors"
 import { createClient } from "@/lib/supabase/client"
 import { PASSWORD_RESET_NEXT } from "@/lib/supabase/auth-callback"
 
 /**
- * Supabase sometimes redirects to the Site URL (/) with tokens in the hash or
- * ?code= in the query when the exact redirect URL is not allowlisted. This
- * completes the session client-side and sends the user to the right page.
+ * Completes Supabase auth when the email link lands on the wrong path (e.g. Site
+ * URL /login) with tokens or errors in the URL hash.
  */
 export function AuthSessionFromUrl() {
   useEffect(() => {
@@ -16,53 +16,68 @@ export function AuthSessionFromUrl() {
       const url = new URL(window.location.href)
       const supabase = createClient()
 
-      const code = url.searchParams.get("code")
-      if (code && !url.pathname.startsWith("/auth/callback")) {
-        const params = new URLSearchParams(url.searchParams)
-        if (!params.get("next") && !params.get("type")) {
-          params.set("next", PASSWORD_RESET_NEXT)
-          params.set("type", "recovery")
-        }
-        params.set("code", code)
-        window.location.replace(`/auth/callback?${params.toString()}`)
-        return
-      }
-
       const hash = url.hash.startsWith("#") ? url.hash.slice(1) : ""
-      if (!hash) return
+      if (hash) {
+        const hashParams = new URLSearchParams(hash)
 
-      const params = new URLSearchParams(hash)
-      const accessToken = params.get("access_token")
-      const refreshToken = params.get("refresh_token")
-      const type = params.get("type")
+        if (hashParams.get("error") || hashParams.get("error_code")) {
+          const message = formatSupabaseCallbackError(hashParams)
+          const target =
+            hashParams.get("error_code") === "otp_expired" ||
+            hashParams.get("type") === "signup"
+              ? "signup"
+              : "login"
+          window.history.replaceState(null, "", url.pathname + url.search)
+          window.location.replace(
+            `/${target}?error=${encodeURIComponent(message)}`
+          )
+          return
+        }
 
-      if (!accessToken || !refreshToken) return
+        const accessToken = hashParams.get("access_token")
+        const refreshToken = hashParams.get("refresh_token")
+        const type = hashParams.get("type")
 
-      const { error } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
-      })
+        if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
 
-      window.history.replaceState(null, "", url.pathname + url.search)
+          window.history.replaceState(null, "", url.pathname + url.search)
 
-      if (error) {
-        window.location.replace(
-          `/login?error=${encodeURIComponent(error.message)}`
-        )
-        return
+          if (error) {
+            window.location.replace(
+              `/signup?error=${encodeURIComponent(error.message)}`
+            )
+            return
+          }
+
+          if (type === "recovery") {
+            window.location.replace(PASSWORD_RESET_NEXT)
+            return
+          }
+
+          window.location.replace("/onboarding")
+          return
+        }
       }
 
-      if (type === "recovery") {
-        window.location.replace(PASSWORD_RESET_NEXT)
-        return
+      const code = url.searchParams.get("code")
+      const tokenHash = url.searchParams.get("token_hash")
+      if (
+        (code || tokenHash) &&
+        !url.pathname.startsWith("/auth/callback")
+      ) {
+        const params = new URLSearchParams(url.searchParams)
+        if (tokenHash && !params.get("type")) {
+          params.set("type", "email")
+        }
+        if (code && !params.get("type") && !params.get("next")) {
+          params.set("type", "signup")
+        }
+        window.location.replace(`/auth/callback?${params.toString()}`)
       }
-
-      if (type === "signup") {
-        window.location.replace("/onboarding")
-        return
-      }
-
-      window.location.replace("/dashboard")
     }
 
     void run()

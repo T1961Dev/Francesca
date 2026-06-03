@@ -1,6 +1,9 @@
 import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
+import { getPublicAppUrl } from "@/lib/app-url"
+import { formatSupabaseCallbackError } from "@/lib/auth/supabase-callback-errors"
+
 /** Where password-reset emails should land after the code exchange. */
 export const PASSWORD_RESET_NEXT = "/reset-password"
 
@@ -17,15 +20,6 @@ export function buildAuthCallbackUrl(type?: "recovery" | "signup") {
 
   const query = params.toString()
   return query ? `${base}?${query}` : base
-}
-
-export function getPublicAppUrl() {
-  const url =
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    "http://localhost:3000"
-
-  return url.replace(/\/$/, "")
 }
 
 /**
@@ -76,16 +70,28 @@ export async function exchangeAuthCallback(
     })
 
     if (error) {
-      return redirectWithError(origin, error.message)
+      return redirectWithError(
+        origin,
+        error.message,
+        options.type === "recovery" ? "login" : "signup"
+      )
     }
   } else if (options.code) {
     const { error } = await supabase.auth.exchangeCodeForSession(options.code)
 
     if (error) {
-      return redirectWithError(origin, error.message)
+      return redirectWithError(
+        origin,
+        error.message,
+        options.type === "recovery" ? "login" : "signup"
+      )
     }
   } else {
-    return redirectWithError(origin, "Missing or expired link")
+    return redirectWithError(
+      origin,
+      "Missing or expired confirmation code. Request a new signup email or try signing in.",
+      options.type === "recovery" ? "login" : "signup"
+    )
   }
 
   return response
@@ -106,8 +112,26 @@ function resolvePostAuthPath(
   return "/dashboard"
 }
 
-function redirectWithError(origin: string, message: string) {
+function redirectWithError(
+  origin: string,
+  message: string,
+  target: "login" | "signup" = "signup"
+) {
   return NextResponse.redirect(
-    `${origin}/login?error=${encodeURIComponent(message)}`
+    `${origin}/${target}?error=${encodeURIComponent(message)}`
   )
+}
+
+export function redirectAuthCallbackError(
+  request: NextRequest,
+  searchParams: URLSearchParams
+) {
+  const { origin } = request.nextUrl
+  const message = formatSupabaseCallbackError(searchParams)
+  const code = searchParams.get("error_code") ?? searchParams.get("error")
+  const target =
+    code === "otp_expired" || searchParams.get("type") === "signup"
+      ? "signup"
+      : "login"
+  return redirectWithError(origin, message, target)
 }
