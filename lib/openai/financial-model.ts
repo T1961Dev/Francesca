@@ -12,14 +12,26 @@ import {
   FinancialModelSchema,
 } from "@/lib/openai/schemas"
 
-export async function generateFinancialModel(input: unknown) {
+export async function generateFinancialModel(
+  input: unknown,
+  deckContext?: {
+    deckSummary?: string | null
+    deckFinancialSignals?: Record<string, unknown> | null
+  }
+) {
   const validatedInput = FinancialModelInputSchema.parse(input)
   const openai = getOpenAIClient()
   const response = await openai.responses.parse({
     model: getFinancialModelOpenAIModel(),
     input: [
       { role: "system", content: financialModelSystemPrompt },
-      { role: "user", content: financialModelUserPrompt(validatedInput) },
+      {
+        role: "user",
+        content: financialModelUserPrompt(validatedInput, {
+          deckSummary: deckContext?.deckSummary,
+          deckFinancialSignals: deckContext?.deckFinancialSignals,
+        }),
+      },
     ],
     text: {
       format: zodTextFormat(FinancialModelSchema, "financial_model"),

@@ -27,6 +27,7 @@ import { rankInvestorsWithGPT } from "@/lib/matching/rank"
 import { getInvestorPipelineV2Sizing } from "@/lib/matching/v2-sizing"
 import { toStoredMatch } from "@/lib/investors/persist-matches"
 import { markInvestorJobFailed } from "@/lib/investors/job-errors"
+import { fetchFounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import { buildFounderProfile } from "@/lib/matching/profile"
 import { hasInvestorMatching } from "@/lib/stripe/plans"
 import { hashProfile } from "@/lib/utils/hash-profile"
@@ -301,10 +302,16 @@ export async function startInvestorMatchingJobV2({
           crunchbaseResults: [],
           linkedinPosts,
         }),
+        financialContext: context.profile.financialContext ?? null,
         userId,
         runId: jobId,
       })
-      withEmails.push({ ...match, rank: index + 1, outreachEmail })
+      withEmails.push({
+        ...match,
+        rank: index + 1,
+        outreachEmail: { subject: outreachEmail.subject, body: outreachEmail.body },
+        outreachSequence: outreachEmail.sequence,
+      })
     }
 
     const storedMatches = withEmails.map((m) => toStoredMatch(m, generatedAt))
@@ -409,13 +416,19 @@ async function loadContext({
   if (deckError) throw deckError
   const profileRecord = (storedProfile ?? {}) as Record<string, unknown>
   const plan = (profileRecord.plan as Plan | undefined) ?? "free"
+  const userId = String(job.user_id)
+  const builtProfile = buildFounderProfile({
+    userId,
+    deckAnalysisId,
+    profile: profileRecord,
+    deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
+  })
+  const financialContext = await fetchFounderFinancialContext(
+    supabase as ReturnType<typeof createAdminClient>,
+    userId
+  )
   return {
-    profile: buildFounderProfile({
-      userId: String(job.user_id),
-      deckAnalysisId,
-      profile: profileRecord,
-      deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
-    }),
+    profile: { ...builtProfile, financialContext },
     plan,
   }
 }

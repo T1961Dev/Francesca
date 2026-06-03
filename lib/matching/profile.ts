@@ -241,6 +241,8 @@ function buildDeckSignals(deckAnalysis: SourceRecord): DeckSignals {
   const summary = pickString(deckAnalysis, ["summary"]) ?? ""
   const investorReadiness = pickString(deckAnalysis, ["investor_readiness", "investorReadiness"])
   const overallScore = pickNumber(deckAnalysis, ["overall_score", "overallScore"])
+  const financialSignals =
+    deckAnalysis.financial_signals ?? deckAnalysis.financialSignals ?? null
 
   const keywords = extractDeckKeywords({ summary, strengths, categoryScores })
 
@@ -248,6 +250,10 @@ function buildDeckSignals(deckAnalysis: SourceRecord): DeckSignals {
     overallScore: overallScore ?? null,
     summary,
     categoryScores,
+    financialSignals:
+      financialSignals && typeof financialSignals === "object"
+        ? (financialSignals as Record<string, unknown>)
+        : null,
     strengths,
     weaknesses,
     missingSections,

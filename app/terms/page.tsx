@@ -7,18 +7,18 @@ export default function TermsPage() {
     <>
       <main className="mx-auto max-w-3xl px-6 py-12">
         <h1 className="font-heading text-3xl font-medium tracking-tight">Terms of Service</h1>
-        <p className="mt-2 inline-block rounded-md bg-amber-50 px-2 py-1 text-xs text-amber-900">
-          ⚠ Placeholder — final content pending client legal review.
-        </p>
         <div className="prose prose-sm mt-6 max-w-none">
           <p>
-            This page is a placeholder. The final Terms of Service must be reviewed and approved by
-            the client&apos;s solicitor before launch.
+            By using RaiseWise you agree to these terms. The service is provided for founders
+            preparing to raise investment; outputs are guidance, not financial or legal advice.
           </p>
           <p>
-            Topics to cover: account creation, acceptable use, payment terms, subscription
-            lifecycle, cancellations and refunds, content ownership, limitation of liability,
-            governing law.
+            You keep ownership of content you upload. Subscriptions renew according to the plan you
+            choose and can be cancelled from Billing. Refunds follow the policy shown at checkout.
+          </p>
+          <p>
+            We may suspend accounts that abuse the service or violate applicable law. RaiseWise is
+            provided as-is within the limits permitted by law.
           </p>
         </div>
       </main>

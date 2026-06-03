@@ -25,5 +25,5 @@ export async function updatePasswordAction(formData: FormData) {
     redirect(`/reset-password?error=${encodeURIComponent(error.message)}`)
   }
 
-  redirect("/dashboard/settings?updated=password")
+  redirect("/login?message=password-updated")
 }

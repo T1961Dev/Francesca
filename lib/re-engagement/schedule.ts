@@ -21,8 +21,7 @@ export async function scheduleReEngagementEmail({
   analysisId: string | null
 }) {
   const supabase = createAdminClient()
-  const ctaPath = analysisId ? `/dashboard/deck-analyser/${analysisId}` : undefined
-  const template = reEngagementEmail({ name, score, ctaPath })
+  const template = reEngagementEmail({ name, score, analysisId })
   const scheduledFor = new Date(Date.now() + TWENTY_FOUR_HOURS_MS).toISOString()
 
   const { error } = await supabase

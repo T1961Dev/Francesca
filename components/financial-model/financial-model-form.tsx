@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { FinancialModelInputSchema } from "@/lib/openai/schemas"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -70,10 +71,12 @@ type FieldName = (typeof steps)[number]["fields"][number][0] | "notes"
 export function FinancialModelForm({
   className,
   initialValues = {},
+  deckPrefillHint,
 }: {
   className?: string
   /** Prefilled from onboarding / settings profile; user can edit. */
   initialValues?: Record<string, string>
+  deckPrefillHint?: string | null
 }) {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
@@ -93,8 +96,57 @@ export function FinancialModelForm({
     setValues((current) => ({ ...current, [name]: value }))
   }
 
+  function validateCurrentStep(): string | null {
+    for (const [name, label] of step.fields) {
+      if (!String(values[name] ?? "").trim()) {
+        return `${label} is required`
+      }
+    }
+    return null
+  }
+
+  function validateAllSteps(): string | null {
+    const parsed = FinancialModelInputSchema.safeParse({
+      companyName: values.companyName ?? "",
+      businessModel: values.businessModel ?? "",
+      industry: values.industry ?? "",
+      targetMarket: values.targetMarket ?? "",
+      fundingGoal: values.fundingGoal ?? "",
+      currentMonthlyRevenue: values.currentMonthlyRevenue ?? "0",
+      currentMonthlyBurn: values.currentMonthlyBurn ?? "0",
+      currentCashBalance: values.currentCashBalance ?? "0",
+      currentRunway: values.currentRunway ?? "0",
+      raiseAmount: values.raiseAmount ?? "0",
+      monthlyRevenueGrowth: values.monthlyRevenueGrowth ?? "0",
+      monthlyCostGrowth: values.monthlyCostGrowth ?? "0",
+      grossMargin: values.grossMargin ?? "0",
+      churn: values.churn ?? "0",
+      currentCustomers: values.currentCustomers ?? "0",
+      targetCustomers: values.targetCustomers ?? "0",
+      averageRevenuePerCustomer: values.averageRevenuePerCustomer ?? "0",
+      teamSize: values.teamSize ?? "0",
+      plannedHires: values.plannedHires ?? "0",
+      notes: values.notes ?? "",
+    })
+    if (!parsed.success) {
+      const first = parsed.error.issues[0]
+      const path = String(first?.path?.[0] ?? "")
+      const label = steps
+        .flatMap((s) => [...s.fields])
+        .find((row) => row[0] === path)?.[1]
+      return label ? `Check "${label}": ${first.message}` : first?.message ?? "Invalid input"
+    }
+    return null
+  }
+
   async function submit() {
     if (loading) return
+
+    const stepError = validateAllSteps()
+    if (stepError) {
+      setError(stepError)
+      return
+    }
 
     setLoading(true)
     setError(null)
@@ -138,6 +190,13 @@ export function FinancialModelForm({
       </CardHeader>
       <CardContent className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
         <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
+          {deckPrefillHint ? (
+            <Alert>
+              <AlertTitle>Prefilled from your deck</AlertTitle>
+              <AlertDescription>{deckPrefillHint}</AlertDescription>
+            </Alert>
+          ) : null}
+
           {error ? (
             <Alert variant="destructive">
               <AlertTitle>Could not generate model</AlertTitle>
@@ -233,9 +292,15 @@ export function FinancialModelForm({
           <Button
             type="button"
             disabled={loading}
-            onClick={() =>
+            onClick={() => {
+              const stepError = validateCurrentStep()
+              if (stepError) {
+                setError(stepError)
+                return
+              }
+              setError(null)
               setStepIndex((index) => Math.min(steps.length - 1, index + 1))
-            }
+            }}
           >
             Continue
           </Button>

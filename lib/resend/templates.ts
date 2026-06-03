@@ -1,3 +1,4 @@
+import { appUrl, emailButton } from "@/lib/resend/html-utils"
 import type { EmailTemplate } from "@/lib/resend/send"
 
 const BRAND_SIGNOFF = "— The RaiseWise team"
@@ -14,30 +15,41 @@ export function welcomeEmail(name?: string | null): EmailTemplate {
     html: `
       <p>Welcome${greeting}.</p>
       <p>Take 2 minutes to complete your founder profile, then upload your deck for an instant investor-readiness score.</p>
-      <p>
-        <a href="${appUrl()}/onboarding" style="display:inline-block;background:#1A3C2A;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">Start onboarding</a>
-      </p>
+      <p>${emailButton("Start onboarding", appUrl("/onboarding"))}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
 }
 
-export function scoreReadyEmail(score?: number | null): EmailTemplate {
+export function scoreReadyEmail(args: {
+  score?: number | null
+  analysisId?: string | null
+}): EmailTemplate {
+  const score = typeof args.score === "number" ? args.score : null
+  const href = args.analysisId
+    ? appUrl(`/dashboard/deck-analyser/${args.analysisId}`)
+    : appUrl("/dashboard/deck-analyser")
+
   return {
     subject: "Your deck score is ready",
     html: `
-      <p>Your investor-readiness report is ready${typeof score === "number" ? ` with a score of ${score}/100` : ""}.</p>
-      <p>Log in to review your next steps.</p>
+      <p>Your investor-readiness report is ready${score !== null ? ` with a score of <strong>${score}/100</strong>` : ""}.</p>
+      <p>${emailButton("View your score", href)}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
 }
 
-export function upgradePromptEmail(): EmailTemplate {
+export function upgradePromptEmail(args: { analysisId?: string | null }): EmailTemplate {
+  const href = args.analysisId
+    ? appUrl(`/dashboard/deck-analyser/${args.analysisId}`)
+    : appUrl("/pricing")
+
   return {
     subject: "Unlock your full investor-readiness report",
     html: `
       <p>Your free report shows the headline score. Upgrade to unlock category feedback, risks, fixes, exports, and investor matching.</p>
+      <p>${emailButton("Unlock full analysis", href)}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
@@ -55,11 +67,9 @@ export function paymentFailedEmail(args: { name?: string | null; attempt: number
       <p>${
         final
           ? "We tried 3 times to charge your card and couldn't get through. Your account has been moved back to the free plan."
-          : "Your latest payment didn't go through. We'll try again automatically."
+          : `Your latest payment didn't go through (attempt ${args.attempt} of 3). We'll try again automatically — please update your card if anything changed.`
       }</p>
-      <p>
-        <a href="${appUrl()}/dashboard/billing" style="display:inline-block;background:#1A3C2A;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">Update payment method</a>
-      </p>
+      <p>${emailButton("Update payment method", appUrl("/dashboard/billing"))}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
@@ -71,11 +81,9 @@ export function lifetimeRefundEmail(args: { name?: string | null }): EmailTempla
     subject: "We had to refund your Lifetime purchase",
     html: `
       <p>Hi ${greeting},</p>
-      <p>RaiseWise Lifetime is limited to 50 founders. Multiple people checked out at the same moment and unfortunately we couldn't grant your slot. We've refunded your payment in full.</p>
+      <p>RaiseWise Lifetime is limited to 30 founders. Multiple people checked out at the same moment and unfortunately we couldn't grant your slot. We've refunded your payment in full.</p>
       <p>If you'd still like access, our Pro plan is available at any time.</p>
-      <p>
-        <a href="${appUrl()}/dashboard/billing" style="display:inline-block;background:#1A3C2A;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">View Pro plan</a>
-      </p>
+      <p>${emailButton("View Pro plan", appUrl("/dashboard/billing"))}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
@@ -84,13 +92,14 @@ export function lifetimeRefundEmail(args: { name?: string | null }): EmailTempla
 export function reEngagementEmail(args: {
   name?: string | null
   score?: number | null
-  ctaPath?: string
+  analysisId?: string | null
 }): EmailTemplate {
   const greeting = firstName(args.name) ?? "there"
   const score = typeof args.score === "number" ? args.score : null
-  const cta = args.ctaPath?.startsWith("/")
-    ? `${appUrl()}${args.ctaPath}`
-    : `${appUrl()}/dashboard`
+  const href = args.analysisId
+    ? appUrl(`/dashboard/deck-analyser/${args.analysisId}`)
+    : appUrl("/dashboard")
+
   return {
     subject:
       score !== null
@@ -99,18 +108,8 @@ export function reEngagementEmail(args: {
     html: `
       <p>Hi ${greeting},</p>
       <p>You scored ${score ?? "—"}/100 on your fundraising readiness. There are specific things investors will push back on — and you can see exactly what they are inside the full analysis.</p>
-      <p>
-        <a href="${cta}" style="display:inline-block;background:#1A3C2A;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none">Unlock your full analysis →</a>
-      </p>
+      <p>${emailButton("Unlock your full analysis", href)}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }
-}
-
-function appUrl() {
-  return (
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    "https://raisewise.app"
-  ).replace(/\/$/, "")
 }

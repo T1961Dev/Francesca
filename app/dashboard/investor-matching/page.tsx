@@ -130,7 +130,7 @@ function PageIntro() {
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Rank investors from a deck analysis, or let matching start automatically after upload on
-          Pro and Lifetime. Matches active VC partners in your region and the US.
+          Pro and Lifetime. Searches active VC partners worldwide.
         </p>
       </div>
       <FeaturePhotoCard

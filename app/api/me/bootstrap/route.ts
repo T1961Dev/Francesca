@@ -3,7 +3,6 @@ import { after, NextResponse } from "next/server"
 import { ensureProfile, getCurrentUser, getProfile } from "@/lib/auth"
 import { isOnboardingComplete } from "@/lib/onboarding"
 import { captureError } from "@/lib/sentry/capture"
-import { createAdminClient } from "@/lib/supabase/admin"
 import { createClient } from "@/lib/supabase/server"
 
 /**
@@ -34,25 +33,12 @@ export async function POST() {
   if (profile && profile.welcome_email_sent === false && authEmail) {
     after(async () => {
       try {
-        const [{ sendTrackedEmail }, { welcomeEmail }] = await Promise.all([
-          import("@/lib/resend/send"),
-          import("@/lib/resend/templates"),
-        ])
-
-        await sendTrackedEmail({
+        const { sendWelcomeEmail } = await import("@/lib/resend/emails")
+        await sendWelcomeEmail({
           userId: user.id,
           to: authEmail,
-          type: "welcome",
-          template: welcomeEmail(
-            profile.full_name ?? user.user_metadata?.full_name ?? null
-          ),
+          name: profile.full_name ?? user.user_metadata?.full_name ?? null,
         })
-
-        const admin = createAdminClient()
-        await admin
-          .from("profiles")
-          .update({ welcome_email_sent: true })
-          .eq("id", user.id)
       } catch (error) {
         captureError(error, { route: "dashboard-welcome-email" })
       }

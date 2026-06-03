@@ -1,7 +1,10 @@
+import type { FounderFinancialContext } from "@/lib/matching/founder-financial-context"
+
 export type DeckSignals = {
   overallScore: number | null
   summary: string
   categoryScores: Array<{ category: string; score: number; feedback?: string }>
+  financialSignals?: Record<string, unknown> | null
   strengths: string[]
   weaknesses: string[]
   missingSections: string[]
@@ -44,6 +47,8 @@ export type FounderProfile = {
     use_of_funds: string[]
   }
   deckSignals?: DeckSignals
+  /** Latest saved financial model — CFO loop for rank + outreach. */
+  financialContext?: FounderFinancialContext | null
 }
 
 export type InvestorMatch = {
@@ -79,6 +84,15 @@ export type InvestorMatch = {
   outreachEmail: {
     subject: string
     body: string
+  }
+  outreachSequence?: {
+    steps: Array<{
+      step: number
+      label: string
+      subject: string
+      body: string
+      sendAfterDays: number
+    }>
   }
   limitedData?: boolean
 }

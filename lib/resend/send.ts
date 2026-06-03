@@ -1,19 +1,35 @@
 import "server-only"
 
 import { getResend } from "@/lib/resend/client"
+import { htmlToPlainText } from "@/lib/resend/html-utils"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 export type EmailTemplate = { subject: string; html: string }
 
+export type EmailType =
+  | "welcome"
+  | "score_ready"
+  | "upgrade_prompt"
+  | "re_engagement"
+  | "payment_failed"
+  | "payment_failed_final"
+  | "lifetime_refund_race"
+  | "health_check"
+
 type SendArgs = {
   userId: string
   to: string
-  type: string
+  type: EmailType
   metadata?: Record<string, unknown>
-} & ({ subject: string; html: string; template?: never } | { template: EmailTemplate; subject?: never; html?: never })
+  /** Resend idempotency key — prevents duplicate sends on retry (24h window). */
+  idempotencyKey?: string
+} & (
+  | { subject: string; html: string; template?: never }
+  | { template: EmailTemplate; subject?: never; html?: never }
+)
 
 export async function sendTrackedEmail(args: SendArgs) {
-  const from = process.env.RESEND_FROM_EMAIL
+  const from = process.env.RESEND_FROM_EMAIL?.trim()
 
   if (!from) {
     throw new Error("Missing RESEND_FROM_EMAIL")
@@ -26,25 +42,50 @@ export async function sendTrackedEmail(args: SendArgs) {
     throw new Error("sendTrackedEmail requires subject + html or a template")
   }
 
+  const text = htmlToPlainText(html)
+  const idempotencyKey =
+    args.idempotencyKey ?? `${args.type}/${args.userId}/${subject.slice(0, 32)}`
+
+  const replyTo =
+    process.env.RESEND_REPLY_TO?.trim() ||
+    process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() ||
+    undefined
+
   const resend = getResend()
   const supabase = createAdminClient()
-  const response = await resend.emails.send({ from, to: args.to, subject, html })
+
+  const { data, error } = await resend.emails.send(
+    {
+      from,
+      to: args.to,
+      subject,
+      html,
+      text,
+      replyTo,
+      tags: [
+        { name: "email_type", value: args.type },
+        { name: "user_id", value: args.userId.slice(0, 36) },
+      ],
+    },
+    { idempotencyKey }
+  )
 
   await supabase.from("email_events").insert({
     user_id: args.userId,
     email_type: args.type,
     sent_to: args.to,
-    status: response.error ? "failed" : "sent",
+    status: error ? "failed" : "sent",
     metadata: {
       ...args.metadata,
-      resendId: response.data?.id,
-      error: response.error,
+      resendId: data?.id,
+      error: error ? { message: error.message, name: error.name } : null,
+      idempotencyKey,
     },
   })
 
-  if (response.error) {
-    throw new Error(response.error.message)
+  if (error) {
+    throw new Error(error.message)
   }
 
-  return response.data
+  return data
 }

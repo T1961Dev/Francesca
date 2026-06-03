@@ -2,6 +2,7 @@ import "server-only"
 
 import { zodTextFormat } from "openai/helpers/zod"
 
+import { computeWeightedOverallScore } from "@/lib/deck/weighted-scoring"
 import { getOpenAIClient, OPENAI_MODELS } from "@/lib/openai/client"
 import {
   deckAnalysisSystemPrompt,
@@ -26,8 +27,14 @@ export async function analyseDeckText(deckText: string) {
     throw new Error("OpenAI returned an empty deck analysis")
   }
 
+  const parsed = response.output_parsed
+  const overallScore = computeWeightedOverallScore(parsed.categoryScores)
+
   return {
-    parsed: response.output_parsed,
+    parsed: {
+      ...parsed,
+      overallScore,
+    },
     raw: {
       id: response.id,
       model: response.model,

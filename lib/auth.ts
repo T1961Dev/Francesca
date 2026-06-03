@@ -22,10 +22,13 @@ export async function getCurrentUser() {
   return getCurrentUserCached()
 }
 
-export async function requireAuth() {
+export async function requireAuth(options?: { redirectTo?: string }) {
   const user = await getCurrentUser()
 
   if (!user) {
+    if (options?.redirectTo?.startsWith("/")) {
+      redirect(`/login?redirectTo=${encodeURIComponent(options.redirectTo)}`)
+    }
     redirect("/login")
   }
 

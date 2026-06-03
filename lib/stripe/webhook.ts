@@ -251,25 +251,30 @@ async function onInvoicePaymentFailed(supabase: AdminClient, invoice: Stripe.Inv
         failed_payment_count: next,
       })
       .eq("id", userId)
-
-    if (profile?.email) {
-      await sendTrackedEmail({
-        userId,
-        type: "payment_failed_final",
-        to: profile.email,
-        template: paymentFailedEmail({
-          name: profile.full_name ?? null,
-          attempt: next,
-        }),
-      }).catch(() => undefined)
-    }
-    return
+  } else {
+    await supabase
+      .from("profiles")
+      .update({ failed_payment_count: next, subscription_status: "past_due" })
+      .eq("id", userId)
   }
 
-  await supabase
-    .from("profiles")
-    .update({ failed_payment_count: next, subscription_status: "past_due" })
-    .eq("id", userId)
+  if (profile?.email) {
+    const emailType = next >= FAILED_PAYMENT_LIMIT ? "payment_failed_final" : "payment_failed"
+    await sendTrackedEmail({
+      userId,
+      type: emailType,
+      to: profile.email,
+      template: paymentFailedEmail({
+        name: profile.full_name ?? null,
+        attempt: next,
+      }),
+      idempotencyKey: `${emailType}/${userId}/${next}`,
+    }).catch(() => undefined)
+  }
+
+  if (next >= FAILED_PAYMENT_LIMIT) {
+    return
+  }
 }
 
 async function onInvoicePaymentSucceeded(supabase: AdminClient, invoice: Stripe.Invoice) {

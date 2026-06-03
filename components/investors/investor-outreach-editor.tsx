@@ -11,8 +11,46 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/sonner"
 import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
 
 type Match = Record<string, unknown>
+
+type OutreachStep = {
+  step: number
+  label: string
+  subject: string
+  body: string
+  sendAfterDays: number
+}
+
+function readSequence(match: Match): OutreachStep[] {
+  const raw = match.outreachSequence
+  if (!raw || typeof raw !== "object") {
+    const subject = String(match.outreachSubject ?? "")
+    const body = String(match.outreachBody ?? "")
+    if (!subject && !body) return []
+    return [
+      { step: 1, label: "Intro", subject, body, sendAfterDays: 0 },
+      { step: 2, label: "Follow-up", subject: "", body: "", sendAfterDays: 5 },
+      { step: 3, label: "Final bump", subject: "", body: "", sendAfterDays: 12 },
+    ]
+  }
+  const steps = (raw as { steps?: unknown }).steps
+  if (!Array.isArray(steps)) return []
+  return steps
+    .map((entry, index) => {
+      if (!entry || typeof entry !== "object") return null
+      const row = entry as Record<string, unknown>
+      return {
+        step: Number(row.step ?? index + 1),
+        label: String(row.label ?? `Step ${index + 1}`),
+        subject: String(row.subject ?? ""),
+        body: String(row.body ?? ""),
+        sendAfterDays: Number(row.sendAfterDays ?? 0),
+      }
+    })
+    .filter((row): row is OutreachStep => Boolean(row))
+}
 
 export function InvestorOutreachEditor({
   jobId,
@@ -24,38 +62,44 @@ export function InvestorOutreachEditor({
   onUpdated?: (patch: Record<string, unknown>) => void
 }) {
   const rank = Number(match.rank)
-  const initialSubject = String(match.outreachSubject ?? "")
-  const initialBody = String(match.outreachBody ?? "")
-
-  const [subject, setSubject] = useState(initialSubject)
-  const [body, setBody] = useState(initialBody)
+  const [activeStep, setActiveStep] = useState(0)
+  const [steps, setSteps] = useState<OutreachStep[]>(() => readSequence(match))
   const [improvements, setImprovements] = useState("")
   const [saving, setSaving] = useState(false)
   const [regenerating, setRegenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setSubject(initialSubject)
-    setBody(initialBody)
+    setSteps(readSequence(match))
+    setActiveStep(0)
     setImprovements("")
     setError(null)
-  }, [initialSubject, initialBody, rank])
+  }, [match, rank])
 
-  const dirty = subject.trim() !== initialSubject.trim() || body.trim() !== initialBody.trim()
+  const current = steps[activeStep]
+  const initialSteps = useMemo(() => readSequence(match), [match])
+  const dirty =
+    JSON.stringify(steps) !== JSON.stringify(initialSteps) &&
+    steps.some((s) => s.subject.trim() && s.body.trim())
+
   const source = String(match.outreachSource ?? "ai")
   const sourceLabel = sourceLabelFor(source)
 
-  const canSave = dirty && subject.trim().length > 0 && body.trim().length > 0
-
   async function saveManualEdits() {
-    if (!canSave) return
+    if (!current || !steps.length) return
     setSaving(true)
     setError(null)
     try {
       const response = await fetch("/api/investors/outreach/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jobId, rank, subject: subject.trim(), body: body.trim() }),
+        body: JSON.stringify({
+          jobId,
+          rank,
+          subject: steps[0]?.subject.trim() ?? "",
+          body: steps[0]?.body.trim() ?? "",
+          outreachSequence: { steps },
+        }),
       })
       const json = await response.json()
       if (!json.success) {
@@ -65,11 +109,12 @@ export function InvestorOutreachEditor({
       onUpdated?.({
         outreachSubject: json.data.outreachSubject,
         outreachBody: json.data.outreachBody,
+        outreachSequence: json.data.outreachSequence,
         outreachUpdatedAt: json.data.outreachUpdatedAt,
         outreachSource: json.data.outreachSource,
         suggestedAngle: json.data.outreachSubject,
       })
-      toast.success("Outreach template saved")
+      toast.success("Outreach sequence saved")
     } catch {
       setError("Could not save")
     } finally {
@@ -95,21 +140,25 @@ export function InvestorOutreachEditor({
         setError(json.error ?? "Could not regenerate")
         return
       }
-      const nextSubject = String(json.data.outreachSubject ?? "")
-      const nextBody = String(json.data.outreachBody ?? "")
-      setSubject(nextSubject)
-      setBody(nextBody)
+      const nextSteps = readSequence({
+        outreachSequence: json.data.outreachSequence,
+        outreachSubject: json.data.outreachSubject,
+        outreachBody: json.data.outreachBody,
+      })
+      setSteps(nextSteps)
+      setActiveStep(0)
       setImprovements("")
       onUpdated?.({
-        outreachSubject: nextSubject,
-        outreachBody: nextBody,
+        outreachSubject: json.data.outreachSubject,
+        outreachBody: json.data.outreachBody,
+        outreachSequence: json.data.outreachSequence,
         outreachGeneratedAt: json.data.outreachGeneratedAt,
         outreachUpdatedAt: json.data.outreachUpdatedAt,
         outreachSource: json.data.outreachSource,
         outreachImprovements: json.data.outreachImprovements,
-        suggestedAngle: nextSubject,
+        suggestedAngle: json.data.outreachSubject,
       })
-      toast.success("Outreach template regenerated")
+      toast.success("Outreach sequence regenerated")
     } catch {
       setError("Could not regenerate")
     } finally {
@@ -118,7 +167,8 @@ export function InvestorOutreachEditor({
   }
 
   async function copyTemplate() {
-    const text = `Subject: ${subject.trim()}\n\n${body.trim()}`
+    if (!current) return
+    const text = `Subject: ${current.subject.trim()}\n\n${current.body.trim()}`
     try {
       await navigator.clipboard.writeText(text)
       toast.success("Copied to clipboard")
@@ -127,90 +177,128 @@ export function InvestorOutreachEditor({
     }
   }
 
+  function updateCurrent(patch: Partial<OutreachStep>) {
+    setSteps((prev) =>
+      prev.map((step, index) => (index === activeStep ? { ...step, ...patch } : step))
+    )
+  }
+
   const updatedLabel = useMemo(() => {
     const updatedAt = match.outreachUpdatedAt ?? match.outreachGeneratedAt
     if (!updatedAt) return null
     return formatRelative(new Date(String(updatedAt)))
   }, [match.outreachGeneratedAt, match.outreachUpdatedAt])
 
+  if (!current) return null
+
   return (
     <>
       <Toaster />
       <section className="space-y-4 rounded-xl border border-border/60 bg-muted/15 p-4">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Sparkles className="size-4 text-primary" aria-hidden />
-            <h3 className="font-medium">Outreach template</h3>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <Sparkles className="size-4 text-primary" aria-hidden />
+              <h3 className="font-medium">Outreach sequence</h3>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Three-touch sequence from deck, financial model, and investor signals. Edit each
+              step before you send.
+            </p>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Personalised from Leads Finder, Crunchbase, and LinkedIn signals. Edit or
-            regenerate below.
-          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{sourceLabel}</Badge>
+            {updatedLabel ? (
+              <span className="text-xs text-muted-foreground">Updated {updatedLabel}</span>
+            ) : null}
+          </div>
         </div>
+
+        <div className="flex flex-wrap gap-2">
+          {steps.map((step, index) => (
+            <button
+              key={step.step}
+              type="button"
+              onClick={() => setActiveStep(index)}
+              className={cn(
+                "rounded-md px-3 py-1.5 text-xs font-medium transition-colors",
+                index === activeStep
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              )}
+            >
+              {step.label}
+              {step.sendAfterDays > 0 ? ` · Day ${step.sendAfterDays}` : " · Now"}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-3">
+          <div className="space-y-1.5">
+            <Label htmlFor={`outreach-subject-${rank}-${activeStep}`}>Subject line</Label>
+            <Input
+              id={`outreach-subject-${rank}-${activeStep}`}
+              value={current.subject}
+              onChange={(event) => updateCurrent({ subject: event.target.value })}
+              placeholder="Short, specific subject"
+              maxLength={120}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor={`outreach-body-${rank}-${activeStep}`}>Email body</Label>
+            <Textarea
+              id={`outreach-body-${rank}-${activeStep}`}
+              value={current.body}
+              onChange={(event) => updateCurrent({ body: event.target.value })}
+              className="min-h-44 font-sans leading-relaxed"
+              placeholder="Your outreach email"
+            />
+          </div>
+        </div>
+
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary">{sourceLabel}</Badge>
-          {updatedLabel ? (
-            <span className="text-xs text-muted-foreground">Updated {updatedLabel}</span>
-          ) : null}
+          <Button
+            size="sm"
+            onClick={saveManualEdits}
+            disabled={!dirty || saving || regenerating}
+          >
+            {saving ? "Saving…" : "Save sequence"}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={copyTemplate}
+            disabled={!current.subject.trim() || !current.body.trim()}
+          >
+            <Copy className="size-3.5" />
+            Copy step
+          </Button>
         </div>
-      </div>
 
-      <div className="space-y-3">
-        <div className="space-y-1.5">
-          <Label htmlFor={`outreach-subject-${rank}`}>Subject line</Label>
-          <Input
-            id={`outreach-subject-${rank}`}
-            value={subject}
-            onChange={(event) => setSubject(event.target.value)}
-            placeholder="Short, specific subject"
-            maxLength={120}
-          />
-        </div>
+        <Separator />
 
-        <div className="space-y-1.5">
-          <Label htmlFor={`outreach-body-${rank}`}>Email body</Label>
+        <div className="space-y-2">
+          <Label htmlFor={`outreach-improvements-${rank}`}>
+            Regenerate full sequence (optional notes)
+          </Label>
           <Textarea
-            id={`outreach-body-${rank}`}
-            value={body}
-            onChange={(event) => setBody(event.target.value)}
-            className="min-h-44 font-sans leading-relaxed"
-            placeholder="Your outreach email"
+            id={`outreach-improvements-${rank}`}
+            value={improvements}
+            onChange={(event) => setImprovements(event.target.value)}
+            className="min-h-20"
+            placeholder='e.g. "Shorter opening", "Mention our seed round", "More casual tone"'
           />
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={regenerate}
+            disabled={regenerating || saving}
+          >
+            <RefreshCw className={cn("size-3.5", regenerating && "animate-spin")} />
+            {regenerating ? "Regenerating…" : "Regenerate sequence"}
+          </Button>
         </div>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        <Button size="sm" onClick={saveManualEdits} disabled={!canSave || saving || regenerating}>
-          {saving ? "Saving…" : "Save changes"}
-        </Button>
-        <Button size="sm" variant="outline" onClick={copyTemplate} disabled={!subject.trim() || !body.trim()}>
-          <Copy className="size-3.5" />
-          Copy
-        </Button>
-      </div>
-
-      <Separator />
-
-      <div className="space-y-2">
-        <Label htmlFor={`outreach-improvements-${rank}`}>Regenerate with improvements (optional)</Label>
-        <Textarea
-          id={`outreach-improvements-${rank}`}
-          value={improvements}
-          onChange={(event) => setImprovements(event.target.value)}
-          className="min-h-20"
-          placeholder='e.g. "Shorter opening", "Mention our seed round", "More casual tone"'
-        />
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={regenerate}
-          disabled={regenerating || saving}
-        >
-          <RefreshCw className={`size-3.5 ${regenerating ? "animate-spin" : ""}`} />
-          {regenerating ? "Regenerating…" : "Regenerate template"}
-        </Button>
-      </div>
 
         {error ? <p className="text-xs text-destructive">{error}</p> : null}
       </section>

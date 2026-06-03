@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+
+import { AuthSessionFromUrl } from "@/components/auth/auth-session-from-url";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -47,6 +49,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <AuthSessionFromUrl />
         {children}
       </body>
     </html>

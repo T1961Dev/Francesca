@@ -1,4 +1,5 @@
 import type { CrunchbaseCompany, LeadsFinderContact, LinkedInPost } from "@/types/apify"
+import type { FounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
 export type OutreachApifyContext = {
@@ -123,12 +124,14 @@ export function buildOutreachPromptPayload({
   apifyContext,
   improvements,
   currentDraft,
+  financialContext,
 }: {
   profile: FounderProfile
-  match: Omit<InvestorMatch, "rank" | "outreachEmail">
+  match: Omit<InvestorMatch, "rank" | "outreachEmail" | "outreachSequence">
   apifyContext?: OutreachApifyContext
   improvements?: string
   currentDraft?: { subject: string; body: string }
+  financialContext?: FounderFinancialContext | null
 }) {
   const signals = profile.deckSignals
   return {
@@ -147,9 +150,22 @@ export function buildOutreachPromptPayload({
       team: profile.team,
       deck: signals
         ? {
+            overallScore: signals.overallScore,
             summary: signals.summary,
+            categoryScores: signals.categoryScores,
+            financialSignals: signals.financialSignals ?? null,
             topStrengths: signals.strengths.slice(0, 3),
             keywords: signals.keywords,
+          }
+        : null,
+      financialModel: financialContext
+        ? {
+            investorSummary: financialContext.investorSummary,
+            narrative: financialContext.narrative,
+            breakEvenMonth: financialContext.breakEvenMonth,
+            risks: financialContext.risks,
+            assumptions: financialContext.assumptions,
+            projectionHead: financialContext.latestProjectionSnippet,
           }
         : null,
     },

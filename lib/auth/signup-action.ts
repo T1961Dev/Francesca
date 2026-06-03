@@ -3,11 +3,9 @@
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
-import {
-  emailPasswordSchema,
-  getAppUrl,
-  rateLimit,
-} from "@/lib/auth/action-shared"
+import { formatAuthErrorMessage } from "@/lib/auth/auth-error-message"
+import { emailPasswordSchema, rateLimit } from "@/lib/auth/action-shared"
+import { buildAuthCallbackUrl } from "@/lib/supabase/auth-callback"
 import { isAuthEmailRegistered } from "@/lib/auth/email-registered"
 import { createClient } from "@/lib/supabase/server"
 
@@ -20,20 +18,17 @@ export async function signupAction(formData: FormData) {
 
   let input: z.infer<typeof emailPasswordSchema> & {
     fullName: string
-    companyName?: string
   }
 
   try {
     input = emailPasswordSchema
       .extend({
         fullName: z.string().min(1),
-        companyName: z.string().optional(),
       })
       .parse({
         email: formData.get("email"),
         password: formData.get("password"),
         fullName: formData.get("name"),
-        companyName: formData.get("companyName") ?? "",
       })
   } catch {
     redirect(
@@ -63,15 +58,12 @@ export async function signupAction(formData: FormData) {
       data: {
         full_name: input.fullName,
       },
-      emailRedirectTo: `${getAppUrl()}/auth/callback?type=signup`,
+      emailRedirectTo: buildAuthCallbackUrl("signup"),
     },
   })
 
   if (error) {
-    const message = error.message.toLowerCase().includes("already")
-      ? "An account with this email already exists. Sign in instead."
-      : error.message
-    redirect(`/signup?error=${encodeURIComponent(message)}`)
+    redirect(`/signup?error=${encodeURIComponent(formatAuthErrorMessage(error))}`)
   }
 
   if (data.user && (!data.user.identities || data.user.identities.length === 0)) {
@@ -86,7 +78,6 @@ export async function signupAction(formData: FormData) {
         id: data.user.id,
         email,
         full_name: input.fullName,
-        company_name: input.companyName || null,
         plan: "free",
         subscription_status: "inactive",
       },
@@ -95,7 +86,7 @@ export async function signupAction(formData: FormData) {
   }
 
   if (data.session) {
-    redirect("/dashboard")
+    redirect("/onboarding")
   }
 
   redirect(`/signup?verify=${encodeURIComponent(input.email)}`)

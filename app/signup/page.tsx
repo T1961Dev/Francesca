@@ -1,4 +1,5 @@
 import { SignupForm } from "@/components/signup-form"
+import { getCurrentUser } from "@/lib/auth"
 import {
   Card,
   CardContent,
@@ -6,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { redirect } from "next/navigation"
 
 export default async function Page({
   searchParams,
@@ -13,8 +15,16 @@ export default async function Page({
   searchParams: Promise<{ error?: string; verify?: string }>
 }) {
   const params = await searchParams
-  const error = params.error?.trim() || null
   const verifyEmail = params.verify?.trim() || null
+
+  if (!verifyEmail) {
+    const user = await getCurrentUser()
+    if (user) {
+      redirect("/dashboard")
+    }
+  }
+
+  const error = params.error?.trim() || null
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -45,7 +55,7 @@ export default async function Page({
                   href="/login"
                   className="underline underline-offset-4 hover:text-foreground"
                 >
-                  Log in
+                  Sign in
                 </a>
                 .
               </p>

@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { canViewInvestorOutreachTemplates, getUserPlan } from "@/lib/access"
 import { requireAuth } from "@/lib/auth"
+import { fetchFounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import { buildFounderProfile } from "@/lib/matching/profile"
 import { generateOutreachEmail } from "@/lib/matching/outreach"
 import {
@@ -79,21 +80,35 @@ export async function POST(request: Request) {
       profile: (profileRow ?? {}) as Record<string, unknown>,
       deckAnalysis: (deckAnalysis ?? {}) as Record<string, unknown>,
     })
+    const financialContext = await fetchFounderFinancialContext(supabase, user.id)
+    profile.financialContext = financialContext
 
     const matchInput = storedMatchToOutreachInput(stored)
     const apifyContext = buildOutreachApifyContextFromStored(stored, row.raw_apify_response)
-    const currentDraft = {
-      subject: String(stored.outreachSubject ?? ""),
-      body: String(stored.outreachBody ?? ""),
-    }
+    const existingSequence = stored.outreachSequence as { steps?: unknown[] } | undefined
 
     const outreach = await generateOutreachEmail({
       profile,
       match: matchInput,
       apifyContext,
+      financialContext,
       improvements,
       currentDraft:
-        currentDraft.subject.trim() && currentDraft.body.trim() ? currentDraft : undefined,
+        existingSequence?.steps?.[0] &&
+        typeof existingSequence.steps[0] === "object"
+          ? {
+              subject: String(
+                (existingSequence.steps[0] as Record<string, unknown>).subject ??
+                  stored.outreachSubject ??
+                  ""
+              ),
+              body: String(
+                (existingSequence.steps[0] as Record<string, unknown>).body ??
+                  stored.outreachBody ??
+                  ""
+              ),
+            }
+          : undefined,
       userId: user.id,
       runId: jobId,
     })
@@ -107,6 +122,7 @@ export async function POST(request: Request) {
       patch: {
         outreachSubject: outreach.subject,
         outreachBody: outreach.body,
+        outreachSequence: outreach.sequence,
         suggestedAngle: outreach.subject,
         outreachGeneratedAt: now,
         outreachUpdatedAt: now,
@@ -120,6 +136,7 @@ export async function POST(request: Request) {
       data: {
         outreachSubject: updated.outreachSubject,
         outreachBody: updated.outreachBody,
+        outreachSequence: updated.outreachSequence,
         outreachGeneratedAt: updated.outreachGeneratedAt,
         outreachUpdatedAt: updated.outreachUpdatedAt,
         outreachSource: updated.outreachSource,

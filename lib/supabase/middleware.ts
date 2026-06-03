@@ -2,6 +2,8 @@ import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 
 import { isOnboardingComplete } from "@/lib/onboarding"
+import { rememberAuthReturnPage } from "@/lib/routing/auth-return"
+import { resolveLegacyPathRedirect } from "@/lib/routing/legacy-paths"
 
 const protectedPrefixes = [
   "/dashboard",
@@ -62,6 +64,30 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
+
+  const legacyTarget = resolveLegacyPathRedirect(pathname)
+  if (legacyTarget && legacyTarget !== pathname) {
+    const legacyUrl = request.nextUrl.clone()
+    legacyUrl.pathname = legacyTarget
+    return NextResponse.redirect(legacyUrl)
+  }
+
+  const authCode = request.nextUrl.searchParams.get("code")
+  if (authCode && !pathname.startsWith("/auth/callback")) {
+    const callbackUrl = request.nextUrl.clone()
+    callbackUrl.pathname = "/auth/callback"
+    if (
+      !callbackUrl.searchParams.get("type") &&
+      !callbackUrl.searchParams.get("next")
+    ) {
+      callbackUrl.searchParams.set("type", "recovery")
+      callbackUrl.searchParams.set("next", "/reset-password")
+    }
+    return NextResponse.redirect(callbackUrl)
+  }
+
+  rememberAuthReturnPage(request, response, pathname)
+
   const isProtected = protectedPrefixes.some((prefix) => pathname.startsWith(prefix))
   const isAuthRoute = authRoutes.includes(pathname)
 

@@ -3,12 +3,28 @@ import {
   FeatureEm,
   FeaturePhotoCard,
 } from "@/components/feature-photo-card"
+import { fetchLatestDeckFinancialPrefill } from "@/lib/deck/queries.server"
 import { getProfile } from "@/lib/auth"
 import { buildFinancialModelPrefill } from "@/lib/profile/prefill"
+import { buildFinancialPrefillFromDeckSignals } from "@/lib/financial/deck-prefill"
+import { DeckFinancialSignalsSchema } from "@/lib/openai/schemas"
 
 export default async function FinancialModelPage() {
-  const profile = await getProfile()
-  const initialValues = buildFinancialModelPrefill(profile)
+  const [profile, deckPrefill] = await Promise.all([
+    getProfile(),
+    fetchLatestDeckFinancialPrefill(),
+  ])
+  const profileValues = buildFinancialModelPrefill(profile)
+  const parsedSignals = deckPrefill?.financialSignals
+    ? DeckFinancialSignalsSchema.safeParse(deckPrefill.financialSignals)
+    : null
+  const initialValues = buildFinancialPrefillFromDeckSignals(
+    parsedSignals?.success ? parsedSignals.data : null,
+    profileValues
+  )
+  const deckHint = deckPrefill?.summary
+    ? "We pre-filled numbers from your latest deck analysis where available. Review before generating."
+    : null
   return (
     <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
       <div className="shrink-0">
@@ -31,7 +47,11 @@ export default async function FinancialModelPage() {
         />
       </div>
       <div className="min-h-0 flex-1">
-        <FinancialModelForm className="h-full" initialValues={initialValues} />
+        <FinancialModelForm
+          className="h-full"
+          initialValues={initialValues}
+          deckPrefillHint={deckHint}
+        />
       </div>
     </main>
   )

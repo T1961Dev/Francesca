@@ -18,6 +18,7 @@ export function buildDeckAnalysisRecord(input: {
     overall_score: analysis.parsed.overallScore,
     summary: analysis.parsed.summary,
     category_scores: analysis.parsed.categoryScores,
+    financial_signals: analysis.parsed.financialSignals,
     strengths: analysis.parsed.strengths,
     weaknesses: analysis.parsed.weaknesses,
     missing_sections: analysis.parsed.missingSections,

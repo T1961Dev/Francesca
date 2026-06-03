@@ -5,8 +5,7 @@ import { buildDeckAnalysisInsert, buildDeckAnalysisRecord } from "@/lib/deck/per
 import { enqueueInvestorMatching, hasActiveInvestorJobForDeck } from "@/lib/investors/enqueue"
 import { analyseDeckText } from "@/lib/openai/deck-analysis"
 import { captureServerEvent } from "@/lib/posthog/server"
-import { scoreReadyEmail } from "@/lib/resend/templates"
-import { sendTrackedEmail } from "@/lib/resend/send"
+import { sendScoreReadyEmail } from "@/lib/resend/emails"
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 import { attemptUsageIncrement, rollbackUsageIncrement } from "@/lib/usage/track"
@@ -224,14 +223,11 @@ export async function POST(request: Request) {
     await captureServerEvent("deck_analysis_completed", user.id, { analysisId })
 
     if (user.email) {
-      const template = scoreReadyEmail(analysis.parsed.overallScore)
-      await sendTrackedEmail({
+      await sendScoreReadyEmail({
         userId: user.id,
         to: user.email,
-        type: "score_ready",
-        subject: template.subject,
-        html: template.html,
-        metadata: { analysisId },
+        score: analysis.parsed.overallScore,
+        analysisId,
       }).catch((error) => captureError(error, { route: "deck-upload-score-email" }))
     }
 

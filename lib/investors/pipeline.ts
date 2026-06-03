@@ -16,6 +16,7 @@ import { getApifyClient } from "@/lib/apify/client"
 import { logApifyCost } from "@/lib/costs/track"
 import { groupLeadsIntoFirms } from "@/lib/matching/group-leads"
 import { mergeInvestors, type MergedFirm } from "@/lib/matching/merge"
+import { fetchFounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import { generateOutreachEmail } from "@/lib/matching/outreach"
 import { buildOutreachApifyContext } from "@/lib/matching/outreach-context"
 import { prefilterFirms } from "@/lib/matching/prefilter"
@@ -604,10 +605,8 @@ async function completeInvestorMatching({
   logJob(jobId, "Generating outreach emails", { rankedCount: ranked.length })
   const generatedAt = new Date().toISOString()
   const withEmails = await Promise.all(
-    ranked.map(async (match, index) => ({
-      ...match,
-      rank: index + 1,
-      outreachEmail: await generateOutreachEmail({
+    ranked.map(async (match, index) => {
+      const outreach = await generateOutreachEmail({
         profile,
         match,
         apifyContext: buildOutreachApifyContext({
@@ -616,10 +615,17 @@ async function completeInvestorMatching({
           crunchbaseResults: crunchbaseResults as CrunchbaseCompany[],
           linkedinPosts,
         }),
+        financialContext: profile.financialContext ?? null,
         userId: String(job.user_id ?? ""),
         runId: jobId,
-      }),
-    }))
+      })
+      return {
+        ...match,
+        rank: index + 1,
+        outreachEmail: { subject: outreach.subject, body: outreach.body },
+        outreachSequence: outreach.sequence,
+      }
+    })
   )
   logJob(jobId, "Outreach emails generated", { matchCount: withEmails.length })
   const storedMatches = withEmails.map((match) => toStoredMatch(match as InvestorMatch, generatedAt))
@@ -700,14 +706,20 @@ async function loadContext({
   // truth). Defaults to "free" if missing so we never up-tier a misconfigured
   // user accidentally.
   const plan = (profileRecord.plan as Plan | undefined) ?? "free"
+  const userId = String(job.user_id)
+  const builtProfile = buildFounderProfile({
+    userId,
+    deckAnalysisId,
+    profile: profileRecord,
+    deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
+  })
+  const financialContext = await fetchFounderFinancialContext(
+    supabase as ReturnType<typeof createAdminClient>,
+    userId
+  )
 
   return {
-    profile: buildFounderProfile({
-      userId: String(job.user_id),
-      deckAnalysisId,
-      profile: profileRecord,
-      deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
-    }),
+    profile: { ...builtProfile, financialContext },
     deckAnalysis: (storedDeckAnalysis ?? {}) as Record<string, unknown>,
     plan,
   }

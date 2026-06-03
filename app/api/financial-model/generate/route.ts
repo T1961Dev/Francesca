@@ -41,7 +41,24 @@ export async function POST(request: Request) {
     incremented = true
 
     await captureServerEvent("financial_model_started", user.id, { plan })
-    const result = await generateFinancialModel(await request.json())
+
+    const { data: latestDeck } = await supabase
+      .from("deck_analyses")
+      .select("summary, financial_signals")
+      .eq("user_id", user.id)
+      .eq("status", "completed")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    const body = await request.json()
+    const result = await generateFinancialModel(body, {
+      deckSummary: latestDeck?.summary ? String(latestDeck.summary) : null,
+      deckFinancialSignals:
+        latestDeck?.financial_signals && typeof latestDeck.financial_signals === "object"
+          ? (latestDeck.financial_signals as Record<string, unknown>)
+          : null,
+    })
     const { data, error } = await supabase
       .from("financial_models")
       .insert({

@@ -27,7 +27,7 @@ export function SignupForm({ error, ...props }: SignupFormProps) {
       <CardHeader>
         <CardTitle>Create an account</CardTitle>
         <CardDescription>
-          Enter your information below to create your account
+          Email and password only — we&apos;ll ask about your company next.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -39,12 +39,8 @@ export function SignupForm({ error, ...props }: SignupFormProps) {
         <form action={signupAction}>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input id="name" name="name" type="text" placeholder="John Doe" required />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="companyName">Company Name</FieldLabel>
-              <Input id="companyName" name="companyName" type="text" />
+              <FieldLabel htmlFor="name">Full name</FieldLabel>
+              <Input id="name" name="name" type="text" placeholder="Your name" required />
             </Field>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -52,13 +48,9 @@ export function SignupForm({ error, ...props }: SignupFormProps) {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder="you@company.com"
                 required
               />
-              <FieldDescription>
-                We&apos;ll use this to contact you. We will not share your email
-                with anyone else.
-              </FieldDescription>
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -70,7 +62,7 @@ export function SignupForm({ error, ...props }: SignupFormProps) {
             <FieldGroup>
               <Field>
                 <SubmitButton
-                  idleText="Create Account"
+                  idleText="Create account"
                   pendingText="Creating account..."
                 />
                 <FieldDescription className="px-6 text-center">

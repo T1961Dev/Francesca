@@ -20,12 +20,14 @@ import { loginAction } from "@/lib/auth/login-action"
 
 type LoginFormProps = React.ComponentProps<"div"> & {
   error?: string | null
+  message?: string | null
   redirectTo?: string | null
 }
 
 export function LoginForm({
   className,
   error,
+  message,
   redirectTo,
   ...props
 }: LoginFormProps) {
@@ -33,12 +35,17 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Sign in</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Use the email and password for your RaiseWise account.
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {message ? (
+            <Alert className="mb-4 border-[#1A3C2A]/25 bg-[#E8F0EB] text-[#1A3C2A]">
+              <AlertDescription>{message}</AlertDescription>
+            </Alert>
+          ) : null}
           {error ? (
             <Alert variant="destructive" className="mb-4">
               <AlertDescription>{error}</AlertDescription>
@@ -55,7 +62,7 @@ export function LoginForm({
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="you@company.com"
                   required
                 />
               </Field>
@@ -73,7 +80,7 @@ export function LoginForm({
                 <Input id="password" name="password" type="password" required />
               </Field>
               <Field>
-                <SubmitButton idleText="Login" pendingText="Logging in..." />
+                <SubmitButton idleText="Sign in" pendingText="Signing in..." />
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link href="/signup">Sign up</Link>
                 </FieldDescription>

@@ -1,6 +1,7 @@
 import type { InvestorMatch } from "@/types/profile"
 
 export function toStoredMatch(match: InvestorMatch, generatedAt: string) {
+  const intro = match.outreachSequence?.steps[0] ?? match.outreachEmail
   return {
     rank: match.rank,
     fitScore: match.fitScore,
@@ -18,9 +19,10 @@ export function toStoredMatch(match: InvestorMatch, generatedAt: string) {
     matchRationale: match.matchRationale,
     whyThisInvestor: match.matchRationale,
     whyNow: match.recentLinkedInSignals[0]?.postText ?? "Recent fit based on firm focus, stage, geography, and LinkedIn activity.",
-    suggestedAngle: match.outreachEmail.subject,
-    outreachSubject: match.outreachEmail.subject,
-    outreachBody: match.outreachEmail.body,
+    suggestedAngle: intro.subject,
+    outreachSubject: intro.subject,
+    outreachBody: intro.body,
+    outreachSequence: match.outreachSequence ?? null,
     outreachGeneratedAt: generatedAt,
     outreachUpdatedAt: generatedAt,
     outreachSource: "ai",

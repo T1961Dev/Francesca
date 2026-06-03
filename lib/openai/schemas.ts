@@ -2,8 +2,22 @@ import { z } from "zod"
 
 const PrioritySchema = z.enum(["high", "medium", "low"])
 
+export const DeckFinancialSignalsSchema = z.object({
+  monthlyRevenue: z.number().nullable(),
+  monthlyBurn: z.number().nullable(),
+  cashBalance: z.number().nullable(),
+  runwayMonths: z.number().nullable(),
+  raiseAmount: z.number().nullable(),
+  customerCount: z.number().nullable(),
+  teamSize: z.number().nullable(),
+  grossMarginPercent: z.number().nullable(),
+  revenueGrowthPercentMonthly: z.number().nullable(),
+  notes: z.string().nullable(),
+})
+
+export type DeckFinancialSignals = z.infer<typeof DeckFinancialSignalsSchema>
+
 export const DeckAnalysisSchema = z.object({
-  overallScore: z.number().min(0).max(100),
   summary: z.string(),
   categoryScores: z.array(
     z.object({
@@ -12,6 +26,7 @@ export const DeckAnalysisSchema = z.object({
       feedback: z.string(),
     })
   ),
+  financialSignals: DeckFinancialSignalsSchema,
   strengths: z.array(z.string()),
   weaknesses: z.array(z.string()),
   missingSections: z.array(z.string()),
@@ -32,6 +47,20 @@ export const DeckAnalysisSchema = z.object({
   ),
   fundraisingRisks: z.array(z.string()),
 })
+
+export const OutreachStepSchema = z.object({
+  step: z.number().int().min(1).max(3),
+  label: z.string(),
+  subject: z.string(),
+  body: z.string(),
+  sendAfterDays: z.number().int().min(0),
+})
+
+export const OutreachSequenceSchema = z.object({
+  steps: z.array(OutreachStepSchema).length(3),
+})
+
+export type OutreachSequence = z.infer<typeof OutreachSequenceSchema>
 
 export const FinancialModelInputSchema = z.object({
   companyName: z.string().min(1),

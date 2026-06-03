@@ -8,7 +8,11 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/login",
-    "/signup",
+    /*
+     * All page routes except static assets and API (API keeps JSON 404s).
+     * Enables legacy path redirects (/settings → /dashboard/settings) and
+     * remembering the last login vs signup page for 404 recovery.
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
   ],
 }

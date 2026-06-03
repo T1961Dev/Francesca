@@ -53,7 +53,6 @@ export default async function DeckAnalyserPage() {
               </>
             }
             description="A focused pass over narrative, traction, market, raise logic, and the missing proof points that slow a round down."
-            cta={{ label: "Start analysis", href: "/dashboard/deck-analyser" }}
           />
         </div>
       </div>

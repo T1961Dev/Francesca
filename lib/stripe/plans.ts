@@ -63,7 +63,7 @@ export const plans: StripePlan[] = [
     id: "lifetime",
     name: "Lifetime",
     description:
-      "Pay once. Keep RaiseWise forever. Limited to 50 founders.",
+      "Pay once. Keep RaiseWise forever. Limited to the first 30 founders.",
     mode: "payment",
     prices: { gbp: 349, eur: 399, usd: 427 },
     priceIdEnv: {
@@ -75,19 +75,19 @@ export const plans: StripePlan[] = [
       "Everything in Pro",
       "Up to 50 ranked investors per run",
       "Pay once, no subscription",
-      "Hard-capped at 50 founders globally",
+      "Hard-capped at 30 founders globally",
       "Priority support",
     ],
     limits: {
       deckUploadsPerMonth: 5,
       financialModelRunsPerMonth: 5,
-      investorMatchRunsPerMonth: 10,
+      investorMatchRunsPerMonth: 2,
       investorMatchesPerRun: 50,
     },
   },
 ]
 
-export const LIFETIME_MAX_INVENTORY = 50 as const
+export const LIFETIME_MAX_INVENTORY = 30 as const
 
 export const FREE_DECK_UPLOAD_LIMIT = 1 as const
 export const FREE_DECK_UPLOAD_LIMIT_WITH_WHATSAPP = 2 as const

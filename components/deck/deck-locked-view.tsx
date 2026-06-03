@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import dynamic from "next/dynamic"
 import { LockIcon } from "lucide-react"
 
@@ -47,25 +47,13 @@ export function DeckLockedView({
   currency,
 }: LockedView) {
   const [paywallOpen, setPaywallOpen] = useState(false)
-  const scheduled = useRef(false)
   const names = dimensionNames.length ? dimensionNames : DEFAULT_DIMENSIONS
-
-  // Schedule the re-engagement email shortly after the score is rendered.
-  useEffect(() => {
-    if (scheduled.current) return
-    scheduled.current = true
-    fetch("/api/paywall/dismiss", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ analysisId, score }),
-    }).catch(() => undefined)
-  }, [analysisId, score])
 
   const onDismiss = useCallback(() => {
     fetch("/api/paywall/dismiss", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ analysisId, score }),
+      body: JSON.stringify({ dismissed: true, analysisId, score }),
     }).catch(() => undefined)
   }, [analysisId, score])
 

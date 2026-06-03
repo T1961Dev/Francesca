@@ -1,3 +1,6 @@
+import { redirect } from "next/navigation"
+
+import { getCurrentUser } from "@/lib/auth"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import {
   Card,
@@ -16,6 +19,13 @@ export default async function ResetPasswordPage({
 }: {
   searchParams: Promise<{ error?: string }>
 }) {
+  const user = await getCurrentUser()
+  if (!user) {
+    redirect(
+      `/forgot-password?error=${encodeURIComponent("Your reset link has expired. Request a new one.")}`
+    )
+  }
+
   const params = await searchParams
   const error = params.error?.trim() || null
 

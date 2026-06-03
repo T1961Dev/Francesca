@@ -233,6 +233,7 @@ function buildFounderPayload(profile: FounderProfile) {
           overallScore: signals.overallScore,
           summary: signals.summary,
           categoryScores: signals.categoryScores,
+          financialSignals: signals.financialSignals ?? null,
           strengths: signals.strengths,
           weaknesses: signals.weaknesses,
           missingSections: signals.missingSections,
@@ -242,5 +243,6 @@ function buildFounderPayload(profile: FounderProfile) {
           keywords: signals.keywords,
         }
       : null,
+    financialModel: profile.financialContext ?? null,
   }
 }

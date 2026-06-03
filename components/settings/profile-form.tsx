@@ -20,7 +20,6 @@ const groups = [
     fields: [
       ["full_name", "Full name"],
       ["role", "Role"],
-      ["location", "Location"],
     ],
   },
   {
@@ -29,17 +28,15 @@ const groups = [
     fields: [
       ["company_name", "Company name"],
       ["website", "Website"],
-      ["industry", "Industry"],
+      ["sector", "Sector"],
       ["stage", "Stage"],
+      ["geography", "Geography"],
     ],
   },
   {
     title: "Raise",
     description: "Funding context for models and investor matching.",
-    fields: [
-      ["funding_stage", "Funding stage"],
-      ["target_raise", "Target raise"],
-    ],
+    fields: [["target_raise", "Target raise (£)"]],
   },
 ] as const
 
@@ -75,7 +72,7 @@ export function ProfileForm({
         <CardHeader className="pb-1">
           <CardTitle>Sign-in email</CardTitle>
           <CardDescription>
-            Synced from Supabase Auth and shown in the sidebar.
+            Used to sign in and shown in the sidebar. Contact support to change it.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">

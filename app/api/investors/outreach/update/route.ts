@@ -7,11 +7,26 @@ import { loadInvestorMatchRow, updateInvestorMatchAtRank } from "@/lib/investors
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 
+import { OutreachSequenceSchema } from "@/lib/openai/schemas"
+
 const schema = z.object({
   jobId: z.string().uuid(),
   rank: z.number().int().positive(),
   subject: z.string().min(1).max(120),
   body: z.string().min(1).max(8000),
+  outreachSequence: z
+    .object({
+      steps: z.array(
+        z.object({
+          step: z.number().int(),
+          label: z.string(),
+          subject: z.string(),
+          body: z.string(),
+          sendAfterDays: z.number().int(),
+        })
+      ),
+    })
+    .optional(),
 })
 
 export async function POST(request: Request) {
@@ -26,13 +41,17 @@ export async function POST(request: Request) {
       )
     }
 
-    const { jobId, rank, subject, body } = schema.parse(await request.json())
+    const { jobId, rank, subject, body, outreachSequence } = schema.parse(await request.json())
     const supabase = await createClient()
     const row = await loadInvestorMatchRow(supabase, jobId, user.id)
 
     if (!row) {
       return NextResponse.json({ success: false, error: "Match not found" }, { status: 404 })
     }
+
+    const sequence = outreachSequence
+      ? OutreachSequenceSchema.parse(outreachSequence)
+      : null
 
     const now = new Date().toISOString()
     const updated = await updateInvestorMatchAtRank({
@@ -43,6 +62,7 @@ export async function POST(request: Request) {
       patch: {
         outreachSubject: subject.trim(),
         outreachBody: body.trim(),
+        outreachSequence: sequence,
         suggestedAngle: subject.trim(),
         outreachUpdatedAt: now,
         outreachSource: "manual",
@@ -54,6 +74,7 @@ export async function POST(request: Request) {
       data: {
         outreachSubject: updated.outreachSubject,
         outreachBody: updated.outreachBody,
+        outreachSequence: updated.outreachSequence,
         outreachUpdatedAt: updated.outreachUpdatedAt,
         outreachSource: updated.outreachSource,
       },
