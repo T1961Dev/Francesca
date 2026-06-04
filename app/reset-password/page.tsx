@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation"
+import Link from "next/link"
 
 import { getCurrentUser } from "@/lib/auth"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -20,14 +20,40 @@ export default async function ResetPasswordPage({
   searchParams: Promise<{ error?: string }>
 }) {
   const user = await getCurrentUser()
-  if (!user) {
-    redirect(
-      `/forgot-password?error=${encodeURIComponent("Your reset link has expired. Request a new one.")}`
-    )
-  }
-
   const params = await searchParams
   const error = params.error?.trim() || null
+
+  if (!user) {
+    return (
+      <main className="flex min-h-svh items-center justify-center p-6">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Reset link expired</CardTitle>
+            <CardDescription>
+              Open the link from your email in one browser window, or request a
+              new reset link.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Alert variant="destructive">
+              <AlertDescription>
+                Your session could not be started from this link. Request a new
+                password reset email and try again in a private window.
+              </AlertDescription>
+            </Alert>
+            <p className="text-center text-sm">
+              <Link
+                href="/forgot-password"
+                className="underline underline-offset-4 hover:text-foreground"
+              >
+                Request a new reset link
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
+      </main>
+    )
+  }
 
   return (
     <main className="flex min-h-svh items-center justify-center p-6">

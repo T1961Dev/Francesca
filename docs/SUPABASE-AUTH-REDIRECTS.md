@@ -97,3 +97,11 @@ Built-in mailer ≈ 2 auth emails/hour. Use plus-addresses (`you+2@…`), wait, 
 ## Email link preloading
 
 Open reset/confirm links in a private window if the first click fails.
+
+## `ERR_TOO_MANY_REDIRECTS` on forgot-password / login
+
+The proxy must only forward Supabase params (`code`, `token_hash`, `error_code`) to
+`/auth/callback`, not app form messages (`?error=` on `/forgot-password`, `/login`, etc.).
+A redirect loop looked like: `/forgot-password?error=…` → `/auth/callback` → `/login?error=…` → repeat.
+
+After fixing, clear cookies for the site and retry.

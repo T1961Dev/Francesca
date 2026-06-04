@@ -38,6 +38,30 @@ function isExemptFromOnboarding(pathname: string) {
   return onboardingExempt.some((prefix) => pathname.startsWith(prefix))
 }
 
+/**
+ * Forward only Supabase auth query params to /auth/callback.
+ * Do NOT treat app form messages (`?error=`) as auth callbacks — that caused
+ * /forgot-password?error=… → /auth/callback → /login?error=… loops.
+ */
+function shouldForwardSupabaseAuthQueryToCallback(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl
+  if (pathname.startsWith("/auth/callback")) return false
+
+  const hasCode = searchParams.has("code")
+  const hasTokenHash = searchParams.has("token_hash")
+  const hasErrorCode = searchParams.has("error_code")
+
+  if (!hasCode && !hasTokenHash && !hasErrorCode) return false
+
+  // App routes use ?error= for validation; never hijack those unless Supabase sent code/token
+  const appFormPaths = ["/forgot-password", "/reset-password", "/onboarding"]
+  if (appFormPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return hasCode || hasTokenHash
+  }
+
+  return true
+}
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request })
 
@@ -73,20 +97,12 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(legacyUrl)
   }
 
-  if (!pathname.startsWith("/auth/callback")) {
+  if (shouldForwardSupabaseAuthQueryToCallback(request)) {
     const callbackUrl = request.nextUrl.clone()
-    let shouldRedirect = false
-
-    const authError =
-      request.nextUrl.searchParams.get("error_code") ??
-      request.nextUrl.searchParams.get("error")
-    if (authError) {
-      shouldRedirect = true
-    }
+    callbackUrl.pathname = "/auth/callback"
 
     const authCode = request.nextUrl.searchParams.get("code")
     if (authCode) {
-      shouldRedirect = true
       if (
         !callbackUrl.searchParams.get("type") &&
         !callbackUrl.searchParams.get("next")
@@ -96,35 +112,28 @@ export async function updateSession(request: NextRequest) {
     }
 
     const tokenHash = request.nextUrl.searchParams.get("token_hash")
-    if (tokenHash) {
-      shouldRedirect = true
-      if (!callbackUrl.searchParams.get("type")) {
-        callbackUrl.searchParams.set(
-          "type",
-          request.nextUrl.searchParams.get("type") ?? "email"
-        )
-      }
+    if (tokenHash && !callbackUrl.searchParams.get("type")) {
+      callbackUrl.searchParams.set(
+        "type",
+        request.nextUrl.searchParams.get("type") ?? "email"
+      )
     }
 
-    if (shouldRedirect) {
-      if (process.env.NODE_ENV !== "production") {
-        callbackUrl.pathname = "/auth/callback"
-        return NextResponse.redirect(callbackUrl)
-      }
+    if (process.env.NODE_ENV !== "production") {
+      return NextResponse.redirect(callbackUrl)
+    }
 
-      try {
-        const type =
-          callbackUrl.searchParams.get("type") ??
-          (authCode && !callbackUrl.searchParams.get("next") ? "signup" : undefined)
-        const target = buildPublicAuthCallbackRedirect(
-          callbackUrl.searchParams,
-          type ? { type } : undefined
-        )
-        return NextResponse.redirect(target)
-      } catch {
-        callbackUrl.pathname = "/auth/callback"
-        return NextResponse.redirect(callbackUrl)
-      }
+    try {
+      const type =
+        callbackUrl.searchParams.get("type") ??
+        (authCode && !callbackUrl.searchParams.get("next") ? "signup" : undefined)
+      const target = buildPublicAuthCallbackRedirect(
+        callbackUrl.searchParams,
+        type ? { type } : undefined
+      )
+      return NextResponse.redirect(target)
+    } catch {
+      return NextResponse.redirect(callbackUrl)
     }
   }
 
