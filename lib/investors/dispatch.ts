@@ -1,5 +1,6 @@
 import "server-only"
 
+import { getPublicAppUrl } from "@/lib/app-url"
 import { markInvestorJobFailed } from "@/lib/investors/job-errors"
 import { captureError } from "@/lib/sentry/capture"
 
@@ -10,10 +11,7 @@ import { captureError } from "@/lib/sentry/capture"
  */
 export function dispatchInvestorMatchingRun(jobId: string) {
   const secret = process.env.CRON_SECRET?.trim()
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    "http://127.0.0.1:3000"
+  const baseUrl = getPublicAppUrl()
 
   if (secret) {
     void fetch(`${baseUrl}/api/cron/investors/run/${jobId}`, {

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
+import { getPublicAppUrl } from "@/lib/app-url"
 import { requireAuth } from "@/lib/auth"
 import { DEFAULT_CURRENCY, isSupportedCurrency } from "@/lib/billing/currency"
 import { captureServerEvent } from "@/lib/posthog/server"
@@ -54,10 +55,7 @@ export async function POST(request: Request) {
       .eq("id", user.id)
       .maybeSingle()
 
-    const appUrl =
-      process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-      process.env.APP_URL?.trim() ||
-      ""
+    const appUrl = getPublicAppUrl()
 
     const returnPath =
       parsed.returnPath && parsed.returnPath.startsWith("/")

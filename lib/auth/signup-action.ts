@@ -50,6 +50,17 @@ export async function signupAction(formData: FormData) {
     )
   }
 
+  let emailRedirectTo: string
+  try {
+    emailRedirectTo = buildAuthCallbackUrl("signup")
+  } catch (e) {
+    const message =
+      e instanceof Error
+        ? e.message
+        : "App URL is not configured for production signup. Contact support."
+    redirect(`/signup?error=${encodeURIComponent(message)}`)
+  }
+
   const supabase = await createClient()
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -58,7 +69,7 @@ export async function signupAction(formData: FormData) {
       data: {
         full_name: input.fullName,
       },
-      emailRedirectTo: buildAuthCallbackUrl("signup"),
+      emailRedirectTo,
     },
   })
 

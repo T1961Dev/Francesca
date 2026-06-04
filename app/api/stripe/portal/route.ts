@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 
+import { getPublicAppUrl } from "@/lib/app-url"
 import { requireAuth } from "@/lib/auth"
 import { captureServerEvent } from "@/lib/posthog/server"
 import { captureError } from "@/lib/sentry/capture"
@@ -22,7 +23,7 @@ export async function POST() {
 
     const session = await getStripe().billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing`,
+      return_url: `${getPublicAppUrl()}/dashboard/billing`,
     })
 
     await captureServerEvent("customer_portal_opened", user.id)

@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient } from "@supabase/ssr"
 
+import { buildPublicAuthCallbackRedirect } from "@/lib/app-url"
 import { isOnboardingComplete } from "@/lib/onboarding"
 import { rememberAuthReturnPage } from "@/lib/routing/auth-return"
 import { resolveLegacyPathRedirect } from "@/lib/routing/legacy-paths"
@@ -106,8 +107,24 @@ export async function updateSession(request: NextRequest) {
     }
 
     if (shouldRedirect) {
-      callbackUrl.pathname = "/auth/callback"
-      return NextResponse.redirect(callbackUrl)
+      if (process.env.NODE_ENV !== "production") {
+        callbackUrl.pathname = "/auth/callback"
+        return NextResponse.redirect(callbackUrl)
+      }
+
+      try {
+        const type =
+          callbackUrl.searchParams.get("type") ??
+          (authCode && !callbackUrl.searchParams.get("next") ? "signup" : undefined)
+        const target = buildPublicAuthCallbackRedirect(
+          callbackUrl.searchParams,
+          type ? { type } : undefined
+        )
+        return NextResponse.redirect(target)
+      } catch {
+        callbackUrl.pathname = "/auth/callback"
+        return NextResponse.redirect(callbackUrl)
+      }
     }
   }
 

@@ -25,9 +25,20 @@ export async function resetPasswordAction(formData: FormData) {
     )
   }
 
+  let redirectTo: string
+  try {
+    redirectTo = buildAuthCallbackUrl("recovery")
+  } catch (e) {
+    const message =
+      e instanceof Error
+        ? e.message
+        : "App URL is not configured for password reset. Contact support."
+    redirect(`/forgot-password?error=${encodeURIComponent(message)}`)
+  }
+
   const supabase = await createClient()
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: buildAuthCallbackUrl("recovery"),
+    redirectTo,
   })
 
   if (error) {

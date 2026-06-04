@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
 
+import { getAuthRedirectOrigin } from "@/lib/app-url"
 import { formatSupabaseCallbackError } from "@/lib/auth/supabase-callback-errors"
 import {
   exchangeAuthCallback,
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get("next") ?? searchParams.get("redirectTo")
 
   if (!code && !tokenHash) {
-    const { origin } = request.nextUrl
+    const origin = getAuthRedirectOrigin(request)
     const message = formatSupabaseCallbackError(searchParams)
     const target = type === "recovery" ? "login" : "signup"
     return NextResponse.redirect(

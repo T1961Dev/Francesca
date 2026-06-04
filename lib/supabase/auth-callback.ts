@@ -1,13 +1,18 @@
 import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
-import { getPublicAppUrl } from "@/lib/app-url"
+import {
+  assertSafeAppUrlForAuth,
+  getAuthRedirectOrigin,
+  getPublicAppUrl,
+} from "@/lib/app-url"
 import { formatSupabaseCallbackError } from "@/lib/auth/supabase-callback-errors"
 
 /** Where password-reset emails should land after the code exchange. */
 export const PASSWORD_RESET_NEXT = "/reset-password"
 
 export function buildAuthCallbackUrl(type?: "recovery" | "signup") {
+  assertSafeAppUrlForAuth("buildAuthCallbackUrl")
   const base = `${getPublicAppUrl()}/auth/callback`
   const params = new URLSearchParams()
 
@@ -35,7 +40,7 @@ export async function exchangeAuthCallback(
     next?: string | null
   }
 ) {
-  const { origin } = request.nextUrl
+  const origin = getAuthRedirectOrigin(request)
   const destination = resolvePostAuthPath(options.type, options.next)
   let response = NextResponse.redirect(`${origin}${destination}`)
 
@@ -126,7 +131,7 @@ export function redirectAuthCallbackError(
   request: NextRequest,
   searchParams: URLSearchParams
 ) {
-  const { origin } = request.nextUrl
+  const origin = getAuthRedirectOrigin(request)
   const message = formatSupabaseCallbackError(searchParams)
   const code = searchParams.get("error_code") ?? searchParams.get("error")
   const target =

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
 
+import { getPublicAppUrl } from "@/lib/app-url"
 import { captureServerEvent } from "@/lib/posthog/server"
 import { captureError } from "@/lib/sentry/capture"
 import { getStripe } from "@/lib/stripe/client"
@@ -22,10 +23,7 @@ export async function GET(request: NextRequest) {
   const next = url.searchParams.get("next") || "/dashboard/billing"
   const safeNext = next.startsWith("/") ? next : "/dashboard/billing"
 
-  const appUrl =
-    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
-    process.env.APP_URL?.trim() ||
-    url.origin
+  const appUrl = getPublicAppUrl()
 
   const finalRedirect = (status: "success" | "pending" | "error") => {
     const target = new URL(safeNext, appUrl)
