@@ -6,6 +6,7 @@ import {
   getAuthRedirectOrigin,
   getPublicAppUrl,
 } from "@/lib/app-url"
+import { buildRecoveryCallbackUrl } from "@/lib/auth/recovery-redirect"
 import { formatSupabaseCallbackError } from "@/lib/auth/supabase-callback-errors"
 
 /** Where password-reset emails should land after the code exchange. */
@@ -13,18 +14,17 @@ export const PASSWORD_RESET_NEXT = "/reset-password"
 
 export function buildAuthCallbackUrl(type?: "recovery" | "signup") {
   assertSafeAppUrlForAuth("buildAuthCallbackUrl")
-  const base = `${getPublicAppUrl()}/auth/callback`
-  const params = new URLSearchParams()
 
   if (type === "recovery") {
-    params.set("type", "recovery")
-    params.set("next", PASSWORD_RESET_NEXT)
-  } else if (type === "signup") {
-    params.set("type", "signup")
+    return buildRecoveryCallbackUrl(getPublicAppUrl)
   }
 
-  const query = params.toString()
-  return query ? `${base}?${query}` : base
+  const base = `${getPublicAppUrl()}/auth/callback`
+  if (type === "signup") {
+    return `${base}?type=signup`
+  }
+
+  return base
 }
 
 /**
@@ -75,27 +75,19 @@ export async function exchangeAuthCallback(
     })
 
     if (error) {
-      return redirectWithError(
-        origin,
-        error.message,
-        options.type === "recovery" ? "login" : "signup"
-      )
+      return redirectWithError(origin, error.message, options.type)
     }
   } else if (options.code) {
     const { error } = await supabase.auth.exchangeCodeForSession(options.code)
 
     if (error) {
-      return redirectWithError(
-        origin,
-        error.message,
-        options.type === "recovery" ? "login" : "signup"
-      )
+      return redirectWithError(origin, error.message, options.type)
     }
   } else {
     return redirectWithError(
       origin,
       "Missing or expired confirmation code. Request a new signup email or try signing in.",
-      options.type === "recovery" ? "login" : "signup"
+      options.type
     )
   }
 
@@ -120,10 +112,24 @@ function resolvePostAuthPath(
 function redirectWithError(
   origin: string,
   message: string,
-  target: "login" | "signup" = "signup"
+  flowType?: string | null
 ) {
+  const lower = message.toLowerCase()
+  const isPkce =
+    lower.includes("code challenge") || lower.includes("code verifier")
+  const isRecovery =
+    flowType === "recovery" ||
+    lower.includes("password") ||
+    lower.includes("recovery")
+
+  const path = isRecovery || isPkce ? "forgot-password" : flowType === "signup" ? "signup" : "login"
+
+  const hint = isPkce
+    ? "Open the reset link in the same browser where you requested it, or request a new link in a private window."
+    : message
+
   return NextResponse.redirect(
-    `${origin}/${target}?error=${encodeURIComponent(message)}`
+    `${origin}/${path}?error=${encodeURIComponent(hint)}`
   )
 }
 
@@ -133,10 +139,5 @@ export function redirectAuthCallbackError(
 ) {
   const origin = getAuthRedirectOrigin(request)
   const message = formatSupabaseCallbackError(searchParams)
-  const code = searchParams.get("error_code") ?? searchParams.get("error")
-  const target =
-    code === "otp_expired" || searchParams.get("type") === "signup"
-      ? "signup"
-      : "login"
-  return redirectWithError(origin, message, target)
+  return redirectWithError(origin, message, searchParams.get("type"))
 }

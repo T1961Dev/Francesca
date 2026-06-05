@@ -6,7 +6,9 @@ import { z } from "zod"
 import { formatAuthErrorMessage } from "@/lib/auth/auth-error-message"
 import { rateLimit } from "@/lib/auth/action-shared"
 import { createClient } from "@/lib/supabase/server"
-import { buildAuthCallbackUrl } from "@/lib/supabase/auth-callback"
+import { PASSWORD_RESET_NEXT } from "@/lib/supabase/auth-callback"
+import { buildRecoveryCallbackUrl } from "@/lib/auth/recovery-redirect"
+import { getPublicAppUrl } from "@/lib/app-url"
 
 export async function resetPasswordAction(formData: FormData) {
   if (!(await rateLimit("forgot-password", formData.get("email")))) {
@@ -27,7 +29,7 @@ export async function resetPasswordAction(formData: FormData) {
 
   let redirectTo: string
   try {
-    redirectTo = buildAuthCallbackUrl("recovery")
+    redirectTo = buildRecoveryCallbackUrl(getPublicAppUrl)
   } catch (e) {
     const message =
       e instanceof Error

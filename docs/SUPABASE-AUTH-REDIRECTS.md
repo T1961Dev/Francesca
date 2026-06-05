@@ -71,10 +71,16 @@ http://localhost:3000/auth/callback/**
 
 ## Password reset flow
 
-1. User submits email on `/forgot-password`
+1. User submits email on `/forgot-password` (**browser client** — stores PKCE verifier in cookies)
 2. Email link → Supabase verify → `https://francesca-sy16.onrender.com/auth/callback?type=recovery&next=/reset-password&code=...`
 3. App exchanges `code` → session → `/reset-password`
 4. New password → sign in at `/login`
+
+**PKCE / “code challenge does not match”**
+
+- Request the reset on `/forgot-password` in the **same browser** you will use to open the email link.
+- Open the link once, preferably in a **private window** (mail apps sometimes prefetch links).
+- If it still fails, request a **new** reset email after deploy.
 
 ## Signup confirmation
 

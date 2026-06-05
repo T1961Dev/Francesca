@@ -62,6 +62,21 @@ function shouldForwardSupabaseAuthQueryToCallback(request: NextRequest) {
   return true
 }
 
+function inferAuthCallbackType(request: NextRequest) {
+  const { pathname, searchParams } = request.nextUrl
+
+  if (searchParams.get("type")) return searchParams.get("type")
+
+  if (searchParams.get("next") === "/reset-password") return "recovery"
+
+  if (pathname.startsWith("/signup")) return "signup"
+  if (pathname.startsWith("/forgot-password") || pathname.startsWith("/reset-password")) {
+    return "recovery"
+  }
+
+  return null
+}
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request })
 
@@ -102,12 +117,16 @@ export async function updateSession(request: NextRequest) {
     callbackUrl.pathname = "/auth/callback"
 
     const authCode = request.nextUrl.searchParams.get("code")
-    if (authCode) {
+    if (authCode && !callbackUrl.searchParams.get("type")) {
+      const inferred = inferAuthCallbackType(request)
+      if (inferred) {
+        callbackUrl.searchParams.set("type", inferred)
+      }
       if (
-        !callbackUrl.searchParams.get("type") &&
+        inferred === "recovery" &&
         !callbackUrl.searchParams.get("next")
       ) {
-        callbackUrl.searchParams.set("type", "signup")
+        callbackUrl.searchParams.set("next", "/reset-password")
       }
     }
 
@@ -124,9 +143,9 @@ export async function updateSession(request: NextRequest) {
     }
 
     try {
+      const inferred = inferAuthCallbackType(request)
       const type =
-        callbackUrl.searchParams.get("type") ??
-        (authCode && !callbackUrl.searchParams.get("next") ? "signup" : undefined)
+        callbackUrl.searchParams.get("type") ?? inferred ?? undefined
       const target = buildPublicAuthCallbackRedirect(
         callbackUrl.searchParams,
         type ? { type } : undefined
