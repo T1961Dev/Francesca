@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
 import { canUseFinancialModel, getUserPlan } from "@/lib/access"
+import { fetchLatestDeckFinancialPrefill } from "@/lib/deck/queries.server"
 import { logOpenAiCost } from "@/lib/costs/track"
 import { generateFinancialModel } from "@/lib/openai/financial-model"
 import { captureServerEvent } from "@/lib/posthog/server"
@@ -42,22 +43,12 @@ export async function POST(request: Request) {
 
     await captureServerEvent("financial_model_started", user.id, { plan })
 
-    const { data: latestDeck } = await supabase
-      .from("deck_analyses")
-      .select("summary, financial_signals")
-      .eq("user_id", user.id)
-      .eq("status", "completed")
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle()
+    const latestDeck = await fetchLatestDeckFinancialPrefill()
 
     const body = await request.json()
     const result = await generateFinancialModel(body, {
-      deckSummary: latestDeck?.summary ? String(latestDeck.summary) : null,
-      deckFinancialSignals:
-        latestDeck?.financial_signals && typeof latestDeck.financial_signals === "object"
-          ? (latestDeck.financial_signals as Record<string, unknown>)
-          : null,
+      deckSummary: latestDeck?.summary ?? null,
+      deckFinancialSignals: latestDeck?.financialSignals ?? null,
     })
     const { data, error } = await supabase
       .from("financial_models")

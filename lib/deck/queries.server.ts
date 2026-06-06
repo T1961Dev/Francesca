@@ -27,28 +27,27 @@ export async function listDeckAnalyses(limit = 8): Promise<DeckAnalysisRow[]> {
   return Array.isArray(data) ? (data as DeckAnalysisRow[]) : []
 }
 
-/** Latest completed deck analysis with financial signals for model prefill. */
+/** Latest completed deck analysis with financial signals for model prefill (paid plans). */
 export async function fetchLatestDeckFinancialPrefill(): Promise<{
   summary: string | null
   financialSignals: Record<string, unknown> | null
 } | null> {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("deck_analyses")
-    .select("summary, financial_signals")
-    .eq("status", "completed")
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle()
+  const { data, error } = await supabase.rpc("fetch_latest_deck_financial_prefill")
 
   if (error) throw error
-  if (!data) return null
+  if (!data || typeof data !== "object") return null
+
+  const row = data as {
+    summary?: unknown
+    financial_signals?: unknown
+  }
 
   return {
-    summary: data.summary ? String(data.summary) : null,
+    summary: row.summary ? String(row.summary) : null,
     financialSignals:
-      data.financial_signals && typeof data.financial_signals === "object"
-        ? (data.financial_signals as Record<string, unknown>)
+      row.financial_signals && typeof row.financial_signals === "object"
+        ? (row.financial_signals as Record<string, unknown>)
         : null,
   }
 }

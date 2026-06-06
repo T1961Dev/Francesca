@@ -1,8 +1,9 @@
-import { after, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
 import { ensureProfile, getCurrentUser, getProfile } from "@/lib/auth"
 import { isOnboardingComplete } from "@/lib/onboarding"
 import { captureError } from "@/lib/sentry/capture"
+import { queueWelcomeEmailIfNeeded } from "@/lib/resend/emails"
 import { createClient } from "@/lib/supabase/server"
 
 /**
@@ -30,20 +31,17 @@ export async function POST() {
     return NextResponse.json({ redirect: "/onboarding" })
   }
 
-  if (profile && profile.welcome_email_sent === false && authEmail) {
-    after(async () => {
-      try {
-        const { queueWelcomeEmailIfNeeded } = await import("@/lib/resend/emails")
-        await queueWelcomeEmailIfNeeded({
-          userId: user.id,
-          email: authEmail,
-          name: profile.full_name ?? user.user_metadata?.full_name ?? null,
-          welcomeEmailSent: profile.welcome_email_sent,
-        })
-      } catch (error) {
-        captureError(error, { route: "dashboard-welcome-email" })
-      }
-    })
+  if (profile && !profile.welcome_email_sent && authEmail) {
+    try {
+      await queueWelcomeEmailIfNeeded({
+        userId: user.id,
+        email: authEmail,
+        name: profile.full_name ?? user.user_metadata?.full_name ?? null,
+        welcomeEmailSent: profile.welcome_email_sent,
+      })
+    } catch (error) {
+      captureError(error, { route: "dashboard-welcome-email" })
+    }
   }
 
   return NextResponse.json({

@@ -1,6 +1,5 @@
 "use server"
 
-import { after } from "next/server"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
@@ -59,18 +58,16 @@ export async function saveOnboardingStep(formData: FormData) {
       .eq("id", user.id)
       .maybeSingle()
 
-    after(async () => {
-      try {
-        await queueWelcomeEmailIfNeeded({
-          userId: user.id,
-          email,
-          name: profileRow?.full_name ?? user.user_metadata?.full_name ?? null,
-          welcomeEmailSent: profileRow?.welcome_email_sent,
-        })
-      } catch (error) {
-        captureError(error, { route: "onboarding-welcome-email" })
-      }
-    })
+    try {
+      await queueWelcomeEmailIfNeeded({
+        userId: user.id,
+        email,
+        name: profileRow?.full_name ?? user.user_metadata?.full_name ?? null,
+        welcomeEmailSent: profileRow?.welcome_email_sent,
+      })
+    } catch (error) {
+      captureError(error, { route: "onboarding-welcome-email" })
+    }
 
     redirect("/dashboard?onboarded=1")
   }
