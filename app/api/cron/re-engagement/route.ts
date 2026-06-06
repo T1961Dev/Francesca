@@ -58,6 +58,7 @@ async function handle(request: Request) {
           type: "re_engagement",
           subject: String(row.subject),
           html: body?.html ?? "",
+          idempotencyKey: `re_engagement/${userId}/${row.id}`,
         })
         await supabase
           .from("re_engagement_emails")

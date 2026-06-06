@@ -6,14 +6,45 @@ import {
   upgradePromptEmail,
   welcomeEmail,
 } from "@/lib/resend/templates"
-import { sendTrackedEmail } from "@/lib/resend/send"
+import { sendTrackedEmail, type EmailType } from "@/lib/resend/send"
 import { createAdminClient } from "@/lib/supabase/admin"
+
+async function hasEmailEvent(
+  userId: string,
+  emailType: EmailType,
+  analysisId?: string | null
+) {
+  const admin = createAdminClient()
+  let query = admin
+    .from("email_events")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("email_type", emailType)
+
+  if (analysisId) {
+    query = query.filter("metadata->>analysisId", "eq", analysisId)
+  }
+
+  const { data } = await query.maybeSingle()
+  return Boolean(data)
+}
 
 export async function sendWelcomeEmail(args: {
   userId: string
   to: string
   name?: string | null
 }) {
+  const admin = createAdminClient()
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("welcome_email_sent")
+    .eq("id", args.userId)
+    .maybeSingle()
+
+  if (profile?.welcome_email_sent) {
+    return { skipped: true as const }
+  }
+
   await sendTrackedEmail({
     userId: args.userId,
     to: args.to,
@@ -22,11 +53,30 @@ export async function sendWelcomeEmail(args: {
     idempotencyKey: `welcome/${args.userId}`,
   })
 
-  const admin = createAdminClient()
   await admin
     .from("profiles")
     .update({ welcome_email_sent: true })
     .eq("id", args.userId)
+
+  return { skipped: false as const }
+}
+
+/** Called after onboarding step 5 and from dashboard bootstrap. */
+export async function queueWelcomeEmailIfNeeded(args: {
+  userId: string
+  email: string
+  name?: string | null
+  welcomeEmailSent?: boolean | null
+}) {
+  if (args.welcomeEmailSent || !args.email.trim()) {
+    return { skipped: true as const }
+  }
+
+  return sendWelcomeEmail({
+    userId: args.userId,
+    to: args.email.trim(),
+    name: args.name,
+  })
 }
 
 export async function sendScoreReadyEmail(args: {
@@ -38,15 +88,9 @@ export async function sendScoreReadyEmail(args: {
   const idempotencyKey = `score_ready/${args.userId}/${args.analysisId}`
 
   const admin = createAdminClient()
-  const { data: existing } = await admin
-    .from("email_events")
-    .select("id")
-    .eq("user_id", args.userId)
-    .eq("email_type", "score_ready")
-    .contains("metadata", { analysisId: args.analysisId })
-    .maybeSingle()
-
-  if (existing) return { skipped: true as const }
+  if (await hasEmailEvent(args.userId, "score_ready", args.analysisId)) {
+    return { skipped: true as const }
+  }
 
   await sendTrackedEmail({
     userId: args.userId,
@@ -75,15 +119,9 @@ export async function sendUpgradePromptEmail(args: {
   const admin = createAdminClient()
 
   if (args.analysisId) {
-    const { data: existing } = await admin
-      .from("email_events")
-      .select("id")
-      .eq("user_id", args.userId)
-      .eq("email_type", "upgrade_prompt")
-      .contains("metadata", { analysisId: args.analysisId })
-      .maybeSingle()
-
-    if (existing) return { skipped: true as const }
+    if (await hasEmailEvent(args.userId, "upgrade_prompt", args.analysisId)) {
+      return { skipped: true as const }
+    }
   } else {
     const { data: profile } = await admin
       .from("profiles")
@@ -116,16 +154,7 @@ export async function sendUpgradePromptEmail(args: {
 }
 
 export async function hasSentScoreReady(userId: string, analysisId: string) {
-  const admin = createAdminClient()
-  const { data } = await admin
-    .from("email_events")
-    .select("id")
-    .eq("user_id", userId)
-    .eq("email_type", "score_ready")
-    .contains("metadata", { analysisId })
-    .maybeSingle()
-
-  return Boolean(data)
+  return hasEmailEvent(userId, "score_ready", analysisId)
 }
 
 export { reEngagementEmail }

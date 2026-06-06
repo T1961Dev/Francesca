@@ -14,8 +14,8 @@ export function welcomeEmail(name?: string | null): EmailTemplate {
     subject: "Welcome to RaiseWise",
     html: `
       <p>Welcome${greeting}.</p>
-      <p>Take 2 minutes to complete your founder profile, then upload your deck for an instant investor-readiness score.</p>
-      <p>${emailButton("Start onboarding", appUrl("/onboarding"))}</p>
+      <p>Your founder profile is set. Upload your pitch deck next to get an instant investor-readiness score and see what to fix before you fundraise.</p>
+      <p>${emailButton("Upload your deck", appUrl("/dashboard/deck-analyser"))}</p>
       <p>${BRAND_SIGNOFF}</p>
     `,
   }

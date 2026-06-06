@@ -1,9 +1,12 @@
 "use server"
 
+import { after } from "next/server"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
 import { requireAuth } from "@/lib/auth"
+import { captureError } from "@/lib/sentry/capture"
+import { queueWelcomeEmailIfNeeded } from "@/lib/resend/emails"
 import { CURRENCIES, SECTORS, STAGES } from "@/lib/onboarding"
 import { mirrorProfileFields } from "@/lib/profile/prefill"
 import { createClient } from "@/lib/supabase/server"
@@ -49,6 +52,26 @@ export async function saveOnboardingStep(formData: FormData) {
   }
 
   if (step === "5") {
+    const email = user.email?.trim() ?? ""
+    const { data: profileRow } = await supabase
+      .from("profiles")
+      .select("welcome_email_sent, full_name")
+      .eq("id", user.id)
+      .maybeSingle()
+
+    after(async () => {
+      try {
+        await queueWelcomeEmailIfNeeded({
+          userId: user.id,
+          email,
+          name: profileRow?.full_name ?? user.user_metadata?.full_name ?? null,
+          welcomeEmailSent: profileRow?.welcome_email_sent,
+        })
+      } catch (error) {
+        captureError(error, { route: "onboarding-welcome-email" })
+      }
+    })
+
     redirect("/dashboard?onboarded=1")
   }
 

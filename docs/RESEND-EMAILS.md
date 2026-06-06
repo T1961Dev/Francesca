@@ -4,20 +4,31 @@ RaiseWise uses [Resend](https://resend.com/docs/send-with-nextjs) for product em
 
 ## Environment
 
+**Render + local (`.env.local`, never commit):**
+
 ```env
 RESEND_API_KEY=re_...
 RESEND_FROM_EMAIL="RaiseWise <hello@yourdomain.com>"
 RESEND_REPLY_TO=support@yourdomain.com   # optional
-CRON_SECRET=...                          # re-engagement cron
+CRON_SECRET=...                          # required for cron routes
+ADMIN_EMAILS=you@company.com             # health-check digest
 ```
 
-Domain must be verified in the Resend dashboard.
+Domain must be verified in [Resend → Domains](https://resend.com/domains). For local smoke tests only you may use `onboarding@resend.dev` (not for production).
+
+### Verify after deploy
+
+```
+GET https://your-app.com/api/health/resend
+```
+
+Expect `"ok": true` with `apiKeyPresent` and `fromPresent` true.
 
 ## Email catalogue (product scope)
 
 | Type | When | Deduped |
 |------|------|---------|
-| `welcome` | First dashboard bootstrap after onboarding complete | `welcome_email_sent` + idempotency `welcome/{userId}` |
+| `welcome` | Onboarding step 5 complete + dashboard bootstrap fallback | `welcome_email_sent` + idempotency `welcome/{userId}` |
 | `score_ready` | Deck analysis completes | Per `analysisId` in `email_events` |
 | `upgrade_prompt` | Free user dismisses paywall (Maybe later) | Per `analysisId`; sets `upgrade_prompt_sent` |
 | `re_engagement` | 24h after paywall dismiss (still free) | One row per user (`re_engagement_emails`) |
@@ -46,6 +57,17 @@ Domain must be verified in the Resend dashboard.
 - `POST /api/resend/score-ready` — body `{ analysisId, score? }`  
 - `POST /api/resend/upgrade-prompt` — body `{ analysisId? }`  
 
-## Cron (Vercel)
+## Cron (Vercel or Render)
 
-See `vercel.json`: `re-engagement` every 5 minutes, `health-check` daily 08:00 UTC.
+`vercel.json` schedules crons on **Vercel only**. On **Render**, use [cron-job.org](https://cron-job.org) or Render Cron Jobs:
+
+| Schedule | URL | Header |
+|----------|-----|--------|
+| `*/5 * * * *` | `https://your-app.com/api/cron/re-engagement` | `Authorization: Bearer {CRON_SECRET}` |
+| `0 8 * * *` | `https://your-app.com/api/cron/health-check` | same |
+
+`CRON_SECRET` must be set or cron routes return 401.
+
+## Auth emails (Supabase)
+
+Signup confirm and password reset are sent by **Supabase Auth** (not Resend) unless you configure [Resend SMTP in Supabase](https://resend.com/docs/send-with-supabase-smtp).

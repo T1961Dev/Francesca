@@ -33,11 +33,12 @@ export async function POST() {
   if (profile && profile.welcome_email_sent === false && authEmail) {
     after(async () => {
       try {
-        const { sendWelcomeEmail } = await import("@/lib/resend/emails")
-        await sendWelcomeEmail({
+        const { queueWelcomeEmailIfNeeded } = await import("@/lib/resend/emails")
+        await queueWelcomeEmailIfNeeded({
           userId: user.id,
-          to: authEmail,
+          email: authEmail,
           name: profile.full_name ?? user.user_metadata?.full_name ?? null,
+          welcomeEmailSent: profile.welcome_email_sent,
         })
       } catch (error) {
         captureError(error, { route: "dashboard-welcome-email" })
