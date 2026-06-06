@@ -68,6 +68,6 @@ Expect `"ok": true` with `apiKeyPresent` and `fromPresent` true.
 
 `CRON_SECRET` must be set or cron routes return 401.
 
-## Auth emails (Supabase)
+## Auth emails (Supabase → Resend SMTP)
 
-Signup confirm and password reset are sent by **Supabase Auth** (not Resend) unless you configure [Resend SMTP in Supabase](https://resend.com/docs/send-with-supabase-smtp).
+Signup confirm and password reset are sent by **Supabase Auth**. Point Supabase at Resend SMTP so auth and product mail share one provider — see `docs/SUPABASE-AUTH-REDIRECTS.md` (Resend SMTP section).

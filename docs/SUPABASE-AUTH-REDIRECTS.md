@@ -96,9 +96,65 @@ If you see `error_code=otp_expired`:
 2. **Redeploy** and sign up with a **new email** (old emails still have the old `redirect_to`).
 3. Open the link in **incognito** (mail clients often prefetch links).
 
-## Email rate limit (Supabase)
+## Resend SMTP for Supabase Auth (recommended)
 
-Built-in mailer ≈ 2 auth emails/hour. Use plus-addresses (`you+2@…`), wait, or disable **Confirm email** for dev-only testing.
+Use the **same Resend account** as product emails (`docs/RESEND-EMAILS.md`). Auth mail (confirm signup, reset password) goes through Supabase → Resend SMTP; welcome / score-ready / upgrade emails still use the Resend SDK in the app.
+
+Guide: [Send emails using Supabase with SMTP](https://resend.com/docs/send-with-supabase-smtp)
+
+### Prerequisites
+
+1. [Verify your domain](https://resend.com/domains) in Resend (e.g. `raisewise.app`).
+2. Create or reuse a Resend API key (store in Render + `.env.local` as `RESEND_API_KEY` for the app).
+
+### Supabase dashboard
+
+**Authentication → Email → SMTP Settings** (enable custom SMTP)
+
+| Field | Value |
+|-------|--------|
+| **Enable custom SMTP** | On |
+| **Host** | `smtp.resend.com` |
+| **Port** | `465` |
+| **Username** | `resend` |
+| **Password** | Your Resend API key (`re_…`) |
+| **Sender email** | Address on your verified domain, e.g. `hello@raisewise.app` |
+| **Sender name** | `RaiseWise` |
+
+Use the **same sender** as `RESEND_FROM_EMAIL` in Render so auth and product mail match:
+
+```env
+RESEND_FROM_EMAIL="RaiseWise <hello@raisewise.app>"
+```
+
+Click **Save**. Supabase sends all auth emails via Resend after this.
+
+### Still required (SMTP does not fix redirects)
+
+- **Authentication → URL configuration**: Site URL + `/auth/callback` redirect URLs (see above).
+- **Render**: `APP_URL` / `NEXT_PUBLIC_APP_URL` set to production host.
+
+### Optional: email templates
+
+**Authentication → Email → Templates** — edit Confirm signup / Reset password copy and subjects. Links must keep Supabase placeholders (`{{ .ConfirmationURL }}`, etc.).
+
+### Test
+
+1. Request password reset or sign up with a **new** email.
+2. In [Resend → Emails](https://resend.com/emails), confirm the message was sent.
+3. Open the link in a **private window**; it should hit `/auth/callback` on your production host.
+
+### Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| Auth email not received | Resend dashboard → check bounces; domain DNS verified |
+| Link still `localhost:10000` | Fix Supabase Site URL + Render `APP_URL`, redeploy, **new** email |
+| SMTP auth failed | Password = full API key; username exactly `resend`; port `465` |
+
+## Email rate limit (built-in Supabase mailer only)
+
+Without custom SMTP, built-in mailer ≈ 2 auth emails/hour. **Resend SMTP removes that cap** for auth mail.
 
 ## Email link preloading
 
