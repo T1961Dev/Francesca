@@ -54,21 +54,32 @@ async function handle(request: Request) {
 
     const subject = `RaiseWise health check — ${new Date().toLocaleDateString("en-GB")}`
     const admins = getAdminEmails()
+    const results: { to: string; ok: boolean; error?: string }[] = []
+
     for (const to of admins) {
       try {
         await sendTrackedEmail({
-          userId: "00000000-0000-0000-0000-000000000000",
           to,
           type: "health_check",
           subject,
           html,
+          idempotencyKey: `health_check/${to}/${new Date().toISOString().slice(0, 10)}`,
         })
+        results.push({ to, ok: true })
       } catch (error) {
+        const message = error instanceof Error ? error.message : "Send failed"
         captureError(error, { route: "cron-health-check-send", to })
+        results.push({ to, ok: false, error: message })
       }
     }
 
-    return NextResponse.json({ success: true, data: { admins: admins.length } })
+    const sent = results.filter((r) => r.ok).length
+    const failed = results.filter((r) => !r.ok).length
+
+    return NextResponse.json({
+      success: failed === 0,
+      data: { admins: admins.length, sent, failed, results },
+    })
   } catch (error) {
     captureError(error, { route: "cron-health-check" })
     return NextResponse.json(

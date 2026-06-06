@@ -17,7 +17,8 @@ export type EmailType =
   | "health_check"
 
 type SendArgs = {
-  userId: string
+  /** Omit for system emails (e.g. admin health check) — must not be a fake UUID. */
+  userId?: string | null
   to: string
   type: EmailType
   metadata?: Record<string, unknown>
@@ -44,7 +45,8 @@ export async function sendTrackedEmail(args: SendArgs) {
 
   const text = htmlToPlainText(html)
   const idempotencyKey =
-    args.idempotencyKey ?? `${args.type}/${args.userId}/${subject.slice(0, 32)}`
+    args.idempotencyKey ??
+    `${args.type}/${args.userId ?? "system"}/${subject.slice(0, 32)}`
 
   const replyTo =
     process.env.RESEND_REPLY_TO?.trim() ||
@@ -64,14 +66,16 @@ export async function sendTrackedEmail(args: SendArgs) {
       replyTo,
       tags: [
         { name: "email_type", value: args.type },
-        { name: "user_id", value: args.userId.slice(0, 36) },
+        ...(args.userId
+          ? [{ name: "user_id", value: args.userId.slice(0, 36) }]
+          : []),
       ],
     },
     { idempotencyKey }
   )
 
-  await supabase.from("email_events").insert({
-    user_id: args.userId,
+  const { error: insertError } = await supabase.from("email_events").insert({
+    user_id: args.userId ?? null,
     email_type: args.type,
     sent_to: args.to,
     status: error ? "failed" : "sent",
@@ -82,6 +86,10 @@ export async function sendTrackedEmail(args: SendArgs) {
       idempotencyKey,
     },
   })
+
+  if (insertError) {
+    throw new Error(`email_events insert failed: ${insertError.message}`)
+  }
 
   if (error) {
     throw new Error(error.message)
