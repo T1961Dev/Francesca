@@ -7,6 +7,7 @@ import { analyseDeckText } from "@/lib/openai/deck-analysis"
 import { captureServerEvent } from "@/lib/posthog/server"
 import { sendScoreReadyEmail } from "@/lib/resend/emails"
 import { captureError } from "@/lib/sentry/capture"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { createClient } from "@/lib/supabase/server"
 import { attemptUsageIncrement, rollbackUsageIncrement } from "@/lib/usage/track"
 import { logOpenAiCost } from "@/lib/costs/track"
@@ -125,7 +126,7 @@ export async function POST(request: Request) {
       analysis,
     })
 
-    const { error: analysisError } = await supabase
+    const { error: analysisError } = await createAdminClient()
       .from("deck_analyses")
       .insert(insertRow)
 

@@ -1,0 +1,1079 @@
+{
+  "company": {
+    "id": "gridwise-carbon",
+    "name": "Gridwise Carbon",
+    "sector": "ClimateTech / Carbon Accounting / B2B SaaS",
+    "expectedTerms": [
+      "climate",
+      "carbon",
+      "sustainability",
+      "emissions",
+      "accounting",
+      "saas"
+    ],
+    "badTerms": [
+      "consumer social",
+      "biotech",
+      "crypto"
+    ],
+    "stage": "pre-seed",
+    "geography": "UK / Europe / Worldwide",
+    "raiseAmount": 700000,
+    "traction": "GBP 5k MRR, 15 pilot customers",
+    "profile": {
+      "company_name": "Gridwise Carbon",
+      "sector": "ClimateTech / Carbon Accounting / B2B SaaS",
+      "industry": "ClimateTech",
+      "stage": "pre-seed",
+      "funding_stage": "pre-seed",
+      "geography": "United Kingdom / Europe / Worldwide",
+      "location": "United Kingdom",
+      "target_raise": 700000,
+      "full_name": "QA Founder",
+      "plan": "pro",
+      "description": "Carbon accounting and supplier emissions tracking for SMEs."
+    },
+    "financialInput": {
+      "companyName": "Gridwise Carbon",
+      "businessModel": "B2B SaaS subscription with implementation support",
+      "industry": "ClimateTech / carbon accounting",
+      "currentMonthlyRevenue": 5000,
+      "currentMonthlyBurn": 39000,
+      "currentCashBalance": 150000,
+      "currentRunway": 3.8,
+      "raiseAmount": 700000,
+      "monthlyRevenueGrowth": 8,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 76,
+      "churn": 4,
+      "currentCustomers": 15,
+      "targetCustomers": 120,
+      "averageRevenuePerCustomer": 333,
+      "teamSize": 5,
+      "plannedHires": 7,
+      "fundingGoal": "Move pilot customers into paid recurring carbon accounting contracts.",
+      "targetMarket": "UK and European SMEs with supplier-emissions reporting pressure.",
+      "notes": "Climate-specific adoption may be seasonal and compliance-led."
+    },
+    "deckText": "Gridwise Carbon Pitch Deck\n\nSector: ClimateTech / Carbon Accounting / B2B SaaS\n\nStage: pre-seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 700,000\n\nTraction: GBP 5k MRR, 15 pilot customers\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Carbon accounting and supplier emissions tracking for SMEs.\n\nBusiness model: B2B SaaS subscription with implementation support.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 5000, burn 39000, cash 150000, gross margin 76%.\n\nInvestor ask: Raising GBP 700,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires."
+  },
+  "validations": {
+    "pass": true,
+    "projectionMonths": 36,
+    "chartLengthsOk": true,
+    "finalRevenue": 37761,
+    "maxRevenue": 88097,
+    "hasNarrative": true,
+    "hasInvestorSummary": true,
+    "assumptionCount": 10,
+    "riskCount": 5,
+    "expectedTermsFound": [
+      "carbon",
+      "emissions",
+      "accounting",
+      "saas"
+    ],
+    "runwayApproxIssues": 0,
+    "businessModelAdapted": true,
+    "consumerMrrOverfit": false,
+    "fintechInventedRevenue": false
+  },
+  "result": {
+    "input": {
+      "companyName": "Gridwise Carbon",
+      "businessModel": "B2B SaaS subscription with implementation support",
+      "industry": "ClimateTech / carbon accounting",
+      "currentMonthlyRevenue": 5000,
+      "currentMonthlyBurn": 39000,
+      "currentCashBalance": 150000,
+      "currentRunway": 3.8,
+      "raiseAmount": 700000,
+      "monthlyRevenueGrowth": 8,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 76,
+      "churn": 4,
+      "currentCustomers": 15,
+      "targetCustomers": 120,
+      "averageRevenuePerCustomer": 333,
+      "teamSize": 5,
+      "plannedHires": 7,
+      "fundingGoal": "Move pilot customers into paid recurring carbon accounting contracts.",
+      "targetMarket": "UK and European SMEs with supplier-emissions reporting pressure.",
+      "notes": "Climate-specific adoption may be seasonal and compliance-led."
+    },
+    "parsed": {
+      "projection": [
+        {
+          "month": 1,
+          "label": "Month 1",
+          "revenue": 5000,
+          "burn": 39000,
+          "cashBalance": 116000,
+          "runwayMonths": 3,
+          "customers": 15
+        },
+        {
+          "month": 2,
+          "label": "Month 2",
+          "revenue": 5400,
+          "burn": 40560,
+          "cashBalance": 79440,
+          "runwayMonths": 2,
+          "customers": 16
+        },
+        {
+          "month": 3,
+          "label": "Month 3",
+          "revenue": 5832,
+          "burn": 42182,
+          "cashBalance": 43090,
+          "runwayMonths": 1,
+          "customers": 17
+        },
+        {
+          "month": 4,
+          "label": "Month 4 (post-raise, cash in)",
+          "revenue": 6299,
+          "burn": 43869,
+          "cashBalance": 666520,
+          "runwayMonths": 15,
+          "customers": 18
+        },
+        {
+          "month": 5,
+          "label": "Month 5",
+          "revenue": 6803,
+          "burn": 45624,
+          "cashBalance": 627699,
+          "runwayMonths": 14,
+          "customers": 20
+        },
+        {
+          "month": 6,
+          "label": "Month 6",
+          "revenue": 7347,
+          "burn": 47449,
+          "cashBalance": 588597,
+          "runwayMonths": 12,
+          "customers": 22
+        },
+        {
+          "month": 12,
+          "label": "Month 12",
+          "revenue": 12699,
+          "burn": 60951,
+          "cashBalance": 383672,
+          "runwayMonths": 6,
+          "customers": 38
+        },
+        {
+          "month": 18,
+          "label": "Month 18",
+          "revenue": 21991,
+          "burn": 78348,
+          "cashBalance": 104952,
+          "runwayMonths": 1,
+          "customers": 65
+        },
+        {
+          "month": 21,
+          "label": "Month 21",
+          "revenue": 27738,
+          "burn": 88016,
+          "cashBalance": -8905,
+          "runwayMonths": 0,
+          "customers": 82
+        },
+        {
+          "month": 24,
+          "label": "Month 24",
+          "revenue": 34964,
+          "burn": 98894,
+          "cashBalance": -185107,
+          "runwayMonths": 0,
+          "customers": 103
+        },
+        {
+          "month": 30,
+          "label": "Month 30",
+          "revenue": 55470,
+          "burn": 120209,
+          "cashBalance": -582846,
+          "runwayMonths": 0,
+          "customers": 149
+        },
+        {
+          "month": 36,
+          "label": "Month 36",
+          "revenue": 88097,
+          "burn": 146170,
+          "cashBalance": -1238714,
+          "runwayMonths": 0,
+          "customers": 237
+        },
+        {
+          "month": 20,
+          "label": "Break-even",
+          "revenue": 25628,
+          "burn": 84495,
+          "cashBalance": 13900,
+          "runwayMonths": 0,
+          "customers": 76
+        },
+        {
+          "month": 16,
+          "label": "12 month mark post-raise",
+          "revenue": 19194,
+          "burn": 74963,
+          "cashBalance": 189939,
+          "runwayMonths": 3,
+          "customers": 56
+        },
+        {
+          "month": 9,
+          "label": "Month 9 (3Q post-raise)",
+          "revenue": 10346,
+          "burn": 54443,
+          "cashBalance": 480789,
+          "runwayMonths": 9,
+          "customers": 31
+        },
+        {
+          "month": 0,
+          "label": "Starting Point",
+          "revenue": 5000,
+          "burn": 39000,
+          "cashBalance": 150000,
+          "runwayMonths": 3.8,
+          "customers": 15
+        },
+        {
+          "month": 8,
+          "label": "Hire spike (month 8)",
+          "revenue": 9568,
+          "burn": 53265,
+          "cashBalance": 496192,
+          "runwayMonths": 9,
+          "customers": 29
+        },
+        {
+          "month": 7,
+          "label": "Month 7",
+          "revenue": 7934,
+          "burn": 49347,
+          "cashBalance": 549250,
+          "runwayMonths": 11,
+          "customers": 24
+        },
+        {
+          "month": 8,
+          "label": "Month 8",
+          "revenue": 8570,
+          "burn": 51321,
+          "cashBalance": 513499,
+          "runwayMonths": 10,
+          "customers": 26
+        },
+        {
+          "month": 14,
+          "label": "Month 14",
+          "revenue": 15828,
+          "burn": 67301,
+          "cashBalance": 289387,
+          "runwayMonths": 4,
+          "customers": 46
+        },
+        {
+          "month": 22,
+          "label": "Month 22",
+          "revenue": 29957,
+          "burn": 91537,
+          "cashBalance": -73334,
+          "runwayMonths": 0,
+          "customers": 90
+        },
+        {
+          "month": 35,
+          "label": "Month 35",
+          "revenue": 81570,
+          "burn": 140548,
+          "cashBalance": -1106307,
+          "runwayMonths": 0,
+          "customers": 220
+        },
+        {
+          "month": 33,
+          "label": "Month 33",
+          "revenue": 67854,
+          "burn": 132569,
+          "cashBalance": -888227,
+          "runwayMonths": 0,
+          "customers": 184
+        },
+        {
+          "month": 27,
+          "label": "Month 27",
+          "revenue": 42955,
+          "burn": 110070,
+          "cashBalance": -385094,
+          "runwayMonths": 0,
+          "customers": 127
+        },
+        {
+          "month": 17,
+          "label": "Month 17",
+          "revenue": 20729,
+          "burn": 76662,
+          "cashBalance": 151357,
+          "runwayMonths": 2,
+          "customers": 60
+        },
+        {
+          "month": 24,
+          "label": "2 Years (month 24)",
+          "revenue": 34964,
+          "burn": 98894,
+          "cashBalance": -185107,
+          "runwayMonths": 0,
+          "customers": 103
+        },
+        {
+          "month": 3,
+          "label": "Pre-raise last cash",
+          "revenue": 5832,
+          "burn": 42182,
+          "cashBalance": 43090,
+          "runwayMonths": 1,
+          "customers": 17
+        },
+        {
+          "month": 36,
+          "label": "End Of Projection",
+          "revenue": 88097,
+          "burn": 146170,
+          "cashBalance": -1238714,
+          "runwayMonths": 0,
+          "customers": 237
+        },
+        {
+          "month": 4,
+          "label": "Raise received",
+          "revenue": 6299,
+          "burn": 43869,
+          "cashBalance": 666520,
+          "runwayMonths": 15,
+          "customers": 18
+        },
+        {
+          "month": 10,
+          "label": "Month 10",
+          "revenue": 11174,
+          "burn": 56420,
+          "cashBalance": 429543,
+          "runwayMonths": 8,
+          "customers": 33
+        },
+        {
+          "month": 11,
+          "label": "Month 11",
+          "revenue": 12067,
+          "burn": 58477,
+          "cashBalance": 369133,
+          "runwayMonths": 6,
+          "customers": 36
+        },
+        {
+          "month": 18,
+          "label": "Month 18",
+          "revenue": 21991,
+          "burn": 78348,
+          "cashBalance": 104952,
+          "runwayMonths": 1,
+          "customers": 65
+        },
+        {
+          "month": 32,
+          "label": "Month 32",
+          "revenue": 62877,
+          "burn": 127470,
+          "cashBalance": -789131,
+          "runwayMonths": 0,
+          "customers": 170
+        },
+        {
+          "month": 31,
+          "label": "Month 31",
+          "revenue": 59222,
+          "burn": 123212,
+          "cashBalance": -693544,
+          "runwayMonths": 0,
+          "customers": 157
+        },
+        {
+          "month": 15,
+          "label": "Month 15",
+          "revenue": 17175,
+          "burn": 69893,
+          "cashBalance": 246346,
+          "runwayMonths": 3,
+          "customers": 50
+        },
+        {
+          "month": 25,
+          "label": "Month 25",
+          "revenue": 37761,
+          "burn": 102550,
+          "cashBalance": -224896,
+          "runwayMonths": 0,
+          "customers": 111
+        }
+      ],
+      "breakEvenMonth": 20,
+      "narrative": "Gridwise Carbon is a B2B SaaS for carbon accounting and emissions reporting serving UK/EU SMEs. The company is currently pre-scale with 15 pilot customers, £5k MRR, and a burn of £39k. The £700k raise provides an immediate boost to runway but, due to headcount scaling and cost ramp, cash-out occurs around month 21 without further funding. SaaS revenue escalates on 8% MoM compounded growth, targeting 120+ customers by year 3. Break-even is achieved at month 20 as revenue covers operating burn just prior to burn-out; scale requires robust conversion and retention, as market seasonality and compliance windows may impact growth cadence. Further capital or cost controls are required to bridge to sustained profitability.",
+      "investorSummary": "Gridwise Carbon is building the core SaaS and customer base to capture the SME carbon reporting opportunity in the UK/EU. Strong margin profile and recurring revenue model; high fixed costs for product, go-to-market, and support drive steep burn rate. The current round buys 15-18 months of runway, with break-even at month 20. Absent overperformance on revenue or further funding, the business will require additional capital within 18 months. Path to 200+ customers is credible if B2B SaaS conversion and seasonal procurement cycles land per forecasted cadence.",
+      "risks": [
+        "Customer acquisition lag vs. plan delays break-even and shortens runway",
+        "High early burn results in cash-out before scale, requiring follow-on funding",
+        "Compliance-driven demand may cluster and be lumpy due to regulation cycles",
+        "Churn could exceed 4% if SME budgets tighten or competition intensifies",
+        "Planned hires may not deliver expected productivity or retainment"
+      ],
+      "assumptions": [
+        "Monthly revenue grows 8% compounded, with customer count scaling linearly with revenue",
+        "Burn increases 4% per month compounded, accounting for hires and operating leverage",
+        "Gross margin is fixed at 76% on SaaS subscriptions; costs include support and GTM",
+        "Raise is received in month 4; costs/hiring ramp begins immediately post-raise",
+        "Customer churn is 4% but net new acquisition outpaces churn per founder's targets",
+        "Annual renewal/expansion revenue not included above base ARPU",
+        "No significant one-off revenue or cost events (such as enterprise deals or layoffs)",
+        "No additional capital raised within projection window, unless indicated by cash balance",
+        "Pilot customers convert to paying contracts in line with revenue CAGR; actual conversion may lag",
+        "Deck signals a longer initial runway (18 months), but founder data as submitted indicates much higher burn and thus shorter cash runway pre-raise"
+      ],
+      "useOfFunds": [
+        {
+          "category": "Product & Engineering",
+          "amount": 280000,
+          "rationale": "Expand SaaS platform and implementation tools; support technical hires"
+        },
+        {
+          "category": "Go-to-Market & Sales",
+          "amount": 210000,
+          "rationale": "Acquire and convert target SME customers via direct and partner GTM"
+        },
+        {
+          "category": "Customer Success & Support",
+          "amount": 105000,
+          "rationale": "Implementation support and retention effort to reduce churn"
+        },
+        {
+          "category": "G&A / Overhead",
+          "amount": 105000,
+          "rationale": "Operational, regulatory, and corporate costs"
+        }
+      ],
+      "chartsData": {
+        "revenue": [
+          {
+            "label": "Month 1",
+            "value": 5000
+          },
+          {
+            "label": "Month 2",
+            "value": 5400
+          },
+          {
+            "label": "Month 3",
+            "value": 5832
+          },
+          {
+            "label": "Month 4 (post-raise, cash in)",
+            "value": 6299
+          },
+          {
+            "label": "Month 5",
+            "value": 6803
+          },
+          {
+            "label": "Month 6",
+            "value": 7347
+          },
+          {
+            "label": "Month 12",
+            "value": 12699
+          },
+          {
+            "label": "Month 18",
+            "value": 21991
+          },
+          {
+            "label": "Month 21",
+            "value": 27738
+          },
+          {
+            "label": "Month 24",
+            "value": 34964
+          },
+          {
+            "label": "Month 30",
+            "value": 55470
+          },
+          {
+            "label": "Month 36",
+            "value": 88097
+          },
+          {
+            "label": "Break-even",
+            "value": 25628
+          },
+          {
+            "label": "12 month mark post-raise",
+            "value": 19194
+          },
+          {
+            "label": "Month 9 (3Q post-raise)",
+            "value": 10346
+          },
+          {
+            "label": "Starting Point",
+            "value": 5000
+          },
+          {
+            "label": "Hire spike (month 8)",
+            "value": 9568
+          },
+          {
+            "label": "Month 7",
+            "value": 7934
+          },
+          {
+            "label": "Month 8",
+            "value": 8570
+          },
+          {
+            "label": "Month 14",
+            "value": 15828
+          },
+          {
+            "label": "Month 22",
+            "value": 29957
+          },
+          {
+            "label": "Month 35",
+            "value": 81570
+          },
+          {
+            "label": "Month 33",
+            "value": 67854
+          },
+          {
+            "label": "Month 27",
+            "value": 42955
+          },
+          {
+            "label": "Month 17",
+            "value": 20729
+          },
+          {
+            "label": "2 Years (month 24)",
+            "value": 34964
+          },
+          {
+            "label": "Pre-raise last cash",
+            "value": 5832
+          },
+          {
+            "label": "End Of Projection",
+            "value": 88097
+          },
+          {
+            "label": "Raise received",
+            "value": 6299
+          },
+          {
+            "label": "Month 10",
+            "value": 11174
+          },
+          {
+            "label": "Month 11",
+            "value": 12067
+          },
+          {
+            "label": "Month 18",
+            "value": 21991
+          },
+          {
+            "label": "Month 32",
+            "value": 62877
+          },
+          {
+            "label": "Month 31",
+            "value": 59222
+          },
+          {
+            "label": "Month 15",
+            "value": 17175
+          },
+          {
+            "label": "Month 25",
+            "value": 37761
+          }
+        ],
+        "burn": [
+          {
+            "label": "Month 1",
+            "value": 39000
+          },
+          {
+            "label": "Month 2",
+            "value": 40560
+          },
+          {
+            "label": "Month 3",
+            "value": 42182
+          },
+          {
+            "label": "Month 4 (post-raise, cash in)",
+            "value": 43869
+          },
+          {
+            "label": "Month 5",
+            "value": 45624
+          },
+          {
+            "label": "Month 6",
+            "value": 47449
+          },
+          {
+            "label": "Month 12",
+            "value": 60951
+          },
+          {
+            "label": "Month 18",
+            "value": 78348
+          },
+          {
+            "label": "Month 21",
+            "value": 88016
+          },
+          {
+            "label": "Month 24",
+            "value": 98894
+          },
+          {
+            "label": "Month 30",
+            "value": 120209
+          },
+          {
+            "label": "Month 36",
+            "value": 146170
+          },
+          {
+            "label": "Break-even",
+            "value": 84495
+          },
+          {
+            "label": "12 month mark post-raise",
+            "value": 74963
+          },
+          {
+            "label": "Month 9 (3Q post-raise)",
+            "value": 54443
+          },
+          {
+            "label": "Starting Point",
+            "value": 39000
+          },
+          {
+            "label": "Hire spike (month 8)",
+            "value": 53265
+          },
+          {
+            "label": "Month 7",
+            "value": 49347
+          },
+          {
+            "label": "Month 8",
+            "value": 51321
+          },
+          {
+            "label": "Month 14",
+            "value": 67301
+          },
+          {
+            "label": "Month 22",
+            "value": 91537
+          },
+          {
+            "label": "Month 35",
+            "value": 140548
+          },
+          {
+            "label": "Month 33",
+            "value": 132569
+          },
+          {
+            "label": "Month 27",
+            "value": 110070
+          },
+          {
+            "label": "Month 17",
+            "value": 76662
+          },
+          {
+            "label": "2 Years (month 24)",
+            "value": 98894
+          },
+          {
+            "label": "Pre-raise last cash",
+            "value": 42182
+          },
+          {
+            "label": "End Of Projection",
+            "value": 146170
+          },
+          {
+            "label": "Raise received",
+            "value": 43869
+          },
+          {
+            "label": "Month 10",
+            "value": 56420
+          },
+          {
+            "label": "Month 11",
+            "value": 58477
+          },
+          {
+            "label": "Month 18",
+            "value": 78348
+          },
+          {
+            "label": "Month 32",
+            "value": 127470
+          },
+          {
+            "label": "Month 31",
+            "value": 123212
+          },
+          {
+            "label": "Month 15",
+            "value": 69893
+          },
+          {
+            "label": "Month 25",
+            "value": 102550
+          }
+        ],
+        "cashBalance": [
+          {
+            "label": "Month 1",
+            "value": 116000
+          },
+          {
+            "label": "Month 2",
+            "value": 79440
+          },
+          {
+            "label": "Month 3",
+            "value": 43090
+          },
+          {
+            "label": "Month 4 (post-raise, cash in)",
+            "value": 666520
+          },
+          {
+            "label": "Month 5",
+            "value": 627699
+          },
+          {
+            "label": "Month 6",
+            "value": 588597
+          },
+          {
+            "label": "Month 12",
+            "value": 383672
+          },
+          {
+            "label": "Month 18",
+            "value": 104952
+          },
+          {
+            "label": "Month 21",
+            "value": -8905
+          },
+          {
+            "label": "Month 24",
+            "value": -185107
+          },
+          {
+            "label": "Month 30",
+            "value": -582846
+          },
+          {
+            "label": "Month 36",
+            "value": -1238714
+          },
+          {
+            "label": "Break-even",
+            "value": 13900
+          },
+          {
+            "label": "12 month mark post-raise",
+            "value": 189939
+          },
+          {
+            "label": "Month 9 (3Q post-raise)",
+            "value": 480789
+          },
+          {
+            "label": "Starting Point",
+            "value": 150000
+          },
+          {
+            "label": "Hire spike (month 8)",
+            "value": 496192
+          },
+          {
+            "label": "Month 7",
+            "value": 549250
+          },
+          {
+            "label": "Month 8",
+            "value": 513499
+          },
+          {
+            "label": "Month 14",
+            "value": 289387
+          },
+          {
+            "label": "Month 22",
+            "value": -73334
+          },
+          {
+            "label": "Month 35",
+            "value": -1106307
+          },
+          {
+            "label": "Month 33",
+            "value": -888227
+          },
+          {
+            "label": "Month 27",
+            "value": -385094
+          },
+          {
+            "label": "Month 17",
+            "value": 151357
+          },
+          {
+            "label": "2 Years (month 24)",
+            "value": -185107
+          },
+          {
+            "label": "Pre-raise last cash",
+            "value": 43090
+          },
+          {
+            "label": "End Of Projection",
+            "value": -1238714
+          },
+          {
+            "label": "Raise received",
+            "value": 666520
+          },
+          {
+            "label": "Month 10",
+            "value": 429543
+          },
+          {
+            "label": "Month 11",
+            "value": 369133
+          },
+          {
+            "label": "Month 18",
+            "value": 104952
+          },
+          {
+            "label": "Month 32",
+            "value": -789131
+          },
+          {
+            "label": "Month 31",
+            "value": -693544
+          },
+          {
+            "label": "Month 15",
+            "value": 246346
+          },
+          {
+            "label": "Month 25",
+            "value": -224896
+          }
+        ],
+        "runway": [
+          {
+            "label": "Month 1",
+            "value": 3
+          },
+          {
+            "label": "Month 2",
+            "value": 2
+          },
+          {
+            "label": "Month 3",
+            "value": 1
+          },
+          {
+            "label": "Month 4 (post-raise, cash in)",
+            "value": 15
+          },
+          {
+            "label": "Month 5",
+            "value": 14
+          },
+          {
+            "label": "Month 6",
+            "value": 12
+          },
+          {
+            "label": "Month 12",
+            "value": 6
+          },
+          {
+            "label": "Month 18",
+            "value": 1
+          },
+          {
+            "label": "Month 21",
+            "value": 0
+          },
+          {
+            "label": "Month 24",
+            "value": 0
+          },
+          {
+            "label": "Month 30",
+            "value": 0
+          },
+          {
+            "label": "Month 36",
+            "value": 0
+          },
+          {
+            "label": "Break-even",
+            "value": 0
+          },
+          {
+            "label": "12 month mark post-raise",
+            "value": 3
+          },
+          {
+            "label": "Month 9 (3Q post-raise)",
+            "value": 9
+          },
+          {
+            "label": "Starting Point",
+            "value": 3.8
+          },
+          {
+            "label": "Hire spike (month 8)",
+            "value": 9
+          },
+          {
+            "label": "Month 7",
+            "value": 11
+          },
+          {
+            "label": "Month 8",
+            "value": 10
+          },
+          {
+            "label": "Month 14",
+            "value": 4
+          },
+          {
+            "label": "Month 22",
+            "value": 0
+          },
+          {
+            "label": "Month 35",
+            "value": 0
+          },
+          {
+            "label": "Month 33",
+            "value": 0
+          },
+          {
+            "label": "Month 27",
+            "value": 0
+          },
+          {
+            "label": "Month 17",
+            "value": 2
+          },
+          {
+            "label": "2 Years (month 24)",
+            "value": 0
+          },
+          {
+            "label": "Pre-raise last cash",
+            "value": 1
+          },
+          {
+            "label": "End Of Projection",
+            "value": 0
+          },
+          {
+            "label": "Raise received",
+            "value": 15
+          },
+          {
+            "label": "Month 10",
+            "value": 8
+          },
+          {
+            "label": "Month 11",
+            "value": 6
+          },
+          {
+            "label": "Month 18",
+            "value": 1
+          },
+          {
+            "label": "Month 32",
+            "value": 0
+          },
+          {
+            "label": "Month 31",
+            "value": 0
+          },
+          {
+            "label": "Month 15",
+            "value": 3
+          },
+          {
+            "label": "Month 25",
+            "value": 0
+          }
+        ]
+      }
+    },
+    "raw": {
+      "id": "resp_0bb7924264b4bd9a006a24923a8f00819fa3628f94de665182",
+      "model": "gpt-4.1-2025-04-14",
+      "usage": {
+        "input_tokens": 815,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 3077,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3892
+      }
+    }
+  },
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\financial-models\\gridwise-carbon.json"
+}

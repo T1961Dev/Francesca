@@ -23,7 +23,7 @@ const PPTX2Json = require("pptx2json") as new () => {
   buffer2json(buffer: Buffer): Promise<Record<string, unknown>>
 }
 
-const maxFileSize = 20 * 1024 * 1024
+const maxFileSize = 50 * 1024 * 1024
 const supportedTypes = new Set([
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.presentationml.presentation",
@@ -35,7 +35,7 @@ export function validateUploadFile(file: File) {
   }
 
   if (file.size > maxFileSize) {
-    throw new Error("File exceeds the 20MB upload limit")
+    throw new Error("File exceeds the 50MB upload limit")
   }
 
   if (!supportedTypes.has(file.type)) {

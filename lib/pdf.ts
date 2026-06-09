@@ -72,6 +72,8 @@ export async function renderInvestorMatchesPdf(input: {
         ["Location", match.location],
         ["Stage focus", match.investmentStage],
         ["Sector focus", Array.isArray(match.sectorFocus) ? (match.sectorFocus as string[]).join(", ") : match.sectorFocus],
+        ["Cheque fit", match.chequeFit],
+        ["Cheque size", match.chequeSize],
         ["Fit score", match.fitScore ?? match.matchScore],
       ]
 

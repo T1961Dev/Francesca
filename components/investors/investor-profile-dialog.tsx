@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type ComponentType } from "react"
+import { useState, type ComponentType } from "react"
 import { Building2, Mail, MapPin } from "lucide-react"
 
 import { InvestorOutreachEditor } from "@/components/investors/investor-outreach-editor"
@@ -34,11 +34,6 @@ export function InvestorProfileDialog({
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [localSent, setLocalSent] = useState<string | null>(null)
-
-  useEffect(() => {
-    setLocalSent((match?.marked_sent_at as string | null) ?? null)
-    setError(null)
-  }, [match])
 
   if (!match) return null
 
@@ -128,6 +123,7 @@ export function InvestorProfileDialog({
             location={String(match.location ?? "-")}
             stages={stages}
             sectors={sectors}
+            chequeFit={String(match.chequeFit ?? "Unknown")}
             email={email}
             firmName={firmName}
           />
@@ -150,6 +146,7 @@ export function InvestorProfileDialog({
               <Separator />
               <div className="px-5 py-4">
                 <InvestorOutreachEditor
+                  key={`${jobId}-${rank}`}
                   jobId={jobId}
                   match={match}
                   onUpdated={(patch) => {
@@ -188,12 +185,14 @@ function ProfileMetaGrid({
   location,
   stages,
   sectors,
+  chequeFit,
   email,
   firmName,
 }: {
   location: string
   stages: string[]
   sectors: string[]
+  chequeFit: string
   email: string | null
   firmName: string
 }) {
@@ -203,6 +202,7 @@ function ProfileMetaGrid({
       <MetaItem icon={Building2} label="Firm" value={firmName || "-"} />
       <MetaItem label="Stage focus" value={stages.length ? stages.join(", ") : "-"} />
       <MetaItem label="Sector focus" value={sectors.length ? sectors.join(", ") : "-"} />
+      <MetaItem label="Cheque fit" value={chequeFit || "Unknown"} />
       {email ? (
         <MetaItem icon={Mail} label="Email" value={email} className="sm:col-span-2" />
       ) : null}
@@ -306,9 +306,9 @@ function readLinkedInUrl(match: Match) {
 }
 
 function formatRelative(date: Date) {
-  const diff = Math.floor((Date.now() - date.getTime()) / 1000)
-  if (diff < 60) return "just now"
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
-  return `${Math.floor(diff / 86400)}d ago`
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
 }

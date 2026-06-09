@@ -1,0 +1,255 @@
+{
+  "fixture": {
+    "id": "quality-average-atlasops",
+    "label": "AtlasOps Average Deck",
+    "companyId": "atlasops",
+    "quality": "average",
+    "expectedScoreBand": [
+      50,
+      75
+    ],
+    "text": "AtlasOps Average Pitch Deck\n\nSector: B2B SaaS / AI automation. Stage: pre-seed. Geography: UK.\n\nProblem: Operations teams use too many tools and need better automation.\n\nSolution: AtlasOps automates common work using AI and integrations.\n\nTraction: GBP 18k MRR and 22 customers, but cohort retention and sales cycle details are not shown.\n\nBusiness model: SaaS subscriptions. Pricing is still being tested.\n\nTeam: Technical and commercial founders; limited detail on prior exits or domain achievements.\n\nFinancials: Raising GBP 750,000. Burn, runway, and use-of-funds are only partly explained.\n\nMarket: Large operations software market, but TAM/SAM/SOM is not quantified.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\quality-average-atlasops.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": false,
+    "sectorTermsFound": [
+      "saas",
+      "ai",
+      "automation",
+      "b2b",
+      "operations"
+    ],
+    "expectedRaise": 750000,
+    "raiseExtracted": 750000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 57,
+    "expectedScoreBand": [
+      50,
+      75
+    ],
+    "scoreInExpectedBand": true,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 5,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": null,
+      "cashBalance": null,
+      "runwayMonths": null,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": null,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Burn, runway, and use-of-funds details are insufficient or missing."
+    }
+  },
+  "extractedText": "AtlasOps Average Deck AtlasOps Average Pitch Deck Sector: B2B SaaS / AI automation. Stage: pre-seed. Geography: UK. Problem: Operations teams use too many tools and need better automation. Solution: AtlasOps automates common work using AI and integrations. Traction: GBP 18k MRR and 22 customers, but cohort retention and sales cycle details are not shown. Business model: SaaS subscriptions. Pricing is still being tested. Team: Technical and commercial founders; limited detail on prior exits or domain achievements. Financials: Raising GBP 750,000. Burn, runway, and use-of-funds are only partly explained. Market: Large operations software market, but TAM/SAM/SOM is not quantified. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The pitch deck provides a basic overview suitable for a pre-seed B2B SaaS startup focused on AI automation for operations teams. Key strengths include clear problem identification and early traction metrics. However, it lacks depth in market sizing, business model specifics, team credentials, and financial details, which impairs investor readiness and confidence.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 80,
+        "feedback": "The problem is clearly stated: operations teams face tool overload and need better automation. This sets a relevant context but could benefit from deeper user pain evidence."
+      },
+      {
+        "category": "Solution strength",
+        "score": 70,
+        "feedback": "Solution is described as AI-driven automation integrating common work tasks. However, lacks detailed differentiation or technology defensibility information."
+      },
+      {
+        "category": "Market size",
+        "score": 40,
+        "feedback": "Market described as large operations software space but no TAM/SAM/SOM data provided, limiting market opportunity assessment."
+      },
+      {
+        "category": "Business model",
+        "score": 50,
+        "feedback": "Business model is SaaS subscription but pricing strategy is still under test. Revenue model details and unit economics are missing."
+      },
+      {
+        "category": "Traction",
+        "score": 65,
+        "feedback": "Shows GBP 18k MRR and 22 customers, indicating early market validation. Missing data on retention, sales cycle, and customer acquisition cost weakens traction narrative."
+      },
+      {
+        "category": "Team",
+        "score": 45,
+        "feedback": "Founders are technical and commercial, but no information on prior successes, domain expertise, or team expansion plans is provided."
+      },
+      {
+        "category": "Financial ask",
+        "score": 55,
+        "feedback": "Raises GBP 750,000, but financial burn rate, runway, and detailed use of funds are only partly explained, reducing transparency."
+      },
+      {
+        "category": "Narrative",
+        "score": 60,
+        "feedback": "Narrative covers essential points but lacks storytelling coherence or compelling vision to strongly engage investors."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": null,
+      "cashBalance": null,
+      "runwayMonths": null,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": null,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Burn, runway, and use-of-funds details are insufficient or missing."
+    },
+    "strengths": [
+      "Clear problem identification relevant to operations teams",
+      "Early traction demonstrated with 22 customers and £18k MRR",
+      "Business model aligned with SaaS subscriptions"
+    ],
+    "weaknesses": [
+      "Significant lack of quantified market sizing data",
+      "Missing detailed financial metrics such as burn rate and runway",
+      "Limited team background and achievement information",
+      "Pricing strategy still untested impacting business model clarity",
+      "Incomplete traction data lacking retention and sales cycle"
+    ],
+    "missingSections": [
+      "Detailed market sizing (TAM/SAM/SOM)",
+      "Comprehensive financial metrics including burn rate and runway",
+      "Founders’ prior achievements and full team background",
+      "Customer retention and sales cycle details",
+      "Pricing strategy and unit economics"
+    ],
+    "investorReadiness": "Low to Medium. The deck contains foundational elements but insufficient detail in multiple critical dimensions, particularly financial transparency, market sizing, and team credibility, limiting investor confidence for pre-seed funding.",
+    "suggestedFixes": [
+      {
+        "title": "Add detailed market sizing",
+        "explanation": "Include quantified TAM/SAM/SOM figures and justify market assumptions to enhance opportunity clarity.",
+        "priority": "high"
+      },
+      {
+        "title": "Enhance financial transparency",
+        "explanation": "Provide clear monthly burn rate, cash balance, runway calculations, and detailed use of funds to build investor trust.",
+        "priority": "high"
+      },
+      {
+        "title": "Expand team background",
+        "explanation": "Detail founders' relevant prior exits, domain expertise, and key hires to strengthen team credibility.",
+        "priority": "medium"
+      },
+      {
+        "title": "Clarify pricing and unit economics",
+        "explanation": "Define and test pricing strategy with supporting unit economics to validate business model assumptions.",
+        "priority": "medium"
+      },
+      {
+        "title": "Include customer retention and sales cycle data",
+        "explanation": "Add metrics on customer retention rates and average sales cycle length to solidify traction storytelling.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Develop a comprehensive market analysis section",
+        "reason": "Investors need market size data to understand potential scale and justify investment risk.",
+        "priority": "high"
+      },
+      {
+        "action": "Detail financial projections and current burn rate",
+        "reason": "Transparency on finances is crucial for assessing runway and funding needs.",
+        "priority": "high"
+      },
+      {
+        "action": "Provide richer team bios with prior startup or domain experience",
+        "reason": "Strong team credentials increase investor confidence in execution capability.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "Insufficient financial detail may concern investors about capital management and runway.",
+      "Unquantified market size reduces confidence in overall market opportunity.",
+      "Unclear pricing model and customer economics increase risk around sustainable growth.",
+      "Limited team achievements and background information might raise doubts about execution.",
+      "Incomplete traction data leaves questions about customer engagement and sales effectiveness."
+    ],
+    "overallScore": 57,
+    "raw": {
+      "id": "resp_01e280210c005c9b006a24916955b88192b3cab6dbc82c5aad",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 800,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 950,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1750
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 80,
+      "feedback": "The problem is clearly stated: operations teams face tool overload and need better automation. This sets a relevant context but could benefit from deeper user pain evidence.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 70,
+      "feedback": "Solution is described as AI-driven automation integrating common work tasks. However, lacks detailed differentiation or technology defensibility information.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 40,
+      "feedback": "Market described as large operations software space but no TAM/SAM/SOM data provided, limiting market opportunity assessment.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 50,
+      "feedback": "Business model is SaaS subscription but pricing strategy is still under test. Revenue model details and unit economics are missing.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 65,
+      "feedback": "Shows GBP 18k MRR and 22 customers, indicating early market validation. Missing data on retention, sales cycle, and customer acquisition cost weakens traction narrative.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 45,
+      "feedback": "Founders are technical and commercial, but no information on prior successes, domain expertise, or team expansion plans is provided.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 55,
+      "feedback": "Raises GBP 750,000, but financial burn rate, runway, and detailed use of funds are only partly explained, reducing transparency.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 60,
+      "feedback": "Narrative covers essential points but lacks storytelling coherence or compelling vision to strongly engage investors.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\quality-average-atlasops.json"
+}

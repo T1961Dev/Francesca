@@ -1,5 +1,6 @@
 import { createHash } from "crypto"
 
+import { buildCompanySpecificThesisKeywords } from "@/lib/matching/investor-fit"
 import { buildInvestorThesisKeywords } from "@/lib/matching/investor-thesis-keywords"
 import type { FounderProfile } from "@/types/profile"
 
@@ -88,8 +89,30 @@ const DECK_KEYWORD_TO_THESIS: Record<string, string> = {
   edtech: "edtech",
   education: "education",
   fintech: "fintech",
+  "financial services": "financial services",
+  "lending api": "lending api",
+  lending: "lending",
+  "bank data": "fintech infrastructure",
   healthtech: "healthtech",
+  healthcare: "healthcare",
+  clinic: "clinic software",
+  clinical: "digital health",
+  patient: "digital health",
+  climatetech: "climatetech",
+  climate: "climate",
+  carbon: "carbon accounting",
+  "carbon accounting": "carbon accounting",
+  emissions: "emissions",
+  sustainability: "sustainability",
+  consumer: "consumer",
+  "consumer social": "consumer social",
+  "gen z": "gen z",
+  events: "events",
+  community: "community",
   saas: "saas",
+  workflow: "workflow automation",
+  "workflow automation": "workflow automation",
+  automation: "automation",
   marketplace: "marketplace",
   "b2b software": "b2b software",
 }
@@ -195,8 +218,11 @@ function normaliseThesisKeyword(raw: string): string | null {
   return trimmed
 }
 
+const DISCOVERY_KEYWORD_LIMIT = 6
+
 /**
- * Investor-thesis keywords for Leads Finder (max 3 — OR match on firm bios).
+ * Investor-thesis keywords for Leads Finder. Keep these company-specific:
+ * vertical evidence beats broad terms like "startup investor" or "VC".
  */
 export function buildDeckAwareThesisKeywords(profile: FounderProfile): string[] {
   const audience = inferInvestorAudience(profile)
@@ -204,7 +230,7 @@ export function buildDeckAwareThesisKeywords(profile: FounderProfile): string[] 
   const result: string[] = []
 
   const add = (raw: string | undefined | null) => {
-    if (!raw || result.length >= 3) return
+    if (!raw || result.length >= DISCOVERY_KEYWORD_LIMIT) return
     const thesis = normaliseThesisKeyword(raw)
     if (!thesis || thesis === "other" || seen.has(thesis)) return
     seen.add(thesis)
@@ -213,15 +239,19 @@ export function buildDeckAwareThesisKeywords(profile: FounderProfile): string[] 
 
   for (const term of AUDIENCE_THESIS[audience]) add(term)
   if (audience === "venture_capital") {
+    for (const term of buildCompanySpecificThesisKeywords(profile, DISCOVERY_KEYWORD_LIMIT)) {
+      add(term)
+      if (result.length >= DISCOVERY_KEYWORD_LIMIT) break
+    }
     for (const term of buildInvestorThesisKeywords(profile)) add(term)
   }
 
   for (const kw of profile.deckSignals?.keywords ?? []) {
     add(kw)
-    if (result.length >= 3) break
+    if (result.length >= DISCOVERY_KEYWORD_LIMIT) break
   }
 
-  if (result.length < 3 && audience === "venture_capital") {
+  if (result.length < DISCOVERY_KEYWORD_LIMIT && audience === "venture_capital") {
     const summary = profile.deckSignals?.summary ?? ""
     const sectorTerms: Record<FounderProfile["company"]["sector"], string[]> = {
       EdTech: ["edtech", "education technology"],
@@ -233,15 +263,15 @@ export function buildDeckAwareThesisKeywords(profile: FounderProfile): string[] 
     }
     for (const term of sectorTerms[profile.company.sector] ?? []) {
       add(term)
-      if (result.length >= 3) break
+      if (result.length >= DISCOVERY_KEYWORD_LIMIT) break
     }
-    if (result.length < 3) {
-      const multi = summary.match(/\b(edtech|fintech|healthtech|saas|exam prep|acquisition)\b/gi)
+    if (result.length < DISCOVERY_KEYWORD_LIMIT) {
+      const multi = summary.match(/\b(edtech|fintech|healthtech|healthcare|climate|carbon|consumer|social|saas|workflow automation|exam prep|acquisition)\b/gi)
       for (const m of multi ?? []) add(m)
     }
   }
 
-  return result.slice(0, 3)
+  return result.slice(0, DISCOVERY_KEYWORD_LIMIT)
 }
 
 export function buildDeckDiscoveryConfig(profile: FounderProfile): DeckDiscoveryConfig {

@@ -1,0 +1,248 @@
+{
+  "fixture": {
+    "id": "quality-excellent-atlasops",
+    "label": "AtlasOps Excellent Deck",
+    "companyId": "atlasops",
+    "quality": "excellent",
+    "expectedScoreBand": [
+      80,
+      95
+    ],
+    "text": "AtlasOps Excellent Pitch Deck\n\nSector: B2B SaaS / AI workflow automation. Stage: pre-seed. Geography: UK / Europe / Worldwide.\n\nProblem: Mid-market operations teams spend 12 hours per week reconciling approvals, handoffs, and reporting across disconnected tools.\n\nSolution: AtlasOps is an AI workflow automation platform that observes repeated operations workflows, recommends automations, and gives managers an audit trail.\n\nMarket: 41,000 UK and EU mid-market operations teams with an initial serviceable market above GBP 1.2bn.\n\nTraction: GBP 18k MRR, 22 customers, GBP 9k ACV, 9% month-on-month MRR growth, 84% gross margin, 97% logo retention in the last quarter.\n\nBusiness model: SaaS subscription priced per operations seat plus workflow volume tiers.\n\nTeam: Founder previously led operations systems at a public SaaS company; CTO built production ML workflow tooling; advisor sold to mid-market buyers.\n\nFinancials: GBP 180k cash, GBP 42k monthly burn, runway 4.3 months, raising GBP 750,000 pre-seed for 18 months runway.\n\nUse of funds: 45% engineering, 35% sales/customer success, 10% AI infrastructure, 10% compliance and finance.\n\nRisks: sales cycle length and model accuracy; mitigated through paid pilots and human approval loops.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\quality-excellent-atlasops.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": false,
+    "sectorTermsFound": [
+      "saas",
+      "ai",
+      "workflow",
+      "automation",
+      "b2b",
+      "operations"
+    ],
+    "expectedRaise": 750000,
+    "raiseExtracted": 750000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 80,
+    "expectedScoreBand": [
+      80,
+      95
+    ],
+    "scoreInExpectedBand": true,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 4,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": 42000,
+      "cashBalance": 180000,
+      "runwayMonths": 4.3,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": 84,
+      "revenueGrowthPercentMonthly": 9,
+      "notes": "Financial projections beyond current runway and revenue details are not provided."
+    }
+  },
+  "extractedText": "AtlasOps Excellent Deck AtlasOps Excellent Pitch Deck Sector: B2B SaaS / AI workflow automation. Stage: pre-seed. Geography: UK / Europe / Worldwide. Problem: Mid-market operations teams spend 12 hours per week reconciling approvals, handoffs, and reporting across disconnected tools. Solution: AtlasOps is an AI workflow automation platform that observes repeated operations workflows, recommends automations, and gives managers an audit trail. Market: 41,000 UK and EU mid-market operations teams with an initial serviceable market above GBP 1.2bn. Traction: GBP 18k MRR, 22 customers, GBP 9k ACV, 9% month-on-month MRR growth, 84% gross margin, 97% logo retention in the last quarter. Business model: SaaS subscription priced per operations seat plus workflow volume tiers. Team: Founder previously led operations systems at a public SaaS company; CTO built production ML workflow tooling; advisor sold to mid-market buyers. Financials: GBP 180k cash, GBP 42k monthly burn, runway 4.3 months, raising GBP 750,000 pre-seed for 18 months runway. Use of funds: 45% engineering, 35% sales/customer success, 10% AI infrastructure, 10% compliance and finance. Risks: sales cycle length and model accuracy; mitigated through paid pilots and human approval loops. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The pitch deck presents a clear problem in the operations space for mid-market teams and offers a concrete AI workflow automation solution with promising early traction and a defined business model. Market sizing is explicitly stated with UK and EU focus, and the financial ask matches stated runway needs. The team has relevant backgrounds but is lightly detailed. Narrative is logical but could be strengthened with more explicit storytelling and risk mitigation details.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 90,
+        "feedback": "Problem is clearly articulated with quantifiable pain points relevant to mid-market operations teams, providing strong investor understanding."
+      },
+      {
+        "category": "Solution strength",
+        "score": 80,
+        "feedback": "Solution aligns well with the problem, leveraging AI for workflow automation and audit trails, but lacks detailed differentiation versus competitors or technology specifics."
+      },
+      {
+        "category": "Market size",
+        "score": 75,
+        "feedback": "Market sizing covers UK and EU mid-market operations teams with serviceable market value, but lacks global scale and segmentation beyond region; TAM, SAM, SOM breakdown missing."
+      },
+      {
+        "category": "Business model",
+        "score": 85,
+        "feedback": "Business model is well defined as SaaS with seat-based pricing plus volume tiers, matching typical B2B SaaS frameworks; pricing details per seat or tiers could enhance clarity."
+      },
+      {
+        "category": "Traction",
+        "score": 85,
+        "feedback": "Promising early revenue (GBP 18k MRR), growth rate (9% MoM), customer count (22), and retention (97%) with strong gross margin; lacks long-term trends or cohort data."
+      },
+      {
+        "category": "Team",
+        "score": 70,
+        "feedback": "Founders have relevant experience; however, team size, roles beyond founder/CTO/advisor, and organizational structure details are missing, limiting assessment of execution capability."
+      },
+      {
+        "category": "Financial ask",
+        "score": 90,
+        "feedback": "Financials are thorough with cash, burn rate, runway, and raise amount clearly stated and justified in context of 18 months runway; use of funds is appropriately allocated."
+      },
+      {
+        "category": "Narrative",
+        "score": 70,
+        "feedback": "Narrative touches key points logically but could improve by integrating more compelling storytelling, customer testimonials, competitive landscape, and clearer risk mitigation explanations."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": 42000,
+      "cashBalance": 180000,
+      "runwayMonths": 4.3,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": 84,
+      "revenueGrowthPercentMonthly": 9,
+      "notes": "Financial projections beyond current runway and revenue details are not provided."
+    },
+    "strengths": [
+      "Clear problem definition with quantifiable pain point",
+      "Early traction with revenue, growth, and retention metrics",
+      "Explicit financial ask and runway with use of funds breakdown",
+      "Defined SaaS business model aligned to target market"
+    ],
+    "weaknesses": [
+      "Limited team detail reduces confidence in execution ability",
+      "Market sizing lacks deeper segmentation and global perspective",
+      "Solution differentiation and competitive landscape not covered",
+      "Narrative missing strong storytelling and detailed risk mitigation"
+    ],
+    "missingSections": [
+      "Competitive landscape",
+      "Customer testimonials or case studies",
+      "Detailed team bios and organizational chart",
+      "Long-term financial projections and unit economics"
+    ],
+    "investorReadiness": "Moderate: The deck covers core investor requirements with clarity on problem, solution, traction, and financial ask but needs improved team detail, market analysis, and narrative depth to increase investor confidence.",
+    "suggestedFixes": [
+      {
+        "title": "Expand Team Information",
+        "explanation": "Provide detailed bios, team size, roles, and hiring roadmap to demonstrate execution capacity and reduce perceived risk.",
+        "priority": "high"
+      },
+      {
+        "title": "Include Competitive Analysis",
+        "explanation": "Present competitors, differentiation, and defensible advantages to clarify positioning and market strategy.",
+        "priority": "high"
+      },
+      {
+        "title": "Enhance Market Segmentation",
+        "explanation": "Break down TAM, SAM, SOM with more granularity, including global markets and customer segments to strengthen market opportunity claims.",
+        "priority": "medium"
+      },
+      {
+        "title": "Strengthen Narrative and Risk Mitigation",
+        "explanation": "Incorporate customer stories, clearer risk controls, and a cohesive story arc to improve engagement and investor confidence.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Add detailed team bios and structure",
+        "reason": "Investors require confidence in the team's ability to deliver the product and execute the business plan.",
+        "priority": "high"
+      },
+      {
+        "action": "Develop and include competitive landscape slide",
+        "reason": "Differentiation is crucial; without it, investors may doubt your defensibility and market positioning.",
+        "priority": "high"
+      },
+      {
+        "action": "Provide detailed market segmentation and global opportunity analysis",
+        "reason": "Clarifies growth potential and helps investors assess scalability.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "Sales cycle length may delay revenue ramp, needs management",
+      "AI model accuracy could impact product effectiveness, requiring ongoing validation",
+      "Limited team detail may raise execution risk concerns"
+    ],
+    "overallScore": 80,
+    "raw": {
+      "id": "resp_00c5de373ce83880006a2491610fe8819f882c44042f6bf89d",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 940,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 951,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1891
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 90,
+      "feedback": "Problem is clearly articulated with quantifiable pain points relevant to mid-market operations teams, providing strong investor understanding.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 80,
+      "feedback": "Solution aligns well with the problem, leveraging AI for workflow automation and audit trails, but lacks detailed differentiation versus competitors or technology specifics.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 75,
+      "feedback": "Market sizing covers UK and EU mid-market operations teams with serviceable market value, but lacks global scale and segmentation beyond region; TAM, SAM, SOM breakdown missing.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 85,
+      "feedback": "Business model is well defined as SaaS with seat-based pricing plus volume tiers, matching typical B2B SaaS frameworks; pricing details per seat or tiers could enhance clarity.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 85,
+      "feedback": "Promising early revenue (GBP 18k MRR), growth rate (9% MoM), customer count (22), and retention (97%) with strong gross margin; lacks long-term trends or cohort data.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 70,
+      "feedback": "Founders have relevant experience; however, team size, roles beyond founder/CTO/advisor, and organizational structure details are missing, limiting assessment of execution capability.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 90,
+      "feedback": "Financials are thorough with cash, burn rate, runway, and raise amount clearly stated and justified in context of 18 months runway; use of funds is appropriately allocated.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 70,
+      "feedback": "Narrative touches key points logically but could improve by integrating more compelling storytelling, customer testimonials, competitive landscape, and clearer risk mitigation explanations.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\quality-excellent-atlasops.json"
+}

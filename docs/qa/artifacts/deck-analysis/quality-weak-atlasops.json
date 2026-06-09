@@ -1,0 +1,272 @@
+{
+  "fixture": {
+    "id": "quality-weak-atlasops",
+    "label": "AtlasOps Weak Deck",
+    "companyId": "atlasops",
+    "quality": "weak",
+    "expectedScoreBand": [
+      10,
+      45
+    ],
+    "text": "AtlasOps Weak Pitch Deck\n\nWe are building an AI tool for companies.\n\nThe market is huge and every business needs automation.\n\nWe have some conversations with potential customers.\n\nThe product will make teams faster.\n\nWe want investment soon but have not decided the amount.\n\nNo revenue, no customer count, no pricing, no burn, no runway, no detailed go-to-market, and no clear team background is included.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\quality-weak-atlasops.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": false,
+    "sectorTermsFound": [
+      "ai",
+      "automation"
+    ],
+    "expectedRaise": 750000,
+    "raiseExtracted": 0,
+    "raiseMatches": false,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 16,
+    "expectedScoreBand": [
+      10,
+      45
+    ],
+    "scoreInExpectedBand": true,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 8,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": null,
+      "monthlyBurn": null,
+      "cashBalance": null,
+      "runwayMonths": null,
+      "raiseAmount": null,
+      "customerCount": null,
+      "teamSize": null,
+      "grossMarginPercent": null,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "No financial data or user metrics disclosed."
+    }
+  },
+  "extractedText": "AtlasOps Weak Deck AtlasOps Weak Pitch Deck We are building an AI tool for companies. The market is huge and every business needs automation. We have some conversations with potential customers. The product will make teams faster. We want investment soon but have not decided the amount. No revenue, no customer count, no pricing, no burn, no runway, no detailed go-to-market, and no clear team background is included. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The deck provides a very high-level and vague overview of the startup's value proposition and market opportunity with minimal supporting data. It lacks critical details on problem definition, product solution specifics, market quantification, business model, traction metrics, team background, financial specifics, and a clear narrative progression. Consequently, it is not investor-ready in its current form.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 30,
+        "feedback": "The deck states the product is an AI tool for companies needing automation but lacks a clear, specific problem definition or articulation of pain points faced by target customers."
+      },
+      {
+        "category": "Solution strength",
+        "score": 25,
+        "feedback": "Solution is vaguely described as a product that makes teams faster with no details on how it achieves this, no differentiation, features, or proof points provided."
+      },
+      {
+        "category": "Market size",
+        "score": 20,
+        "feedback": "The deck claims the market is huge but provides no TAM, SAM, SOM figures or market analysis to substantiate this claim."
+      },
+      {
+        "category": "Business model",
+        "score": 10,
+        "feedback": "No information on pricing, revenue streams, customer segments, or sales strategy is included."
+      },
+      {
+        "category": "Traction",
+        "score": 15,
+        "feedback": "Mentions having some conversations with potential customers but provides no data on actual users, revenue, growth metrics, or customer validation."
+      },
+      {
+        "category": "Team",
+        "score": 5,
+        "feedback": "No details on founder or team backgrounds, skills, or relevant experience."
+      },
+      {
+        "category": "Financial ask",
+        "score": 10,
+        "feedback": "Mentions desire for investment soon but has not decided on the amount and provides no financial projections or fundraising strategy."
+      },
+      {
+        "category": "Narrative",
+        "score": 20,
+        "feedback": "The pitch lacks a structured compelling story that connects problem, solution, market, traction, team, and financials into a persuasive argument for investment."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": null,
+      "monthlyBurn": null,
+      "cashBalance": null,
+      "runwayMonths": null,
+      "raiseAmount": null,
+      "customerCount": null,
+      "teamSize": null,
+      "grossMarginPercent": null,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "No financial data or user metrics disclosed."
+    },
+    "strengths": [
+      "Identifies broad market need for automation",
+      "Expresses intent to raise investment"
+    ],
+    "weaknesses": [
+      "Lacks clear problem definition",
+      "No solution details or differentiation",
+      "No market sizing or data",
+      "No business model described",
+      "No traction or revenue metrics",
+      "No team information",
+      "No financial ask details",
+      "No coherent narrative structure"
+    ],
+    "missingSections": [
+      "Problem definition",
+      "Solution description",
+      "Market sizing",
+      "Business model",
+      "Traction metrics",
+      "Team background",
+      "Financial projections and ask",
+      "Narrative storytelling"
+    ],
+    "investorReadiness": "Not investor-ready due to insufficient detail and data across all critical dimensions.",
+    "suggestedFixes": [
+      {
+        "title": "Define the Problem Clearly",
+        "explanation": "Articulate the specific customer pain points your product addresses with evidence or user stories to create urgency and relevance.",
+        "priority": "high"
+      },
+      {
+        "title": "Detail Your Solution",
+        "explanation": "Describe your AI tool’s features, technology, and differentiation to demonstrate strength and feasibility.",
+        "priority": "high"
+      },
+      {
+        "title": "Quantify the Market",
+        "explanation": "Provide market size data (TAM, SAM, SOM) supported by credible research to justify opportunity scale.",
+        "priority": "high"
+      },
+      {
+        "title": "Clarify Business Model",
+        "explanation": "Explain how you will make money, including pricing, revenue streams, and sales channels.",
+        "priority": "high"
+      },
+      {
+        "title": "Present Traction Metrics",
+        "explanation": "Share customer numbers, revenue, growth metrics, or signed LOIs to prove momentum.",
+        "priority": "high"
+      },
+      {
+        "title": "Introduce the Team",
+        "explanation": "Provide founder and key team members’ backgrounds and relevant experiences to build credibility.",
+        "priority": "medium"
+      },
+      {
+        "title": "Specify Financial Ask",
+        "explanation": "State how much investment you seek and how the funds will be deployed with projections.",
+        "priority": "high"
+      },
+      {
+        "title": "Craft a Cohesive Narrative",
+        "explanation": "Build a clear, engaging story connecting market, problem, solution, team, traction, and financials to convince investors.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Develop a detailed problem statement with customer validation",
+        "reason": "Without a clear problem, the product lacks context and investor interest will be low",
+        "priority": "high"
+      },
+      {
+        "action": "Build out financial projections and determine raise amount",
+        "reason": "Investors need clear financial asks and plans to evaluate risk and returns",
+        "priority": "high"
+      },
+      {
+        "action": "Include team biographies and demonstrate relevant expertise",
+        "reason": "Investors invest in teams; missing this undermines confidence",
+        "priority": "high"
+      }
+    ],
+    "fundraisingRisks": [
+      "Lack of clarity on the problem and solution undermines investor confidence",
+      "Absence of market sizing reduces perceived opportunity",
+      "No traction or revenue data increases perceived risk",
+      "Unspecified financial ask reflects poor preparation",
+      "Missing team information weakens credibility"
+    ],
+    "overallScore": 16,
+    "raw": {
+      "id": "resp_06f6d1975b89fcf0006a24918215d8819eac6c1023791f4c5e",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 733,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 966,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1699
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 30,
+      "feedback": "The deck states the product is an AI tool for companies needing automation but lacks a clear, specific problem definition or articulation of pain points faced by target customers.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 25,
+      "feedback": "Solution is vaguely described as a product that makes teams faster with no details on how it achieves this, no differentiation, features, or proof points provided.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 20,
+      "feedback": "The deck claims the market is huge but provides no TAM, SAM, SOM figures or market analysis to substantiate this claim.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 10,
+      "feedback": "No information on pricing, revenue streams, customer segments, or sales strategy is included.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 15,
+      "feedback": "Mentions having some conversations with potential customers but provides no data on actual users, revenue, growth metrics, or customer validation.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 5,
+      "feedback": "No details on founder or team backgrounds, skills, or relevant experience.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 10,
+      "feedback": "Mentions desire for investment soon but has not decided on the amount and provides no financial projections or fundraising strategy.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 20,
+      "feedback": "The pitch lacks a structured compelling story that connects problem, solution, market, traction, team, and financials into a persuasive argument for investment.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\quality-weak-atlasops.json"
+}

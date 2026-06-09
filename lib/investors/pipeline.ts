@@ -9,6 +9,7 @@ import {
 import {
   buildLeadsFinderInput,
   discoverVCPartners,
+  discoverVCPartnersRegionally,
   LEADS_FINDER_ACTOR_ID,
 } from "@/lib/apify/leads-finder"
 import { fetchLinkedInResults, startLinkedInEnrichment } from "@/lib/apify/linkedin"
@@ -19,6 +20,11 @@ import { mergeInvestors, type MergedFirm } from "@/lib/matching/merge"
 import { fetchFounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import { generateOutreachEmail } from "@/lib/matching/outreach"
 import { buildOutreachApifyContext } from "@/lib/matching/outreach-context"
+import {
+  composeEvidenceBasedRationale,
+  scoreFirmForProfile,
+  selectDiverseInvestorMatches,
+} from "@/lib/matching/investor-fit"
 import { prefilterFirms } from "@/lib/matching/prefilter"
 import { buildFounderProfile } from "@/lib/matching/profile"
 import { markInvestorJobFailed } from "@/lib/investors/job-errors"
@@ -133,14 +139,15 @@ export async function startInvestorMatchingJob({
     const leadsFinderInput = buildLeadsFinderInput(context.profile, {
       fetchCount: sizing.leadsFinderFetchCount,
     })
-    logJob(jobId, "Starting Leads Finder actor", {
+    logJob(jobId, "Starting regional Leads Finder actors", {
       actor: LEADS_FINDER_ACTOR_ID,
       input: leadsFinderInput,
     })
 
-    let rawLeads = await discoverVCPartners(context.profile, {
+    const regionalDiscovery = await discoverVCPartnersRegionally(context.profile, {
       fetchCount: sizing.leadsFinderFetchCount,
     })
+    let rawLeads = regionalDiscovery.leads
     await logApifyCost({
       userId: String(job.user_id),
       runId: jobId,
@@ -148,7 +155,10 @@ export async function startInvestorMatchingJob({
       actorId: LEADS_FINDER_ACTOR_ID,
       units: rawLeads.length || sizing.leadsFinderFetchCount,
     })
-    logJob(jobId, "Leads Finder actor completed", { itemCount: rawLeads.length })
+    logJob(jobId, "Regional Leads Finder actors completed", {
+      itemCount: rawLeads.length,
+      passes: regionalDiscovery.queries.map((query) => query.query),
+    })
     await ensureNotCancelled(supabase, jobId)
 
     let groupedFirms = groupLeadsIntoFirms(rawLeads, context.profile)
@@ -233,7 +243,14 @@ export async function startInvestorMatchingJob({
         apify_dataset_id: crunchbaseRun.datasetId,
         crunchbase_run_id: crunchbaseRun.runId,
         crunchbase_dataset_id: crunchbaseRun.datasetId,
-        apify_actor_runs: { leadsFinder: { input: leadsFinderInput }, crunchbase: crunchbaseRun },
+        apify_actor_runs: {
+          leadsFinder: {
+            input: leadsFinderInput,
+            regionalInputs: regionalDiscovery.actorInputs,
+            regionalQueries: regionalDiscovery.queries,
+          },
+          crunchbase: crunchbaseRun,
+        },
         investor_signals: crunchbaseResults,
         shortlisted_investors: shortlist,
         scraping_completed_at: new Date().toISOString(),
@@ -306,7 +323,11 @@ export async function startInvestorMatchingJob({
       crunchbaseResults,
       linkedinPosts,
       limitedData,
-      leadsFinderInput,
+      leadsFinderInput: {
+        ...leadsFinderInput,
+        regionalInputs: regionalDiscovery.actorInputs,
+        regionalQueries: regionalDiscovery.queries,
+      },
     })
 
     return { jobId, cacheHit: false }
@@ -592,20 +613,26 @@ async function completeInvestorMatching({
     linkedinPosts,
     targetMatchCount,
     limitedData,
+    profile,
+  })
+  const diversifiedRanked = selectDiverseInvestorMatches({
+    matches: ranked,
+    profile,
+    targetMatchCount,
   })
   logJob(jobId, "OpenAI ranking completed", {
     rankedFromGpt: rankedFromGpt.length,
     backfilled: ranked.length - rankedFromGpt.length,
-    finalCount: ranked.length,
+    finalCount: diversifiedRanked.length,
     plan,
     targetMatchCount,
   })
   await ensureNotCancelled(supabase, jobId)
 
-  logJob(jobId, "Generating outreach emails", { rankedCount: ranked.length })
+  logJob(jobId, "Generating outreach emails", { rankedCount: diversifiedRanked.length })
   const generatedAt = new Date().toISOString()
   const withEmails = await Promise.all(
-    ranked.map(async (match, index) => {
+    diversifiedRanked.map(async (match, index) => {
       const outreach = await generateOutreachEmail({
         profile,
         match,
@@ -823,6 +850,7 @@ function errorToLog(error: unknown) {
 }
 
 function toStoredMatch(match: InvestorMatch, generatedAt: string) {
+  const intro = match.outreachSequence?.steps[0] ?? match.outreachEmail
   return {
     rank: match.rank,
     fitScore: match.fitScore,
@@ -840,9 +868,14 @@ function toStoredMatch(match: InvestorMatch, generatedAt: string) {
     matchRationale: match.matchRationale,
     whyThisInvestor: match.matchRationale,
     whyNow: match.recentLinkedInSignals[0]?.postText ?? "Recent fit is based on firm focus, stage, geography, and available deployment signals.",
-    suggestedAngle: match.outreachEmail.subject,
-    outreachSubject: match.outreachEmail.subject,
-    outreachBody: match.outreachEmail.body,
+    chequeFit: match.chequeFit ?? "Unknown",
+    chequeSize: match.chequeSize ?? null,
+    fitBreakdown: match.fitBreakdown ?? null,
+    rationaleComponents: match.rationaleComponents ?? null,
+    suggestedAngle: intro.subject,
+    outreachSubject: intro.subject,
+    outreachBody: intro.body,
+    outreachSequence: match.outreachSequence ?? null,
     outreachGeneratedAt: generatedAt,
     outreachUpdatedAt: generatedAt,
     outreachSource: "ai",
@@ -901,15 +934,15 @@ function backfillFromShortlist({
   linkedinPosts,
   targetMatchCount,
   limitedData,
+  profile,
 }: {
   ranked: RankedMatch[]
   shortlist: MergedFirm[]
   linkedinPosts: LinkedInPost[]
   targetMatchCount: number
   limitedData: boolean
+  profile: FounderProfile
 }): RankedMatch[] {
-  if (ranked.length >= targetMatchCount) return ranked
-
   const usedPartnerLinkedIns = new Set(
     ranked.map((match) => match.partner.linkedin.trim().toLowerCase())
   )
@@ -918,9 +951,14 @@ function backfillFromShortlist({
   )
 
   const fillers: RankedMatch[] = []
+  const outputLimit = Math.min(shortlist.length, Math.max(targetMatchCount * 3, targetMatchCount + 15))
 
-  for (const firm of shortlist) {
-    if (ranked.length + fillers.length >= targetMatchCount) break
+  const scoredShortlist = shortlist
+    .map((firm) => ({ firm, assessment: scoreFirmForProfile(firm, profile) }))
+    .sort((a, b) => b.assessment.score - a.assessment.score)
+
+  for (const { firm, assessment } of scoredShortlist) {
+    if (ranked.length + fillers.length >= outputLimit) break
 
     const firmKey = firm.Firm_Name.trim().toLowerCase()
     if (usedFirmNames.has(firmKey)) continue
@@ -940,12 +978,10 @@ function backfillFromShortlist({
         relevance: "low" as const,
       }))
 
-    const focus = firm.Focus_Areas.slice(0, 2).join(" / ") || "general venture"
-    const stage = firm.Investment_Stages[0] ?? "early-stage"
     const country = firm.Country || "Unknown geography"
 
-    fillers.push({
-      fitScore: Math.max(35, 50 - fillers.length), // 50, 49, 48, ...
+    const filler: RankedMatch = {
+      fitScore: assessment.score,
       firm: {
         name: firm.Firm_Name,
         website: firm.Website,
@@ -966,19 +1002,24 @@ function backfillFromShortlist({
         email: contact.Email ?? undefined,
         linkedin: partnerLinkedIn,
       },
-      matchRationale: `Worth a look: ${firm.Firm_Name} invests in ${focus} at ${stage} stage out of ${country}. Sector and stage overlap is plausible based on the founder's profile, but this candidate was outside the AI ranker's top picks — review the firm's portfolio before reaching out.`,
+      matchRationale: "",
       recentLinkedInSignals: signals,
+      chequeFit: assessment.chequeFit,
+      chequeSize: assessment.chequeSize,
+      fitBreakdown: assessment.facets,
       limitedData: true,
-    })
+    }
+    filler.matchRationale = composeEvidenceBasedRationale(profile, filler, assessment)
+    fillers.push(filler)
 
     usedFirmNames.add(firmKey)
     usedPartnerLinkedIns.add(partnerLinkedIn.trim().toLowerCase())
   }
 
-  if (fillers.length === 0) return ranked
-
   // Suppress the "void" reference to limitedData; it informs future telemetry.
   void limitedData
 
   return [...ranked, ...fillers]
+    .sort((a, b) => b.fitScore - a.fitScore)
+    .slice(0, outputLimit)
 }

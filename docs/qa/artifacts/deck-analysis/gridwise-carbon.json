@@ -1,0 +1,245 @@
+{
+  "fixture": {
+    "id": "gridwise-carbon",
+    "label": "Gridwise Carbon",
+    "companyId": "gridwise-carbon",
+    "quality": "company",
+    "text": "Gridwise Carbon Pitch Deck\n\nSector: ClimateTech / Carbon Accounting / B2B SaaS\n\nStage: pre-seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 700,000\n\nTraction: GBP 5k MRR, 15 pilot customers\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Carbon accounting and supplier emissions tracking for SMEs.\n\nBusiness model: B2B SaaS subscription with implementation support.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 5000, burn 39000, cash 150000, gross margin 76%.\n\nInvestor ask: Raising GBP 700,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\gridwise-carbon.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": false,
+    "sectorTermsFound": [
+      "climate",
+      "carbon",
+      "emissions",
+      "accounting",
+      "saas"
+    ],
+    "expectedRaise": 700000,
+    "raiseExtracted": 700000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 63,
+    "expectedScoreBand": null,
+    "scoreInExpectedBand": null,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 5,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 5000,
+      "monthlyBurn": 39000,
+      "cashBalance": 150000,
+      "runwayMonths": 18,
+      "raiseAmount": 700000,
+      "customerCount": 15,
+      "teamSize": null,
+      "grossMarginPercent": 76,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Monthly revenue, burn, cash, runway and raise amount are stated. Customer count from pilots included. Team size and growth metrics are missing."
+    }
+  },
+  "extractedText": "Gridwise Carbon Gridwise Carbon Pitch Deck Sector: ClimateTech / Carbon Accounting / B2B SaaS Stage: pre-seed Geography: UK / Europe / Worldwide Raise amount: GBP 700,000 Traction: GBP 5k MRR, 15 pilot customers Problem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure. Solution: Carbon accounting and supplier emissions tracking for SMEs. Business model: B2B SaaS subscription with implementation support. Team: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success. Go-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches. Financial assumptions: current monthly revenue 5000, burn 39000, cash 150000, gross margin 76%. Investor ask: Raising GBP 700,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model. Use of funds: product development, customer acquisition, compliance or data where relevant, and core hires. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The pitch deck presents a pre-seed ClimateTech B2B SaaS startup focused on carbon accounting for SMEs. It outlines the problem related to fragmented, manual workflows causing inefficiency, proposes a SaaS solution, provides limited traction data (5k MRR, 15 pilots), details the team and go-to-market plans, and specifies a £700k raise with financial assumptions. However, it lacks detailed market sizing, detailed competitive landscape, customer acquisition strategy, and product differentiation. Financial details are partial but include revenue, burn, cash and gross margin.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 75,
+        "feedback": "The problem is described as inefficient, fragmented workflows causing waste, which is clear but generic. More specifics on customer pain points or case examples would strengthen understanding."
+      },
+      {
+        "category": "Solution strength",
+        "score": 70,
+        "feedback": "The solution is defined as carbon accounting and supplier emissions tracking SaaS with implementation support, fitting the problem. However, feature details, product uniqueness, and differentiation from competitors are not provided."
+      },
+      {
+        "category": "Market size",
+        "score": 40,
+        "feedback": "The deck does not provide any quantification or credible estimates of the total addressable market or serviceable market. This is a notable omission for investor assessment."
+      },
+      {
+        "category": "Business model",
+        "score": 70,
+        "feedback": "The B2B SaaS subscription model with implementation support is stated clearly. Pricing, sales cycle, or customer acquisition cost details are missing, limiting evaluation."
+      },
+      {
+        "category": "Traction",
+        "score": 60,
+        "feedback": "The deck reports £5k MRR and 15 pilot customers which indicates initial validation. No growth metrics or revenue growth rates are provided."
+      },
+      {
+        "category": "Team",
+        "score": 65,
+        "feedback": "Founder-led team with product, commercial, and domain experience is mentioned. Hiring plans are outlined but details on team members’ backgrounds, skills, or relevant achievements are absent."
+      },
+      {
+        "category": "Financial ask",
+        "score": 75,
+        "feedback": "The amount to raise (£700k) and use of funds are stated, along with current financials and runway assumption (18 months). However, detailed financial projections or milestones are not exhibited."
+      },
+      {
+        "category": "Narrative",
+        "score": 65,
+        "feedback": "The deck logically connects problem, solution, market, traction, team, and raise but lacks a compelling story or differentiation that engages investors beyond basic facts."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 5000,
+      "monthlyBurn": 39000,
+      "cashBalance": 150000,
+      "runwayMonths": 18,
+      "raiseAmount": 700000,
+      "customerCount": 15,
+      "teamSize": null,
+      "grossMarginPercent": 76,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Monthly revenue, burn, cash, runway and raise amount are stated. Customer count from pilots included. Team size and growth metrics are missing."
+    },
+    "strengths": [
+      "Clear problem and solution alignment",
+      "Initial traction with pilot customers and revenue",
+      "Detailed capital raise amount and planned use of funds"
+    ],
+    "weaknesses": [
+      "No market size quantification or analysis",
+      "Limited team background or bios",
+      "No demonstration of product differentiation or competitive edge",
+      "Lack of detailed financial projections or growth metrics"
+    ],
+    "missingSections": [
+      "Market sizing details",
+      "Competitive analysis",
+      "Detailed team bios",
+      "Customer acquisition and marketing strategy"
+    ],
+    "investorReadiness": "Moderate",
+    "suggestedFixes": [
+      {
+        "title": "Add Market Size and Opportunity Analysis",
+        "explanation": "Include credible estimates of total and serviceable addressable market to demonstrate opportunity scale.",
+        "priority": "high"
+      },
+      {
+        "title": "Expand Team Information",
+        "explanation": "Provide detailed backgrounds and relevant achievements of founders and key hires to establish credibility.",
+        "priority": "medium"
+      },
+      {
+        "title": "Detail Customer Acquisition Strategy",
+        "explanation": "Explain how customers will be acquired, sales cycle, cost of acquisition, and retention to improve business model confidence.",
+        "priority": "high"
+      },
+      {
+        "title": "Enhance Financial Projections",
+        "explanation": "Show month-by-month revenue growth, unit economics, and milestone-linked financial plans.",
+        "priority": "high"
+      },
+      {
+        "title": "Include Competitive Landscape and Differentiation",
+        "explanation": "Clarify how the product differentiates from existing tools to strengthen solution conviction.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Develop detailed market sizing section",
+        "reason": "Investors need to understand growth potential and opportunity scale.",
+        "priority": "high"
+      },
+      {
+        "action": "Create comprehensive team bios",
+        "reason": "Establish confidence in execution capability.",
+        "priority": "medium"
+      },
+      {
+        "action": "Build and present detailed financial projections linked to milestones",
+        "reason": "Demonstrate sound financial planning.",
+        "priority": "high"
+      }
+    ],
+    "fundraisingRisks": [
+      "Unclear market size risks underestimating opportunity",
+      "Limited traction may not convince investors",
+      "Lack of detailed team information reduces confidence",
+      "No clear competitive differentiation risks losing market share"
+    ],
+    "overallScore": 63,
+    "raw": {
+      "id": "resp_075bc204612d3336006a2491558c60819c907e7d675cea9672",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 876,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 941,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1817
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 75,
+      "feedback": "The problem is described as inefficient, fragmented workflows causing waste, which is clear but generic. More specifics on customer pain points or case examples would strengthen understanding.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 70,
+      "feedback": "The solution is defined as carbon accounting and supplier emissions tracking SaaS with implementation support, fitting the problem. However, feature details, product uniqueness, and differentiation from competitors are not provided.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 40,
+      "feedback": "The deck does not provide any quantification or credible estimates of the total addressable market or serviceable market. This is a notable omission for investor assessment.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 70,
+      "feedback": "The B2B SaaS subscription model with implementation support is stated clearly. Pricing, sales cycle, or customer acquisition cost details are missing, limiting evaluation.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 60,
+      "feedback": "The deck reports £5k MRR and 15 pilot customers which indicates initial validation. No growth metrics or revenue growth rates are provided.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 65,
+      "feedback": "Founder-led team with product, commercial, and domain experience is mentioned. Hiring plans are outlined but details on team members’ backgrounds, skills, or relevant achievements are absent.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 75,
+      "feedback": "The amount to raise (£700k) and use of funds are stated, along with current financials and runway assumption (18 months). However, detailed financial projections or milestones are not exhibited.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 65,
+      "feedback": "The deck logically connects problem, solution, market, traction, team, and raise but lacks a compelling story or differentiation that engages investors beyond basic facts.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\gridwise-carbon.json"
+}

@@ -111,6 +111,16 @@ export function storedMatchToOutreachInput(
       linkedin: String(stored.linkedinUrl ?? partner.linkedin ?? ""),
     },
     matchRationale: String(stored.matchRationale ?? stored.whyThisInvestor ?? ""),
+    chequeFit: pickChequeFit(stored.chequeFit),
+    chequeSize: pickOptionalString(stored.chequeSize),
+    fitBreakdown:
+      stored.fitBreakdown && typeof stored.fitBreakdown === "object"
+        ? (stored.fitBreakdown as InvestorMatch["fitBreakdown"])
+        : undefined,
+    rationaleComponents:
+      stored.rationaleComponents && typeof stored.rationaleComponents === "object"
+        ? (stored.rationaleComponents as InvestorMatch["rationaleComponents"])
+        : undefined,
     recentLinkedInSignals: Array.isArray(stored.recentLinkedInSignals)
       ? (stored.recentLinkedInSignals as InvestorMatch["recentLinkedInSignals"])
       : [],
@@ -226,6 +236,13 @@ function asRecord(value: unknown) {
 
 function pickOptionalString(value: unknown) {
   return typeof value === "string" && value.trim() ? value.trim() : undefined
+}
+
+function pickChequeFit(value: unknown): InvestorMatch["chequeFit"] {
+  if (value === "Strong" || value === "Partial" || value === "Weak" || value === "Unknown") {
+    return value
+  }
+  return "Unknown"
 }
 
 function pickStringArray(value: unknown) {

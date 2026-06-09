@@ -48,7 +48,7 @@ export const plans: StripePlan[] = [
     },
     features: [
       "Everything in Starter",
-      "Up to 35 ranked investors per run",
+      "25 ranked investors per run",
       "Personalised outreach emails",
       "CSV and PDF export of matches",
     ],
@@ -56,7 +56,7 @@ export const plans: StripePlan[] = [
       deckUploadsPerMonth: 25,
       financialModelRunsPerMonth: 25,
       investorMatchRunsPerMonth: 10,
-      investorMatchesPerRun: 35,
+      investorMatchesPerRun: 25,
     },
   },
   {
@@ -73,7 +73,7 @@ export const plans: StripePlan[] = [
     },
     features: [
       "Everything in Pro",
-      "Up to 50 ranked investors per run",
+      "25 ranked investors per run",
       "Pay once, no subscription",
       "Hard-capped at 30 founders globally",
       "Priority support",
@@ -82,7 +82,7 @@ export const plans: StripePlan[] = [
       deckUploadsPerMonth: 5,
       financialModelRunsPerMonth: 5,
       investorMatchRunsPerMonth: 2,
-      investorMatchesPerRun: 50,
+      investorMatchesPerRun: 25,
     },
   },
 ]
@@ -90,7 +90,6 @@ export const plans: StripePlan[] = [
 export const LIFETIME_MAX_INVENTORY = 30 as const
 
 export const FREE_DECK_UPLOAD_LIMIT = 1 as const
-export const FREE_DECK_UPLOAD_LIMIT_WITH_WHATSAPP = 2 as const
 
 export function getPlan(planId: string): StripePlan | undefined {
   return plans.find((plan) => plan.id === planId)

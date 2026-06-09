@@ -3,6 +3,12 @@ import {
   inferInvestorAudience,
 } from "@/lib/matching/deck-discovery"
 import { normaliseFounderGeographyForRanking } from "@/lib/apify/leads-finder-locations"
+import {
+  buildCompanySpecificThesisKeywords,
+  classifyInvestorRegion,
+  founderDiscoveryRegions,
+  founderWantsWorldwide,
+} from "@/lib/matching/investor-fit"
 import type { LeadsFinderContact } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
 
@@ -29,9 +35,13 @@ export function preFilterPeople(
 ): LeadsFinderContact[] {
   const geo = normaliseFounderGeographyForRanking(profile.company.geography)
   const audience = inferInvestorAudience(profile)
-  const sectorKeywords = buildDeckAwareSectorTerms(profile)
+  const sectorKeywords = [
+    ...buildCompanySpecificThesisKeywords(profile, 8),
+    ...buildDeckAwareSectorTerms(profile),
+  ]
+  const preferredRegions = founderDiscoveryRegions(profile)
 
-  return leads
+  const scored = leads
     .filter((lead) => {
       const email = lead.email?.trim()
       const firm = lead.company_name?.trim()
@@ -51,17 +61,61 @@ export function preFilterPeople(
 
       return true
     })
-    .map((lead) => ({ lead, score: scoreLead(lead, profile, geo, sectorKeywords) }))
+    .map((lead) => ({ lead, score: scoreLead(lead, profile, geo, sectorKeywords, preferredRegions) }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(({ lead }) => lead)
+
+  return selectRegionAwareLeads(scored, profile, limit).map(({ lead }) => lead)
+}
+
+function selectRegionAwareLeads(
+  scored: Array<{ lead: LeadsFinderContact; score: number }>,
+  profile: FounderProfile,
+  limit: number
+) {
+  if (!founderWantsWorldwide(profile) || limit < 6) {
+    return scored.slice(0, limit)
+  }
+
+  const selected: typeof scored = []
+  const used = new Set<string>()
+  const floorPerRegion = Math.max(2, Math.floor(limit * 0.16))
+
+  const keyFor = (lead: LeadsFinderContact) =>
+    lead.email?.trim().toLowerCase() ||
+    lead.linkedin?.trim().toLowerCase() ||
+    `${lead.full_name ?? ""}:${lead.company_name ?? ""}`.toLowerCase()
+  const add = (item: (typeof scored)[number]) => {
+    const key = keyFor(item.lead)
+    if (!key || used.has(key)) return false
+    selected.push(item)
+    used.add(key)
+    return true
+  }
+
+  for (const region of ["UK", "Europe", "US"] as const) {
+    let count = 0
+    for (const item of scored) {
+      if (selected.length >= limit || count >= floorPerRegion) break
+      const leadRegion = classifyInvestorRegion(item.lead.company_country ?? item.lead.country ?? "")
+      if (leadRegion !== region) continue
+      if (add(item)) count += 1
+    }
+  }
+
+  for (const item of scored) {
+    if (selected.length >= limit) break
+    add(item)
+  }
+
+  return selected.slice(0, limit)
 }
 
 function scoreLead(
   lead: LeadsFinderContact,
   profile: FounderProfile,
   geo: string | null,
-  sectorKeywords: string[]
+  sectorKeywords: string[],
+  preferredRegions: ReturnType<typeof founderDiscoveryRegions>
 ) {
   let score = 0
   const title = lead.job_title ?? ""
@@ -73,9 +127,13 @@ function scoreLead(
   }
 
   const leadGeo = `${lead.country ?? ""} ${lead.company_country ?? ""}`.toLowerCase()
+  const leadRegion = classifyInvestorRegion(lead.company_country ?? lead.country ?? "")
   if (geo) {
     if (leadGeo.includes(geo)) score += 25
     else if (leadGeo.includes("united kingdom") && geo.includes("united kingdom")) score += 20
+  }
+  if (preferredRegions.includes(leadRegion)) {
+    score += leadRegion === "UK" ? 25 : leadRegion === "Europe" ? 20 : leadRegion === "US" ? 10 : 6
   }
 
   const focusText = [
@@ -87,7 +145,10 @@ function scoreLead(
     .join(" ")
     .toLowerCase()
 
-  if (sectorKeywords.some((kw) => focusText.includes(kw.toLowerCase()))) score += 20
+  const sectorMatches = sectorKeywords.filter((kw) => focusText.includes(kw.toLowerCase()))
+  if (sectorMatches.length >= 2) score += 35
+  else if (sectorMatches.length === 1) score += 22
+  else score -= 15
 
   const stageMap: Record<FounderProfile["company"]["stage"], string[]> = {
     "pre-seed": ["pre-seed", "pre seed", "seed"],
@@ -96,6 +157,10 @@ function scoreLead(
   }
   const wanted = stageMap[profile.company.stage]
   if (wanted.some((s) => focusText.includes(s))) score += 10
+
+  if (/\b(venture capital|private equity|startup|founders|early stage)\b/i.test(focusText) && sectorMatches.length === 0) {
+    score -= 10
+  }
 
   return score
 }

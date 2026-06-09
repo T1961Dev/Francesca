@@ -76,6 +76,24 @@ export type InvestorMatch = {
     linkedin: string
   }
   matchRationale: string
+  chequeFit?: "Strong" | "Partial" | "Weak" | "Unknown"
+  chequeSize?: string
+  fitBreakdown?: {
+    sectorFit: number
+    stageFit: number
+    geographyFit: number
+    chequeFit: number
+    businessModelFit: number
+    tractionFit: number
+    evidenceQuality: number
+  }
+  rationaleComponents?: {
+    startupFact: string
+    investorEvidence: string
+    fitReason: string
+    caveat: string
+    confidence: string
+  }
   recentLinkedInSignals: Array<{
     postText: string
     postedAt: string

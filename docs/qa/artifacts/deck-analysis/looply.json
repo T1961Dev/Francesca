@@ -1,0 +1,240 @@
+{
+  "fixture": {
+    "id": "looply",
+    "label": "Looply",
+    "companyId": "looply",
+    "quality": "company",
+    "text": "Looply Pitch Deck\n\nSector: Consumer / Social / Events\n\nStage: pre-seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 500,000\n\nTraction: Pre-revenue, 12,000 waitlist users, 4,500 beta users\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Gen Z event discovery and friend plans app.\n\nBusiness model: Consumer social app with event affiliate and premium monetisation.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 0, burn 35000, cash 120000, gross margin 75%.\n\nInvestor ask: Raising GBP 500,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\looply.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": true,
+    "sectorTermsFound": [
+      "consumer",
+      "social",
+      "gen z"
+    ],
+    "expectedRaise": 500000,
+    "raiseExtracted": 500000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 63,
+    "expectedScoreBand": null,
+    "scoreInExpectedBand": null,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 4,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 0,
+      "monthlyBurn": 35000,
+      "cashBalance": 120000,
+      "runwayMonths": null,
+      "raiseAmount": 500000,
+      "customerCount": null,
+      "teamSize": null,
+      "grossMarginPercent": 75,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway months not explicitly stated; assume ask funds cover 18 months as indicated."
+    }
+  },
+  "extractedText": "Looply Looply Pitch Deck Sector: Consumer / Social / Events Stage: pre-seed Geography: UK / Europe / Worldwide Raise amount: GBP 500,000 Traction: Pre-revenue, 12,000 waitlist users, 4,500 beta users Problem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure. Solution: Gen Z event discovery and friend plans app. Business model: Consumer social app with event affiliate and premium monetisation. Team: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success. Go-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches. Financial assumptions: current monthly revenue 0, burn 35000, cash 120000, gross margin 75%. Investor ask: Raising GBP 500,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model. Use of funds: product development, customer acquisition, compliance or data where relevant, and core hires. -- 1 of 1 --",
+  "analysis": {
+    "summary": "Looply targets inefficiencies in event planning workflows for Gen Z by offering an integrated social app focused on event discovery and friend planning. The deck outlines a clear problem and solution, a plausible business model, and demonstrates early traction via waitlist and beta users. The founder-led team's experience is mentioned, though details are limited. Financials are partially disclosed, indicating a pre-revenue status but with specified burn and cash. The fundraising ask is stated with intended use. The narrative is straightforward but lacks depth and compelling storytelling elements.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 80,
+        "feedback": "The problem is clearly stated focusing on fragmented and manual workflows causing wasted time and money. However, more quantitative evidence or user insights would strengthen it."
+      },
+      {
+        "category": "Solution strength",
+        "score": 70,
+        "feedback": "Solution is a Gen Z-targeted app combining event discovery and friend planning. It aligns with the problem but lacks detailed features, competitive advantages, or proof of solution validation beyond beta users."
+      },
+      {
+        "category": "Market size",
+        "score": 50,
+        "feedback": "Geographic markets (UK, Europe, selected worldwide) are indicated but no market sizing or TAM/SAM/SOM analysis is provided."
+      },
+      {
+        "category": "Business model",
+        "score": 60,
+        "feedback": "Business model is consumer social app monetized via event affiliate and premium options. Details on pricing, revenue projections, or monetization strategy are absent."
+      },
+      {
+        "category": "Traction",
+        "score": 65,
+        "feedback": "Pre-revenue stage with 12,000 waitlist users and 4,500 beta users shows early interest but lacks growth metrics or engagement data."
+      },
+      {
+        "category": "Team",
+        "score": 55,
+        "feedback": "Description is brief, noting founder-led experience across relevant domains and hiring plans, but no names, backgrounds, or team size specifics are included."
+      },
+      {
+        "category": "Financial ask",
+        "score": 70,
+        "feedback": "Investor ask is clearly stated at GBP 500,000 for 18 months runway with defined uses. Financial assumptions include burn, cash, and gross margin, but revenue projections and milestones are not detailed."
+      },
+      {
+        "category": "Narrative",
+        "score": 60,
+        "feedback": "The narrative is direct and factual but lacks emotional appeal, user stories, or a strong vision to differentiate Looply within the competitive landscape."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 0,
+      "monthlyBurn": 35000,
+      "cashBalance": 120000,
+      "runwayMonths": null,
+      "raiseAmount": 500000,
+      "customerCount": null,
+      "teamSize": null,
+      "grossMarginPercent": 75,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway months not explicitly stated; assume ask funds cover 18 months as indicated."
+    },
+    "strengths": [
+      "Clear problem statement addressing real user pain points.",
+      "Early traction demonstrated by waitlist and beta users.",
+      "Founder-led team with relevant domain experience.",
+      "Explicit fundraising amount and intended use of funds."
+    ],
+    "weaknesses": [
+      "Lack of detailed market size analysis or segmentation.",
+      "Limited business model specifics and revenue projections.",
+      "Sparse team information with no key personnel or size disclosed.",
+      "No detailed user engagement or growth metrics.",
+      "Narrative lacks compelling storytelling to engage investors."
+    ],
+    "missingSections": [
+      "Detailed market size and competitive landscape analysis",
+      "Revenue projections and detailed financial model",
+      "Team composition and key bios",
+      "Detailed go-to-market and customer acquisition strategy"
+    ],
+    "investorReadiness": "Moderately early stage with promising initial traction but requires more detailed market, financial, and team content to enhance investor confidence.",
+    "suggestedFixes": [
+      {
+        "title": "Add detailed market sizing and competitive analysis",
+        "explanation": "Provide TAM/SAM/SOM metrics and differentiate from competitors to elucidate market opportunity and positioning.",
+        "priority": "high"
+      },
+      {
+        "title": "Enhance business model with financial projections",
+        "explanation": "Include pricing strategy, revenue forecasts, and monetization breakdown to clarify financial viability.",
+        "priority": "high"
+      },
+      {
+        "title": "Expand team section with key biographies",
+        "explanation": "Include backgrounds, roles, and hires to demonstrate team capability and readiness.",
+        "priority": "medium"
+      },
+      {
+        "title": "Develop user engagement and growth metrics",
+        "explanation": "Provide retention, daily/weekly active user counts, and growth rates to validate traction.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Prepare detailed market sizing and competitor analysis",
+        "reason": "Investors require understanding of target market scale and competitive advantage.",
+        "priority": "high"
+      },
+      {
+        "action": "Develop and share detailed financial projections",
+        "reason": "Clarifies business viability and expected return on investment.",
+        "priority": "high"
+      },
+      {
+        "action": "Strengthen team presentation with bios and hiring plan",
+        "reason": "Reassures investors about execution capability and team depth.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "Pre-revenue status increases risk profile, relying on user acquisition execution.",
+      "Limited market size data may lead to investor uncertainty about scalability.",
+      "Sparse financial projections limit assessment of use of funds and milestones.",
+      "Insufficient team detail may reduce confidence in delivery capability."
+    ],
+    "overallScore": 63,
+    "raw": {
+      "id": "resp_0d86e92da3027fb8006a249134388c819da12bab0a049f26d0",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 875,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 967,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1842
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 80,
+      "feedback": "The problem is clearly stated focusing on fragmented and manual workflows causing wasted time and money. However, more quantitative evidence or user insights would strengthen it.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 70,
+      "feedback": "Solution is a Gen Z-targeted app combining event discovery and friend planning. It aligns with the problem but lacks detailed features, competitive advantages, or proof of solution validation beyond beta users.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 50,
+      "feedback": "Geographic markets (UK, Europe, selected worldwide) are indicated but no market sizing or TAM/SAM/SOM analysis is provided.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 60,
+      "feedback": "Business model is consumer social app monetized via event affiliate and premium options. Details on pricing, revenue projections, or monetization strategy are absent.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 65,
+      "feedback": "Pre-revenue stage with 12,000 waitlist users and 4,500 beta users shows early interest but lacks growth metrics or engagement data.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 55,
+      "feedback": "Description is brief, noting founder-led experience across relevant domains and hiring plans, but no names, backgrounds, or team size specifics are included.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 70,
+      "feedback": "Investor ask is clearly stated at GBP 500,000 for 18 months runway with defined uses. Financial assumptions include burn, cash, and gross margin, but revenue projections and milestones are not detailed.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 60,
+      "feedback": "The narrative is direct and factual but lacks emotional appeal, user stories, or a strong vision to differentiate Looply within the competitive landscape.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\looply.json"
+}

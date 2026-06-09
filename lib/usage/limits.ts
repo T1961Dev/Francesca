@@ -1,6 +1,5 @@
 import {
   FREE_DECK_UPLOAD_LIMIT,
-  FREE_DECK_UPLOAD_LIMIT_WITH_WHATSAPP,
   getPlan,
 } from "@/lib/stripe/plans"
 import type { Plan } from "@/types/app"
@@ -22,12 +21,11 @@ export type LimitResolution = {
 
 /**
  * Resolve the numeric limit + counter type for a given plan + action.
- * Whatsapp bonus only affects Free plan deck uploads.
+ * Free founders get exactly one deck upload ever.
  */
 export function resolveUsageLimit(
   plan: Plan,
-  action: UsageAction,
-  options: { whatsappBonus?: boolean } = {}
+  action: UsageAction
 ): LimitResolution {
   const planConfig = plan === "free" ? null : getPlan(plan)
 
@@ -36,9 +34,7 @@ export function resolveUsageLimit(
       if (plan === "free") {
         return {
           action,
-          limit: options.whatsappBonus
-            ? FREE_DECK_UPLOAD_LIMIT_WITH_WHATSAPP
-            : FREE_DECK_UPLOAD_LIMIT,
+          limit: FREE_DECK_UPLOAD_LIMIT,
           useEverCounter: true,
           label: "deck_uploads",
         }

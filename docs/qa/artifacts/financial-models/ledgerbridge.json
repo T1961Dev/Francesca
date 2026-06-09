@@ -1,0 +1,1077 @@
+{
+  "company": {
+    "id": "ledgerbridge",
+    "name": "LedgerBridge",
+    "sector": "FinTech / API / Lending Infrastructure",
+    "expectedTerms": [
+      "fintech",
+      "api",
+      "lending",
+      "infrastructure",
+      "financial services",
+      "bank data"
+    ],
+    "badTerms": [
+      "healthtech",
+      "climate",
+      "consumer social"
+    ],
+    "stage": "seed",
+    "geography": "UK / Europe / Worldwide",
+    "raiseAmount": 1200000,
+    "traction": "3 lender pilots, signed LOIs, pre-revenue",
+    "profile": {
+      "company_name": "LedgerBridge",
+      "sector": "FinTech / API / Lending Infrastructure",
+      "industry": "FinTech",
+      "stage": "seed",
+      "funding_stage": "seed",
+      "geography": "United Kingdom / Europe / Worldwide",
+      "location": "United Kingdom",
+      "target_raise": 1200000,
+      "full_name": "QA Founder",
+      "plan": "pro",
+      "description": "API infrastructure for SME lender bank-data and cashflow verification."
+    },
+    "financialInput": {
+      "companyName": "LedgerBridge",
+      "businessModel": "FinTech infrastructure API usage-based contracts",
+      "industry": "FinTech / lending infrastructure",
+      "currentMonthlyRevenue": 0,
+      "currentMonthlyBurn": 64000,
+      "currentCashBalance": 250000,
+      "currentRunway": 3.9,
+      "raiseAmount": 1200000,
+      "monthlyRevenueGrowth": 0,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 84,
+      "churn": 2,
+      "currentCustomers": 3,
+      "targetCustomers": 30,
+      "averageRevenuePerCustomer": 0,
+      "teamSize": 8,
+      "plannedHires": 9,
+      "fundingGoal": "Convert lender pilots and LOIs into paid API contracts.",
+      "targetMarket": "UK and European SME lenders and embedded finance platforms.",
+      "notes": "Pre-revenue with 3 pilots and signed LOIs. Do not treat LOIs as revenue."
+    },
+    "deckText": "LedgerBridge Pitch Deck\n\nSector: FinTech / API / Lending Infrastructure\n\nStage: seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 1,200,000\n\nTraction: 3 lender pilots, signed LOIs, pre-revenue\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: API infrastructure for SME lender bank-data and cashflow verification.\n\nBusiness model: FinTech infrastructure API usage-based contracts.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 0, burn 64000, cash 250000, gross margin 84%.\n\nInvestor ask: Raising GBP 1,200,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires."
+  },
+  "validations": {
+    "pass": true,
+    "projectionMonths": 36,
+    "chartLengthsOk": true,
+    "finalRevenue": 0,
+    "maxRevenue": 0,
+    "hasNarrative": true,
+    "hasInvestorSummary": true,
+    "assumptionCount": 8,
+    "riskCount": 4,
+    "expectedTermsFound": [
+      "fintech",
+      "api",
+      "lending",
+      "infrastructure",
+      "financial services"
+    ],
+    "runwayApproxIssues": 0,
+    "businessModelAdapted": true,
+    "consumerMrrOverfit": false,
+    "fintechInventedRevenue": false
+  },
+  "result": {
+    "input": {
+      "companyName": "LedgerBridge",
+      "businessModel": "FinTech infrastructure API usage-based contracts",
+      "industry": "FinTech / lending infrastructure",
+      "currentMonthlyRevenue": 0,
+      "currentMonthlyBurn": 64000,
+      "currentCashBalance": 250000,
+      "currentRunway": 3.9,
+      "raiseAmount": 1200000,
+      "monthlyRevenueGrowth": 0,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 84,
+      "churn": 2,
+      "currentCustomers": 3,
+      "targetCustomers": 30,
+      "averageRevenuePerCustomer": 0,
+      "teamSize": 8,
+      "plannedHires": 9,
+      "fundingGoal": "Convert lender pilots and LOIs into paid API contracts.",
+      "targetMarket": "UK and European SME lenders and embedded finance platforms.",
+      "notes": "Pre-revenue with 3 pilots and signed LOIs. Do not treat LOIs as revenue."
+    },
+    "parsed": {
+      "projection": [
+        {
+          "month": 1,
+          "label": "Month 1",
+          "revenue": 0,
+          "burn": 64000,
+          "cashBalance": 186000,
+          "runwayMonths": 2.9,
+          "customers": 3
+        },
+        {
+          "month": 2,
+          "label": "Month 2",
+          "revenue": 0,
+          "burn": 66560,
+          "cashBalance": 119440,
+          "runwayMonths": 1.8,
+          "customers": 3
+        },
+        {
+          "month": 3,
+          "label": "Month 3",
+          "revenue": 0,
+          "burn": 69222,
+          "cashBalance": 50218,
+          "runwayMonths": 0.7,
+          "customers": 3
+        },
+        {
+          "month": 4,
+          "label": "Month 4 (post-raise)",
+          "revenue": 0,
+          "burn": 71990,
+          "cashBalance": 1141228,
+          "runwayMonths": 15.9,
+          "customers": 3
+        },
+        {
+          "month": 5,
+          "label": "Month 5",
+          "revenue": 0,
+          "burn": 74870,
+          "cashBalance": 1066358,
+          "runwayMonths": 14.2,
+          "customers": 3
+        },
+        {
+          "month": 6,
+          "label": "Month 6",
+          "revenue": 0,
+          "burn": 77865,
+          "cashBalance": 988493,
+          "runwayMonths": 12.7,
+          "customers": 3
+        },
+        {
+          "month": 7,
+          "label": "Month 7",
+          "revenue": 0,
+          "burn": 80978,
+          "cashBalance": 907515,
+          "runwayMonths": 11.2,
+          "customers": 3
+        },
+        {
+          "month": 8,
+          "label": "Month 8",
+          "revenue": 0,
+          "burn": 84217,
+          "cashBalance": 823299,
+          "runwayMonths": 9.8,
+          "customers": 3
+        },
+        {
+          "month": 9,
+          "label": "Month 9",
+          "revenue": 0,
+          "burn": 87586,
+          "cashBalance": 735713,
+          "runwayMonths": 8.4,
+          "customers": 3
+        },
+        {
+          "month": 10,
+          "label": "Month 10",
+          "revenue": 0,
+          "burn": 91089,
+          "cashBalance": 644624,
+          "runwayMonths": 7.1,
+          "customers": 3
+        },
+        {
+          "month": 11,
+          "label": "Month 11",
+          "revenue": 0,
+          "burn": 94733,
+          "cashBalance": 549891,
+          "runwayMonths": 5.8,
+          "customers": 3
+        },
+        {
+          "month": 12,
+          "label": "Month 12",
+          "revenue": 0,
+          "burn": 98522,
+          "cashBalance": 451369,
+          "runwayMonths": 4.6,
+          "customers": 3
+        },
+        {
+          "month": 13,
+          "label": "Month 13",
+          "revenue": 0,
+          "burn": 102963,
+          "cashBalance": 348405,
+          "runwayMonths": 3.4,
+          "customers": 4
+        },
+        {
+          "month": 14,
+          "label": "Month 14",
+          "revenue": 0,
+          "burn": 107082,
+          "cashBalance": 241323,
+          "runwayMonths": 2.3,
+          "customers": 4
+        },
+        {
+          "month": 15,
+          "label": "Month 15",
+          "revenue": 0,
+          "burn": 111365,
+          "cashBalance": 129958,
+          "runwayMonths": 1.2,
+          "customers": 4
+        },
+        {
+          "month": 16,
+          "label": "Month 16",
+          "revenue": 0,
+          "burn": 115820,
+          "cashBalance": 14138,
+          "runwayMonths": 0.1,
+          "customers": 4
+        },
+        {
+          "month": 17,
+          "label": "Month 17",
+          "revenue": 0,
+          "burn": 120453,
+          "cashBalance": -106315,
+          "runwayMonths": 0,
+          "customers": 4
+        },
+        {
+          "month": 18,
+          "label": "Month 18",
+          "revenue": 0,
+          "burn": 125271,
+          "cashBalance": -231586,
+          "runwayMonths": 0,
+          "customers": 4
+        },
+        {
+          "month": 19,
+          "label": "Month 19",
+          "revenue": 0,
+          "burn": 130282,
+          "cashBalance": -361868,
+          "runwayMonths": 0,
+          "customers": 5
+        },
+        {
+          "month": 20,
+          "label": "Month 20",
+          "revenue": 0,
+          "burn": 135494,
+          "cashBalance": -497362,
+          "runwayMonths": 0,
+          "customers": 5
+        },
+        {
+          "month": 21,
+          "label": "Month 21",
+          "revenue": 0,
+          "burn": 140914,
+          "cashBalance": -638276,
+          "runwayMonths": 0,
+          "customers": 5
+        },
+        {
+          "month": 22,
+          "label": "Month 22",
+          "revenue": 0,
+          "burn": 146551,
+          "cashBalance": -784827,
+          "runwayMonths": 0,
+          "customers": 5
+        },
+        {
+          "month": 23,
+          "label": "Month 23",
+          "revenue": 0,
+          "burn": 152413,
+          "cashBalance": -937240,
+          "runwayMonths": 0,
+          "customers": 6
+        },
+        {
+          "month": 24,
+          "label": "Month 24",
+          "revenue": 0,
+          "burn": 158509,
+          "cashBalance": -1095749,
+          "runwayMonths": 0,
+          "customers": 6
+        },
+        {
+          "month": 25,
+          "label": "Month 25",
+          "revenue": 0,
+          "burn": 164850,
+          "cashBalance": -1260599,
+          "runwayMonths": 0,
+          "customers": 6
+        },
+        {
+          "month": 26,
+          "label": "Month 26",
+          "revenue": 0,
+          "burn": 171444,
+          "cashBalance": -1422043,
+          "runwayMonths": 0,
+          "customers": 7
+        },
+        {
+          "month": 27,
+          "label": "Month 27",
+          "revenue": 0,
+          "burn": 178302,
+          "cashBalance": -1590345,
+          "runwayMonths": 0,
+          "customers": 7
+        },
+        {
+          "month": 28,
+          "label": "Month 28",
+          "revenue": 0,
+          "burn": 185434,
+          "cashBalance": -1765779,
+          "runwayMonths": 0,
+          "customers": 7
+        },
+        {
+          "month": 29,
+          "label": "Month 29",
+          "revenue": 0,
+          "burn": 192851,
+          "cashBalance": -1948630,
+          "runwayMonths": 0,
+          "customers": 8
+        },
+        {
+          "month": 30,
+          "label": "Month 30",
+          "revenue": 0,
+          "burn": 200565,
+          "cashBalance": -2139195,
+          "runwayMonths": 0,
+          "customers": 8
+        },
+        {
+          "month": 31,
+          "label": "Month 31",
+          "revenue": 0,
+          "burn": 208587,
+          "cashBalance": -2337782,
+          "runwayMonths": 0,
+          "customers": 8
+        },
+        {
+          "month": 32,
+          "label": "Month 32",
+          "revenue": 0,
+          "burn": 216931,
+          "cashBalance": -2544713,
+          "runwayMonths": 0,
+          "customers": 9
+        },
+        {
+          "month": 33,
+          "label": "Month 33",
+          "revenue": 0,
+          "burn": 225608,
+          "cashBalance": -2760321,
+          "runwayMonths": 0,
+          "customers": 9
+        },
+        {
+          "month": 34,
+          "label": "Month 34",
+          "revenue": 0,
+          "burn": 234633,
+          "cashBalance": -2984954,
+          "runwayMonths": 0,
+          "customers": 9
+        },
+        {
+          "month": 35,
+          "label": "Month 35",
+          "revenue": 0,
+          "burn": 244018,
+          "cashBalance": -3218972,
+          "runwayMonths": 0,
+          "customers": 9
+        },
+        {
+          "month": 36,
+          "label": "Month 36",
+          "revenue": 0,
+          "burn": 253779,
+          "cashBalance": -3462751,
+          "runwayMonths": 0,
+          "customers": 9
+        }
+      ],
+      "breakEvenMonth": null,
+      "narrative": "LedgerBridge is developing API-based infrastructure for SME lending and is currently pre-revenue, with three lender pilots and signed LOIs. The model assumes no revenue for the next 36 months as per founder guidance (ARPC and usage are both zero). Even with the additional capital raise of £1.2M, the cash runway extends circa 16 additional months, but unless revenue milestones are achieved, the business will face a funding gap after month 16. Cost base increases 4% monthly to reflect team expansion and operational ramp-up, but without revenue conversion, the business never reaches breakeven in this window. Immediate focus must be on converting pilots and LOIs to paid contracts to extend runway and achieve a sustainable business model.",
+      "investorSummary": "LedgerBridge is pre-revenue, supporting three lender pilots and signed LOIs. The business model is usage-based and highly scalable if contracts convert—but current projections assume zero revenue per founder input for the full 36 months. Planned hires and 4% monthly cost increase accelerate burn, with cash-out at month 16 post-raise. This runway is in line with the stated funding ask but underscores urgency for revenue conversion. Investors should view this as a high-risk seed-stage bet with a clear market problem and product vision, but unproven monetization. Key inflection points hinge on near-term revenue activation from pilots/LOIs.",
+      "risks": [
+        "Failure to convert pilots/LOIs to paying customers prevents revenue generation and extends pre-revenue risk.",
+        "Burn rate and planned hiring outpace runway if revenue is not realized, leading to a funding cliff after month 16.",
+        "No proven market demand or unit economics until first paid contracts commence.",
+        "Market, regulatory, and competitive risks inherent in fintech infrastructure."
+      ],
+      "assumptions": [
+        "No monthly revenue for 36 months due to zero ARPC and no paid contracts per founder guidance.",
+        "Monthly burn increases by 4% to reflect hiring and growing opex.",
+        "All funds from the raise are received at the start of month 4.",
+        "Customer count increases linearly to target 9 by month 36, but produces no revenue as average revenue per customer is zero.",
+        "Churn is not modeled since there are no paying customers.",
+        "Deck data is fully reconciled with founder inputs; no material discrepancies.",
+        "No additional capital is raised beyond the £1.2M identified.",
+        "No non-recurring revenue or one-off contract payments are assumed."
+      ],
+      "useOfFunds": [
+        {
+          "category": "Hiring (team expansion)",
+          "amount": 500000,
+          "rationale": "Increase product and engineering capacity to deliver API product and support pilots."
+        },
+        {
+          "category": "Runway extension (operating expenses)",
+          "amount": 600000,
+          "rationale": "Fund fixed operational and overhead costs through the pre-revenue phase."
+        },
+        {
+          "category": "Sales & Business Development",
+          "amount": 80000,
+          "rationale": "Convert LOIs and pilots into paying customers and drive initial commercial traction."
+        },
+        {
+          "category": "Legal & Compliance",
+          "amount": 20000,
+          "rationale": "Establish compliance and onboarding for financial services in the UK/EU."
+        }
+      ],
+      "chartsData": {
+        "revenue": [
+          {
+            "label": "Month 1",
+            "value": 0
+          },
+          {
+            "label": "Month 2",
+            "value": 0
+          },
+          {
+            "label": "Month 3",
+            "value": 0
+          },
+          {
+            "label": "Month 4 (post-raise)",
+            "value": 0
+          },
+          {
+            "label": "Month 5",
+            "value": 0
+          },
+          {
+            "label": "Month 6",
+            "value": 0
+          },
+          {
+            "label": "Month 7",
+            "value": 0
+          },
+          {
+            "label": "Month 8",
+            "value": 0
+          },
+          {
+            "label": "Month 9",
+            "value": 0
+          },
+          {
+            "label": "Month 10",
+            "value": 0
+          },
+          {
+            "label": "Month 11",
+            "value": 0
+          },
+          {
+            "label": "Month 12",
+            "value": 0
+          },
+          {
+            "label": "Month 13",
+            "value": 0
+          },
+          {
+            "label": "Month 14",
+            "value": 0
+          },
+          {
+            "label": "Month 15",
+            "value": 0
+          },
+          {
+            "label": "Month 16",
+            "value": 0
+          },
+          {
+            "label": "Month 17",
+            "value": 0
+          },
+          {
+            "label": "Month 18",
+            "value": 0
+          },
+          {
+            "label": "Month 19",
+            "value": 0
+          },
+          {
+            "label": "Month 20",
+            "value": 0
+          },
+          {
+            "label": "Month 21",
+            "value": 0
+          },
+          {
+            "label": "Month 22",
+            "value": 0
+          },
+          {
+            "label": "Month 23",
+            "value": 0
+          },
+          {
+            "label": "Month 24",
+            "value": 0
+          },
+          {
+            "label": "Month 25",
+            "value": 0
+          },
+          {
+            "label": "Month 26",
+            "value": 0
+          },
+          {
+            "label": "Month 27",
+            "value": 0
+          },
+          {
+            "label": "Month 28",
+            "value": 0
+          },
+          {
+            "label": "Month 29",
+            "value": 0
+          },
+          {
+            "label": "Month 30",
+            "value": 0
+          },
+          {
+            "label": "Month 31",
+            "value": 0
+          },
+          {
+            "label": "Month 32",
+            "value": 0
+          },
+          {
+            "label": "Month 33",
+            "value": 0
+          },
+          {
+            "label": "Month 34",
+            "value": 0
+          },
+          {
+            "label": "Month 35",
+            "value": 0
+          },
+          {
+            "label": "Month 36",
+            "value": 0
+          }
+        ],
+        "burn": [
+          {
+            "label": "Month 1",
+            "value": 64000
+          },
+          {
+            "label": "Month 2",
+            "value": 66560
+          },
+          {
+            "label": "Month 3",
+            "value": 69222
+          },
+          {
+            "label": "Month 4 (post-raise)",
+            "value": 71990
+          },
+          {
+            "label": "Month 5",
+            "value": 74870
+          },
+          {
+            "label": "Month 6",
+            "value": 77865
+          },
+          {
+            "label": "Month 7",
+            "value": 80978
+          },
+          {
+            "label": "Month 8",
+            "value": 84217
+          },
+          {
+            "label": "Month 9",
+            "value": 87586
+          },
+          {
+            "label": "Month 10",
+            "value": 91089
+          },
+          {
+            "label": "Month 11",
+            "value": 94733
+          },
+          {
+            "label": "Month 12",
+            "value": 98522
+          },
+          {
+            "label": "Month 13",
+            "value": 102963
+          },
+          {
+            "label": "Month 14",
+            "value": 107082
+          },
+          {
+            "label": "Month 15",
+            "value": 111365
+          },
+          {
+            "label": "Month 16",
+            "value": 115820
+          },
+          {
+            "label": "Month 17",
+            "value": 120453
+          },
+          {
+            "label": "Month 18",
+            "value": 125271
+          },
+          {
+            "label": "Month 19",
+            "value": 130282
+          },
+          {
+            "label": "Month 20",
+            "value": 135494
+          },
+          {
+            "label": "Month 21",
+            "value": 140914
+          },
+          {
+            "label": "Month 22",
+            "value": 146551
+          },
+          {
+            "label": "Month 23",
+            "value": 152413
+          },
+          {
+            "label": "Month 24",
+            "value": 158509
+          },
+          {
+            "label": "Month 25",
+            "value": 164850
+          },
+          {
+            "label": "Month 26",
+            "value": 171444
+          },
+          {
+            "label": "Month 27",
+            "value": 178302
+          },
+          {
+            "label": "Month 28",
+            "value": 185434
+          },
+          {
+            "label": "Month 29",
+            "value": 192851
+          },
+          {
+            "label": "Month 30",
+            "value": 200565
+          },
+          {
+            "label": "Month 31",
+            "value": 208587
+          },
+          {
+            "label": "Month 32",
+            "value": 216931
+          },
+          {
+            "label": "Month 33",
+            "value": 225608
+          },
+          {
+            "label": "Month 34",
+            "value": 234633
+          },
+          {
+            "label": "Month 35",
+            "value": 244018
+          },
+          {
+            "label": "Month 36",
+            "value": 253779
+          }
+        ],
+        "cashBalance": [
+          {
+            "label": "Month 1",
+            "value": 186000
+          },
+          {
+            "label": "Month 2",
+            "value": 119440
+          },
+          {
+            "label": "Month 3",
+            "value": 50218
+          },
+          {
+            "label": "Month 4 (post-raise)",
+            "value": 1141228
+          },
+          {
+            "label": "Month 5",
+            "value": 1066358
+          },
+          {
+            "label": "Month 6",
+            "value": 988493
+          },
+          {
+            "label": "Month 7",
+            "value": 907515
+          },
+          {
+            "label": "Month 8",
+            "value": 823299
+          },
+          {
+            "label": "Month 9",
+            "value": 735713
+          },
+          {
+            "label": "Month 10",
+            "value": 644624
+          },
+          {
+            "label": "Month 11",
+            "value": 549891
+          },
+          {
+            "label": "Month 12",
+            "value": 451369
+          },
+          {
+            "label": "Month 13",
+            "value": 348405
+          },
+          {
+            "label": "Month 14",
+            "value": 241323
+          },
+          {
+            "label": "Month 15",
+            "value": 129958
+          },
+          {
+            "label": "Month 16",
+            "value": 14138
+          },
+          {
+            "label": "Month 17",
+            "value": -106315
+          },
+          {
+            "label": "Month 18",
+            "value": -231586
+          },
+          {
+            "label": "Month 19",
+            "value": -361868
+          },
+          {
+            "label": "Month 20",
+            "value": -497362
+          },
+          {
+            "label": "Month 21",
+            "value": -638276
+          },
+          {
+            "label": "Month 22",
+            "value": -784827
+          },
+          {
+            "label": "Month 23",
+            "value": -937240
+          },
+          {
+            "label": "Month 24",
+            "value": -1095749
+          },
+          {
+            "label": "Month 25",
+            "value": -1260599
+          },
+          {
+            "label": "Month 26",
+            "value": -1422043
+          },
+          {
+            "label": "Month 27",
+            "value": -1590345
+          },
+          {
+            "label": "Month 28",
+            "value": -1765779
+          },
+          {
+            "label": "Month 29",
+            "value": -1948630
+          },
+          {
+            "label": "Month 30",
+            "value": -2139195
+          },
+          {
+            "label": "Month 31",
+            "value": -2337782
+          },
+          {
+            "label": "Month 32",
+            "value": -2544713
+          },
+          {
+            "label": "Month 33",
+            "value": -2760321
+          },
+          {
+            "label": "Month 34",
+            "value": -2984954
+          },
+          {
+            "label": "Month 35",
+            "value": -3218972
+          },
+          {
+            "label": "Month 36",
+            "value": -3462751
+          }
+        ],
+        "runway": [
+          {
+            "label": "Month 1",
+            "value": 2.9
+          },
+          {
+            "label": "Month 2",
+            "value": 1.8
+          },
+          {
+            "label": "Month 3",
+            "value": 0.7
+          },
+          {
+            "label": "Month 4 (post-raise)",
+            "value": 15.9
+          },
+          {
+            "label": "Month 5",
+            "value": 14.2
+          },
+          {
+            "label": "Month 6",
+            "value": 12.7
+          },
+          {
+            "label": "Month 7",
+            "value": 11.2
+          },
+          {
+            "label": "Month 8",
+            "value": 9.8
+          },
+          {
+            "label": "Month 9",
+            "value": 8.4
+          },
+          {
+            "label": "Month 10",
+            "value": 7.1
+          },
+          {
+            "label": "Month 11",
+            "value": 5.8
+          },
+          {
+            "label": "Month 12",
+            "value": 4.6
+          },
+          {
+            "label": "Month 13",
+            "value": 3.4
+          },
+          {
+            "label": "Month 14",
+            "value": 2.3
+          },
+          {
+            "label": "Month 15",
+            "value": 1.2
+          },
+          {
+            "label": "Month 16",
+            "value": 0.1
+          },
+          {
+            "label": "Month 17",
+            "value": 0
+          },
+          {
+            "label": "Month 18",
+            "value": 0
+          },
+          {
+            "label": "Month 19",
+            "value": 0
+          },
+          {
+            "label": "Month 20",
+            "value": 0
+          },
+          {
+            "label": "Month 21",
+            "value": 0
+          },
+          {
+            "label": "Month 22",
+            "value": 0
+          },
+          {
+            "label": "Month 23",
+            "value": 0
+          },
+          {
+            "label": "Month 24",
+            "value": 0
+          },
+          {
+            "label": "Month 25",
+            "value": 0
+          },
+          {
+            "label": "Month 26",
+            "value": 0
+          },
+          {
+            "label": "Month 27",
+            "value": 0
+          },
+          {
+            "label": "Month 28",
+            "value": 0
+          },
+          {
+            "label": "Month 29",
+            "value": 0
+          },
+          {
+            "label": "Month 30",
+            "value": 0
+          },
+          {
+            "label": "Month 31",
+            "value": 0
+          },
+          {
+            "label": "Month 32",
+            "value": 0
+          },
+          {
+            "label": "Month 33",
+            "value": 0
+          },
+          {
+            "label": "Month 34",
+            "value": 0
+          },
+          {
+            "label": "Month 35",
+            "value": 0
+          },
+          {
+            "label": "Month 36",
+            "value": 0
+          }
+        ]
+      }
+    },
+    "raw": {
+      "id": "resp_0fd1502f611684a7006a24922c5c3881a288b148f5451a9bf8",
+      "model": "gpt-4.1-2025-04-14",
+      "usage": {
+        "input_tokens": 881,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1997,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2878
+      }
+    }
+  },
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\financial-models\\ledgerbridge.json"
+}

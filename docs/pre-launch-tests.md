@@ -45,12 +45,12 @@ NEXT_PUBLIC_POSTHOG_HOST=...
 
 1. **Lifetime race condition**
 
-   - In Supabase SQL: `update public.lifetime_inventory set current_count = 49`.
+   - In Supabase SQL: `update public.lifetime_inventory set current_count = 29`.
    - Open two browsers as two different users on `/pricing`. Click **Choose Lifetime**
      in both within 1 second. Use Stripe test cards `4242 4242 4242 4242`.
    - Expect: exactly one Checkout succeeds, the other gets a 409
      "Lifetime is sold out" response **or** completes payment and is automatically
-     refunded with an apology email. After confirmation, `current_count = 50`,
+      refunded with an apology email. After confirmation, `current_count = 30`,
      `/pricing` and `/dashboard/billing` no longer show the Lifetime card, and
      the Lifetime price is `active = false` in Stripe (check the Stripe dashboard
      or `stripe.prices.retrieve(...)`). Repeat 5×.
@@ -97,11 +97,11 @@ NEXT_PUBLIC_POSTHOG_HOST=...
    - Expect: email arrives within 1 minute in Gmail, Outlook, and Apple Mail.
      Clicking the CTA lands on the paywall.
 
-7. **WhatsApp bonus flow**
+7. **Free second upload prompt**
 
-   - Sign up Free → upload 1 deck → try to upload a 2nd → expect WhatsApp
-     modal → enter `+447700900000` → upload starts.
-   - Try to upload a 3rd → expect the paywall (no WhatsApp option).
+   - Sign up Free → upload 1 deck → try to upload a 2nd → expect:
+     "You've used your free analysis. Upgrade to upload again."
+   - Click the upgrade CTA → expect the upgrade flow; no second free upload starts.
 
 8. **Cost ceiling**
 

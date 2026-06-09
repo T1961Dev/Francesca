@@ -2,6 +2,11 @@ import "server-only"
 
 import { apify } from "@/lib/apify/client"
 import { buildLeadsFinderContactLocations } from "@/lib/apify/leads-finder-locations"
+import {
+  buildInvestorDiscoveryQueries,
+  type InvestorDiscoveryQuery,
+  type InvestorRegion,
+} from "@/lib/matching/investor-fit"
 import { buildDeckDiscoveryConfig } from "@/lib/matching/deck-discovery"
 import type { LeadsFinderContact } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
@@ -18,6 +23,14 @@ export type LeadsFinderInputOptions = {
   fetchCount?: number
   /** Broaden search (drop sector keywords) for a second pass */
   broad?: boolean
+  region?: InvestorRegion
+  companyKeywords?: string[]
+}
+
+export type RegionalLeadsFinderResult = {
+  leads: LeadsFinderContact[]
+  actorInputs: Record<string, unknown>[]
+  queries: InvestorDiscoveryQuery[]
 }
 
 export function buildLeadsFinderInput(
@@ -25,7 +38,7 @@ export function buildLeadsFinderInput(
   options: LeadsFinderInputOptions = {}
 ) {
   const fetchCount = options.fetchCount ?? DEFAULT_FETCH_COUNT
-  const locations = buildLeadsFinderContactLocations(profile.company.geography)
+  const locations = buildLeadsFinderContactLocations(profile.company.geography, options.region)
   const discovery = buildDeckDiscoveryConfig(profile)
 
   const input: Record<string, unknown> = {
@@ -37,11 +50,56 @@ export function buildLeadsFinderInput(
     contact_location: locations,
   }
 
-  if (!options.broad && discovery.thesisKeywords.length) {
-    input.company_keywords = discovery.thesisKeywords
+  const keywords = options.companyKeywords?.length
+    ? options.companyKeywords
+    : discovery.thesisKeywords
+
+  if (!options.broad && keywords.length) {
+    input.company_keywords = keywords
   }
 
   return input
+}
+
+export async function discoverVCPartnersRegionally(
+  profile: FounderProfile,
+  options: LeadsFinderInputOptions = {}
+): Promise<RegionalLeadsFinderResult> {
+  const totalFetchCount = options.fetchCount ?? DEFAULT_FETCH_COUNT
+  const queries = buildInvestorDiscoveryQueries(profile)
+  const passFetchCount = Math.max(20, Math.ceil(totalFetchCount / Math.max(1, queries.length)))
+  const leads: LeadsFinderContact[] = []
+  const actorInputs: Record<string, unknown>[] = []
+
+  for (const query of queries) {
+    const input = buildLeadsFinderInput(profile, {
+      ...options,
+      broad: false,
+      fetchCount: passFetchCount,
+      region: query.region,
+      companyKeywords: query.companyKeywords,
+    })
+    actorInputs.push({
+      ...input,
+      discoveryRegion: query.region,
+      discoveryQuery: query.query,
+    })
+    leads.push(
+      ...(await discoverVCPartners(profile, {
+        ...options,
+        broad: false,
+        fetchCount: passFetchCount,
+        region: query.region,
+        companyKeywords: query.companyKeywords,
+      }))
+    )
+  }
+
+  return {
+    leads: dedupeLeadsFinderContacts(leads),
+    actorInputs,
+    queries,
+  }
 }
 
 export async function discoverVCPartners(
@@ -78,4 +136,17 @@ export async function discoverVCPartners(
   })
 
   return validated
+}
+
+function dedupeLeadsFinderContacts(leads: LeadsFinderContact[]) {
+  const seen = new Set<string>()
+  return leads.filter((lead) => {
+    const key =
+      lead.email?.trim().toLowerCase() ||
+      lead.linkedin?.trim().toLowerCase() ||
+      `${lead.full_name ?? ""}:${lead.company_name ?? ""}`.toLowerCase()
+    if (!key || seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
 }

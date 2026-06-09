@@ -41,7 +41,6 @@ export default async function DeckAnalyserPage() {
           <DeckUploadCard
             plan={plan}
             totalDeckUploadsEver={usage?.totalDeckUploadsEver ?? 0}
-            whatsappBonusUsed={usage?.whatsappBonusUsed ?? false}
             plans={plans}
             currency={currency}
           />

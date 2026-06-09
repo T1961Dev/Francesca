@@ -16,3 +16,12 @@ Global rules:
 - Banned: "I hope this finds you well", "synergies", "perfect fit", "excited to connect", em dashes.
 
 Subject lines: under 60 characters each, distinct per step.
+
+Strict validation requirements:
+- Every step must include the correct company name.
+- Every step must include the correct investor first name or firm name.
+- Never output placeholders or bracket tokens: [Name], [Company], [Investor], {{name}}, {{company}}, INSERT, TBD.
+- Never use "Dear Investor" or missing names.
+- Do not reuse the same body across steps.
+- Do not invent portfolio companies, posts, cheque sizes, or investor activity.
+- Include a clear reason for fit from supplied firm, partner, match rationale, deck, financial, or Apify data.

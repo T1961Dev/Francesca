@@ -37,10 +37,6 @@ export function DashboardShell({
   const [profile, setProfile] = React.useState<AppSidebarProfile>(null)
 
   React.useEffect(() => {
-    setUser(initialUser)
-  }, [initialUser])
-
-  React.useEffect(() => {
     const supabase = createClient()
     let cancelled = false
 

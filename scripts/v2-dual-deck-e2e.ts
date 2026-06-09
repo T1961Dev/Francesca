@@ -247,6 +247,7 @@ async function runDeckV2(spec: (typeof DECKS)[0]) {
     targetMatchCount: sizing.targetMatchCount,
     deckSummary,
     limitedData,
+    profile: founderProfile,
   })
 
   let rankedForOutreach = ranked
@@ -358,7 +359,7 @@ function buildMarkdown(
   lines.push("")
   lines.push(`**Run:** ${startedAt}`)
   lines.push(`**Pipeline:** v2 (Leads Finder → prefilter → LinkedIn profile/posts → GPT rank → backfill → outreach)`)
-  lines.push(`**Plan:** Pro (35 matches per deck)`)
+  lines.push(`**Plan:** Pro (25 matches per deck)`)
   lines.push("")
 
   if (results.length === 2) {

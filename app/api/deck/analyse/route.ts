@@ -4,6 +4,7 @@ import { z } from "zod"
 import { buildDeckAnalysisInsert, buildDeckAnalysisRecord } from "@/lib/deck/persist"
 import { analyseDeckText } from "@/lib/openai/deck-analysis"
 import { captureError } from "@/lib/sentry/capture"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { createClient } from "@/lib/supabase/server"
 
 const schema = z.object({
@@ -21,6 +22,21 @@ export async function POST(request: Request) {
     }
 
     const body = schema.parse(await request.json())
+    const { data: upload, error: uploadError } = await supabase
+      .from("deck_uploads")
+      .select("id")
+      .eq("id", body.deckUploadId)
+      .eq("user_id", user.id)
+      .maybeSingle()
+
+    if (uploadError) throw uploadError
+    if (!upload) {
+      return NextResponse.json(
+        { success: false, error: "Deck upload not found" },
+        { status: 404 }
+      )
+    }
+
     const analysis = await analyseDeckText(body.text)
 
     const analysisId = crypto.randomUUID()
@@ -31,7 +47,9 @@ export async function POST(request: Request) {
       analysis,
     })
 
-    const { error } = await supabase.from("deck_analyses").insert(insertRow)
+    const { error } = await createAdminClient()
+      .from("deck_analyses")
+      .insert(insertRow)
 
     if (error) throw error
 

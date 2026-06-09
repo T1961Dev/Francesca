@@ -6,10 +6,10 @@ import type { FounderProfile } from "@/types/profile"
  */
 const SECTOR_THESIS_KEYWORDS: Record<FounderProfile["company"]["sector"], string[]> = {
   EdTech: ["edtech", "education"],
-  FinTech: ["fintech", "financial services"],
-  SaaS: ["saas", "b2b software"],
-  HealthTech: ["healthtech", "digital health"],
-  AI: ["artificial intelligence", "ai"],
+  FinTech: ["fintech", "financial services", "lending", "banking infrastructure"],
+  SaaS: ["saas", "b2b software", "enterprise software"],
+  HealthTech: ["healthtech", "digital health", "healthcare"],
+  AI: ["artificial intelligence", "ai", "workflow automation"],
   Other: [],
 }
 
@@ -27,6 +27,11 @@ export function buildInvestorThesisKeywords(profile: FounderProfile): string[] {
     result.push(trimmed)
   }
 
+  for (const term of rawVerticalTerms(profile)) {
+    add(term)
+    if (result.length >= 3) return result
+  }
+
   for (const term of SECTOR_THESIS_KEYWORDS[profile.company.sector] ?? []) {
     add(term)
     if (result.length >= 3) return result
@@ -40,4 +45,34 @@ export function buildInvestorThesisKeywords(profile: FounderProfile): string[] {
   return result
     .filter((k) => k.toLowerCase() !== "other")
     .slice(0, 3)
+}
+
+function rawVerticalTerms(profile: FounderProfile): string[] {
+  const haystack = [
+    profile.company.sectorRaw,
+    profile.company.subSector,
+    profile.company.businessModelRaw,
+    profile.company.oneLiner,
+    profile.deckSignals?.summary ?? "",
+  ]
+    .join(" ")
+    .toLowerCase()
+
+  if (/\b(climatetech|climate|carbon|emissions|sustainability|esg)\b/.test(haystack)) {
+    return ["climatetech", "carbon accounting", "climate software"]
+  }
+  if (/\b(consumer|social|gen z|events|community)\b/.test(haystack)) {
+    return ["consumer social", "consumer app", "community"]
+  }
+  if (/\b(lending|bank data|banking api|fintech infrastructure)\b/.test(haystack)) {
+    return ["fintech infrastructure", "lending API", "financial services"]
+  }
+  if (/\b(clinic|clinical|patient|private clinics|healthcare saas)\b/.test(haystack)) {
+    return ["healthcare SaaS", "clinic software", "digital health"]
+  }
+  if (/\b(workflow automation|productivity|operations)\b/.test(haystack)) {
+    return ["workflow automation", "AI productivity", "B2B SaaS"]
+  }
+
+  return []
 }

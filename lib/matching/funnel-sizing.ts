@@ -54,5 +54,4 @@ export function computeInvestorFunnelSizing(planId: string): InvestorFunnelSizin
   }
 }
 
-/** Pro (35): fetch 59, shortlist 46, enrich 41, linkedin 40 */
-/** Lifetime (50): fetch 80, shortlist 65, enrich 58, linkedin 55 */
+/** Pro/Lifetime (25): fetch 45, shortlist 33, enrich 29, linkedin 30 */

@@ -1,0 +1,247 @@
+{
+  "fixture": {
+    "id": "ledgerbridge",
+    "label": "LedgerBridge",
+    "companyId": "ledgerbridge",
+    "quality": "company",
+    "text": "LedgerBridge Pitch Deck\n\nSector: FinTech / API / Lending Infrastructure\n\nStage: seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 1,200,000\n\nTraction: 3 lender pilots, signed LOIs, pre-revenue\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: API infrastructure for SME lender bank-data and cashflow verification.\n\nBusiness model: FinTech infrastructure API usage-based contracts.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 0, burn 64000, cash 250000, gross margin 84%.\n\nInvestor ask: Raising GBP 1,200,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\ledgerbridge.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": true,
+    "sectorTermsFound": [
+      "fintech",
+      "api",
+      "lending",
+      "infrastructure",
+      "bank data"
+    ],
+    "expectedRaise": 1200000,
+    "raiseExtracted": 1200000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 60,
+    "expectedScoreBand": null,
+    "scoreInExpectedBand": null,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 5,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 0,
+      "monthlyBurn": 64000,
+      "cashBalance": 250000,
+      "runwayMonths": 4,
+      "raiseAmount": 1200000,
+      "customerCount": 3,
+      "teamSize": null,
+      "grossMarginPercent": 84,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway estimated by dividing cash by burn rate; team size not specified."
+    }
+  },
+  "extractedText": "LedgerBridge LedgerBridge Pitch Deck Sector: FinTech / API / Lending Infrastructure Stage: seed Geography: UK / Europe / Worldwide Raise amount: GBP 1,200,000 Traction: 3 lender pilots, signed LOIs, pre-revenue Problem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure. Solution: API infrastructure for SME lender bank-data and cashflow verification. Business model: FinTech infrastructure API usage-based contracts. Team: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success. Go-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches. Financial assumptions: current monthly revenue 0, burn 64000, cash 250000, gross margin 84%. Investor ask: Raising GBP 1,200,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model. Use of funds: product development, customer acquisition, compliance or data where relevant, and core hires. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The pitch deck clearly outlines the problem of fragmented and manual workflows in SME lending, and proposes a strong API infrastructure solution for bank data and cashflow verification. The market focus is broadly UK, Europe, and selective global expansion. The business model is usage-based API contracts, which fits the fintech API infrastructure space. Traction is very early with 3 lender pilots and signed LOIs but pre-revenue. The team is founder-led with relevant domain and commercial experience and plans to hire for key roles. Financial ask is explicit at GBP 1.2M for 18 months runway, with current cash and burn data provided. However, key details on market size, deeper team backgrounds, and detailed customer acquisition strategy are missing, limiting full investor confidence. The narrative lacks a compelling story arc or competitive landscape context. Overall, the deck requires more depth in market analysis, team credentials, and traction metrics to improve investor readiness.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 80,
+        "feedback": "Problem is clearly stated as inefficiencies in SME lending workflows due to fragmentation and manual processes."
+      },
+      {
+        "category": "Solution strength",
+        "score": 75,
+        "feedback": "API infrastructure for bank-data and cashflow verification is a strong technical solution but lacks demo or technical validation details."
+      },
+      {
+        "category": "Market size",
+        "score": 40,
+        "feedback": "Market definition is geographic (UK, Europe, worldwide) but no quantification or segmentation of market size provided."
+      },
+      {
+        "category": "Business model",
+        "score": 70,
+        "feedback": "Usage-based API contracts fit FinTech infrastructure, but no pricing strategy or revenue projections elaborated."
+      },
+      {
+        "category": "Traction",
+        "score": 50,
+        "feedback": "3 lender pilots and signed LOIs indicate early validation but still pre-revenue; more customer acquisition results or KPIs missing."
+      },
+      {
+        "category": "Team",
+        "score": 55,
+        "feedback": "Founder-led with relevant experience mentioned; lacks detailed bios, complementary skills explanation, or advisory board info."
+      },
+      {
+        "category": "Financial ask",
+        "score": 85,
+        "feedback": "Clear raise amount (GBP 1.2M), current financial snapshot and runway stated; use of funds is broadly outlined."
+      },
+      {
+        "category": "Narrative",
+        "score": 45,
+        "feedback": "Narrative is factual but lacks compelling storytelling, competitive positioning, or clear milestones achieved or planned."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 0,
+      "monthlyBurn": 64000,
+      "cashBalance": 250000,
+      "runwayMonths": 4,
+      "raiseAmount": 1200000,
+      "customerCount": 3,
+      "teamSize": null,
+      "grossMarginPercent": 84,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway estimated by dividing cash by burn rate; team size not specified."
+    },
+    "strengths": [
+      "Clear articulation of a real problem in SME lending workflows.",
+      "Use of modern API infrastructure as a scalable solution.",
+      "Explicit raise amount with financial burn and runway outlined."
+    ],
+    "weaknesses": [
+      "Lack of quantified market size and segmentation data.",
+      "Pre-revenue traction with minimal customer metrics or growth signals.",
+      "Insufficient team detail to fully assess capabilities and execution strength.",
+      "Missing in-depth go-to-market and competitive positioning information.",
+      "Narrative lacks engagement and does not clearly connect problem, solution, and business impact."
+    ],
+    "missingSections": [
+      "Detailed market size and segmentation analysis",
+      "Comprehensive team bios and organizational structure",
+      "Competitive landscape and differentiation analysis",
+      "Detailed customer acquisition strategy and milestones",
+      "Revenue projections and unit economics"
+    ],
+    "investorReadiness": "Moderate. The deck covers key points but lacks quantitative market and team details and strong traction metrics, which limits immediate investor confidence. Further detail and evidence needed to improve readiness.",
+    "suggestedFixes": [
+      {
+        "title": "Add Market Size and Segmentation",
+        "explanation": "Include detailed TAM, SAM, and SOM analysis with relevant data on UK/Europe SME lending markets to demonstrate opportunity scale.",
+        "priority": "high"
+      },
+      {
+        "title": "Enhance Team Presentation",
+        "explanation": "Provide detailed bios, highlight complementary skills, and include any advisory board members to increase investor confidence in execution capabilities.",
+        "priority": "high"
+      },
+      {
+        "title": "Improve Traction Metrics",
+        "explanation": "Add data on pilot outcomes, customer feedback, timelines for conversion from LOIs, and any early revenue forecasts to demonstrate momentum.",
+        "priority": "medium"
+      },
+      {
+        "title": "Develop Competitive Landscape",
+        "explanation": "Include analysis of competitors and clearly state LedgerBridge's differentiation to prove unique value proposition.",
+        "priority": "medium"
+      },
+      {
+        "title": "Refine Narrative",
+        "explanation": "Craft a compelling story linking problem, solution, market, team, and financial ask to engage investors beyond factual listing.",
+        "priority": "low"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Add quantified market size analysis",
+        "reason": "Demonstrates opportunity scale and attracts investor interest by showing market potential.",
+        "priority": "high"
+      },
+      {
+        "action": "Detail team bios and complementarity",
+        "reason": "Increases confidence in startup's ability to execute and manage growth.",
+        "priority": "high"
+      },
+      {
+        "action": "Expand traction information with pilot outcomes and conversions",
+        "reason": "Provides evidence of product-market fit and validation needed to justify investment.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "Unclear market size data may lead investors to question opportunity scale.",
+      "Pre-revenue status and limited traction reduce investor confidence in growth potential.",
+      "Insufficient team details raise execution risk concerns.",
+      "Lack of competitive analysis undermines differentiation and defensibility arguments."
+    ],
+    "overallScore": 60,
+    "raw": {
+      "id": "resp_030f1aac5b9c0ac2006a24914acacc81a3868c088a2588075a",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 873,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1048,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1921
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 80,
+      "feedback": "Problem is clearly stated as inefficiencies in SME lending workflows due to fragmentation and manual processes.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 75,
+      "feedback": "API infrastructure for bank-data and cashflow verification is a strong technical solution but lacks demo or technical validation details.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 40,
+      "feedback": "Market definition is geographic (UK, Europe, worldwide) but no quantification or segmentation of market size provided.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 70,
+      "feedback": "Usage-based API contracts fit FinTech infrastructure, but no pricing strategy or revenue projections elaborated.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 50,
+      "feedback": "3 lender pilots and signed LOIs indicate early validation but still pre-revenue; more customer acquisition results or KPIs missing.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 55,
+      "feedback": "Founder-led with relevant experience mentioned; lacks detailed bios, complementary skills explanation, or advisory board info.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 85,
+      "feedback": "Clear raise amount (GBP 1.2M), current financial snapshot and runway stated; use of funds is broadly outlined.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 45,
+      "feedback": "Narrative is factual but lacks compelling storytelling, competitive positioning, or clear milestones achieved or planned.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\ledgerbridge.json"
+}

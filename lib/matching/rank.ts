@@ -5,15 +5,18 @@ import { z } from "zod"
 
 import { normaliseLinkedInUrl } from "@/lib/apify/linkedin"
 import { loadPrompt } from "@/lib/matching/loadPrompt"
+import {
+  applyFitAssessmentToMatch,
+  scoreFirmForProfile,
+} from "@/lib/matching/investor-fit"
 import { getOpenAIClient } from "@/lib/openai/client"
 import type { MergedFirm } from "@/lib/matching/merge"
 import type { LinkedInPost } from "@/types/apify"
 import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
 /**
- * Hard upper bound on candidates returned by the model. The plan-driven
- * cap (Pro = 35, Lifetime = 50) is always far below this, so the schema
- * just acts as a safety net for runaway outputs.
+ * Hard upper bound on candidates returned by the model. The product target is
+ * 25 ranked investors per run, so this just acts as a safety net.
  */
 const RANKER_SCHEMA_MAX = 60
 
@@ -56,21 +59,22 @@ const RankingSchema = z.object({
   rankedCandidates: z.array(RankedItemSchema).max(RANKER_SCHEMA_MAX),
 })
 
+type RankedItem = z.infer<typeof RankedItemSchema>
+
 export async function rankInvestorsWithGPT({
   profile,
   firms,
   partnerSignals,
   limitedData = false,
-  targetMatchCount = 35,
+  targetMatchCount = 25,
 }: {
   profile: FounderProfile
   firms: MergedFirm[]
   partnerSignals: LinkedInPost[]
   limitedData?: boolean
   /**
-   * Plan-driven cap. The prompt instructs the model to return AT LEAST 25 and
-   * UP TO this many; the result is then sliced to this length so the caller
-   * never receives more than the plan allows.
+   * Product cap. The prompt instructs the model to return exactly this many
+   * when the pool is large enough.
    */
   targetMatchCount?: number
 }): Promise<Array<Omit<InvestorMatch, "rank" | "outreachEmail">>> {
@@ -79,6 +83,7 @@ export async function rankInvestorsWithGPT({
       .filter((contact) => Boolean(contact.Name && contact.Email))
       .map((contact) => {
         const partnerLinkedIn = normaliseLinkedInUrl(contact.LinkedIn) ?? ""
+        const deterministicFit = scoreFirmForProfile(firm, profile)
         const signals = partnerSignals
           .filter((signal) => normaliseLinkedInUrl(signal.profileUrl) === partnerLinkedIn)
           .slice(0, 2)
@@ -92,6 +97,18 @@ export async function rankInvestorsWithGPT({
           firmWebsite: firm.Website,
           firmLinkedIn: firm.LinkedIn,
           recentDealCompanies: firm.recentDealCompanies,
+          deterministicFit: {
+            score: deterministicFit.score,
+            facets: deterministicFit.facets,
+            penalties: deterministicFit.penalties,
+            chequeFit: deterministicFit.chequeFit,
+            chequeSize: deterministicFit.chequeSize ?? null,
+            region: deterministicFit.region,
+            vertical: deterministicFit.vertical,
+            sectorEvidence: deterministicFit.evidence.sector,
+            isGeneralist: deterministicFit.isGeneralist,
+            isSectorSpecialist: deterministicFit.isSectorSpecialist,
+          },
           partnerName: contact.Name,
           partnerTitle: contact.Title,
           partnerEmail: contact.Email,
@@ -104,6 +121,7 @@ export async function rankInvestorsWithGPT({
       })
   )
 
+  const firmLookup = buildFirmLookup(firms)
   const founderPayload = buildFounderPayload(profile)
   // Cap = exact plan target. We tell the model to return exactly `cap`
   // entries; anything fewer is topped up by `backfillFromShortlist` in the
@@ -147,25 +165,16 @@ export async function rankInvestorsWithGPT({
 
       return response.output_parsed.rankedCandidates
         .slice(0, cap)
-        .map((match) => ({
-          fitScore: match.fitScore,
-          firm: {
-            ...match.firm,
-            website: match.firm.website ?? undefined,
-            linkedin: match.firm.linkedin ?? undefined,
-            recentInvestments: match.firm.recentInvestments.map((investment) => ({
-              ...investment,
-              amount: investment.amount ?? undefined,
-            })),
-          },
-          partner: {
-            ...match.partner,
-            email: match.partner.email ?? undefined,
-          },
-          matchRationale: match.matchRationale,
-          recentLinkedInSignals: match.recentLinkedInSignals,
-          limitedData,
-        }))
+        .map((match) => {
+          const hydrated = hydrateRankedMatchFromSource(match, firmLookup)
+          return applyFitAssessmentToMatch(
+            {
+              ...hydrated,
+              limitedData,
+            },
+            profile
+          )
+        })
     } catch (error) {
       lastError = error
       const message = error instanceof Error ? error.message : String(error)
@@ -182,34 +191,123 @@ export async function rankInvestorsWithGPT({
   throw lastError instanceof Error ? lastError : new Error("Investor ranking failed")
 }
 
-const RANKER_SYSTEM_PROMPT = `You are an expert venture capital analyst running a SORT operation, not a filter operation.
+function buildFirmLookup(firms: MergedFirm[]) {
+  const lookup = new Map<string, MergedFirm>()
+  for (const firm of firms) {
+    const key = normaliseFirmKey(firm.Firm_Name)
+    if (key && !lookup.has(key)) lookup.set(key, firm)
+  }
+  return lookup
+}
 
-The pipeline has already done the filtering. Your input is a small, pre-curated pool of investors (\`candidatePoolSize\`). Your job is to rank them — every one of them — and return the top \`achievableMatchCount\` by fitScore. Think of it like sorting a deck of cards: every card must go somewhere; you don't throw away the low cards.
+function hydrateRankedMatchFromSource(
+  match: RankedItem,
+  firmLookup: Map<string, MergedFirm>
+): Omit<InvestorMatch, "rank" | "outreachEmail"> {
+  const sourceFirm = firmLookup.get(normaliseFirmKey(match.firm.name))
+  const sourceContact = sourceFirm ? findSourceContact(sourceFirm, match) : null
 
-Hard requirements:
-- Return JSON only.
-- The \`rankedCandidates\` array MUST have EXACTLY \`achievableMatchCount\` entries. If your output has fewer, the pipeline rejects it and uses a worse fallback heuristic — you lose the chance to surface partners YOU think are best.
-- Even mediocre fits MUST appear in the output, just with a lower fitScore. Sectors that don't perfectly match a partner's thesis are not grounds to exclude; we want partners whose adjacent thesis or geography overlap could still spark interest.
-- Use the full 0-100 score range so the founder can see relative strength:
-    90-100: exceptional thesis + stage + geography alignment
-    70-89: strong overlap on 2+ dimensions
-    50-69: plausible overlap on 1-2 dimensions
-    30-49: weaker but reachable; still worth surfacing
-    Avoid clustering — spread scores across this range.
+  if (!sourceFirm) {
+    return {
+      fitScore: match.fitScore,
+      firm: {
+        ...match.firm,
+        website: match.firm.website ?? undefined,
+        linkedin: match.firm.linkedin ?? undefined,
+        recentInvestments: match.firm.recentInvestments.map((investment) => ({
+          ...investment,
+          amount: investment.amount ?? undefined,
+        })),
+      },
+      partner: {
+        ...match.partner,
+        email: match.partner.email ?? undefined,
+      },
+      matchRationale: match.matchRationale,
+      recentLinkedInSignals: match.recentLinkedInSignals,
+    }
+  }
 
-How to score (in priority order):
-1. Sector and sub-sector overlap. Read the founder's raw sector + deck summary, not just the enum bucket. A holdco/search-fund deck does NOT match a generic SaaS VC.
-2. Stage match (the founder's stage vs the partner's typical stage).
-3. Geography overlap.
-4. Founder-specific deck signals (overall score, strengths, weaknesses, missing sections, fundraising risks).
-5. Firm's recent deal velocity.
-6. Partner's recent LinkedIn activity and title.
+  return {
+    fitScore: match.fitScore,
+    firm: {
+      name: sourceFirm.Firm_Name,
+      website: sourceFirm.Website,
+      linkedin: sourceFirm.LinkedIn,
+      type: sourceFirm.Firm_Type || match.firm.type || "Venture Capital Investor",
+      country: sourceFirm.Country || match.firm.country,
+      focusAreas: sourceFirm.Focus_Areas,
+      investmentStages: sourceFirm.Investment_Stages,
+      recentInvestments: (sourceFirm.recentDealCompanies ?? []).slice(0, 3).map((investment) => ({
+        company: investment.name,
+        stage: investment.stage ?? "Unknown",
+        announcedDate: investment.date ?? "",
+      })),
+    },
+    partner: sourceContact
+      ? {
+          name: sourceContact.Name,
+          title: sourceContact.Title || match.partner.title || "Investor",
+          email: sourceContact.Email ?? match.partner.email ?? undefined,
+          linkedin: sourceContact.LinkedIn ?? match.partner.linkedin,
+        }
+      : {
+          ...match.partner,
+          email: match.partner.email ?? undefined,
+        },
+    matchRationale: match.matchRationale,
+    recentLinkedInSignals: match.recentLinkedInSignals,
+  }
+}
 
-Output structure:
-- Each entry must have a unique \`partnerLinkedIn\` (no duplicates).
-- The \`matchRationale\` must be 2-4 sentences, specific to THIS partner AND THIS founder. Reference at least one concrete detail from the founder's deck (a strength, a category score, a sector phrase) AND at least one concrete detail from the investor's supplied data (firm focus, recent deal, post excerpt, geography).
-- Never use "perfect fit", "great match", "aligns with our vision", "passionate about", "excited to connect", or other VC cliches.
-- Two different founder decks must produce visibly different rationales for the same investor.`
+function findSourceContact(firm: MergedFirm, match: RankedItem) {
+  const targetLinkedIn = normaliseLinkedInUrl(match.partner.linkedin)
+  const targetEmail = match.partner.email?.trim().toLowerCase()
+  const targetName = normalisePersonKey(match.partner.name)
+
+  return (
+    firm.Contacts.find((contact) => {
+      const contactLinkedIn = normaliseLinkedInUrl(contact.LinkedIn)
+      return Boolean(targetLinkedIn && contactLinkedIn === targetLinkedIn)
+    }) ??
+    firm.Contacts.find((contact) => {
+      return Boolean(targetEmail && contact.Email?.trim().toLowerCase() === targetEmail)
+    }) ??
+    firm.Contacts.find((contact) => {
+      return Boolean(targetName && normalisePersonKey(contact.Name) === targetName)
+    }) ??
+    firm.Contacts.find((contact) => Boolean(contact.Name && contact.Email)) ??
+    firm.Contacts[0] ??
+    null
+  )
+}
+
+function normaliseFirmKey(name: string | null | undefined) {
+  return (name ?? "")
+    .toLowerCase()
+    .replace(/\b(ltd|llp|llc|inc|capital|ventures?|partners?|fund|management)\b/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .trim()
+}
+
+function normalisePersonKey(name: string | null | undefined) {
+  return (name ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "")
+    .trim()
+}
+
+const RANKER_SYSTEM_PROMPT = `You are an expert venture capital analyst ranking investors for one specific founder.
+
+Return JSON only in rankedCandidates. Return exactly achievableMatchCount entries when the pool is large enough.
+
+Use deterministicFit as guardrails. Sector/thesis fit is 35%, stage 20%, geography 15%, cheque 10%, business model 10%, traction/raise 5%, evidence quality 5%.
+
+Down-rank generic broad funds with no vertical evidence, unknown sector evidence, wrong geography without a global mandate, unknown cheque size, and weak evidence. Unknown cheque size must never be scored as strong.
+
+ClimateTech/carbon accounting, fintech infrastructure, HealthTech, consumer social, and AI workflow SaaS are different categories. Do not treat them all as generic SaaS.
+
+Rationales must include one concrete startup fact, one concrete investor evidence point, a clear fit reason, and a caveat where relevant. Never use generic VC cliches such as "perfect fit", "great match", "aligns with our vision", "strong network", or "excited to connect". Do not invent facts.`
 
 function buildFounderPayload(profile: FounderProfile) {
   const signals = profile.deckSignals

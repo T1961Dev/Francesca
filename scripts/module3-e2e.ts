@@ -144,8 +144,7 @@ const SAME_PROFILE = {
   full_name: "Founder",
 }
 
-// Picking Pro for both decks to exercise the new 35-match cap. Run a third
-// pass with Lifetime if you want to verify the 50-match path.
+// Picking Pro for both decks to exercise the 25-match cap.
 const decks: DeckSpec[] = [
   {
     label: "Mark Pal",

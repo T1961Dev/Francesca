@@ -38,10 +38,7 @@ export function LandingHero() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <Link href="/signup">Analyse your deck</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link href="/pricing">View pricing</Link>
+              <Link href="/signup">Get your free score</Link>
             </Button>
           </div>
         </div>
@@ -53,7 +50,6 @@ export function LandingHero() {
             </>
           }
           description="Upload your deck and we score readiness, missing sections, and the angle most likely to land with investors."
-          cta={{ label: "Start now", href: "/signup" }}
           className="md:p-10"
         />
       </div>

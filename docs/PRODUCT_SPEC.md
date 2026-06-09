@@ -6,8 +6,8 @@
 |------|-------|------|-----------------|-------------------|
 | Free | £0 | Overall score only, 1 upload ever | Locked | Locked |
 | Starter | £29/mo | Full analysis + PDF | Full model + PDF | Locked |
-| Pro | £79/mo | Full | Full | 10 runs/mo, 35 matches/run, outreach sequences |
-| Lifetime | £349 once | Full (5 uploads/mo) | Full (5/mo) | **2 runs/mo**, 50 matches/run, **30 founders max** |
+| Pro | £79/mo | Full | Full | 10 runs/mo, 25 matches/run, outreach sequences |
+| Lifetime | £349 once | Full (5 uploads/mo) | Full (5/mo) | **2 runs/mo**, 25 matches/run, **30 founders max** |
 
 ## Module 1 — Pitch deck analyser
 

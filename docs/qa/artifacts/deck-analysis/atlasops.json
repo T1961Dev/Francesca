@@ -1,0 +1,246 @@
+{
+  "fixture": {
+    "id": "atlasops",
+    "label": "AtlasOps",
+    "companyId": "atlasops",
+    "quality": "company",
+    "text": "AtlasOps Pitch Deck\n\nSector: B2B SaaS / AI / Workflow Automation\n\nStage: pre-seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 750,000\n\nTraction: GBP 18k MRR, 22 customers, 9% month-on-month growth, GBP 9k ACV\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: AI workflow automation for mid-market operations teams.\n\nBusiness model: B2B SaaS subscription.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 18000, burn 42000, cash 180000, gross margin 82%.\n\nInvestor ask: Raising GBP 750,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\atlasops.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": false,
+    "sectorTermsFound": [
+      "saas",
+      "ai",
+      "workflow",
+      "automation",
+      "b2b",
+      "operations"
+    ],
+    "expectedRaise": 750000,
+    "raiseExtracted": 750000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 65,
+    "expectedScoreBand": null,
+    "scoreInExpectedBand": null,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 5,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": 42000,
+      "cashBalance": 180000,
+      "runwayMonths": 4.3,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": 82,
+      "revenueGrowthPercentMonthly": 9,
+      "notes": "Runway estimated based on burn and cash balance; no explicit team size stated in deck."
+    }
+  },
+  "extractedText": "AtlasOps AtlasOps Pitch Deck Sector: B2B SaaS / AI / Workflow Automation Stage: pre-seed Geography: UK / Europe / Worldwide Raise amount: GBP 750,000 Traction: GBP 18k MRR, 22 customers, 9% month-on-month growth, GBP 9k ACV Problem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure. Solution: AI workflow automation for mid-market operations teams. Business model: B2B SaaS subscription. Team: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success. Go-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches. Financial assumptions: current monthly revenue 18000, burn 42000, cash 180000, gross margin 82%. Investor ask: Raising GBP 750,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model. Use of funds: product development, customer acquisition, compliance or data where relevant, and core hires. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The deck presents a clear problem about fragmented workflows and offers an AI-driven B2B SaaS solution targeting mid-market operations teams. Financial signals show early traction with modest revenue and customer base but a high burn rate and limited runway. The business model and team are described but lack depth; several sections such as detailed market size and team composition are sparse or missing. The financial ask and use of funds are stated but need clearer milestone specifics. The narrative is concise but would benefit from stronger cohesion and clarity on competitive differentiation and growth strategy.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 85,
+        "feedback": "The problem is clearly stated: customers waste time and money due to fragmented, manual workflows that are hard to measure. This is specific and relevant for the target market."
+      },
+      {
+        "category": "Solution strength",
+        "score": 75,
+        "feedback": "The solution is described as AI workflow automation for mid-market operations teams, which fits the problem. However, the deck lacks detail on AI uniqueness, competitive advantages, and technical validation."
+      },
+      {
+        "category": "Market size",
+        "score": 50,
+        "feedback": "The deck mentions mid-market operations teams across UK, Europe, and possibly worldwide but provides no concrete market sizing, segmentation, or TAM figures."
+      },
+      {
+        "category": "Business model",
+        "score": 70,
+        "feedback": "Business model stated as B2B SaaS subscription, which is appropriate. Pricing, customer acquisition cost, lifetime value, and sales cycle details are missing."
+      },
+      {
+        "category": "Traction",
+        "score": 65,
+        "feedback": "Traction includes £18k MRR, 22 customers, 9% monthly growth, and £9k ACV. These early metrics show some initial adoption but are modest for investment readiness. Monthly burn (£42k) vs revenue (£18k) indicates high cash burn."
+      },
+      {
+        "category": "Team",
+        "score": 55,
+        "feedback": "Founder-led with product, commercial, and domain experience. Hiring plans are mentioned but no detail on current team members, bios, or track record. This limits confidence in execution capability."
+      },
+      {
+        "category": "Financial ask",
+        "score": 70,
+        "feedback": "Raising £750k to cover 18 months, with general use of funds and goals to prove repeatable acquisition and reach financial milestones. Lacks detailed breakdown of milestones or planned KPIs post-funding."
+      },
+      {
+        "category": "Narrative",
+        "score": 60,
+        "feedback": "The narrative is concise but somewhat disjointed. It covers necessary topics but lacks storytelling flow, compelling differentiation, and a clear go-to-market momentum story."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 18000,
+      "monthlyBurn": 42000,
+      "cashBalance": 180000,
+      "runwayMonths": 4.3,
+      "raiseAmount": 750000,
+      "customerCount": 22,
+      "teamSize": null,
+      "grossMarginPercent": 82,
+      "revenueGrowthPercentMonthly": 9,
+      "notes": "Runway estimated based on burn and cash balance; no explicit team size stated in deck."
+    },
+    "strengths": [
+      "Clear problem statement relevant to target market",
+      "Initial traction with paying customers and measurable growth",
+      "Reasonable use of funds aligned with stage and priorities"
+    ],
+    "weaknesses": [
+      "Lack of detailed market size and competitive landscape",
+      "High cash burn relative to revenue and unclear path to profitability",
+      "Sparse team details and lack of demonstrated track record",
+      "Limited detail on AI differentiation and technical validation"
+    ],
+    "missingSections": [
+      "Detailed market size and segmentation",
+      "Competitive analysis",
+      "Complete team profiles and bios",
+      "Detailed financial projections and KPIs",
+      "Customer acquisition strategy details"
+    ],
+    "investorReadiness": "Low to moderate readiness; needs more market, team, and financial detail plus stronger narrative to attract serious investor interest.",
+    "suggestedFixes": [
+      {
+        "title": "Expand Market Size and Competitive Analysis",
+        "explanation": "Include TAM, SAM, and SOM estimates and a detailed competitive landscape to demonstrate market opportunity and positioning.",
+        "priority": "high"
+      },
+      {
+        "title": "Detail the Team",
+        "explanation": "Provide resumes or bios for founders and key hires, highlighting relevant expertise and track record to build investor confidence.",
+        "priority": "high"
+      },
+      {
+        "title": "Clarify Financial Milestones",
+        "explanation": "Define specific KPIs and milestones linked to the funding round to justify valuation and investment rationale.",
+        "priority": "medium"
+      },
+      {
+        "title": "Strengthen Narrative Flow",
+        "explanation": "Craft a more coherent and compelling story linking problem, solution, market, traction, and team to engage investors.",
+        "priority": "medium"
+      },
+      {
+        "title": "Elaborate Customer Acquisition Strategy",
+        "explanation": "Detail sales channels, pipeline, CAC, and go-to-market plans to support repeatable growth claims.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Add detailed market sizing and competitor analysis",
+        "reason": "Investors require evidence of significant market opportunity and competitive positioning before committing capital.",
+        "priority": "high"
+      },
+      {
+        "action": "Enhance team section with bios and relevant experience",
+        "reason": "Founder and team credibility is critical to mitigate execution risk in early-stage investments.",
+        "priority": "high"
+      },
+      {
+        "action": "Define clear fundraising milestones and KPIs",
+        "reason": "Specific targets linked to the raise demonstrate planning rigor and help investors track progress.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "High cash burn relative to current revenue threatens runway and may require faster burn reduction or additional funding.",
+      "Insufficient market and competitive data reduces investor confidence in opportunity assessment.",
+      "Limited team information increases perceived execution risk, especially for a technical product relying on AI and workflow automation."
+    ],
+    "overallScore": 65,
+    "raw": {
+      "id": "resp_0361cfb60f3d88ce006a249128c5b0819d9147f0a8f227edb5",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 884,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1062,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1946
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 85,
+      "feedback": "The problem is clearly stated: customers waste time and money due to fragmented, manual workflows that are hard to measure. This is specific and relevant for the target market.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 75,
+      "feedback": "The solution is described as AI workflow automation for mid-market operations teams, which fits the problem. However, the deck lacks detail on AI uniqueness, competitive advantages, and technical validation.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 50,
+      "feedback": "The deck mentions mid-market operations teams across UK, Europe, and possibly worldwide but provides no concrete market sizing, segmentation, or TAM figures.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 70,
+      "feedback": "Business model stated as B2B SaaS subscription, which is appropriate. Pricing, customer acquisition cost, lifetime value, and sales cycle details are missing.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 65,
+      "feedback": "Traction includes £18k MRR, 22 customers, 9% monthly growth, and £9k ACV. These early metrics show some initial adoption but are modest for investment readiness. Monthly burn (£42k) vs revenue (£18k) indicates high cash burn.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 55,
+      "feedback": "Founder-led with product, commercial, and domain experience. Hiring plans are mentioned but no detail on current team members, bios, or track record. This limits confidence in execution capability.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 70,
+      "feedback": "Raising £750k to cover 18 months, with general use of funds and goals to prove repeatable acquisition and reach financial milestones. Lacks detailed breakdown of milestones or planned KPIs post-funding.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 60,
+      "feedback": "The narrative is concise but somewhat disjointed. It covers necessary topics but lacks storytelling flow, compelling differentiation, and a clear go-to-market momentum story.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\atlasops.json"
+}

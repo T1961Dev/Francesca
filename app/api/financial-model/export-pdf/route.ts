@@ -18,7 +18,20 @@ export async function POST(request: Request) {
     if (!canExportPdf(await getUserPlan())) return NextResponse.json({ success: false, error: "Upgrade to export PDFs" }, { status: 403 })
 
     const { modelId } = schema.parse(await request.json())
-    const { data: model } = await supabase.from("financial_models").select("*").eq("id", modelId).single()
+    const { data: model, error: modelError } = await supabase
+      .from("financial_models")
+      .select("*")
+      .eq("id", modelId)
+      .eq("user_id", user.id)
+      .maybeSingle()
+    if (modelError) throw modelError
+    if (!model) {
+      return NextResponse.json(
+        { success: false, error: "Financial model not found" },
+        { status: 404 }
+      )
+    }
+
     const inputs = model.inputs as Record<string, unknown>
     const pdf = await renderFinancialModelPdf({
       companyName: String(inputs.companyName ?? "Company"),

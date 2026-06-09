@@ -76,7 +76,7 @@ export function PaywallModal({
       })
       const json = await response.json()
       if (json.success && json.data?.url) {
-        window.location.href = json.data.url
+        window.location.assign(json.data.url)
         return
       }
       setError(json.error ?? "Could not start checkout.")

@@ -4,6 +4,7 @@ import { z } from "zod"
 import { canViewInvestorOutreachTemplates, getUserPlan } from "@/lib/access"
 import { requireAuth } from "@/lib/auth"
 import { loadInvestorMatchRow, updateInvestorMatchAtRank } from "@/lib/investors/match-mutations"
+import { validateOutreachSequenceBasics } from "@/lib/matching/outreach-validation"
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 
@@ -52,6 +53,13 @@ export async function POST(request: Request) {
     const sequence = outreachSequence
       ? OutreachSequenceSchema.parse(outreachSequence)
       : null
+    const validation = sequence ? validateOutreachSequenceBasics(sequence) : { valid: true, reasons: [] }
+    if (!validation.valid) {
+      return NextResponse.json(
+        { success: false, error: `Invalid outreach sequence: ${validation.reasons.join(", ")}` },
+        { status: 400 }
+      )
+    }
 
     const now = new Date().toISOString()
     const updated = await updateInvestorMatchAtRank({

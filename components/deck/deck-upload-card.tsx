@@ -31,18 +31,9 @@ const PaywallModal = dynamic(
   { loading: () => null }
 )
 
-const WhatsAppCaptureModal = dynamic(
-  () =>
-    import("@/components/deck/whatsapp-capture-modal").then(
-      (mod) => mod.WhatsAppCaptureModal
-    ),
-  { loading: () => null }
-)
-
 type DeckUploadCardProps = {
   plan: Plan
   totalDeckUploadsEver: number
-  whatsappBonusUsed: boolean
   plans: StripePlan[]
   currency: Currency
 }
@@ -50,7 +41,6 @@ type DeckUploadCardProps = {
 export function DeckUploadCard({
   plan,
   totalDeckUploadsEver,
-  whatsappBonusUsed,
   plans,
   currency,
 }: DeckUploadCardProps) {
@@ -59,8 +49,6 @@ export function DeckUploadCard({
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [fileName, setFileName] = useState<string | null>(null)
-  const [pendingFormData, setPendingFormData] = useState<FormData | null>(null)
-  const [whatsappOpen, setWhatsappOpen] = useState(false)
   const [paywallOpen, setPaywallOpen] = useState(false)
   const [limit, setLimit] = useState<LimitReachedPayload | null>(null)
 
@@ -111,32 +99,19 @@ export function DeckUploadCard({
     if (loading) return
 
     if (plan === "free" && totalDeckUploadsEver >= 1) {
-      // Second upload for a free user.
-      if (!whatsappBonusUsed) {
-        setPendingFormData(formData)
-        setWhatsappOpen(true)
-        return
-      }
-      // WhatsApp bonus already used — straight to paywall.
-      setPendingFormData(formData)
-      setPaywallOpen(true)
+      setLimit({
+        error: "limit_reached",
+        action: "deck_upload",
+        limit_type: "deck_uploads",
+        current: totalDeckUploadsEver,
+        max: 1,
+        resets_at: null,
+        plan,
+      })
       return
     }
 
     await performUpload(formData)
-  }
-
-  function continueAfterWhatsapp() {
-    if (pendingFormData) {
-      const data = pendingFormData
-      setPendingFormData(null)
-      void performUpload(data)
-    }
-  }
-
-  function openPaywallInstead() {
-    setWhatsappOpen(false)
-    setPaywallOpen(true)
   }
 
   return (
@@ -168,7 +143,7 @@ export function DeckUploadCard({
                     {fileName ?? "Choose a PDF or PPTX deck"}
                   </Label>
                   <p className="text-xs text-muted-foreground">
-                    Maximum 20MB. Text must be selectable/extractable.
+                    Maximum 50MB. Text must be selectable/extractable.
                   </p>
                 </div>
               </div>
@@ -209,21 +184,11 @@ export function DeckUploadCard({
         </CardContent>
       </Card>
 
-      {whatsappOpen ? (
-        <WhatsAppCaptureModal
-          open={whatsappOpen}
-          onOpenChange={setWhatsappOpen}
-          onContinue={continueAfterWhatsapp}
-          onUpgradeInstead={openPaywallInstead}
-        />
-      ) : null}
-
       {paywallOpen ? (
         <PaywallModal
           open={paywallOpen}
           onOpenChange={(open) => {
             setPaywallOpen(open)
-            if (!open) setPendingFormData(null)
           }}
           plans={plans}
           currency={currency}

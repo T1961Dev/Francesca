@@ -72,20 +72,26 @@ export function LimitReachedModal({
       : payload.plan === "lifetime"
         ? "lifetime"
         : "subscription"
+  const freeDeckUploadUsed =
+    payload.plan === "free" && payload.limit_type === "deck_uploads"
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {variant === "free"
+            {freeDeckUploadUsed
+              ? "Free analysis used"
+              : variant === "free"
               ? "Upgrade to keep going"
               : variant === "lifetime"
                 ? "Monthly cap reached"
                 : "You've used your monthly allowance"}
           </DialogTitle>
           <DialogDescription>
-            {variant === "free" ? (
+            {freeDeckUploadUsed ? (
+              <>You&apos;ve used your free analysis. Upgrade to upload again.</>
+            ) : variant === "free" ? (
               <>You&apos;ve used your free {label}. Upgrade to keep going.</>
             ) : variant === "lifetime" ? (
               <>

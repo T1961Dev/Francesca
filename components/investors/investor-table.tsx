@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 
 import { InvestorIdentityCell } from "@/components/investors/investor-identity-cell"
@@ -9,6 +9,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { cn } from "@/lib/utils"
 
 type Match = Record<string, unknown>
+
+function patchKey(jobId: string | null | undefined, rank: number) {
+  return `${jobId ?? "local"}:${Number.isFinite(rank) ? rank : "unknown"}`
+}
 
 const InvestorProfileDialog = dynamic(
   () =>
@@ -29,11 +33,14 @@ export function InvestorTable({
   scrollable?: boolean
 }) {
   const [selected, setSelected] = useState<Match | null>(null)
-  const [rows, setRows] = useState<Match[]>(matches)
+  const [patches, setPatches] = useState<Record<string, Record<string, unknown>>>({})
 
-  useEffect(() => {
-    setRows(matches)
-  }, [matches])
+  const rows = useMemo(() => {
+    return matches.map((match) => {
+      const patch = patches[patchKey(jobId, Number(match.rank))]
+      return patch ? { ...match, ...patch } : match
+    })
+  }, [jobId, matches, patches])
 
   const sorted = useMemo(() => {
     return [...rows].sort((a, b) => {
@@ -45,9 +52,11 @@ export function InvestorTable({
   }, [rows])
 
   function applyUpdate(rank: number, patch: Record<string, unknown>) {
-    setRows((current) =>
-      current.map((m) => (Number(m.rank) === rank ? { ...m, ...patch } : m))
-    )
+    const key = patchKey(jobId, rank)
+    setPatches((current) => ({
+      ...current,
+      [key]: { ...(current[key] ?? {}), ...patch },
+    }))
     setSelected((m) => (m && Number(m.rank) === rank ? { ...m, ...patch } : m))
   }
 

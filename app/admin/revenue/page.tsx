@@ -6,19 +6,25 @@ const STARTER_GBP = plans.find((p) => p.id === "starter")?.prices.gbp ?? 29
 const PRO_GBP = plans.find((p) => p.id === "pro")?.prices.gbp ?? 79
 const LIFETIME_GBP = plans.find((p) => p.id === "lifetime")?.prices.gbp ?? 349
 
+function isoDaysAgo(days: number) {
+  const date = new Date()
+  date.setUTCDate(date.getUTCDate() - days)
+  return date.toISOString()
+}
+
 export default async function AdminRevenuePage() {
   const supabase = createAdminClient()
 
-  const [{ data: starters }, { data: pros }, { data: lifetimes }, { data: events }] = await Promise.all([
+  const [{ count: starters }, { count: pros }, { count: lifetimes }, { data: events }] = await Promise.all([
     supabase.from("profiles").select("id", { count: "exact", head: true }).eq("plan", "starter").eq("subscription_status", "active"),
     supabase.from("profiles").select("id", { count: "exact", head: true }).eq("plan", "pro").eq("subscription_status", "active"),
     supabase.from("profiles").select("id", { count: "exact", head: true }).eq("plan", "lifetime"),
-    supabase.from("billing_events").select("event_type, created_at").gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()),
+    supabase.from("billing_events").select("event_type, created_at").gte("created_at", isoDaysAgo(30)),
   ])
 
-  const starterCount = starters?.length ?? 0
-  const proCount = pros?.length ?? 0
-  const lifetimeCount = lifetimes?.length ?? 0
+  const starterCount = starters ?? 0
+  const proCount = pros ?? 0
+  const lifetimeCount = lifetimes ?? 0
   const mrrGbp = starterCount * STARTER_GBP + proCount * PRO_GBP
   const lifetimeRevenueGbp = lifetimeCount * LIFETIME_GBP
 

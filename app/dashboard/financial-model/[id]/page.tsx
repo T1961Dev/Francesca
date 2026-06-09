@@ -7,7 +7,9 @@ import {
   formatMonthLabel,
   parseProjection,
 } from "@/lib/financial/format"
+import { canUseFinancialModel, getUserPlan } from "@/lib/access"
 import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 function buildChartsFromProjection(projection: ReturnType<typeof parseProjection>) {
   const labelAt = (index: number, month: (typeof projection)[number]) =>
@@ -41,6 +43,11 @@ export default async function FinancialModelResultPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+  const plan = await getUserPlan()
+  if (!canUseFinancialModel(plan)) {
+    redirect("/pricing")
+  }
+
   const supabase = await createClient()
   const { data: model } = await supabase
     .from("financial_models")

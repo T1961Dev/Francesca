@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { Copy, RefreshCw, Sparkles } from "lucide-react"
 import { toast } from "sonner"
 
@@ -68,13 +68,6 @@ export function InvestorOutreachEditor({
   const [saving, setSaving] = useState(false)
   const [regenerating, setRegenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    setSteps(readSequence(match))
-    setActiveStep(0)
-    setImprovements("")
-    setError(null)
-  }, [match, rank])
 
   const current = steps[activeStep]
   const initialSteps = useMemo(() => readSequence(match), [match])
@@ -313,9 +306,9 @@ function sourceLabelFor(source: string) {
 }
 
 function formatRelative(date: Date) {
-  const diff = Math.floor((Date.now() - date.getTime()) / 1000)
-  if (diff < 60) return "just now"
-  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`
-  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
-  return `${Math.floor(diff / 86400)}d ago`
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
 }

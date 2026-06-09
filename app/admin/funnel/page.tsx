@@ -2,9 +2,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isOnboardingComplete } from "@/lib/onboarding"
 
+function isoDaysAgo(days: number) {
+  const date = new Date()
+  date.setUTCDate(date.getUTCDate() - days)
+  return date.toISOString()
+}
+
 export default async function AdminFunnelPage() {
   const supabase = createAdminClient()
-  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+  const since = isoDaysAgo(30)
 
   const { data: profiles } = await supabase
     .from("profiles")

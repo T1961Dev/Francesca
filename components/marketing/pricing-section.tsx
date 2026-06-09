@@ -48,7 +48,7 @@ export async function PricingSection() {
             <p className="mt-1 text-2xl font-medium">{formatPrice(0, currency)}</p>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <p>1 deck upload (2 with WhatsApp)</p>
+            <p>1 deck upload ever</p>
             <p>Overall score + dimensions</p>
             <p>Full feedback locked</p>
           </CardContent>

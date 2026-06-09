@@ -23,7 +23,7 @@ For race conditions, cron jobs, and Stripe webhook edge cases, also run [`pre-la
 | Label | Purpose | Suggested plan |
 |-------|---------|----------------|
 | **Free-A** | First-time founder journey | Free |
-| **Free-B** | WhatsApp bonus + second upload | Free |
+| **Free-B** | Second upload soft prompt | Free |
 | **Starter** | Deck + financial model | Starter |
 | **Pro** | Full investor matching | Pro |
 | **Lifetime** | Lifetime limits (2 match runs/mo, 5 deck/mo) | Lifetime |
@@ -118,13 +118,12 @@ Complete as **Free-A** immediately after signup.
 | 5.6 | Analysis history | New row appears; list scrolls internally if many items. | | |
 | 5.7 | Re-open analysis from history | Same locked view; score consistent. | | |
 
-### WhatsApp bonus (Free-B)
+### Free second upload prompt (Free-B)
 
 | # | Step | Expected | Pass | Notes |
 |---|------|----------|------|-------|
-| 5.8 | Upload 2nd deck on Free (after 1st) | **WhatsApp modal** appears before upload. | | |
-| 5.9 | Enter phone (e.g. `+447700900000`) | Upload proceeds; `whatsapp_bonus_used` consumed. | | |
-| 5.10 | Attempt 3rd upload | **Paywall only** — no WhatsApp option. | | |
+| 5.8 | Upload 2nd deck on Free (after 1st) | Soft prompt: "You've used your free analysis. Upgrade to upload again." | | |
+| 5.9 | Click upgrade CTA | Upgrade flow opens; no second free upload starts. | | |
 
 ---
 
@@ -207,7 +206,7 @@ On **Pro** or **Lifetime** account with a **completed deck analysis**.
 | 9.2 | Open on Pro | **Recent jobs** list scrolls internally; launcher to pick deck. | | |
 | 9.3 | Start match from launcher | Job created; progress UI updates (polling). | | |
 | 9.4 | Wait for completion | Status → `completed`; ranked investors appear. | | |
-| 9.5 | Match count | **≤ 35** on Pro, **≤ 50** on Lifetime. | | |
+| 9.5 | Match count | **25** on Pro or Lifetime when enough qualified leads exist. | | |
 | 9.6 | Open a match row | Fit explanation, firm, partner details visible. | | |
 
 ### Auto-start after deck upload (Pro/Lifetime)
@@ -298,10 +297,10 @@ Quick pass after the recent UX fixes:
 
 | Plan | Deck uploads | Financial models | Match runs / month | Matches / run |
 |------|-------------|------------------|-------------------|---------------|
-| **Free** | 1 ever (+1 with WhatsApp) | Locked | Locked | — |
+| **Free** | 1 ever | Locked | Locked | — |
 | **Starter** | 10 / month | 10 / month | Locked | — |
-| **Pro** | 25 / month | 25 / month | 10 | 35 |
-| **Lifetime** | 5 / month | 5 / month | **2** | 50 |
+| **Pro** | 25 / month | 25 / month | 10 | 25 |
+| **Lifetime** | 5 / month | 5 / month | **2** | 25 |
 
 Free deck: overall score + dimension **names** only. Paid: full feedback, PDF export, financial model, and (Pro+) matching.
 

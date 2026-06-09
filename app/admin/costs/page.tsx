@@ -2,9 +2,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { createAdminClient } from "@/lib/supabase/admin"
 
+function isoDaysAgo(days: number) {
+  const date = new Date()
+  date.setUTCDate(date.getUTCDate() - days)
+  return date.toISOString()
+}
+
 export default async function AdminCostsPage() {
   const supabase = createAdminClient()
-  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+  const since = isoDaysAgo(30)
 
   const { data: costs } = await supabase
     .from("api_costs")

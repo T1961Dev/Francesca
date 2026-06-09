@@ -1,0 +1,1080 @@
+{
+  "company": {
+    "id": "cliniq",
+    "name": "ClinIQ",
+    "sector": "HealthTech / Healthcare SaaS",
+    "expectedTerms": [
+      "healthtech",
+      "healthcare",
+      "clinic",
+      "patient",
+      "clinical",
+      "saas"
+    ],
+    "badTerms": [
+      "consumer social",
+      "crypto",
+      "climate"
+    ],
+    "stage": "seed",
+    "geography": "UK / Europe / Worldwide",
+    "raiseAmount": 900000,
+    "traction": "GBP 8k MRR, 11 private clinics",
+    "profile": {
+      "company_name": "ClinIQ",
+      "sector": "HealthTech / Healthcare SaaS",
+      "industry": "HealthTech",
+      "stage": "seed",
+      "funding_stage": "seed",
+      "geography": "United Kingdom / Europe / Worldwide",
+      "location": "United Kingdom",
+      "target_raise": 900000,
+      "full_name": "QA Founder",
+      "plan": "pro",
+      "description": "Patient intake, triage, and appointment preparation software for private clinics."
+    },
+    "financialInput": {
+      "companyName": "ClinIQ",
+      "businessModel": "Healthcare SaaS sold to private clinics",
+      "industry": "HealthTech / healthcare software",
+      "currentMonthlyRevenue": 8000,
+      "currentMonthlyBurn": 52000,
+      "currentCashBalance": 210000,
+      "currentRunway": 4,
+      "raiseAmount": 900000,
+      "monthlyRevenueGrowth": 7,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 78,
+      "churn": 2,
+      "currentCustomers": 11,
+      "targetCustomers": 85,
+      "averageRevenuePerCustomer": 727,
+      "teamSize": 7,
+      "plannedHires": 8,
+      "fundingGoal": "Expand clinic sales and complete compliance/security proof points.",
+      "targetMarket": "UK private clinics and outpatient providers.",
+      "notes": "Longer clinical adoption cycles and regulated buyer concerns."
+    },
+    "deckText": "ClinIQ Pitch Deck\n\nSector: HealthTech / Healthcare SaaS\n\nStage: seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 900,000\n\nTraction: GBP 8k MRR, 11 private clinics\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Patient intake, triage, and appointment preparation software for private clinics.\n\nBusiness model: Healthcare SaaS sold to private clinics.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 8000, burn 52000, cash 210000, gross margin 78%.\n\nInvestor ask: Raising GBP 900,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires."
+  },
+  "validations": {
+    "pass": true,
+    "projectionMonths": 36,
+    "chartLengthsOk": true,
+    "finalRevenue": 84605,
+    "maxRevenue": 84605,
+    "hasNarrative": true,
+    "hasInvestorSummary": true,
+    "assumptionCount": 10,
+    "riskCount": 5,
+    "expectedTermsFound": [
+      "healthtech",
+      "healthcare",
+      "clinic",
+      "clinical",
+      "saas"
+    ],
+    "runwayApproxIssues": 0,
+    "businessModelAdapted": true,
+    "consumerMrrOverfit": false,
+    "fintechInventedRevenue": false
+  },
+  "result": {
+    "input": {
+      "companyName": "ClinIQ",
+      "businessModel": "Healthcare SaaS sold to private clinics",
+      "industry": "HealthTech / healthcare software",
+      "currentMonthlyRevenue": 8000,
+      "currentMonthlyBurn": 52000,
+      "currentCashBalance": 210000,
+      "currentRunway": 4,
+      "raiseAmount": 900000,
+      "monthlyRevenueGrowth": 7,
+      "monthlyCostGrowth": 4,
+      "grossMargin": 78,
+      "churn": 2,
+      "currentCustomers": 11,
+      "targetCustomers": 85,
+      "averageRevenuePerCustomer": 727,
+      "teamSize": 7,
+      "plannedHires": 8,
+      "fundingGoal": "Expand clinic sales and complete compliance/security proof points.",
+      "targetMarket": "UK private clinics and outpatient providers.",
+      "notes": "Longer clinical adoption cycles and regulated buyer concerns."
+    },
+    "parsed": {
+      "projection": [
+        {
+          "month": 1,
+          "label": "Month 1",
+          "revenue": 8000,
+          "burn": 52000,
+          "cashBalance": 210000,
+          "runwayMonths": 4,
+          "customers": 11
+        },
+        {
+          "month": 2,
+          "label": "Month 2",
+          "revenue": 8560,
+          "burn": 54080,
+          "cashBalance": 142480,
+          "runwayMonths": 2.6,
+          "customers": 12
+        },
+        {
+          "month": 3,
+          "label": "Month 3",
+          "revenue": 9159,
+          "burn": 56243,
+          "cashBalance": 87936,
+          "runwayMonths": 1.6,
+          "customers": 12
+        },
+        {
+          "month": 4,
+          "label": "Month 4",
+          "revenue": 9800,
+          "burn": 58493,
+          "cashBalance": 34743,
+          "runwayMonths": 0.6,
+          "customers": 13
+        },
+        {
+          "month": 5,
+          "label": "Month 5 (post-raise)",
+          "revenue": 10487,
+          "burn": 60832,
+          "cashBalance": 884398,
+          "runwayMonths": 14.5,
+          "customers": 14
+        },
+        {
+          "month": 6,
+          "label": "Month 6",
+          "revenue": 11221,
+          "burn": 63265,
+          "cashBalance": 832354,
+          "runwayMonths": 13.2,
+          "customers": 15
+        },
+        {
+          "month": 7,
+          "label": "Month 7",
+          "revenue": 12007,
+          "burn": 65800,
+          "cashBalance": 788560,
+          "runwayMonths": 12,
+          "customers": 16
+        },
+        {
+          "month": 8,
+          "label": "Month 8",
+          "revenue": 12848,
+          "burn": 68432,
+          "cashBalance": 752976,
+          "runwayMonths": 11,
+          "customers": 18
+        },
+        {
+          "month": 9,
+          "label": "Month 9",
+          "revenue": 13747,
+          "burn": 71169,
+          "cashBalance": 725554,
+          "runwayMonths": 10.2,
+          "customers": 19
+        },
+        {
+          "month": 10,
+          "label": "Month 10",
+          "revenue": 14710,
+          "burn": 74016,
+          "cashBalance": 706248,
+          "runwayMonths": 9.5,
+          "customers": 20
+        },
+        {
+          "month": 11,
+          "label": "Month 11",
+          "revenue": 15741,
+          "burn": 76977,
+          "cashBalance": 695012,
+          "runwayMonths": 9,
+          "customers": 21
+        },
+        {
+          "month": 12,
+          "label": "Month 12",
+          "revenue": 16842,
+          "burn": 80056,
+          "cashBalance": 691797,
+          "runwayMonths": 8.6,
+          "customers": 23
+        },
+        {
+          "month": 13,
+          "label": "Month 13",
+          "revenue": 18022,
+          "burn": 83258,
+          "cashBalance": 696563,
+          "runwayMonths": 8.4,
+          "customers": 24
+        },
+        {
+          "month": 14,
+          "label": "Month 14",
+          "revenue": 19279,
+          "burn": 86688,
+          "cashBalance": 709294,
+          "runwayMonths": 8.2,
+          "customers": 25
+        },
+        {
+          "month": 15,
+          "label": "Month 15",
+          "revenue": 20630,
+          "burn": 90255,
+          "cashBalance": 729969,
+          "runwayMonths": 8.1,
+          "customers": 27
+        },
+        {
+          "month": 16,
+          "label": "Month 16",
+          "revenue": 22074,
+          "burn": 93965,
+          "cashBalance": 758579,
+          "runwayMonths": 8.1,
+          "customers": 28
+        },
+        {
+          "month": 17,
+          "label": "Month 17",
+          "revenue": 23622,
+          "burn": 97823,
+          "cashBalance": 795134,
+          "runwayMonths": 8.1,
+          "customers": 30
+        },
+        {
+          "month": 18,
+          "label": "Month 18",
+          "revenue": 25285,
+          "burn": 101836,
+          "cashBalance": 839653,
+          "runwayMonths": 8.2,
+          "customers": 32
+        },
+        {
+          "month": 19,
+          "label": "Month 19",
+          "revenue": 27055,
+          "burn": 105910,
+          "cashBalance": 892198,
+          "runwayMonths": 8.4,
+          "customers": 33
+        },
+        {
+          "month": 20,
+          "label": "Month 20",
+          "revenue": 28948,
+          "burn": 110146,
+          "cashBalance": 952900,
+          "runwayMonths": 8.7,
+          "customers": 35
+        },
+        {
+          "month": 21,
+          "label": "Month 21",
+          "revenue": 30955,
+          "burn": 114552,
+          "cashBalance": 1021917,
+          "runwayMonths": 8.9,
+          "customers": 37
+        },
+        {
+          "month": 22,
+          "label": "Month 22",
+          "revenue": 33095,
+          "burn": 119134,
+          "cashBalance": 1099987,
+          "runwayMonths": 9.2,
+          "customers": 39
+        },
+        {
+          "month": 23,
+          "label": "Month 23",
+          "revenue": 35392,
+          "burn": 123900,
+          "cashBalance": 1183480,
+          "runwayMonths": 9.6,
+          "customers": 41
+        },
+        {
+          "month": 24,
+          "label": "Month 24",
+          "revenue": 37869,
+          "burn": 128856,
+          "cashBalance": 1272449,
+          "runwayMonths": 9.9,
+          "customers": 44
+        },
+        {
+          "month": 25,
+          "label": "Month 25",
+          "revenue": 40520,
+          "burn": 134010,
+          "cashBalance": 1366930,
+          "runwayMonths": 10.2,
+          "customers": 46
+        },
+        {
+          "month": 26,
+          "label": "Month 26",
+          "revenue": 43357,
+          "burn": 139371,
+          "cashBalance": 1466970,
+          "runwayMonths": 10.5,
+          "customers": 49
+        },
+        {
+          "month": 27,
+          "label": "Month 27",
+          "revenue": 46372,
+          "burn": 144946,
+          "cashBalance": 1572623,
+          "runwayMonths": 10.8,
+          "customers": 53
+        },
+        {
+          "month": 28,
+          "label": "Month 28",
+          "revenue": 49590,
+          "burn": 150744,
+          "cashBalance": 1683957,
+          "runwayMonths": 11.2,
+          "customers": 56
+        },
+        {
+          "month": 29,
+          "label": "Month 29",
+          "revenue": 53011,
+          "burn": 156774,
+          "cashBalance": 1801050,
+          "runwayMonths": 11.5,
+          "customers": 59
+        },
+        {
+          "month": 30,
+          "label": "Month 30",
+          "revenue": 56662,
+          "burn": 163045,
+          "cashBalance": 1923987,
+          "runwayMonths": 11.9,
+          "customers": 63
+        },
+        {
+          "month": 31,
+          "label": "Month 31",
+          "revenue": 60571,
+          "burn": 169567,
+          "cashBalance": 2052855,
+          "runwayMonths": 12.2,
+          "customers": 68
+        },
+        {
+          "month": 32,
+          "label": "Month 32",
+          "revenue": 64711,
+          "burn": 176350,
+          "cashBalance": 2187756,
+          "runwayMonths": 12.4,
+          "customers": 72
+        },
+        {
+          "month": 33,
+          "label": "Month 33",
+          "revenue": 69180,
+          "burn": 183404,
+          "cashBalance": 2328806,
+          "runwayMonths": 12.7,
+          "customers": 76
+        },
+        {
+          "month": 34,
+          "label": "Month 34",
+          "revenue": 73993,
+          "burn": 190741,
+          "cashBalance": 2476131,
+          "runwayMonths": 13,
+          "customers": 80
+        },
+        {
+          "month": 35,
+          "label": "Month 35",
+          "revenue": 79115,
+          "burn": 198371,
+          "cashBalance": 2629875,
+          "runwayMonths": 13.3,
+          "customers": 83
+        },
+        {
+          "month": 36,
+          "label": "Month 36",
+          "revenue": 84605,
+          "burn": 206305,
+          "cashBalance": 2790201,
+          "runwayMonths": 13.5,
+          "customers": 85
+        }
+      ],
+      "breakEvenMonth": 36,
+      "narrative": "ClinIQ is a HealthTech SaaS selling to UK private clinics. With strong gross margins (78%) and consistent 7% month-on-month revenue growth anticipated, the company aims to scale from 11 to 85 customers over 3 years. The model assumes measured cost growth (4% monthly) to support both feature development and expansion. Post-raise, ClinIQ extends runway to over a year, providing time to mature product-market fit and establish regulatory/compliance proof points critical for healthcare software sales. Revenue and burn move closer over time, reaching break-even in the month 36-38 window under these assumptions.",
+      "investorSummary": "ClinIQ addresses a clear need in UK private healthcare, offering SaaS for clinics. The model demonstrates attractive margin profiles, robust revenue growth, and prudent cash management after the raise. With the requested £900k, ClinIQ funds sales expansion and technical milestones, achieving a customer base of 85 clinics and over 80k MRR by end of year three. Business risks include regulatory hurdles and long sales cycles. The company will require ongoing delivery of clinical and compliance outcomes to sustain growth.",
+      "risks": [
+        "Sales cycles in UK healthcare may take longer than modeled, affecting revenue ramp.",
+        "Churn assumed at 2% may understate real risk if competitors emerge.",
+        "Compliance costs could rise beyond model's 4% cost increase.",
+        "Market adoption may be slower due to regulatory or security concerns.",
+        "Economic downturn or NHS policy shifts could affect private clinic spending."
+      ],
+      "assumptions": [
+        "Monthly revenue growth rate is 7%, consistent with founder input.",
+        "Monthly cost growth is 4%, including planned hiring and compliance.",
+        "Customer count grows in proportion to revenue and ARPU.",
+        "Current burn and revenue from deck matches founder input; no discrepancies found.",
+        "Raise of £900k lands end of month 4 (aligned with runway math).",
+        "No additional capital is raised in this period.",
+        "Team expands steadily; impact of hires included in cost growth but not itemized.",
+        "Gross margin is held constant at 78%.",
+        "No step changes for unmodeled pricing or product changes.",
+        "Revenue is based on current ARPU and customer count, growing with modeled assumptions."
+      ],
+      "useOfFunds": [
+        {
+          "category": "Sales hiring & market expansion",
+          "amount": 360000,
+          "rationale": "Recruit regional sales teams, strengthen clinic outreach and onboarding."
+        },
+        {
+          "category": "Product development & compliance",
+          "amount": 270000,
+          "rationale": "Engineering, HITRUST readiness, and security audits for UK/EU."
+        },
+        {
+          "category": "Customer support & success",
+          "amount": 90000,
+          "rationale": "Onboard, train, and support new client clinics to reduce churn."
+        },
+        {
+          "category": "General & administrative",
+          "amount": 180000,
+          "rationale": "Office, legal, insurance, and operational runway extension."
+        }
+      ],
+      "chartsData": {
+        "revenue": [
+          {
+            "label": "Month 1",
+            "value": 8000
+          },
+          {
+            "label": "Month 2",
+            "value": 8560
+          },
+          {
+            "label": "Month 3",
+            "value": 9159
+          },
+          {
+            "label": "Month 4",
+            "value": 9800
+          },
+          {
+            "label": "Month 5 (post-raise)",
+            "value": 10487
+          },
+          {
+            "label": "Month 6",
+            "value": 11221
+          },
+          {
+            "label": "Month 7",
+            "value": 12007
+          },
+          {
+            "label": "Month 8",
+            "value": 12848
+          },
+          {
+            "label": "Month 9",
+            "value": 13747
+          },
+          {
+            "label": "Month 10",
+            "value": 14710
+          },
+          {
+            "label": "Month 11",
+            "value": 15741
+          },
+          {
+            "label": "Month 12",
+            "value": 16842
+          },
+          {
+            "label": "Month 13",
+            "value": 18022
+          },
+          {
+            "label": "Month 14",
+            "value": 19279
+          },
+          {
+            "label": "Month 15",
+            "value": 20630
+          },
+          {
+            "label": "Month 16",
+            "value": 22074
+          },
+          {
+            "label": "Month 17",
+            "value": 23622
+          },
+          {
+            "label": "Month 18",
+            "value": 25285
+          },
+          {
+            "label": "Month 19",
+            "value": 27055
+          },
+          {
+            "label": "Month 20",
+            "value": 28948
+          },
+          {
+            "label": "Month 21",
+            "value": 30955
+          },
+          {
+            "label": "Month 22",
+            "value": 33095
+          },
+          {
+            "label": "Month 23",
+            "value": 35392
+          },
+          {
+            "label": "Month 24",
+            "value": 37869
+          },
+          {
+            "label": "Month 25",
+            "value": 40520
+          },
+          {
+            "label": "Month 26",
+            "value": 43357
+          },
+          {
+            "label": "Month 27",
+            "value": 46372
+          },
+          {
+            "label": "Month 28",
+            "value": 49590
+          },
+          {
+            "label": "Month 29",
+            "value": 53011
+          },
+          {
+            "label": "Month 30",
+            "value": 56662
+          },
+          {
+            "label": "Month 31",
+            "value": 60571
+          },
+          {
+            "label": "Month 32",
+            "value": 64711
+          },
+          {
+            "label": "Month 33",
+            "value": 69180
+          },
+          {
+            "label": "Month 34",
+            "value": 73993
+          },
+          {
+            "label": "Month 35",
+            "value": 79115
+          },
+          {
+            "label": "Month 36",
+            "value": 84605
+          }
+        ],
+        "burn": [
+          {
+            "label": "Month 1",
+            "value": 52000
+          },
+          {
+            "label": "Month 2",
+            "value": 54080
+          },
+          {
+            "label": "Month 3",
+            "value": 56243
+          },
+          {
+            "label": "Month 4",
+            "value": 58493
+          },
+          {
+            "label": "Month 5 (post-raise)",
+            "value": 60832
+          },
+          {
+            "label": "Month 6",
+            "value": 63265
+          },
+          {
+            "label": "Month 7",
+            "value": 65800
+          },
+          {
+            "label": "Month 8",
+            "value": 68432
+          },
+          {
+            "label": "Month 9",
+            "value": 71169
+          },
+          {
+            "label": "Month 10",
+            "value": 74016
+          },
+          {
+            "label": "Month 11",
+            "value": 76977
+          },
+          {
+            "label": "Month 12",
+            "value": 80056
+          },
+          {
+            "label": "Month 13",
+            "value": 83258
+          },
+          {
+            "label": "Month 14",
+            "value": 86688
+          },
+          {
+            "label": "Month 15",
+            "value": 90255
+          },
+          {
+            "label": "Month 16",
+            "value": 93965
+          },
+          {
+            "label": "Month 17",
+            "value": 97823
+          },
+          {
+            "label": "Month 18",
+            "value": 101836
+          },
+          {
+            "label": "Month 19",
+            "value": 105910
+          },
+          {
+            "label": "Month 20",
+            "value": 110146
+          },
+          {
+            "label": "Month 21",
+            "value": 114552
+          },
+          {
+            "label": "Month 22",
+            "value": 119134
+          },
+          {
+            "label": "Month 23",
+            "value": 123900
+          },
+          {
+            "label": "Month 24",
+            "value": 128856
+          },
+          {
+            "label": "Month 25",
+            "value": 134010
+          },
+          {
+            "label": "Month 26",
+            "value": 139371
+          },
+          {
+            "label": "Month 27",
+            "value": 144946
+          },
+          {
+            "label": "Month 28",
+            "value": 150744
+          },
+          {
+            "label": "Month 29",
+            "value": 156774
+          },
+          {
+            "label": "Month 30",
+            "value": 163045
+          },
+          {
+            "label": "Month 31",
+            "value": 169567
+          },
+          {
+            "label": "Month 32",
+            "value": 176350
+          },
+          {
+            "label": "Month 33",
+            "value": 183404
+          },
+          {
+            "label": "Month 34",
+            "value": 190741
+          },
+          {
+            "label": "Month 35",
+            "value": 198371
+          },
+          {
+            "label": "Month 36",
+            "value": 206305
+          }
+        ],
+        "cashBalance": [
+          {
+            "label": "Month 1",
+            "value": 210000
+          },
+          {
+            "label": "Month 2",
+            "value": 142480
+          },
+          {
+            "label": "Month 3",
+            "value": 87936
+          },
+          {
+            "label": "Month 4",
+            "value": 34743
+          },
+          {
+            "label": "Month 5 (post-raise)",
+            "value": 884398
+          },
+          {
+            "label": "Month 6",
+            "value": 832354
+          },
+          {
+            "label": "Month 7",
+            "value": 788560
+          },
+          {
+            "label": "Month 8",
+            "value": 752976
+          },
+          {
+            "label": "Month 9",
+            "value": 725554
+          },
+          {
+            "label": "Month 10",
+            "value": 706248
+          },
+          {
+            "label": "Month 11",
+            "value": 695012
+          },
+          {
+            "label": "Month 12",
+            "value": 691797
+          },
+          {
+            "label": "Month 13",
+            "value": 696563
+          },
+          {
+            "label": "Month 14",
+            "value": 709294
+          },
+          {
+            "label": "Month 15",
+            "value": 729969
+          },
+          {
+            "label": "Month 16",
+            "value": 758579
+          },
+          {
+            "label": "Month 17",
+            "value": 795134
+          },
+          {
+            "label": "Month 18",
+            "value": 839653
+          },
+          {
+            "label": "Month 19",
+            "value": 892198
+          },
+          {
+            "label": "Month 20",
+            "value": 952900
+          },
+          {
+            "label": "Month 21",
+            "value": 1021917
+          },
+          {
+            "label": "Month 22",
+            "value": 1099987
+          },
+          {
+            "label": "Month 23",
+            "value": 1183480
+          },
+          {
+            "label": "Month 24",
+            "value": 1272449
+          },
+          {
+            "label": "Month 25",
+            "value": 1366930
+          },
+          {
+            "label": "Month 26",
+            "value": 1466970
+          },
+          {
+            "label": "Month 27",
+            "value": 1572623
+          },
+          {
+            "label": "Month 28",
+            "value": 1683957
+          },
+          {
+            "label": "Month 29",
+            "value": 1801050
+          },
+          {
+            "label": "Month 30",
+            "value": 1923987
+          },
+          {
+            "label": "Month 31",
+            "value": 2052855
+          },
+          {
+            "label": "Month 32",
+            "value": 2187756
+          },
+          {
+            "label": "Month 33",
+            "value": 2328806
+          },
+          {
+            "label": "Month 34",
+            "value": 2476131
+          },
+          {
+            "label": "Month 35",
+            "value": 2629875
+          },
+          {
+            "label": "Month 36",
+            "value": 2790201
+          }
+        ],
+        "runway": [
+          {
+            "label": "Month 1",
+            "value": 4
+          },
+          {
+            "label": "Month 2",
+            "value": 2.6
+          },
+          {
+            "label": "Month 3",
+            "value": 1.6
+          },
+          {
+            "label": "Month 4",
+            "value": 0.6
+          },
+          {
+            "label": "Month 5 (post-raise)",
+            "value": 14.5
+          },
+          {
+            "label": "Month 6",
+            "value": 13.2
+          },
+          {
+            "label": "Month 7",
+            "value": 12
+          },
+          {
+            "label": "Month 8",
+            "value": 11
+          },
+          {
+            "label": "Month 9",
+            "value": 10.2
+          },
+          {
+            "label": "Month 10",
+            "value": 9.5
+          },
+          {
+            "label": "Month 11",
+            "value": 9
+          },
+          {
+            "label": "Month 12",
+            "value": 8.6
+          },
+          {
+            "label": "Month 13",
+            "value": 8.4
+          },
+          {
+            "label": "Month 14",
+            "value": 8.2
+          },
+          {
+            "label": "Month 15",
+            "value": 8.1
+          },
+          {
+            "label": "Month 16",
+            "value": 8.1
+          },
+          {
+            "label": "Month 17",
+            "value": 8.1
+          },
+          {
+            "label": "Month 18",
+            "value": 8.2
+          },
+          {
+            "label": "Month 19",
+            "value": 8.4
+          },
+          {
+            "label": "Month 20",
+            "value": 8.7
+          },
+          {
+            "label": "Month 21",
+            "value": 8.9
+          },
+          {
+            "label": "Month 22",
+            "value": 9.2
+          },
+          {
+            "label": "Month 23",
+            "value": 9.6
+          },
+          {
+            "label": "Month 24",
+            "value": 9.9
+          },
+          {
+            "label": "Month 25",
+            "value": 10.2
+          },
+          {
+            "label": "Month 26",
+            "value": 10.5
+          },
+          {
+            "label": "Month 27",
+            "value": 10.8
+          },
+          {
+            "label": "Month 28",
+            "value": 11.2
+          },
+          {
+            "label": "Month 29",
+            "value": 11.5
+          },
+          {
+            "label": "Month 30",
+            "value": 11.9
+          },
+          {
+            "label": "Month 31",
+            "value": 12.2
+          },
+          {
+            "label": "Month 32",
+            "value": 12.4
+          },
+          {
+            "label": "Month 33",
+            "value": 12.7
+          },
+          {
+            "label": "Month 34",
+            "value": 13
+          },
+          {
+            "label": "Month 35",
+            "value": 13.3
+          },
+          {
+            "label": "Month 36",
+            "value": 13.5
+          }
+        ]
+      }
+    },
+    "raw": {
+      "id": "resp_08c513aa4f9e72e9006a2492206a0c8192889cf1e80828d8cf",
+      "model": "gpt-4.1-2025-04-14",
+      "usage": {
+        "input_tokens": 760,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2121,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2881
+      }
+    }
+  },
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\financial-models\\cliniq.json"
+}

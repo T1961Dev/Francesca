@@ -1,14 +1,18 @@
 import { normaliseLinkedInUrl } from "@/lib/apify/linkedin"
+import {
+  composeEvidenceBasedRationale,
+  scoreFirmForProfile,
+} from "@/lib/matching/investor-fit"
 import type { MergedFirm } from "@/lib/matching/merge"
 import type { LinkedInPost } from "@/types/apify"
-import type { InvestorMatch } from "@/types/profile"
+import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
-type RankedMatch = Omit<InvestorMatch, "rank" | "outreachEmail">
+type RankedMatch = Omit<InvestorMatch, "rank" | "outreachEmail" | "outreachSequence">
 
 /**
- * Top up GPT ranking to the plan cap using the next-best enriched firms.
- * Rationales mention deck context lightly but flag lower confidence — no
- * generic "outside AI top picks" boilerplate when avoidable.
+ * Top up GPT ranking to the plan cap using deterministic fit scoring.
+ * Fillers remain lower-confidence, but they must still carry real sector,
+ * stage, geography, cheque, and evidence caveats rather than generic copy.
  */
 export function backfillRankedMatches({
   ranked,
@@ -17,6 +21,8 @@ export function backfillRankedMatches({
   targetMatchCount,
   deckSummary,
   limitedData,
+  profile,
+  candidatePoolSize,
 }: {
   ranked: RankedMatch[]
   firms: MergedFirm[]
@@ -24,19 +30,24 @@ export function backfillRankedMatches({
   targetMatchCount: number
   deckSummary: string
   limitedData: boolean
+  profile: FounderProfile
+  candidatePoolSize?: number
 }): RankedMatch[] {
-  if (ranked.length >= targetMatchCount) return ranked.slice(0, targetMatchCount)
-
   const usedPartners = new Set(
     ranked.map((m) => m.partner.linkedin.trim().toLowerCase()).filter(Boolean)
   )
   const usedFirms = new Set(ranked.map((m) => m.firm.name.trim().toLowerCase()))
+  const deckSnippet = deckSummary.slice(0, 120)
+  const outputLimit = Math.max(targetMatchCount, candidatePoolSize ?? targetMatchCount)
+
+  const scoredFirms = firms
+    .map((firm) => ({ firm, assessment: scoreFirmForProfile(firm, profile) }))
+    .sort((a, b) => b.assessment.score - a.assessment.score)
 
   const fillers: RankedMatch[] = []
-  const deckSnippet = deckSummary.slice(0, 120)
 
-  for (const firm of firms) {
-    if (ranked.length + fillers.length >= targetMatchCount) break
+  for (const { firm, assessment } of scoredFirms) {
+    if (ranked.length + fillers.length >= outputLimit) break
     if (usedFirms.has(firm.Firm_Name.trim().toLowerCase())) continue
 
     const contact = firm.Contacts.find(
@@ -57,11 +68,8 @@ export function backfillRankedMatches({
         relevance: "low" as const,
       }))
 
-    const focus = firm.Focus_Areas.slice(0, 2).join(" / ") || "venture"
-    const stage = firm.Investment_Stages[0] ?? "early-stage"
-
-    fillers.push({
-      fitScore: Math.max(32, 48 - fillers.length),
+    const filler: RankedMatch = {
+      fitScore: assessment.score,
       firm: {
         name: firm.Firm_Name,
         website: firm.Website,
@@ -82,14 +90,25 @@ export function backfillRankedMatches({
         email: contact.Email ?? undefined,
         linkedin: partnerLinkedIn,
       },
-      matchRationale: `Secondary pick: ${firm.Firm_Name} focuses on ${focus} at ${stage} stage (${firm.Country || "unknown geo"}). Your deck (${deckSnippet}${deckSummary.length > 120 ? "…" : ""}) suggests plausible overlap on sector or stage, though they ranked below the strongest fits — review their portfolio before outreach.`,
+      matchRationale: "",
       recentLinkedInSignals: signals,
+      chequeFit: assessment.chequeFit,
+      chequeSize: assessment.chequeSize,
+      fitBreakdown: assessment.facets,
       limitedData: limitedData || true,
-    })
+    }
 
+    filler.matchRationale = composeEvidenceBasedRationale(profile, filler, assessment)
+    if (assessment.score < 35 && deckSnippet) {
+      filler.matchRationale = `${filler.matchRationale} Deck context used: ${deckSnippet}${deckSummary.length > 120 ? "..." : ""}`.slice(0, 600)
+    }
+
+    fillers.push(filler)
     usedFirms.add(firm.Firm_Name.trim().toLowerCase())
     usedPartners.add(partnerLinkedIn.trim().toLowerCase())
   }
 
-  return [...ranked, ...fillers].slice(0, targetMatchCount)
+  return [...ranked, ...fillers]
+    .sort((a, b) => b.fitScore - a.fitScore)
+    .slice(0, outputLimit)
 }

@@ -19,7 +19,6 @@ export type UsageState = {
   financialModelRunsThisMonth: number
   investorMatchRunsThisMonth: number
   totalDeckUploadsEver: number
-  whatsappBonusUsed: boolean
   lastResetAt: string | null
 }
 
@@ -46,13 +45,12 @@ export async function attemptUsageIncrement({
   const { data: usage } = await supabase
     .from("user_usage")
     .select(
-      "deck_uploads_this_month, financial_model_runs_this_month, investor_match_runs_this_month, total_deck_uploads_ever, whatsapp_bonus_used"
+      "deck_uploads_this_month, financial_model_runs_this_month, investor_match_runs_this_month, total_deck_uploads_ever"
     )
     .eq("user_id", userId)
     .maybeSingle()
 
-  const whatsappBonus = Boolean(usage?.whatsapp_bonus_used)
-  const limit = resolveUsageLimit(plan, action, { whatsappBonus })
+  const limit = resolveUsageLimit(plan, action)
 
   const current = limit.useEverCounter
     ? (usage?.total_deck_uploads_ever as number | undefined) ?? 0
@@ -139,7 +137,7 @@ export async function fetchUsageState(userId: string): Promise<UsageState | null
   const { data } = await supabase
     .from("user_usage")
     .select(
-      "deck_uploads_this_month, financial_model_runs_this_month, investor_match_runs_this_month, total_deck_uploads_ever, whatsapp_bonus_used, last_reset_at"
+      "deck_uploads_this_month, financial_model_runs_this_month, investor_match_runs_this_month, total_deck_uploads_ever, last_reset_at"
     )
     .eq("user_id", userId)
     .maybeSingle()
@@ -151,16 +149,6 @@ export async function fetchUsageState(userId: string): Promise<UsageState | null
     financialModelRunsThisMonth: (data.financial_model_runs_this_month as number) ?? 0,
     investorMatchRunsThisMonth: (data.investor_match_runs_this_month as number) ?? 0,
     totalDeckUploadsEver: (data.total_deck_uploads_ever as number) ?? 0,
-    whatsappBonusUsed: Boolean(data.whatsapp_bonus_used),
     lastResetAt: (data.last_reset_at as string | null) ?? null,
   }
-}
-
-export async function markWhatsappBonusUsed(userId: string) {
-  const { createAdminClient } = await import("@/lib/supabase/admin")
-  const supabase = createAdminClient()
-  await supabase
-    .from("user_usage")
-    .update({ whatsapp_bonus_used: true, updated_at: new Date().toISOString() })
-    .eq("user_id", userId)
 }

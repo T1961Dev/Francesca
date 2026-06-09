@@ -1,0 +1,248 @@
+{
+  "fixture": {
+    "id": "cliniq",
+    "label": "ClinIQ",
+    "companyId": "cliniq",
+    "quality": "company",
+    "text": "ClinIQ Pitch Deck\n\nSector: HealthTech / Healthcare SaaS\n\nStage: seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 900,000\n\nTraction: GBP 8k MRR, 11 private clinics\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Patient intake, triage, and appointment preparation software for private clinics.\n\nBusiness model: Healthcare SaaS sold to private clinics.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 8000, burn 52000, cash 210000, gross margin 78%.\n\nInvestor ask: Raising GBP 900,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires.",
+    "pdfPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\fixtures\\cliniq.pdf"
+  },
+  "validations": {
+    "pass": true,
+    "companyMentioned": true,
+    "sectorTermsFound": [
+      "healthcare",
+      "clinic",
+      "patient",
+      "saas"
+    ],
+    "expectedRaise": 900000,
+    "raiseExtracted": 900000,
+    "raiseMatches": true,
+    "categoryCount": 8,
+    "weightedScoringExists": true,
+    "score": 65,
+    "expectedScoreBand": null,
+    "scoreInExpectedBand": null,
+    "feedbackSpecificity": "Specific",
+    "suggestedFixesCount": 5,
+    "priorityActionsCount": 3,
+    "financialSignals": {
+      "monthlyRevenue": 8000,
+      "monthlyBurn": 52000,
+      "cashBalance": 210000,
+      "runwayMonths": 4,
+      "raiseAmount": 900000,
+      "customerCount": 11,
+      "teamSize": null,
+      "grossMarginPercent": 78,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway estimated as cash divided by monthly burn (~4 months). Team size not disclosed. No monthly revenue growth stated."
+    }
+  },
+  "extractedText": "ClinIQ ClinIQ Pitch Deck Sector: HealthTech / Healthcare SaaS Stage: seed Geography: UK / Europe / Worldwide Raise amount: GBP 900,000 Traction: GBP 8k MRR, 11 private clinics Problem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure. Solution: Patient intake, triage, and appointment preparation software for private clinics. Business model: Healthcare SaaS sold to private clinics. Team: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success. Go-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches. Financial assumptions: current monthly revenue 8000, burn 52000, cash 210000, gross margin 78%. Investor ask: Raising GBP 900,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model. Use of funds: product development, customer acquisition, compliance or data where relevant, and core hires. -- 1 of 1 --",
+  "analysis": {
+    "summary": "The pitch deck presents a clear problem around inefficiencies in private clinic workflows and a SaaS solution addressing patient intake and appointment preparation. The market strategy targets UK private clinics with European and selective global expansion. Financial figures and raise amount are stated, but detailed market size data is missing. Team description is brief. The narrative lacks compelling storytelling or customer validation.",
+    "categoryScores": [
+      {
+        "category": "Problem clarity",
+        "score": 85,
+        "feedback": "Problem is clearly defined with focus on fragmented, manual workflows causing inefficiencies in private clinics."
+      },
+      {
+        "category": "Solution strength",
+        "score": 75,
+        "feedback": "Solution aligns well with problem; software targets key clinic pain points but lacks detail on unique features or technology."
+      },
+      {
+        "category": "Market size",
+        "score": 40,
+        "feedback": "No concrete data or metrics on total addressable market size; only geographic targets mentioned."
+      },
+      {
+        "category": "Business model",
+        "score": 70,
+        "feedback": "Model as Healthcare SaaS is stated but lacks pricing strategy, sales cycle details, or unit economics beyond gross margin."
+      },
+      {
+        "category": "Traction",
+        "score": 65,
+        "feedback": "Initial traction shown (GBP 8k MRR, 11 clinics), but growth rates, churn, customer feedback, or pipeline info are absent."
+      },
+      {
+        "category": "Team",
+        "score": 60,
+        "feedback": "Founding team experience is outlined briefly with plans to hire, but no individual backgrounds or evidence of capability."
+      },
+      {
+        "category": "Financial ask",
+        "score": 80,
+        "feedback": "Raise amount and use of funds are provided along with basic financials; runway and burn rate are explicit but could include more projections."
+      },
+      {
+        "category": "Narrative",
+        "score": 55,
+        "feedback": "Narrative is factual but lacks engaging storytelling, differentiation, and customer or market validation."
+      }
+    ],
+    "financialSignals": {
+      "monthlyRevenue": 8000,
+      "monthlyBurn": 52000,
+      "cashBalance": 210000,
+      "runwayMonths": 4,
+      "raiseAmount": 900000,
+      "customerCount": 11,
+      "teamSize": null,
+      "grossMarginPercent": 78,
+      "revenueGrowthPercentMonthly": null,
+      "notes": "Runway estimated as cash divided by monthly burn (~4 months). Team size not disclosed. No monthly revenue growth stated."
+    },
+    "strengths": [
+      "Clear problem articulation focused on private clinics' inefficiencies",
+      "Solution directly addresses key clinic workflow pain points",
+      "Provides specific financials including MRR, burn, cash, and gross margin",
+      "Explicit raise amount and use of funds outlined",
+      "Defined geographic go-to-market strategy"
+    ],
+    "weaknesses": [
+      "Market size not quantified or detailed",
+      "Limited team information and lack of individual expertise",
+      "Traction metrics sparse without growth or retention data",
+      "Narrative is dry, lacks customer stories or validations",
+      "No detailed business model mechanics such as pricing or sales funnel"
+    ],
+    "missingSections": [
+      "Detailed market size analysis",
+      "Individual team member backgrounds",
+      "Customer testimonials or case studies",
+      "Detailed financial projections and unit economics",
+      "Competitive landscape and differentiation"
+    ],
+    "investorReadiness": "The deck is moderately prepared but lacks critical details around market sizing, team depth, traction metrics, and compelling narrative to strongly attract investors.",
+    "suggestedFixes": [
+      {
+        "title": "Add detailed market size and opportunity metrics",
+        "explanation": "Include TAM, SAM, and SOM metrics with data sources to demonstrate the business opportunity's scale and attractiveness.",
+        "priority": "high"
+      },
+      {
+        "title": "Expand team profiles",
+        "explanation": "Highlight founders' relevant experience and showcase key hires or advisors to instill confidence in execution capability.",
+        "priority": "high"
+      },
+      {
+        "title": "Include customer testimonials or early case studies",
+        "explanation": "Provide evidence of customer satisfaction and use cases to support traction claims and solution effectiveness.",
+        "priority": "medium"
+      },
+      {
+        "title": "Provide detailed financial projections with unit economics",
+        "explanation": "Add revenue growth rates, churn, CAC, LTV, and other KPIs to allow investors to assess financial potential properly.",
+        "priority": "high"
+      },
+      {
+        "title": "Develop a compelling narrative with differentiation",
+        "explanation": "Craft storytelling around why ClinIQ is uniquely positioned, its impact, and roadmap to create investor excitement.",
+        "priority": "medium"
+      }
+    ],
+    "priorityActions": [
+      {
+        "action": "Add comprehensive market size analysis",
+        "reason": "Investors require confidence in the market opportunity size to justify investment risk.",
+        "priority": "high"
+      },
+      {
+        "action": "Detail team experience and hiring plans",
+        "reason": "Strong teams reduce execution risk and improve investor confidence.",
+        "priority": "high"
+      },
+      {
+        "action": "Enhance traction presentation with growth metrics and customer feedback",
+        "reason": "Demonstrating growth and customer validation supports business momentum.",
+        "priority": "medium"
+      }
+    ],
+    "fundraisingRisks": [
+      "Inadequate market size data may cause investor skepticism about opportunity scale.",
+      "Limited team detail could signal weak execution potential.",
+      "Low traction detail and absence of growth metrics reduce confidence in product-market fit.",
+      "No competitive landscape or differentiation presented, risking market misunderstanding."
+    ],
+    "overallScore": 65,
+    "raw": {
+      "id": "resp_0b4ba2d5882dfa50006a24913f9fa4819dbf12840e1d5b1058",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "usage": {
+        "input_tokens": 870,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 937,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1807
+      }
+    }
+  },
+  "weightedCategories": [
+    {
+      "category": "Problem clarity",
+      "score": 85,
+      "feedback": "Problem is clearly defined with focus on fragmented, manual workflows causing inefficiencies in private clinics.",
+      "weight": 10,
+      "dimensionKey": "problem"
+    },
+    {
+      "category": "Solution strength",
+      "score": 75,
+      "feedback": "Solution aligns well with problem; software targets key clinic pain points but lacks detail on unique features or technology.",
+      "weight": 10,
+      "dimensionKey": "solution"
+    },
+    {
+      "category": "Market size",
+      "score": 40,
+      "feedback": "No concrete data or metrics on total addressable market size; only geographic targets mentioned.",
+      "weight": 15,
+      "dimensionKey": "market"
+    },
+    {
+      "category": "Business model",
+      "score": 70,
+      "feedback": "Model as Healthcare SaaS is stated but lacks pricing strategy, sales cycle details, or unit economics beyond gross margin.",
+      "weight": 10,
+      "dimensionKey": "business_model"
+    },
+    {
+      "category": "Traction",
+      "score": 65,
+      "feedback": "Initial traction shown (GBP 8k MRR, 11 clinics), but growth rates, churn, customer feedback, or pipeline info are absent.",
+      "weight": 20,
+      "dimensionKey": "traction"
+    },
+    {
+      "category": "Team",
+      "score": 60,
+      "feedback": "Founding team experience is outlined briefly with plans to hire, but no individual backgrounds or evidence of capability.",
+      "weight": 20,
+      "dimensionKey": "team"
+    },
+    {
+      "category": "Financial ask",
+      "score": 80,
+      "feedback": "Raise amount and use of funds are provided along with basic financials; runway and burn rate are explicit but could include more projections.",
+      "weight": 10,
+      "dimensionKey": "financials"
+    },
+    {
+      "category": "Narrative",
+      "score": 55,
+      "feedback": "Narrative is factual but lacks engaging storytelling, differentiation, and customer or market validation.",
+      "weight": 5,
+      "dimensionKey": "narrative"
+    }
+  ],
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\deck-analysis\\cliniq.json"
+}

@@ -1,0 +1,1080 @@
+{
+  "company": {
+    "id": "looply",
+    "name": "Looply",
+    "sector": "Consumer / Social / Events",
+    "expectedTerms": [
+      "consumer",
+      "social",
+      "events",
+      "community",
+      "gen z",
+      "marketplace"
+    ],
+    "badTerms": [
+      "enterprise saas",
+      "healthtech",
+      "biotech",
+      "lending infrastructure"
+    ],
+    "stage": "pre-seed",
+    "geography": "UK / Europe / Worldwide",
+    "raiseAmount": 500000,
+    "traction": "Pre-revenue, 12,000 waitlist users, 4,500 beta users",
+    "profile": {
+      "company_name": "Looply",
+      "sector": "Consumer / Social / Events",
+      "industry": "Consumer social",
+      "stage": "pre-seed",
+      "funding_stage": "pre-seed",
+      "geography": "United Kingdom / Europe / Worldwide",
+      "location": "United Kingdom",
+      "target_raise": 500000,
+      "full_name": "QA Founder",
+      "plan": "pro",
+      "description": "Gen Z event discovery and friend plans app."
+    },
+    "financialInput": {
+      "companyName": "Looply",
+      "businessModel": "Consumer social app with event affiliate and premium monetisation",
+      "industry": "Consumer social / events",
+      "currentMonthlyRevenue": 0,
+      "currentMonthlyBurn": 35000,
+      "currentCashBalance": 120000,
+      "currentRunway": 3.4,
+      "raiseAmount": 500000,
+      "monthlyRevenueGrowth": 0,
+      "monthlyCostGrowth": 5,
+      "grossMargin": 75,
+      "churn": 12,
+      "currentCustomers": 4500,
+      "targetCustomers": 70000,
+      "averageRevenuePerCustomer": 0,
+      "teamSize": 5,
+      "plannedHires": 6,
+      "fundingGoal": "Convert waitlist and beta traction into a monetised city-by-city launch.",
+      "targetMarket": "Gen Z users in UK and European university cities.",
+      "notes": "Pre-revenue. 12,000 waitlist users and 4,500 beta users."
+    },
+    "deckText": "Looply Pitch Deck\n\nSector: Consumer / Social / Events\n\nStage: pre-seed\n\nGeography: UK / Europe / Worldwide\n\nRaise amount: GBP 500,000\n\nTraction: Pre-revenue, 12,000 waitlist users, 4,500 beta users\n\nProblem: Target customers waste time and money because existing workflows are fragmented, manual, and hard to measure.\n\nSolution: Gen Z event discovery and friend plans app.\n\nBusiness model: Consumer social app with event affiliate and premium monetisation.\n\nTeam: Founder-led team with product, commercial, and domain experience; hiring plans focus on engineering, sales, and customer success.\n\nGo-to-market: Start in the UK, expand into Europe, and selectively target worldwide investors and customers where the thesis matches.\n\nFinancial assumptions: current monthly revenue 0, burn 35000, cash 120000, gross margin 75%.\n\nInvestor ask: Raising GBP 500,000 to fund the next 18 months, prove repeatable acquisition, and reach the milestones in the financial model.\n\nUse of funds: product development, customer acquisition, compliance or data where relevant, and core hires."
+  },
+  "validations": {
+    "pass": true,
+    "projectionMonths": 36,
+    "chartLengthsOk": true,
+    "finalRevenue": 0,
+    "maxRevenue": 0,
+    "hasNarrative": true,
+    "hasInvestorSummary": true,
+    "assumptionCount": 8,
+    "riskCount": 6,
+    "expectedTermsFound": [
+      "consumer",
+      "social",
+      "events",
+      "community",
+      "gen z"
+    ],
+    "runwayApproxIssues": 0,
+    "businessModelAdapted": true,
+    "consumerMrrOverfit": false,
+    "fintechInventedRevenue": false
+  },
+  "result": {
+    "input": {
+      "companyName": "Looply",
+      "businessModel": "Consumer social app with event affiliate and premium monetisation",
+      "industry": "Consumer social / events",
+      "currentMonthlyRevenue": 0,
+      "currentMonthlyBurn": 35000,
+      "currentCashBalance": 120000,
+      "currentRunway": 3.4,
+      "raiseAmount": 500000,
+      "monthlyRevenueGrowth": 0,
+      "monthlyCostGrowth": 5,
+      "grossMargin": 75,
+      "churn": 12,
+      "currentCustomers": 4500,
+      "targetCustomers": 70000,
+      "averageRevenuePerCustomer": 0,
+      "teamSize": 5,
+      "plannedHires": 6,
+      "fundingGoal": "Convert waitlist and beta traction into a monetised city-by-city launch.",
+      "targetMarket": "Gen Z users in UK and European university cities.",
+      "notes": "Pre-revenue. 12,000 waitlist users and 4,500 beta users."
+    },
+    "parsed": {
+      "projection": [
+        {
+          "month": 1,
+          "label": "Month 1",
+          "revenue": 0,
+          "burn": 35000,
+          "cashBalance": 85000,
+          "runwayMonths": 2.4,
+          "customers": 4500
+        },
+        {
+          "month": 2,
+          "label": "Month 2",
+          "revenue": 0,
+          "burn": 36750,
+          "cashBalance": 48250,
+          "runwayMonths": 1.3,
+          "customers": 4500
+        },
+        {
+          "month": 3,
+          "label": "Month 3",
+          "revenue": 0,
+          "burn": 38587.5,
+          "cashBalance": 9662.5,
+          "runwayMonths": 0.3,
+          "customers": 4500
+        },
+        {
+          "month": 4,
+          "label": "Raise closes",
+          "revenue": 0,
+          "burn": 40517.88,
+          "cashBalance": 509144.63,
+          "runwayMonths": 12.6,
+          "customers": 4500
+        },
+        {
+          "month": 5,
+          "label": "Month 5",
+          "revenue": 0,
+          "burn": 42543.77,
+          "cashBalance": 466600.86,
+          "runwayMonths": 11,
+          "customers": 4500
+        },
+        {
+          "month": 6,
+          "label": "Month 6",
+          "revenue": 0,
+          "burn": 44670.96,
+          "cashBalance": 421929.9,
+          "runwayMonths": 9.5,
+          "customers": 4500
+        },
+        {
+          "month": 7,
+          "label": "Month 7",
+          "revenue": 0,
+          "burn": 46804.51,
+          "cashBalance": 375125.4,
+          "runwayMonths": 8,
+          "customers": 4500
+        },
+        {
+          "month": 8,
+          "label": "Month 8",
+          "revenue": 0,
+          "burn": 49044.74,
+          "cashBalance": 326080.66,
+          "runwayMonths": 6.7,
+          "customers": 4500
+        },
+        {
+          "month": 9,
+          "label": "Month 9",
+          "revenue": 0,
+          "burn": 51397.97,
+          "cashBalance": 274682.69,
+          "runwayMonths": 5.3,
+          "customers": 4500
+        },
+        {
+          "month": 10,
+          "label": "Month 10",
+          "revenue": 0,
+          "burn": 53867.87,
+          "cashBalance": 220814.82,
+          "runwayMonths": 4.1,
+          "customers": 4500
+        },
+        {
+          "month": 11,
+          "label": "Month 11",
+          "revenue": 0,
+          "burn": 56461.27,
+          "cashBalance": 164353.55,
+          "runwayMonths": 2.9,
+          "customers": 4500
+        },
+        {
+          "month": 12,
+          "label": "Month 12",
+          "revenue": 0,
+          "burn": 59184.33,
+          "cashBalance": 105169.22,
+          "runwayMonths": 1.8,
+          "customers": 4500
+        },
+        {
+          "month": 13,
+          "label": "Month 13",
+          "revenue": 0,
+          "burn": 62044.54,
+          "cashBalance": 43124.69,
+          "runwayMonths": 0.7,
+          "customers": 4500
+        },
+        {
+          "month": 14,
+          "label": "Month 14",
+          "revenue": 0,
+          "burn": 65049.77,
+          "cashBalance": -21925.07,
+          "runwayMonths": 0,
+          "customers": 4500
+        },
+        {
+          "month": 15,
+          "label": "Month 15",
+          "revenue": 0,
+          "burn": 68208.26,
+          "cashBalance": -90133.33,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 16,
+          "label": "Month 16",
+          "revenue": 0,
+          "burn": 71528.68,
+          "cashBalance": -161662.01,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 17,
+          "label": "Month 17",
+          "revenue": 0,
+          "burn": 75020.11,
+          "cashBalance": -236682.13,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 18,
+          "label": "Month 18",
+          "revenue": 0,
+          "burn": 78692.11,
+          "cashBalance": -315374.25,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 19,
+          "label": "Month 19",
+          "revenue": 0,
+          "burn": 82554.72,
+          "cashBalance": -397928.97,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 20,
+          "label": "Month 20",
+          "revenue": 0,
+          "burn": 86618.46,
+          "cashBalance": -484547.43,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 21,
+          "label": "Month 21",
+          "revenue": 0,
+          "burn": 90894.39,
+          "cashBalance": -575441.82,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 22,
+          "label": "Month 22",
+          "revenue": 0,
+          "burn": 95394.11,
+          "cashBalance": -670835.93,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 23,
+          "label": "Month 23",
+          "revenue": 0,
+          "burn": 100129.81,
+          "cashBalance": -770965.74,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 24,
+          "label": "Month 24",
+          "revenue": 0,
+          "burn": 105114.3,
+          "cashBalance": -876080.04,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 25,
+          "label": "Month 25",
+          "revenue": 0,
+          "burn": 110361.02,
+          "cashBalance": -986441.05,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 26,
+          "label": "Month 26",
+          "revenue": 0,
+          "burn": 115884.07,
+          "cashBalance": -1102325.12,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 27,
+          "label": "Month 27",
+          "revenue": 0,
+          "burn": 121698.27,
+          "cashBalance": -1224023.39,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 28,
+          "label": "Month 28",
+          "revenue": 0,
+          "burn": 127819.19,
+          "cashBalance": -1351842.59,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 29,
+          "label": "Month 29",
+          "revenue": 0,
+          "burn": 134263.15,
+          "cashBalance": -1486105.74,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 30,
+          "label": "Month 30",
+          "revenue": 0,
+          "burn": 141047.31,
+          "cashBalance": -1627153.05,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 31,
+          "label": "Month 31",
+          "revenue": 0,
+          "burn": 148189.67,
+          "cashBalance": -1775342.72,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 32,
+          "label": "Month 32",
+          "revenue": 0,
+          "burn": 155709.15,
+          "cashBalance": -1931051.87,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 33,
+          "label": "Month 33",
+          "revenue": 0,
+          "burn": 163625.61,
+          "cashBalance": -2094677.48,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 34,
+          "label": "Month 34",
+          "revenue": 0,
+          "burn": 171959.89,
+          "cashBalance": -2266637.37,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 35,
+          "label": "Month 35",
+          "revenue": 0,
+          "burn": 180733.89,
+          "cashBalance": -2447371.26,
+          "runwayMonths": 0,
+          "customers": null
+        },
+        {
+          "month": 36,
+          "label": "Month 36",
+          "revenue": 0,
+          "burn": 189970.58,
+          "cashBalance": -2637341.84,
+          "runwayMonths": 0,
+          "customers": null
+        }
+      ],
+      "breakEvenMonth": null,
+      "narrative": "Looply is a pre-revenue, high-engagement consumer social app targeting Gen Z event-goers. With a rapid cost ramp driven by team expansion and product development, Looply is seeking £500,000 in funding to enable a city-by-city launch and monetisation. The team is leveraging early traction of 4,500 active beta users and 12,000 waitlist signups. The model assumes zero revenue through month 36 due to untested monetisation, resulting in negative cash flow after the first year. Revenue generation, either from affiliate event conversion or premium features, is a critical milestone for sustainability. Cash out is projected after approximately 13 months unless revenue is realised or expenses curtailed. The company provides significant upside if monetisation can be proven given existing user demand.",
+      "investorSummary": "Looply offers a potentially viral product in a large, underserved market, boasting notable pre-launch user traction. However, the current plan carries high burn, no revenue, and limited runway post-raise without a monetisation engine. Early validation of revenue streams is crucial. Investment risk is high but could generate meaningful returns upon validated city-by-city expansion and ARPU demonstration.",
+      "risks": [
+        "No current revenue or proven monetisation.",
+        "Rapid cost growth reduces runway despite the raise.",
+        "Operating cash out by month 14 post-raise without clear revenue inflection.",
+        "Dependence on converting waitlist and beta users to paying customers.",
+        "Market adoption, user retention, and monetisation rates are unproven.",
+        "Competitive landscape in social/events apps is crowded."
+      ],
+      "assumptions": [
+        "No revenue is booked for the projection period due to lack of historic traction and unproven ARPU.",
+        "Burn increases 5% per month due to operational and team scale-up.",
+        "All funding received and available in month 4.",
+        "No cost reductions or pivots are made even as cash balances approach zero.",
+        "Planned hires commence immediately after raise, reflected in burn trajectory.",
+        "Monthly customer count is held flat as beta engagement only; no monetised customers modeled due to missing conversion rates.",
+        "Gross margin percent is not computationally relevant until revenue generation.",
+        "When cash drops below zero, runway is shown as zero as a true reflection of solvency."
+      ],
+      "useOfFunds": [
+        {
+          "category": "Team expansion + talent (engineering, product, community)",
+          "amount": 300000,
+          "rationale": "Critical hires to accelerate product and market rollout."
+        },
+        {
+          "category": "Go-to-market (events, university partnerships, marketing)",
+          "amount": 120000,
+          "rationale": "Operations and marketing to drive active engaged users in core cities."
+        },
+        {
+          "category": "Product development (app, analytics, infra)",
+          "amount": 60000,
+          "rationale": "Platform improvements and scaling."
+        },
+        {
+          "category": "Legal, admin, runway buffer",
+          "amount": 20000,
+          "rationale": "Essential operations and compliance as company scales."
+        }
+      ],
+      "chartsData": {
+        "revenue": [
+          {
+            "label": "Month 1",
+            "value": 0
+          },
+          {
+            "label": "Month 2",
+            "value": 0
+          },
+          {
+            "label": "Month 3",
+            "value": 0
+          },
+          {
+            "label": "Raise closes",
+            "value": 0
+          },
+          {
+            "label": "Month 5",
+            "value": 0
+          },
+          {
+            "label": "Month 6",
+            "value": 0
+          },
+          {
+            "label": "Month 7",
+            "value": 0
+          },
+          {
+            "label": "Month 8",
+            "value": 0
+          },
+          {
+            "label": "Month 9",
+            "value": 0
+          },
+          {
+            "label": "Month 10",
+            "value": 0
+          },
+          {
+            "label": "Month 11",
+            "value": 0
+          },
+          {
+            "label": "Month 12",
+            "value": 0
+          },
+          {
+            "label": "Month 13",
+            "value": 0
+          },
+          {
+            "label": "Month 14",
+            "value": 0
+          },
+          {
+            "label": "Month 15",
+            "value": 0
+          },
+          {
+            "label": "Month 16",
+            "value": 0
+          },
+          {
+            "label": "Month 17",
+            "value": 0
+          },
+          {
+            "label": "Month 18",
+            "value": 0
+          },
+          {
+            "label": "Month 19",
+            "value": 0
+          },
+          {
+            "label": "Month 20",
+            "value": 0
+          },
+          {
+            "label": "Month 21",
+            "value": 0
+          },
+          {
+            "label": "Month 22",
+            "value": 0
+          },
+          {
+            "label": "Month 23",
+            "value": 0
+          },
+          {
+            "label": "Month 24",
+            "value": 0
+          },
+          {
+            "label": "Month 25",
+            "value": 0
+          },
+          {
+            "label": "Month 26",
+            "value": 0
+          },
+          {
+            "label": "Month 27",
+            "value": 0
+          },
+          {
+            "label": "Month 28",
+            "value": 0
+          },
+          {
+            "label": "Month 29",
+            "value": 0
+          },
+          {
+            "label": "Month 30",
+            "value": 0
+          },
+          {
+            "label": "Month 31",
+            "value": 0
+          },
+          {
+            "label": "Month 32",
+            "value": 0
+          },
+          {
+            "label": "Month 33",
+            "value": 0
+          },
+          {
+            "label": "Month 34",
+            "value": 0
+          },
+          {
+            "label": "Month 35",
+            "value": 0
+          },
+          {
+            "label": "Month 36",
+            "value": 0
+          }
+        ],
+        "burn": [
+          {
+            "label": "Month 1",
+            "value": 35000
+          },
+          {
+            "label": "Month 2",
+            "value": 36750
+          },
+          {
+            "label": "Month 3",
+            "value": 38588
+          },
+          {
+            "label": "Raise closes",
+            "value": 40518
+          },
+          {
+            "label": "Month 5",
+            "value": 42544
+          },
+          {
+            "label": "Month 6",
+            "value": 44671
+          },
+          {
+            "label": "Month 7",
+            "value": 46805
+          },
+          {
+            "label": "Month 8",
+            "value": 49045
+          },
+          {
+            "label": "Month 9",
+            "value": 51398
+          },
+          {
+            "label": "Month 10",
+            "value": 53868
+          },
+          {
+            "label": "Month 11",
+            "value": 56461
+          },
+          {
+            "label": "Month 12",
+            "value": 59184
+          },
+          {
+            "label": "Month 13",
+            "value": 62045
+          },
+          {
+            "label": "Month 14",
+            "value": 65050
+          },
+          {
+            "label": "Month 15",
+            "value": 68208
+          },
+          {
+            "label": "Month 16",
+            "value": 71529
+          },
+          {
+            "label": "Month 17",
+            "value": 75020
+          },
+          {
+            "label": "Month 18",
+            "value": 78692
+          },
+          {
+            "label": "Month 19",
+            "value": 82555
+          },
+          {
+            "label": "Month 20",
+            "value": 86618
+          },
+          {
+            "label": "Month 21",
+            "value": 90894
+          },
+          {
+            "label": "Month 22",
+            "value": 95394
+          },
+          {
+            "label": "Month 23",
+            "value": 100130
+          },
+          {
+            "label": "Month 24",
+            "value": 105114
+          },
+          {
+            "label": "Month 25",
+            "value": 110361
+          },
+          {
+            "label": "Month 26",
+            "value": 115884
+          },
+          {
+            "label": "Month 27",
+            "value": 121698
+          },
+          {
+            "label": "Month 28",
+            "value": 127819
+          },
+          {
+            "label": "Month 29",
+            "value": 134263
+          },
+          {
+            "label": "Month 30",
+            "value": 141047
+          },
+          {
+            "label": "Month 31",
+            "value": 148190
+          },
+          {
+            "label": "Month 32",
+            "value": 155709
+          },
+          {
+            "label": "Month 33",
+            "value": 163626
+          },
+          {
+            "label": "Month 34",
+            "value": 171960
+          },
+          {
+            "label": "Month 35",
+            "value": 180734
+          },
+          {
+            "label": "Month 36",
+            "value": 189971
+          }
+        ],
+        "cashBalance": [
+          {
+            "label": "Month 1",
+            "value": 85000
+          },
+          {
+            "label": "Month 2",
+            "value": 48250
+          },
+          {
+            "label": "Month 3",
+            "value": 9663
+          },
+          {
+            "label": "Raise closes",
+            "value": 509145
+          },
+          {
+            "label": "Month 5",
+            "value": 466601
+          },
+          {
+            "label": "Month 6",
+            "value": 421930
+          },
+          {
+            "label": "Month 7",
+            "value": 375125
+          },
+          {
+            "label": "Month 8",
+            "value": 326081
+          },
+          {
+            "label": "Month 9",
+            "value": 274683
+          },
+          {
+            "label": "Month 10",
+            "value": 220815
+          },
+          {
+            "label": "Month 11",
+            "value": 164354
+          },
+          {
+            "label": "Month 12",
+            "value": 105169
+          },
+          {
+            "label": "Month 13",
+            "value": 43125
+          },
+          {
+            "label": "Month 14",
+            "value": -21925
+          },
+          {
+            "label": "Month 15",
+            "value": -90133
+          },
+          {
+            "label": "Month 16",
+            "value": -161662
+          },
+          {
+            "label": "Month 17",
+            "value": -236682
+          },
+          {
+            "label": "Month 18",
+            "value": -315374
+          },
+          {
+            "label": "Month 19",
+            "value": -397929
+          },
+          {
+            "label": "Month 20",
+            "value": -484547
+          },
+          {
+            "label": "Month 21",
+            "value": -575442
+          },
+          {
+            "label": "Month 22",
+            "value": -670836
+          },
+          {
+            "label": "Month 23",
+            "value": -770966
+          },
+          {
+            "label": "Month 24",
+            "value": -876080
+          },
+          {
+            "label": "Month 25",
+            "value": -986441
+          },
+          {
+            "label": "Month 26",
+            "value": -1102325
+          },
+          {
+            "label": "Month 27",
+            "value": -1224023
+          },
+          {
+            "label": "Month 28",
+            "value": -1351843
+          },
+          {
+            "label": "Month 29",
+            "value": -1486106
+          },
+          {
+            "label": "Month 30",
+            "value": -1627153
+          },
+          {
+            "label": "Month 31",
+            "value": -1775343
+          },
+          {
+            "label": "Month 32",
+            "value": -1931052
+          },
+          {
+            "label": "Month 33",
+            "value": -2094677
+          },
+          {
+            "label": "Month 34",
+            "value": -2266637
+          },
+          {
+            "label": "Month 35",
+            "value": -2447371
+          },
+          {
+            "label": "Month 36",
+            "value": -2637342
+          }
+        ],
+        "runway": [
+          {
+            "label": "Month 1",
+            "value": 2.4
+          },
+          {
+            "label": "Month 2",
+            "value": 1.3
+          },
+          {
+            "label": "Month 3",
+            "value": 0.3
+          },
+          {
+            "label": "Raise closes",
+            "value": 12.6
+          },
+          {
+            "label": "Month 5",
+            "value": 11
+          },
+          {
+            "label": "Month 6",
+            "value": 9.5
+          },
+          {
+            "label": "Month 7",
+            "value": 8
+          },
+          {
+            "label": "Month 8",
+            "value": 6.7
+          },
+          {
+            "label": "Month 9",
+            "value": 5.3
+          },
+          {
+            "label": "Month 10",
+            "value": 4.1
+          },
+          {
+            "label": "Month 11",
+            "value": 2.9
+          },
+          {
+            "label": "Month 12",
+            "value": 1.8
+          },
+          {
+            "label": "Month 13",
+            "value": 0.7
+          },
+          {
+            "label": "Month 14",
+            "value": 0
+          },
+          {
+            "label": "Month 15",
+            "value": 0
+          },
+          {
+            "label": "Month 16",
+            "value": 0
+          },
+          {
+            "label": "Month 17",
+            "value": 0
+          },
+          {
+            "label": "Month 18",
+            "value": 0
+          },
+          {
+            "label": "Month 19",
+            "value": 0
+          },
+          {
+            "label": "Month 20",
+            "value": 0
+          },
+          {
+            "label": "Month 21",
+            "value": 0
+          },
+          {
+            "label": "Month 22",
+            "value": 0
+          },
+          {
+            "label": "Month 23",
+            "value": 0
+          },
+          {
+            "label": "Month 24",
+            "value": 0
+          },
+          {
+            "label": "Month 25",
+            "value": 0
+          },
+          {
+            "label": "Month 26",
+            "value": 0
+          },
+          {
+            "label": "Month 27",
+            "value": 0
+          },
+          {
+            "label": "Month 28",
+            "value": 0
+          },
+          {
+            "label": "Month 29",
+            "value": 0
+          },
+          {
+            "label": "Month 30",
+            "value": 0
+          },
+          {
+            "label": "Month 31",
+            "value": 0
+          },
+          {
+            "label": "Month 32",
+            "value": 0
+          },
+          {
+            "label": "Month 33",
+            "value": 0
+          },
+          {
+            "label": "Month 34",
+            "value": 0
+          },
+          {
+            "label": "Month 35",
+            "value": 0
+          },
+          {
+            "label": "Month 36",
+            "value": 0
+          }
+        ]
+      }
+    },
+    "raw": {
+      "id": "resp_08ac0856dd68cb1c006a24920eece481a0bbd26a297e034a78",
+      "model": "gpt-4.1-2025-04-14",
+      "usage": {
+        "input_tokens": 806,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2216,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 3022
+      }
+    }
+  },
+  "artifactPath": "C:\\Users\\tomas\\OneDrive\\Documents\\Work and Business\\Client Projects\\FrancescaV2\\app\\docs\\qa\\artifacts\\financial-models\\looply.json"
+}

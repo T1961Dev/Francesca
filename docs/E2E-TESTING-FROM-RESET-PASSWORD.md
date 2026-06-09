@@ -145,12 +145,12 @@ After onboarding complete, first dashboard load triggers welcome (once).
 | 6.6 | After Maybe later | **Upgrade prompt** email (once per analysis). | | |
 | 6.7 | History list | New row; internal scroll if many items. | | |
 
-### WhatsApp bonus (optional second Free account)
+### Free second upload prompt (optional second Free account)
 
 | # | Step | Expected | Pass | Notes |
 |---|------|----------|------|-------|
-| 6.8 | 2nd upload on Free | WhatsApp modal → enter phone → upload works. | | |
-| 6.9 | 3rd upload | Paywall only. | | |
+| 6.8 | 2nd upload on Free | Soft prompt: "You've used your free analysis. Upgrade to upload again." | | |
+| 6.9 | Click upgrade CTA | Upgrade flow opens; no second free upload starts. | | |
 
 ---
 
@@ -222,7 +222,7 @@ After onboarding complete, first dashboard load triggers welcome (once).
 |---|------|----------|------|-------|
 | 11.1 | Starter | Locked / pricing. | | |
 | 11.2 | Pro: start match from launcher | Job runs; progress updates. | | |
-| 11.3 | Job completes | ≤35 matches (Pro) or ≤50 (Lifetime). | | |
+| 11.3 | Job completes | 25 matches on Pro or Lifetime when enough qualified leads exist. | | |
 | 11.4 | Outreach editor | 3 steps (day 0 / 5 / 12); save + regenerate. | | |
 | 11.5 | Export CSV + PDF | Download. | | |
 | 11.6 | Cancel / retry failed job | Works as expected. | | |
@@ -261,10 +261,10 @@ After onboarding complete, first dashboard load triggers welcome (once).
 
 | Plan | Deck | Financial model | Match runs/mo | Matches/run |
 |------|------|-----------------|---------------|-------------|
-| Free | 1 (+1 WhatsApp) | — | — | — |
+| Free | 1 ever | — | — | — |
 | Starter | 10/mo | 10/mo | — | — |
-| Pro | 25/mo | 25/mo | 10 | 35 |
-| Lifetime | 5/mo | 5/mo | **2** | 50 |
+| Pro | 25/mo | 25/mo | 10 | 25 |
+| Lifetime | 5/mo | 5/mo | **2** | 25 |
 
 ---
 

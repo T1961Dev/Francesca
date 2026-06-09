@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { z } from "zod"
 
 import { requireAuth } from "@/lib/auth"
+import { canViewInvestorOutreachTemplates, getUserPlan } from "@/lib/access"
 import { captureError } from "@/lib/sentry/capture"
 import { createClient } from "@/lib/supabase/server"
 
@@ -20,6 +21,14 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const user = await requireAuth()
+    const plan = await getUserPlan()
+    if (!canViewInvestorOutreachTemplates(plan)) {
+      return NextResponse.json(
+        { success: false, error: "Upgrade to Pro to manage outreach templates." },
+        { status: 403 }
+      )
+    }
+
     const { jobId, rank, sent } = schema.parse(await request.json())
 
     const supabase = await createClient()

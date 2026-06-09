@@ -1,5 +1,6 @@
 import type { JohnVCFirm } from "@/types/apify"
 import type { FounderProfile } from "@/types/profile"
+import { scoreFirmForProfile } from "@/lib/matching/investor-fit"
 
 type PrefilterFirm = JohnVCFirm & {
   recentDealCount?: number
@@ -16,33 +17,12 @@ export function prefilterFirms(firms: PrefilterFirm[], profile: FounderProfile, 
 }
 
 function scoreFirm(firm: PrefilterFirm, profile: FounderProfile) {
-  let score = 0
-
-  if (firm.Country === profile.company.geography) score += 30
-  else if (firm.Country === "United States") score += 10
-
-  score += Math.min((firm.recentDealCount ?? 0) * 15, 60)
-
-  const stageMap: Record<FounderProfile["company"]["stage"], string[]> = {
-    "pre-seed": ["Pre-Seed", "Seed"],
-    seed: ["Seed", "Series A"],
-    "series-a": ["Series A", "Series B"],
-  }
-  const wantedStages = stageMap[profile.company.stage]
-  if (firm.Investment_Stages.some((stage) => wantedStages.includes(stage))) score += 20
-
-  const sectorKeywords = [
-    profile.company.sector,
-    profile.company.subSector,
-    profile.company.businessModel,
-  ]
-    .join(" ")
-    .toLowerCase()
-    .split(/[\s/-]+/)
-    .filter((keyword) => keyword.length > 2)
-  const focusText = firm.Focus_Areas.join(" ").toLowerCase()
-
-  if (sectorKeywords.some((keyword) => focusText.includes(keyword))) score += 25
-
-  return score
+  return scoreFirmForProfile(
+    {
+      ...firm,
+      recentDealCount: firm.recentDealCount ?? 0,
+      recentDealCompanies: firm.recentDealCompanies ?? [],
+    },
+    profile
+  ).score
 }

@@ -42,7 +42,7 @@ export async function exchangeAuthCallback(
 ) {
   const origin = getAuthRedirectOrigin(request)
   const destination = resolvePostAuthPath(options.type, options.next)
-  let response = NextResponse.redirect(`${origin}${destination}`)
+  const response = NextResponse.redirect(`${origin}${destination}`)
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

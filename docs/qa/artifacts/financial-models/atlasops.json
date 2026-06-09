@@ -1,0 +1,17 @@
+{
+  "company": {
+    "id": "atlasops",
+    "name": "AtlasOps",
+    "sector": "B2B SaaS / AI / Workflow Automation",
+    "stage": "pre-seed",
+    "geography": "UK / Europe / Worldwide",
+    "raiseAmount": 750000,
+    "traction": "GBP 18k MRR, 22 customers, 9% month-on-month growth, GBP 9k ACV"
+  },
+  "validations": {
+    "pass": false,
+    "error": "Expected ',' or ']' after array element in JSON at position 53431 (line 21022 column 4)"
+  },
+  "error": "Expected ',' or ']' after array element in JSON at position 53431 (line 21022 column 4)",
+  "note": "Generated after the QA run to preserve the failed AtlasOps financial model artifact recorded in the report. The OpenAI structured output parse failed before a model artifact could be serialized."
+}

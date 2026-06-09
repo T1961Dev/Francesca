@@ -8,7 +8,7 @@ import {
   resolveLinkedInPostsActorId,
 } from "@/lib/apify/actors"
 import { verifyEmails, validEmailSet } from "@/lib/apify/emailVerifier"
-import { discoverVCPartners } from "@/lib/apify/leads-finder"
+import { discoverVCPartnersRegionally } from "@/lib/apify/leads-finder"
 import { enrichLinkedInProfiles, profileMapByUrl } from "@/lib/apify/linkedinProfile"
 import { fetchLinkedInPostsForProfiles } from "@/lib/apify/linkedinPosts"
 import { normaliseLinkedInUrl } from "@/lib/apify/linkedin"
@@ -16,12 +16,10 @@ import { getScrapeCache, setScrapeCache } from "@/lib/cache/investorScrapeCache"
 import { logApifyCost } from "@/lib/costs/track"
 import { backfillRankedMatches } from "@/lib/matching/backfill-v2"
 import { enrichedCandidatesToFirms } from "@/lib/matching/enriched-to-firms"
-import {
-  buildDiscoveryFilterFromProfile,
-  type DiscoveryFilterPayload,
-} from "@/lib/matching/filterFromProfile"
+import { buildDiscoveryFilterFromProfile } from "@/lib/matching/filterFromProfile"
 import { buildOutreachApifyContext } from "@/lib/matching/outreach-context"
 import { generateOutreachEmail } from "@/lib/matching/outreach"
+import { selectDiverseInvestorMatches } from "@/lib/matching/investor-fit"
 import { preFilterPeople } from "@/lib/matching/preFilterPeople"
 import { rankInvestorsWithGPT } from "@/lib/matching/rank"
 import { getInvestorPipelineV2Sizing } from "@/lib/matching/v2-sizing"
@@ -34,7 +32,7 @@ import { hashProfile } from "@/lib/utils/hash-profile"
 import { createAdminClient } from "@/lib/supabase/admin"
 import type { LeadsFinderContact, LinkedInPost } from "@/types/apify"
 import type { EnrichedInvestorCandidate } from "@/types/matching-v2"
-import type { FounderProfile, InvestorMatch } from "@/types/profile"
+import type { InvestorMatch } from "@/types/profile"
 import type { Plan } from "@/types/app"
 
 type SupabaseAdmin = ReturnType<typeof createAdminClient>
@@ -110,6 +108,8 @@ export async function startInvestorMatchingJobV2({
     let enrichedCandidates: EnrichedInvestorCandidate[]
     let scrapeCacheId: string | null = null
     let rawLeads: LeadsFinderContact[] = []
+    let leadsFinderActorInputs: Record<string, unknown>[] = []
+    let regionalDiscoveryQueries: unknown[] = filterPayload.discoveryQueries
 
     const scrapeHit = await getScrapeCache(filterHash)
     if (scrapeHit) {
@@ -118,10 +118,13 @@ export async function startInvestorMatchingJobV2({
       scrapeCacheId = scrapeHit.id
       rawLeads = scrapeHit.candidates.map((c) => c.lead)
     } else {
-      logJob(jobId, "Running Leads Finder", { fetchCount: sizing.leadsFinderFetchCount })
-      rawLeads = await discoverVCPartners(context.profile, {
+      logJob(jobId, "Running regional Leads Finder", { fetchCount: sizing.leadsFinderFetchCount })
+      const regionalDiscovery = await discoverVCPartnersRegionally(context.profile, {
         fetchCount: sizing.leadsFinderFetchCount,
       })
+      rawLeads = regionalDiscovery.leads
+      leadsFinderActorInputs = regionalDiscovery.actorInputs
+      regionalDiscoveryQueries = regionalDiscovery.queries
       await logApifyCost({
         userId,
         runId: jobId,
@@ -221,7 +224,7 @@ export async function startInvestorMatchingJobV2({
         shortlisted_count: firms.length,
         shortlisted_investors: firms,
         linkedin_signals: linkedinPosts,
-        investor_signals: { pipelineVersion: "v2", filterHash },
+      investor_signals: { pipelineVersion: "v2", filterHash },
       })
       .eq("id", jobId)
       .throwOnError()
@@ -252,15 +255,23 @@ export async function startInvestorMatchingJobV2({
       targetMatchCount,
       deckSummary,
       limitedData,
+      profile: context.profile,
+      candidatePoolSize: Math.min(firms.length, Math.max(targetMatchCount * 3, targetMatchCount + 15)),
+    })
+    const diversifiedRanked = selectDiverseInvestorMatches({
+      matches: ranked,
+      profile: context.profile,
+      targetMatchCount,
     })
 
     logJob(jobId, "Ranking done", {
       gpt: rankedFromGpt.length,
-      final: ranked.length,
+      backfilled: ranked.length,
+      final: diversifiedRanked.length,
       target: targetMatchCount,
     })
 
-    let rankedForOutreach = ranked
+    let rankedForOutreach = diversifiedRanked
     if (process.env.INVESTOR_PIPELINE_EMAIL_VERIFY?.trim().toLowerCase() !== "false") {
       const emails = ranked.map((m) => m.partner.email).filter((e): e is string => Boolean(e))
       if (emails.length) {
@@ -319,6 +330,7 @@ export async function startInvestorMatchingJobV2({
       ...filterPayload,
       fetch_count: sizing.leadsFinderFetchCount,
       pipelineVersion: "v2",
+      regionalDiscoveryQueries,
     }
 
     await supabase
@@ -331,7 +343,10 @@ export async function startInvestorMatchingJobV2({
         filter_hash: filterHash,
         scrape_cache_id: scrapeCacheId,
         limited_data: limitedData,
-        apify_actor_input: { discovery: leadsFinderInput },
+        apify_actor_input: {
+          discovery: leadsFinderInput,
+          leadsFinderActorInputs,
+        },
         apify_query: {
           pipeline: ["v2", "leads_finder", "pre_filter", "linkedin_profile", "linkedin_posts", "rank", "outreach", "email_verify"],
           limitedData,
@@ -345,6 +360,7 @@ export async function startInvestorMatchingJobV2({
           enrichedCandidates,
           linkedinPosts,
           filterPayload,
+          regionalDiscoveryQueries,
         },
         raw_openai_response: { matchCount: storedMatches.length, rankedFromGpt: rankedFromGpt.length },
       })

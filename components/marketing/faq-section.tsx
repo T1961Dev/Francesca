@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/accordion"
 
 const faqs = [
-  ["What file types are supported?", "PDF and PPTX pitch decks up to 20MB."],
+  ["What file types are supported?", "PDF and PPTX pitch decks up to 50MB."],
   [
     "How does investor matching work?",
     "The app uses your profile, deck analysis, Apify lead data, and OpenAI scoring to rank relevant investors.",

@@ -8,6 +8,10 @@ import {
   buildOutreachPromptPayload,
   type OutreachApifyContext,
 } from "@/lib/matching/outreach-context"
+import {
+  ensureValidOutreachSequence,
+  validateOutreachSequence,
+} from "@/lib/matching/outreach-validation"
 import type { FounderFinancialContext } from "@/lib/matching/founder-financial-context"
 import { OPENAI_MODELS } from "@/lib/openai/client"
 import { getOpenAIClient } from "@/lib/openai/client"
@@ -16,7 +20,9 @@ import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
 const OUTREACH_SEQUENCE_SYSTEM_PROMPT = `You write a 3-touch cold outreach sequence for early-stage founders.
 Return JSON with exactly 3 steps: intro (day 0), follow-up (day 5), final bump (day 12).
-Keep each body concise. No bullet lists. Never invent investor signals.`
+Every step must include the company name and either the investor first name or firm name.
+No placeholders, bracket tokens, Dear Investor, reused bodies, or invented investor signals.
+Keep each body concise. No bullet lists.`
 
 export async function generateOutreachSequence({
   profile,
@@ -43,56 +49,96 @@ export async function generateOutreachSequence({
     () => OUTREACH_SEQUENCE_SYSTEM_PROMPT
   )
   const openai = getOpenAIClient()
-  const response = await openai.responses.parse({
-    model,
-    input: [
-      { role: "system", content: systemPrompt },
-      {
-        role: "user",
-        content: JSON.stringify({
-          ...buildOutreachPromptPayload({
-            profile,
-            match,
-            apifyContext,
-            improvements,
-            currentDraft: currentSequence?.steps[0]
-              ? {
-                  subject: currentSequence.steps[0].subject,
-                  body: currentSequence.steps[0].body,
-                }
-              : undefined,
-            financialContext,
-          }),
-          currentSequence: currentSequence ?? null,
-        }),
-      },
-    ],
-    text: {
-      format: zodTextFormat(OutreachSequenceSchema, "investor_outreach_sequence"),
-    },
-  })
+  let validationErrors: string[] = []
+  let lastError: unknown
 
-  if (!response.output_parsed?.steps?.length) {
-    throw new Error("OpenAI returned empty investor outreach sequence")
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const response = await openai.responses.parse({
+        model,
+        input: [
+          { role: "system", content: systemPrompt },
+          {
+            role: "user",
+            content: JSON.stringify({
+              ...buildOutreachPromptPayload({
+                profile,
+                match,
+                apifyContext,
+                improvements: [improvements, validationErrors.length ? `Fix validation errors: ${validationErrors.join(", ")}` : ""]
+                  .filter(Boolean)
+                  .join("\n"),
+                currentDraft: currentSequence?.steps[0]
+                  ? {
+                      subject: currentSequence.steps[0].subject,
+                      body: currentSequence.steps[0].body,
+                    }
+                  : undefined,
+                financialContext,
+              }),
+              currentSequence: currentSequence ?? null,
+              validationRequirements: {
+                exactDays: [0, 5, 12],
+                requireCompanyName: profile.company.name,
+                requireInvestorOrFirmName: [match.partner.name, match.firm.name],
+                noPlaceholders: true,
+              },
+            }),
+          },
+        ],
+        text: {
+          format: zodTextFormat(OutreachSequenceSchema, "investor_outreach_sequence"),
+        },
+      })
+
+      if (!response.output_parsed?.steps?.length) {
+        throw new Error("OpenAI returned empty investor outreach sequence")
+      }
+
+      await logOpenAiCost({
+        userId: userId ?? null,
+        runId: runId ?? null,
+        runType: "investor_match",
+        model,
+        usage: response.usage,
+      }).catch(() => undefined)
+
+      const sequence = {
+        steps: response.output_parsed.steps.map((step) => ({
+          step: step.step,
+          label: step.label.trim(),
+          subject: cleanOutreach(step.subject).slice(0, 80),
+          body: cleanOutreach(step.body),
+          sendAfterDays: step.sendAfterDays,
+        })),
+      }
+      const validation = validateOutreachSequence(sequence, { profile, match })
+      if (validation.valid) return sequence
+
+      validationErrors = validation.reasons
+      console.warn("[outreach] generated sequence failed validation", {
+        attempt,
+        validationErrors,
+        company: profile.company.name,
+        firm: match.firm.name,
+      })
+    } catch (error) {
+      lastError = error
+      console.warn("[outreach] generation attempt failed", {
+        attempt,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
   }
 
-  await logOpenAiCost({
-    userId: userId ?? null,
-    runId: runId ?? null,
-    runType: "investor_match",
-    model,
-    usage: response.usage,
-  }).catch(() => undefined)
-
-  return {
-    steps: response.output_parsed.steps.map((step) => ({
-      step: step.step,
-      label: step.label.trim(),
-      subject: cleanOutreach(step.subject).slice(0, 80),
-      body: cleanOutreach(step.body),
-      sendAfterDays: step.sendAfterDays,
-    })),
+  if (lastError) {
+    console.warn("[outreach] using fallback sequence after generation failure", {
+      error: lastError instanceof Error ? lastError.message : String(lastError),
+    })
   }
+
+  const fallback = ensureValidOutreachSequence(null, { profile, match })
+  return fallback.sequence
 }
 
 /** Generates a 3-step sequence; intro step is also returned as a single email for legacy fields. */
@@ -166,7 +212,5 @@ function cleanOutreach(value: string) {
     .replace(/I hope this finds you well[,.]?\s*/gi, "")
     .replace(/I came across your profile[,.]?\s*/gi, "")
     .replace(/synergies/gi, "fit")
-    .replace(/\[(?:Name|Company|Firm)[^\]]*\]/gi, "")
-    .replace(/\{\{[^}]+\}\}/g, "")
     .trim()
 }
