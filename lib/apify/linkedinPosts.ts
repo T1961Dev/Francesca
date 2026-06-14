@@ -2,7 +2,10 @@ import "server-only"
 
 import { apify } from "@/lib/apify/client"
 import { resolveLinkedInPostsActorId } from "@/lib/apify/actors"
-import { normaliseLinkedInUrl } from "@/lib/apify/linkedin"
+import {
+  buildLinkedInPostsFetchPlan,
+  normaliseLinkedInPostRows,
+} from "@/lib/apify/linkedin-post-normalization"
 import type { LinkedInPost } from "@/types/apify"
 
 export async function fetchLinkedInPostsForProfiles(
@@ -10,39 +13,31 @@ export async function fetchLinkedInPostsForProfiles(
   options: { maxPosts?: number; postedLimit?: string } = {}
 ): Promise<LinkedInPost[]> {
   const actorId = resolveLinkedInPostsActorId()
-  const targetUrls = Array.from(
-    new Set(profileUrls.map(normaliseLinkedInUrl).filter((u): u is string => Boolean(u)))
-  )
-  if (!targetUrls.length) return []
-
-  const input = {
-    targetUrls,
-    maxPosts: options.maxPosts ?? 10,
-    postedLimit: options.postedLimit ?? "year",
-    maxReactions: 0,
-    postNestedReactions: false,
-    maxComments: 0,
-    postNestedComments: false,
-  }
+  const plan = buildLinkedInPostsFetchPlan(profileUrls, options)
+  if (!plan) return []
 
   console.log("[apify:linkedin-posts] Starting actor", {
     actorId,
-    targetUrlCount: targetUrls.length,
+    targetUrlCount: plan.targetUrls.length,
+    maxPosts: plan.maxPosts,
   })
-  const run = await apify.actor(actorId).call(input)
+  const run = await apify.actor(actorId).call(plan.input)
   const datasetId = String(run.defaultDatasetId ?? "")
   if (!datasetId) return []
 
-  const { items } = await apify.dataset(datasetId).listItems()
-  console.log("[apify:linkedin-posts] Dataset fetched", { itemCount: items.length })
-
-  return items.map((row) => {
-    const item = row as Record<string, unknown>
-    return {
-      profileUrl: String(item.profileUrl ?? ""),
-      postText: String(item.postText ?? item.text ?? ""),
-      postedAt: String(item.postedAt ?? item.date ?? ""),
-      postUrl: item.postUrl ? String(item.postUrl) : undefined,
-    } satisfies LinkedInPost
+  const { items } = await apify.dataset(datasetId).listItems({
+    clean: true,
+    limit: plan.datasetItemLimit,
   })
+  const posts = normaliseLinkedInPostRows(items, {
+    targetUrls: plan.targetUrls,
+    maxPostsPerProfile: plan.maxPosts,
+  })
+  console.log("[apify:linkedin-posts] Dataset fetched", {
+    itemCount: items.length,
+    postCount: posts.length,
+    itemLimit: plan.datasetItemLimit,
+  })
+
+  return posts
 }

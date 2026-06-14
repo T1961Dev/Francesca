@@ -14,6 +14,10 @@ import {
   ensureValidOutreachSequence,
   validateOutreachSequence,
 } from "@/lib/matching/outreach-validation"
+import {
+  buildLinkedInPostsFetchPlan,
+  normaliseLinkedInPostRows,
+} from "@/lib/apify/linkedin-post-normalization"
 import type { MergedFirm } from "@/lib/matching/merge"
 import type { FounderProfile, InvestorMatch } from "@/types/profile"
 
@@ -138,6 +142,104 @@ const tests: TestCase[] = [
       const specialistScore = scoreFirmForProfile(specialist, companies.gridwise)
       assert.ok(specialistScore.score - broadScore.score >= 20)
       assert.ok(broadScore.penalties.includes("generic_broad_fund_without_vertical_evidence"))
+    },
+  },
+  {
+    name: "LinkedIn posts actor skips maxPosts zero instead of sending unlimited input",
+    fn: () => {
+      const plan = buildLinkedInPostsFetchPlan(["https://www.linkedin.com/in/isheraz"], {
+        maxPosts: 0,
+      })
+      assert.equal(plan, null)
+    },
+  },
+  {
+    name: "LinkedIn posts actor input disables comments reactions and repost expansion",
+    fn: () => {
+      const plan = buildLinkedInPostsFetchPlan(["linkedin.com/in/muhammad-zubair-594a3037a"], {
+        maxPosts: 50,
+      })
+      assert.ok(plan)
+      assert.equal(plan.input.maxPosts, 10)
+      assert.equal(plan.input.scrapeReactions, false)
+      assert.equal(plan.input.maxReactions, 0)
+      assert.equal(plan.input.postNestedReactions, false)
+      assert.equal(plan.input.scrapeComments, false)
+      assert.equal(plan.input.maxComments, 0)
+      assert.equal(plan.input.postNestedComments, false)
+      assert.equal(plan.input.includeQuotePosts, false)
+      assert.equal(plan.input.includeReposts, false)
+      assert.ok(plan.datasetItemLimit <= 1000)
+    },
+  },
+  {
+    name: "LinkedIn post normaliser filters reaction and comment rows",
+    fn: () => {
+      const posts = normaliseLinkedInPostRows(
+        [
+          {
+            type: "reaction",
+            reactionType: "LIKE",
+            actor: { linkedinUrl: "https://www.linkedin.com/in/someone" },
+            query: {
+              post: "https://www.linkedin.com/posts/muhammad-zubair-594a3037a_example-activity-1",
+            },
+          },
+          {
+            type: "comment",
+            commentary: "Great post.",
+            actor: { linkedinUrl: "https://www.linkedin.com/in/someone-else" },
+            query: {
+              post: "https://www.linkedin.com/posts/muhammad-zubair-594a3037a_example-activity-1",
+            },
+          },
+          {
+            type: "post",
+            id: "7470073463710408704",
+            linkedinUrl: "https://www.linkedin.com/posts/muhammad-zubair-594a3037a_ai-code-activity-7470073463710408704-RJdp",
+            content: "Are you letting AI code for you without setting any boundaries?",
+            author: {
+              linkedinUrl: "https://www.linkedin.com/in/muhammad-zubair-594a3037a?miniProfileUrn=abc",
+            },
+            postedAt: { date: "2026-06-09T11:25:01.002Z" },
+            query: {
+              targetUrl: "https://www.linkedin.com/in/muhammad-zubair-594a3037a",
+            },
+          },
+        ],
+        {
+          targetUrls: ["https://www.linkedin.com/in/muhammad-zubair-594a3037a"],
+          maxPostsPerProfile: 10,
+        }
+      )
+
+      assert.equal(posts.length, 1)
+      assert.equal(posts[0]?.profileUrl, "https://www.linkedin.com/in/muhammad-zubair-594a3037a")
+      assert.match(posts[0]?.postText ?? "", /AI code/)
+    },
+  },
+  {
+    name: "LinkedIn post normaliser dedupes and caps posts per profile",
+    fn: () => {
+      const targetUrl = "https://www.linkedin.com/in/test-investor"
+      const posts = normaliseLinkedInPostRows(
+        [
+          linkedInPostRow(targetUrl, "1", "First investor activity signal worth keeping."),
+          linkedInPostRow(targetUrl, "1", "First investor activity signal worth keeping."),
+          linkedInPostRow(targetUrl, "2", "Second investor activity signal worth keeping."),
+          linkedInPostRow(targetUrl, "3", "Third investor activity signal should be capped."),
+        ],
+        { targetUrls: [targetUrl], maxPostsPerProfile: 2 }
+      )
+
+      assert.equal(posts.length, 2)
+      assert.deepEqual(
+        posts.map((post) => post.postText),
+        [
+          "First investor activity signal worth keeping.",
+          "Second investor activity signal worth keeping.",
+        ]
+      )
     },
   },
   {
@@ -551,4 +653,16 @@ function atlasMatch() {
     }),
     companies.atlasops
   )
+}
+
+function linkedInPostRow(profileUrl: string, id: string, content: string) {
+  return {
+    type: "post",
+    id,
+    linkedinUrl: `https://www.linkedin.com/posts/test-investor_activity-${id}`,
+    content,
+    author: { linkedinUrl: profileUrl },
+    postedAt: { date: "2026-06-09T11:25:01.002Z" },
+    query: { targetUrl: profileUrl },
+  }
 }

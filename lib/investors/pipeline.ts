@@ -299,12 +299,14 @@ export async function startInvestorMatchingJob({
         .throwOnError()
 
       linkedinPosts = await fetchLinkedInResults(String(linkedInRun.datasetId ?? ""))
-      await logApifyCost({
-        userId: String(job.user_id),
-        runId: jobId,
-        runType: "investor_match",
-        actorId: LINKEDIN_ACTOR,
-      })
+      if (linkedInRun.runId) {
+        await logApifyCost({
+          userId: String(job.user_id),
+          runId: jobId,
+          runType: "investor_match",
+          actorId: LINKEDIN_ACTOR,
+        })
+      }
       logJob(jobId, "LinkedIn dataset fetched", { itemCount: linkedinPosts.length })
       limitedData = linkedinPosts.length === 0
     } else {
@@ -475,6 +477,23 @@ export async function processCrunchbaseWebhook({
       })
       .eq("id", jobId)
       .throwOnError()
+
+    if (!run.datasetId) {
+      await completeInvestorMatching({
+        supabase,
+        job,
+        profile: context.profile,
+        plan: context.plan,
+        shortlist,
+        rawLeads: [],
+        groupedFirms,
+        crunchbaseResults,
+        linkedinPosts: [],
+        limitedData: true,
+        leadsFinderInput: asRecord(job.apify_actor_runs)?.leadsFinder as Record<string, unknown> ?? {},
+      })
+      return { jobId, completed: true, limitedData: true }
+    }
 
     return { jobId, completed: false, limitedData: failed }
   } catch (stageError) {
