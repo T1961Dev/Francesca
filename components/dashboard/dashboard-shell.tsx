@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import {
   AppSidebar,
@@ -27,11 +27,14 @@ type BootstrapProfile = {
 export function DashboardShell({
   children,
   initialUser,
+  isAdmin = false,
 }: {
   children: React.ReactNode
   initialUser: AppSidebarUser
+  isAdmin?: boolean
 }) {
   const router = useRouter()
+  const pathname = usePathname()
   const bootstrapStarted = React.useRef(false)
   const [user, setUser] = React.useState<AppSidebarUser>(initialUser)
   const [profile, setProfile] = React.useState<AppSidebarProfile>(null)
@@ -97,10 +100,14 @@ export function DashboardShell({
       email: user.email || null,
     } satisfies AppSidebarProfile)
 
+  const workspaceTitle = pathname.startsWith("/admin")
+    ? "Admin workspace"
+    : "Your fundraising workspace"
+
   return (
     <TooltipProvider>
       <SidebarProvider>
-        <AppSidebar user={user} profile={displayProfile} />
+        <AppSidebar user={user} profile={displayProfile} isAdmin={isAdmin} />
         <SidebarInset className="overflow-hidden">
           <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border/45 bg-card/90 backdrop-blur-md supports-[backdrop-filter]:bg-card/75">
             <div className="flex items-center gap-2 px-4">
@@ -110,7 +117,7 @@ export function DashboardShell({
                 className="mr-2 h-4 bg-border/60"
               />
               <p className="font-heading text-sm font-medium tracking-tight text-foreground">
-                Your fundraising workspace
+                {workspaceTitle}
               </p>
             </div>
           </header>

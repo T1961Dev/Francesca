@@ -3,8 +3,10 @@
 import * as React from "react"
 
 import { NavMain } from "@/components/nav-main"
+import { NavAdmin } from "@/components/nav-admin"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
+import { ADMIN_NAV_ITEMS } from "@/lib/admin/nav"
 import {
   Sidebar,
   SidebarContent,
@@ -14,12 +16,18 @@ import {
 } from "@/components/ui/sidebar"
 import { SidebarUpgradeCard } from "@/components/sidebar-upgrade-card"
 import {
+  AlertTriangleIcon,
   AudioLinesIcon,
   CreditCardIcon,
   FileTextIcon,
+  FilterIcon,
+  GemIcon,
   LineChartIcon,
+  ReceiptIcon,
   Settings2Icon,
   TargetIcon,
+  TrendingUpIcon,
+  UsersIcon,
 } from "lucide-react"
 
 const iconCls = "size-4 stroke-[1.5]"
@@ -40,10 +48,12 @@ export type AppSidebarProfile = {
 export function AppSidebar({
   user,
   profile,
+  isAdmin = false,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   user: AppSidebarUser
   profile: AppSidebarProfile
+  isAdmin?: boolean
 }) {
   const meta = user.userMetadata as
     | { full_name?: string; avatar_url?: string }
@@ -108,6 +118,20 @@ export function AppSidebar({
     avatar: meta?.avatar_url ?? null,
   }
 
+  const adminNavIcons: Record<string, React.ReactNode> = {
+    Users: <UsersIcon className={iconCls} />,
+    Lifetime: <GemIcon className={iconCls} />,
+    Revenue: <TrendingUpIcon className={iconCls} />,
+    Costs: <ReceiptIcon className={iconCls} />,
+    Funnel: <FilterIcon className={iconCls} />,
+    Failures: <AlertTriangleIcon className={iconCls} />,
+  }
+
+  const adminNav = ADMIN_NAV_ITEMS.map((item) => ({
+    ...item,
+    icon: adminNavIcons[item.title],
+  }))
+
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -115,6 +139,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
+        {isAdmin ? <NavAdmin items={adminNav} /> : null}
       </SidebarContent>
       <SidebarFooter className="gap-1">
         <SidebarUpgradeCard visible={planLabel === "free"} />

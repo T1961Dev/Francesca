@@ -1,6 +1,8 @@
 import Link from "next/link"
 
+import { ClickableTableRow } from "@/components/admin/clickable-table-row"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -21,7 +23,7 @@ export default async function AdminUsersPage({
 
   let query = supabase
     .from("profiles")
-    .select("id, email, plan, created_at, deleted_at, full_name", { count: "exact" })
+    .select("id, email, plan, created_at, deleted_at, full_name, company_name", { count: "exact" })
     .order("created_at", { ascending: false })
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
 
@@ -29,14 +31,26 @@ export default async function AdminUsersPage({
   if (plan) query = query.eq("plan", plan)
 
   const { data: users, count } = await query
+  const totalPages = count ? Math.ceil(count / PAGE_SIZE) : 1
+
+  function pageHref(nextPage: number) {
+    const sp = new URLSearchParams()
+    if (q) sp.set("q", q)
+    if (plan) sp.set("plan", plan)
+    sp.set("page", String(nextPage))
+    return `/admin/users?${sp.toString()}`
+  }
 
   return (
     <div className="space-y-4">
-      <h1 className="font-heading text-3xl font-medium tracking-tight">Users</h1>
+      <div>
+        <h1 className="font-heading text-3xl font-medium tracking-tight">Users</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Click any row to open user details</p>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>{count ?? 0} total</CardTitle>
-          <form className="mt-2 flex flex-wrap gap-2">
+          <form className="mt-2 flex flex-wrap items-center gap-2">
             <Input name="q" placeholder="Search email" defaultValue={q} className="max-w-sm" />
             <select
               name="plan"
@@ -49,6 +63,9 @@ export default async function AdminUsersPage({
               <option value="pro">Pro</option>
               <option value="lifetime">Lifetime</option>
             </select>
+            <Button type="submit" variant="secondary" size="sm">
+              Filter
+            </Button>
           </form>
         </CardHeader>
         <CardContent>
@@ -57,16 +74,19 @@ export default async function AdminUsersPage({
               <TableRow>
                 <TableHead>Email</TableHead>
                 <TableHead>Name</TableHead>
+                <TableHead>Company</TableHead>
                 <TableHead>Plan</TableHead>
                 <TableHead>Joined</TableHead>
-                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {(users ?? []).map((user) => (
-                <TableRow key={String(user.id)}>
-                  <TableCell>{String(user.email ?? "—")}</TableCell>
+                <ClickableTableRow key={String(user.id)} href={`/admin/users/${user.id}`}>
+                  <TableCell className="font-medium">{String(user.email ?? "—")}</TableCell>
                   <TableCell>{String(user.full_name ?? "—")}</TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {String(user.company_name ?? "—")}
+                  </TableCell>
                   <TableCell>
                     <Badge variant={user.plan === "free" ? "neutral" : "default"}>{String(user.plan)}</Badge>
                     {user.deleted_at ? (
@@ -75,25 +95,31 @@ export default async function AdminUsersPage({
                       </Badge>
                     ) : null}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-muted-foreground">
                     {new Date(String(user.created_at)).toLocaleDateString("en-GB")}
                   </TableCell>
-                  <TableCell>
-                    <Link
-                      href={`/admin/users/${user.id}`}
-                      className="text-sm underline underline-offset-4 hover:text-foreground"
-                    >
-                      Open
-                    </Link>
-                  </TableCell>
-                </TableRow>
+                </ClickableTableRow>
               ))}
             </TableBody>
           </Table>
           {count && count > PAGE_SIZE ? (
-            <p className="mt-3 text-xs text-muted-foreground">
-              Page {page} of {Math.ceil(count / PAGE_SIZE)}
-            </p>
+            <div className="mt-4 flex items-center justify-between text-sm">
+              <p className="text-muted-foreground">
+                Page {page} of {totalPages}
+              </p>
+              <div className="flex gap-2">
+                {page > 1 ? (
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={pageHref(page - 1)}>Previous</Link>
+                  </Button>
+                ) : null}
+                {page < totalPages ? (
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={pageHref(page + 1)}>Next</Link>
+                  </Button>
+                ) : null}
+              </div>
+            </div>
           ) : null}
         </CardContent>
       </Card>

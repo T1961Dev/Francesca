@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { FunnelVisual } from "@/components/admin/funnel-visual"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isOnboardingComplete } from "@/lib/onboarding"
 
@@ -32,47 +32,21 @@ export default async function AdminFunnelPage() {
   const upgraded = (profiles ?? []).filter((p) => p.plan !== "free").length
 
   const steps = [
-    { label: "Signed up", value: signupCount },
-    { label: "Completed onboarding", value: onboardedCount },
-    { label: "Uploaded deck", value: usersWithDeck },
-    { label: "Saw score", value: usersWithScore },
-    { label: "Saw paywall", value: dismissed },
-    { label: "Upgraded", value: upgraded },
+    { label: "Signed up", value: signupCount, description: "New accounts created" },
+    { label: "Completed onboarding", value: onboardedCount, description: "Profile and company details filled" },
+    { label: "Uploaded deck", value: usersWithDeck, description: "At least one deck analysis started" },
+    { label: "Saw score", value: usersWithScore, description: "Deck analysis completed" },
+    { label: "Saw paywall", value: dismissed, description: "Dismissed upgrade prompt" },
+    { label: "Upgraded", value: upgraded, description: "Starter, Pro, or Lifetime plan" },
   ]
-  const max = Math.max(...steps.map((s) => s.value), 1)
 
   return (
     <div className="space-y-4">
-      <h1 className="font-heading text-3xl font-medium tracking-tight">Funnel (last 30 days)</h1>
-      <Card>
-        <CardHeader>
-          <CardTitle>Conversion</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          {steps.map((step, index) => {
-            const pct = signupCount > 0 ? Math.round((step.value / signupCount) * 100) : 0
-            const width = Math.max(2, Math.round((step.value / max) * 100))
-            return (
-              <div key={step.label} className="space-y-1">
-                <div className="flex justify-between text-xs">
-                  <span>
-                    {index + 1}. {step.label}
-                  </span>
-                  <span className="text-muted-foreground">
-                    {step.value} · {pct}%
-                  </span>
-                </div>
-                <div className="h-3 overflow-hidden rounded-sm bg-secondary">
-                  <div
-                    className="h-full bg-primary transition-[width]"
-                    style={{ width: `${width}%` }}
-                  />
-                </div>
-              </div>
-            )
-          })}
-        </CardContent>
-      </Card>
+      <div>
+        <h1 className="font-heading text-3xl font-medium tracking-tight">Funnel</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Signup to upgrade journey · last 30 days</p>
+      </div>
+      <FunnelVisual steps={steps} signupCount={signupCount} />
     </div>
   )
 }
