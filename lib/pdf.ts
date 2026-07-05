@@ -2,6 +2,8 @@ import "server-only"
 
 import { createRequire } from "node:module"
 
+import { buildTeaserContent } from "@/lib/deck/teaser-content"
+
 const require = createRequire(import.meta.url)
 const PDFDocument = require("pdfkit/js/pdfkit.standalone.js")
 
@@ -103,6 +105,140 @@ export async function renderInvestorMatchesPdf(input: {
   })
 }
 
+export async function renderDeckTeaserPdf(input: {
+  companyName: string
+  sector?: string | null
+  stage?: string | null
+  geography?: string | null
+  targetRaise?: number | null
+  targetRaiseCurrency?: string | null
+  summary: string
+  investorReadiness: string
+  strengths: string[]
+  categoryScores: unknown[]
+}) {
+  const content = buildTeaserContent(input)
+
+  return new Promise<Buffer>((resolve, reject) => {
+    const doc = new PDFDocument({ size: "A4", margin: 0 })
+    const chunks: Buffer[] = []
+
+    doc.on("data", (chunk: Buffer) => chunks.push(chunk))
+    doc.on("end", () => resolve(Buffer.concat(chunks)))
+    doc.on("error", reject)
+
+    const pageWidth = doc.page.width
+    const pageHeight = doc.page.height
+    const margin = 48
+    const contentWidth = pageWidth - margin * 2
+    const columnGap = 20
+    const columnWidth = (contentWidth - columnGap) / 2
+    const cream = "#FFFDF7"
+    const pale = "#F7F4ED"
+    const green = "#1A3C2A"
+    const gold = "#C9A84C"
+    const muted = "#5C6F63"
+    const dark = "#12100B"
+    const border = "#D8E2DB"
+    const preparedDate = new Date().toLocaleDateString("en-GB")
+
+    doc.rect(0, 0, pageWidth, pageHeight).fill(cream)
+    doc.rect(0, 0, pageWidth, 118).fill(green)
+
+    doc.fillColor("#DCE8E1").fontSize(8).text("CONFIDENTIAL · INVESTOR OVERVIEW", margin, 28, {
+      characterSpacing: 1.2,
+    })
+    doc.fillColor("#FFFFFF").fontSize(28).text(content.companyName, margin, 46, {
+      width: contentWidth - 180,
+      lineGap: 1,
+    })
+    doc.fillColor("#E8F0EB").fontSize(11).text(content.metaLine || "Early-stage company", margin, 88, {
+      width: contentWidth - 180,
+    })
+
+    doc.roundedRect(pageWidth - margin - 156, 34, 156, 58, 10).fill("#FFFFFF")
+    doc.fillColor(muted).fontSize(8).text("RAISING", pageWidth - margin - 144, 46, {
+      characterSpacing: 0.8,
+    })
+    doc.fillColor(green).fontSize(18).text(content.raiseLabel, pageWidth - margin - 144, 60, {
+      width: 132,
+    })
+
+    let y = 138
+    doc
+      .fillColor(muted)
+      .fontSize(9)
+      .text(`Prepared ${preparedDate}`, margin, y, { width: contentWidth, align: "right" })
+
+    y = 168
+    teaserSectionLabel(doc, "Overview", margin, y, gold, green)
+    const overviewHeight = measureTextHeight(doc, content.overview, contentWidth, 12, 5)
+    doc.fillColor(dark).fontSize(12).text(content.overview, margin, y + 22, {
+      width: contentWidth,
+      lineGap: 5,
+    })
+
+    y += 30 + overviewHeight + 18
+    const rowOneLeft = drawTeaserBlock(doc, {
+      x: margin,
+      y,
+      width: columnWidth,
+      title: "The problem",
+      body: content.problem,
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    const rowOneRight = drawTeaserBlock(doc, {
+      x: margin + columnWidth + columnGap,
+      y,
+      width: columnWidth,
+      title: "What we do",
+      body: content.solution,
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    y += Math.max(rowOneLeft, rowOneRight) + 16
+
+    const rowTwoLeft = drawTeaserBlock(doc, {
+      x: margin,
+      y,
+      width: columnWidth,
+      title: "Why now",
+      body: content.whyNow,
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    const rowTwoRight = drawTeaserBlock(doc, {
+      x: margin + columnWidth + columnGap,
+      y,
+      width: columnWidth,
+      title: "Highlights",
+      bullets: content.highlights,
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    y += Math.max(rowTwoLeft, rowTwoRight) + 24
+
+    const footerY = pageHeight - 72
+    doc.moveTo(margin, footerY).lineTo(pageWidth - margin, footerY).strokeColor(border).stroke()
+    doc.fillColor(green).fontSize(10).text(content.companyName, margin, footerY + 14)
+    doc
+      .fillColor(muted)
+      .fontSize(8)
+      .text(
+        "One-page investor overview. Full deck available on request after mutual interest.",
+        margin,
+        footerY + 30,
+        { width: contentWidth - 120, lineGap: 2 }
+      )
+    doc
+      .fillColor(muted)
+      .fontSize(8)
+      .text("Prepared with RaiseWise", pageWidth - margin - 120, footerY + 14, {
+        width: 120,
+        align: "right",
+      })
+
+    doc.end()
+  })
+}
+
 export async function renderFinancialModelPdf(input: {
   companyName: string
   assumptions: unknown
@@ -170,4 +306,126 @@ function formatStructuredList(items: unknown[]) {
       return `• ${title}${score}${priority}${body ? `\n  ${body}` : ""}`
     })
     .join("\n")
+}
+
+function clampWords(value: string, maxWords: number) {
+  const words = value.trim().split(/\s+/).filter(Boolean)
+  if (words.length <= maxWords) return value.trim()
+  return `${words.slice(0, maxWords).join(" ")}…`
+}
+
+function formatRaise(amount?: number | null, currency?: string | null) {
+  if (!amount) return "—"
+  const code = (currency ?? "gbp").toUpperCase()
+  const symbol = code === "GBP" ? "£" : code === "EUR" ? "€" : code === "USD" ? "$" : `${code} `
+  return `${symbol}${Number(amount).toLocaleString()}`
+}
+
+function teaserSectionLabel(
+  doc: InstanceType<typeof PDFDocument>,
+  label: string,
+  x: number,
+  y: number,
+  gold: string,
+  green: string
+) {
+  doc.roundedRect(x, y + 3, 24, 2.5, 1.25).fill(gold)
+  doc.fillColor(green).fontSize(9).text(label.toUpperCase(), x + 32, y, { characterSpacing: 0.8 })
+}
+
+function measureTextHeight(
+  doc: InstanceType<typeof PDFDocument>,
+  text: string,
+  width: number,
+  fontSize: number,
+  lineGap = 3
+) {
+  doc.fontSize(fontSize)
+  return doc.heightOfString(text, { width, lineGap })
+}
+
+function drawTeaserBlock(
+  doc: InstanceType<typeof PDFDocument>,
+  input: {
+    x: number
+    y: number
+    width: number
+    title: string
+    body?: string
+    bullets?: string[]
+    colors: {
+      green: string
+      gold: string
+      fill: string
+      border: string
+      dark: string
+      muted: string
+    }
+  }
+) {
+  const padding = 16
+  const titleHeight = 22
+  const innerWidth = input.width - padding * 2
+  let contentHeight = 0
+
+  if (input.body) {
+    contentHeight += measureTextHeight(doc, input.body, innerWidth, 10, 4)
+  }
+
+  const bullets = input.bullets?.filter(Boolean) ?? []
+  if (bullets.length) {
+    bullets.forEach((bullet) => {
+      contentHeight += measureTextHeight(doc, bullet, innerWidth - 14, 10, 2) + 10
+    })
+  } else if (!input.body) {
+    contentHeight += measureTextHeight(
+      doc,
+      "Focused execution in a defined market with a clear path to the next milestone.",
+      innerWidth,
+      10,
+      4
+    )
+  }
+
+  const cardHeight = padding + titleHeight + contentHeight + padding
+  const { x, y, width, title, body, colors } = input
+
+  doc.roundedRect(x, y, width, cardHeight, 12).fill(colors.fill)
+  doc.roundedRect(x, y, width, cardHeight, 12).stroke(colors.border)
+  doc.fillColor(colors.green).fontSize(12).text(title, x + padding, y + padding, {
+    width: innerWidth,
+  })
+
+  let cursorY = y + padding + titleHeight
+
+  if (body) {
+    doc.fillColor(colors.dark).fontSize(10).text(body, x + padding, cursorY, {
+      width: innerWidth,
+      lineGap: 4,
+    })
+    cursorY += measureTextHeight(doc, body, innerWidth, 10, 4)
+  }
+
+  if (bullets.length) {
+    bullets.forEach((bullet) => {
+      doc.circle(x + padding + 4, cursorY + 5, 2.5).fill(colors.gold)
+      doc.fillColor(colors.dark).fontSize(10).text(bullet, x + padding + 14, cursorY, {
+        width: innerWidth - 14,
+        lineGap: 2,
+      })
+      cursorY += measureTextHeight(doc, bullet, innerWidth - 14, 10, 2) + 10
+    })
+  } else if (!body) {
+    doc
+      .fillColor(colors.dark)
+      .fontSize(10)
+      .text(
+        "Focused execution in a defined market with a clear path to the next milestone.",
+        x + padding,
+        cursorY,
+        { width: innerWidth, lineGap: 4 }
+      )
+  }
+
+  return cardHeight
 }

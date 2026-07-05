@@ -28,6 +28,7 @@ export function TeamSwitcher({
     name: string
     logo: React.ReactNode | string
     plan: string
+    tagline?: string
   }[]
 }) {
   const { isMobile } = useSidebar()
@@ -69,8 +70,8 @@ export function TeamSwitcher({
                 ) : (
                   <span className="truncate font-medium">{activeTeam.name}</span>
                 )}
-                <span className="truncate text-xs capitalize text-muted-foreground">
-                  {activeTeam.plan} plan
+                <span className="truncate text-xs leading-snug text-muted-foreground">
+                  {activeTeam.tagline ?? `${activeTeam.plan} plan`}
                 </span>
               </div>
             </Link>

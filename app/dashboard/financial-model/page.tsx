@@ -9,6 +9,7 @@ import { buildFinancialModelPrefill } from "@/lib/profile/prefill"
 import { buildFinancialPrefillFromDeckSignals } from "@/lib/financial/deck-prefill"
 import { DeckFinancialSignalsSchema } from "@/lib/openai/schemas"
 import { canUseFinancialModel, getUserPlan } from "@/lib/access"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { redirect } from "next/navigation"
 
 export default async function FinancialModelPage() {
@@ -34,7 +35,7 @@ export default async function FinancialModelPage() {
     ? "We pre-filled numbers from your latest deck analysis where available. Review before generating."
     : null
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0">
         <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
           Financial Model
@@ -54,9 +55,9 @@ export default async function FinancialModelPage() {
           description="Capture revenue, burn, runway, hiring, and customer assumptions in one clean model investors can actually follow."
         />
       </div>
-      <div className="min-h-0 flex-1">
+      <div className="md:min-h-0 md:flex-1">
         <FinancialModelForm
-          className="h-full"
+          className="md:h-full"
           initialValues={initialValues}
           deckPrefillHint={deckHint}
         />

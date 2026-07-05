@@ -25,7 +25,7 @@ export default async function ResetPasswordPage({
 
   if (!user) {
     return (
-      <main className="flex min-h-svh items-center justify-center p-6">
+      <main className="flex h-svh flex-col items-center justify-center overflow-y-auto p-6 py-10">
         <Card className="w-full max-w-sm">
           <CardHeader>
             <CardTitle>Reset link expired</CardTitle>
@@ -56,7 +56,7 @@ export default async function ResetPasswordPage({
   }
 
   return (
-    <main className="flex min-h-svh items-center justify-center p-6">
+    <main className="flex h-svh flex-col items-center justify-center overflow-y-auto p-6 py-10">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Choose a new password</CardTitle>

@@ -17,6 +17,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { ChevronRightIcon } from "lucide-react"
 
@@ -35,6 +36,13 @@ export function NavMain({
   }[]
 }) {
   const pathname = usePathname()
+  const { setOpenMobile } = useSidebar()
+
+  function closeMobileNav() {
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setOpenMobile(false)
+    }
+  }
 
   function navItemIsActive(url: string) {
     if (url === "/dashboard") {
@@ -59,7 +67,7 @@ export function NavMain({
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild tooltip={item.title} isActive={routeActive}>
-                  <Link href={item.url}>
+                  <Link href={item.url} onClick={closeMobileNav}>
                     {item.icon}
                     <span>{item.title}</span>
                   </Link>
@@ -88,7 +96,7 @@ export function NavMain({
                     {subItems.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <Link href={subItem.url}>
+                          <Link href={subItem.url} onClick={closeMobileNav}>
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

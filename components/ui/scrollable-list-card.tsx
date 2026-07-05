@@ -25,7 +25,7 @@ export function ScrollableListCard({
   contentClassName?: string
 }) {
   return (
-    <Card className={cn("flex min-h-0 flex-1 flex-col overflow-hidden", className)}>
+    <Card className={cn("flex flex-col", className)}>
       <CardHeader
         className={cn(
           "shrink-0",
@@ -39,7 +39,7 @@ export function ScrollableListCard({
         {headerAddon}
       </CardHeader>
       <CardContent
-        className={cn("min-h-0 flex-1 overflow-y-auto pb-6", contentClassName)}
+        className={cn("pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto", contentClassName)}
       >
         {children}
       </CardContent>

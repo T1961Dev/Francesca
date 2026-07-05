@@ -32,7 +32,7 @@ export function FeaturePhotoCard({
     >
       <div
         aria-hidden
-        className="absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
             "linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.78) 35%, rgba(0,0,0,.18) 100%), radial-gradient(42% 95% at 74% 24%, rgba(223,156,78,.96), transparent 60%), radial-gradient(34% 82% at 92% 68%, rgba(122,52,27,.86), transparent 68%), radial-gradient(30% 72% at 62% 18%, rgba(26,92,106,.72), transparent 64%), radial-gradient(72% 72% at 24% 105%, rgba(96,48,28,.86), transparent 73%), linear-gradient(90deg, #030303 0%, #0b0807 42%, #22140d 100%)",
@@ -43,7 +43,7 @@ export function FeaturePhotoCard({
       />
       <div
         aria-hidden
-        className="absolute inset-0 z-0 opacity-20"
+        className="pointer-events-none absolute inset-0 z-0 opacity-20"
         style={{
           backgroundImage:
             "radial-gradient(circle at 20% 20%, rgba(255,255,255,.38) 0 1px, transparent 1px), radial-gradient(circle at 70% 40%, rgba(0,0,0,.18) 0 1px, transparent 1px)",

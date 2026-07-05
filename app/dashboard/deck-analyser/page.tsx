@@ -13,6 +13,7 @@ import { detectCurrencyFromRequest } from "@/lib/billing/currency.server"
 import { FREE_DECK_PREVIEW_TAGLINE } from "@/lib/deck/preview"
 import { listDeckAnalyses } from "@/lib/deck/queries.server"
 import { requireAuth } from "@/lib/auth"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { plans } from "@/lib/stripe/plans"
 import { fetchUsageState } from "@/lib/usage/track"
 
@@ -27,7 +28,7 @@ export default async function DeckAnalyserPage() {
   const showFullPreviews = canViewFullDeckAnalysis(plan)
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
         <div>
           <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
@@ -98,14 +99,9 @@ export default async function DeckAnalyserPage() {
                         /100
                       </span>
                     </p>
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                      className="pointer-events-none"
-                    >
+                    <span className="inline-flex h-7 items-center rounded-md border border-border/80 bg-card px-3 text-[0.8rem] font-medium">
                       Open
-                    </Button>
+                    </span>
                   </div>
                 </Link>
               )

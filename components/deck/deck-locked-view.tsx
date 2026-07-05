@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FREE_DECK_PREVIEW_TAGLINE } from "@/lib/deck/preview"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import type { Currency, StripePlan } from "@/types/billing"
 
 const PaywallModal = dynamic(
@@ -58,10 +59,10 @@ export function DeckLockedView({
   }, [analysisId, score])
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <Card>
         <CardHeader>
-          <div className="flex items-end justify-between gap-3">
+          <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <CardTitle className="text-2xl">
                 {score ?? "—"} <span className="text-base font-normal text-muted-foreground">/100</span>

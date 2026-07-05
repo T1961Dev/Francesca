@@ -48,6 +48,7 @@ export async function DeckInvestorMatchesSection({
 
         {matches.length ? (
           <InvestorMatchesPanel
+            deckAnalysisId={deckAnalysisId}
             jobId={bundle.jobId}
             matches={matches}
             title="Investor matches for this deck"

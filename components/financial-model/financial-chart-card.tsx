@@ -116,7 +116,7 @@ export function FinancialChartsGrid({
   if (!entries.length) return null
 
   return (
-    <div className={cn("gap-3", compact ? "grid h-full min-h-0 grid-cols-2 grid-rows-2" : "grid md:grid-cols-2 gap-4")}>
+    <div className={cn("gap-3", compact ? "grid h-full min-h-0 grid-cols-1 sm:grid-cols-2 sm:grid-rows-2" : "grid gap-4 md:grid-cols-2")}>
       {entries.map(([key, data]) => (
         <FinancialChartCard
           key={key}

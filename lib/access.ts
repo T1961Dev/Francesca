@@ -51,6 +51,10 @@ export function canUseInvestorMatching(plan: Plan) {
   return hasInvestorMatching(plan)
 }
 
+export function canGenerateTeaser(plan: Plan) {
+  return hasInvestorMatching(plan)
+}
+
 export function canViewInvestorOutreachTemplates(plan: Plan) {
   return hasInvestorMatching(plan)
 }

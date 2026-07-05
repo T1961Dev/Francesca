@@ -4,8 +4,8 @@ export const metadata = { title: "About · RaiseWise" }
 
 export default function AboutPage() {
   return (
-    <>
-      <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-background">
+      <div className="mx-auto max-w-3xl px-6 py-12">
         <h1 className="font-heading text-3xl font-medium tracking-tight">About RaiseWise</h1>
         <div className="prose prose-sm mt-6 max-w-none">
           <p>
@@ -14,8 +14,8 @@ export default function AboutPage() {
             investors — in one workspace.
           </p>
         </div>
-      </main>
+      </div>
       <SiteFooter />
-    </>
+    </main>
   )
 }

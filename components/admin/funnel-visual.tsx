@@ -58,8 +58,8 @@ export function FunnelVisual({
             return (
               <div key={step.label}>
                 <div
-                  className="relative mx-auto py-3"
-                  style={{ width: `${Math.max(width, 28)}%`, minWidth: "12rem" }}
+                  className="relative mx-auto w-full max-w-full py-3 sm:max-w-none"
+                  style={{ width: `min(100%, max(${Math.max(width, 28)}%, 12rem))` }}
                 >
                   <div
                     className={cn(

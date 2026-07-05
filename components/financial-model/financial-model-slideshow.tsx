@@ -18,6 +18,7 @@ import {
   type UseOfFundsItem,
 } from "@/lib/financial/format"
 import { cn } from "@/lib/utils"
+import { dashboardSlideshowMainClass } from "@/lib/dashboard/page-classes"
 
 type FinancialModelSlideshowProps = {
   modelId: string
@@ -45,7 +46,7 @@ function FeatureStepCard({
     <div className="relative flex min-h-[5.5rem] shrink-0 items-center overflow-hidden rounded-xl bg-[#070605] p-4 text-[#F7F0E6] ring-1 ring-black/5 md:p-5">
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
             "linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.74) 38%, rgba(0,0,0,.2) 100%), radial-gradient(42% 95% at 74% 24%, rgba(223,156,78,.96), transparent 60%), radial-gradient(34% 82% at 92% 68%, rgba(122,52,27,.86), transparent 68%), radial-gradient(30% 72% at 62% 18%, rgba(26,92,106,.72), transparent 64%), linear-gradient(90deg, #030303 0%, #0b0807 42%, #22140d 100%)",
@@ -226,9 +227,9 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
   const isLast = stepIndex === slides.length - 1
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4 md:p-5">
-      <div className="flex shrink-0 items-center justify-between gap-4">
-        <div>
+    <main className={dashboardSlideshowMainClass}>
+      <div className="flex shrink-0 flex-wrap items-start justify-between gap-3 sm:items-center sm:gap-4">
+        <div className="min-w-0">
           <h1 className="font-heading text-3xl font-medium leading-none tracking-tight md:text-[2rem]">
             Financial model
           </h1>
@@ -257,23 +258,27 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
       <section
         key={stepIndex}
         className={cn(
-          "flex min-h-0 flex-1 flex-col overflow-hidden p-1",
+          "flex min-h-0 flex-1 flex-col overflow-y-auto p-1 md:overflow-hidden",
           "animate-in fade-in slide-in-from-right-4 duration-300"
         )}
       >
-        <div className="min-h-0 flex-1 overflow-hidden">{step.content}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto md:overflow-hidden">{step.content}</div>
       </section>
 
-      <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/60 pt-3">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3">
         <Button
           type="button"
           variant="outline"
           disabled={isFirst}
+          className="shrink-0"
           onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
         >
           <ArrowLeftIcon data-icon="inline-start" />
           Back
         </Button>
+        <p className="order-first w-full text-center text-xs text-muted-foreground sm:order-none sm:w-auto sm:flex-1">
+          Step {stepIndex + 1} of {slides.length}
+        </p>
         <div className="hidden gap-1 sm:flex">
           {slides.map((slide, index) => (
             <button
@@ -289,6 +294,7 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
         <Button
           type="button"
           disabled={isLast}
+          className="shrink-0"
           onClick={() =>
             setStepIndex((index) => Math.min(slides.length - 1, index + 1))
           }

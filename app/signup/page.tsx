@@ -27,7 +27,7 @@ export default async function Page({
   const error = params.error?.trim() || null
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="flex h-svh w-full flex-col overflow-y-auto items-center justify-center p-6 py-10 md:p-10">
       <div className="w-full max-w-sm">
         {verifyEmail ? (
           <Card>

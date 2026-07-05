@@ -50,6 +50,7 @@ export const plans: StripePlan[] = [
       "Everything in Starter",
       "25 ranked investors per run",
       "Personalised outreach emails",
+      "Branded one-page teaser for investor outreach",
       "CSV and PDF export of matches",
     ],
     limits: {

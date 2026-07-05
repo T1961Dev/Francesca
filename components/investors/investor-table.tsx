@@ -24,10 +24,12 @@ const InvestorProfileDialog = dynamic(
 
 export function InvestorTable({
   matches,
+  deckAnalysisId,
   jobId,
   scrollable = false,
 }: {
   matches: Match[]
+  deckAnalysisId?: string | null
   jobId?: string | null
   /** Constrain height and scroll rows (saved matches lists). */
   scrollable?: boolean
@@ -100,7 +102,7 @@ export function InvestorTable({
               <TableRow
                 key={`${investorName}-${index}`}
                 className={cn(
-                  "cursor-pointer",
+                  "cursor-pointer touch-manipulation active:bg-muted/50",
                   sent && "opacity-70"
                 )}
                 onClick={() => setSelected(match)}
@@ -160,13 +162,18 @@ export function InvestorTable({
             "max-h-[min(36rem,calc(100dvh-13rem))]"
           )}
         >
-          {table}
+          <InvestorMatchCards matches={sorted} onSelect={setSelected} className="md:hidden" />
+          <div className="hidden md:block">{table}</div>
         </div>
       ) : (
-        table
+        <>
+          <InvestorMatchCards matches={sorted} onSelect={setSelected} className="md:hidden" />
+          <div className="hidden md:block">{table}</div>
+        </>
       )}
       {selected ? (
         <InvestorProfileDialog
+          deckAnalysisId={deckAnalysisId ?? null}
           jobId={jobId ?? null}
           match={selected}
           open
@@ -177,6 +184,64 @@ export function InvestorTable({
         />
       ) : null}
     </>
+  )
+}
+
+function InvestorMatchCards({
+  matches,
+  onSelect,
+  className,
+}: {
+  matches: Match[]
+  onSelect: (match: Match) => void
+  className?: string
+}) {
+  return (
+    <div className={cn("space-y-2 p-2", className)}>
+      {matches.map((match, index) => {
+        const sent = Boolean(match.marked_sent_at)
+        const investorName = String(match.investorName ?? "Unknown investor")
+        const gptScore = match.matchScore ?? match.fitScore
+        const stages = readInvestmentStages(match)
+        const sectorText = readSectorText(match)
+
+        return (
+          <button
+            key={`${investorName}-${index}`}
+            type="button"
+            onClick={() => onSelect(match)}
+            className={cn(
+              "w-full rounded-lg border border-border/60 bg-card p-3 text-left transition-colors hover:bg-muted/40",
+              sent && "opacity-70"
+            )}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate font-medium">{investorName}</p>
+                <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                  {readRole(match)} · {String(match.firmName ?? "-")}
+                </p>
+              </div>
+              <Badge variant="secondary" className="shrink-0 font-mono tabular-nums">
+                {gptScore != null ? String(gptScore) : "-"}
+              </Badge>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+              <span className="truncate">{stages.slice(0, 2).join(", ") || "-"}</span>
+              <span aria-hidden>·</span>
+              <span className="truncate">{sectorText}</span>
+            </div>
+            <div className="mt-2">
+              {sent ? (
+                <Badge variant="success">Sent</Badge>
+              ) : (
+                <Badge variant="neutral">Open</Badge>
+              )}
+            </div>
+          </button>
+        )
+      })}
+    </div>
   )
 }
 

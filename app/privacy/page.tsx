@@ -4,8 +4,8 @@ export const metadata = { title: "Privacy Policy · RaiseWise" }
 
 export default function PrivacyPage() {
   return (
-    <>
-      <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-background">
+      <div className="mx-auto max-w-3xl px-6 py-12">
         <h1 className="font-heading text-3xl font-medium tracking-tight">Privacy Policy</h1>
         <div className="prose prose-sm mt-6 max-w-none">
           <p>
@@ -22,8 +22,8 @@ export default function PrivacyPage() {
             required by law.
           </p>
         </div>
-      </main>
+      </div>
       <SiteFooter />
-    </>
+    </main>
   )
 }

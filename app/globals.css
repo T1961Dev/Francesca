@@ -170,8 +170,8 @@
   }
   html {
     @apply font-sans;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply bg-background text-foreground;
@@ -179,7 +179,29 @@
       radial-gradient(34rem 24rem at 4% 100%, rgb(201 168 76 / 0.16), transparent 60%),
       radial-gradient(42rem 30rem at 94% 0%, rgb(26 60 42 / 0.08), transparent 58%),
       linear-gradient(180deg, #eef5f1 0%, #e8f0eb 100%);
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+  }
+
+  /* Desktop dashboard shell uses its own scroll region. */
+  @media (min-width: 768px) {
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  /* Mobile: allow natural document scroll — nested overflow traps break iOS taps. */
+  @media (max-width: 767px) {
+    html,
+    body {
+      height: auto;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }

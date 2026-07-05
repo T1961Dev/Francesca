@@ -88,6 +88,12 @@ export function DashboardShell({
     }
   }, [router])
 
+  // Safety: Radix modals can occasionally leave pointer-events disabled on body.
+  React.useEffect(() => {
+    document.body.style.pointerEvents = ""
+    document.body.style.overflow = ""
+  }, [pathname])
+
   const displayProfile: AppSidebarProfile =
     profile ??
     ({
@@ -108,20 +114,22 @@ export function DashboardShell({
     <TooltipProvider>
       <SidebarProvider>
         <AppSidebar user={user} profile={displayProfile} isAdmin={isAdmin} />
-        <SidebarInset className="overflow-hidden">
-          <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border/45 bg-card/90 backdrop-blur-md supports-[backdrop-filter]:bg-card/75">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
+        <SidebarInset className="flex min-h-0 flex-1 flex-col max-md:overflow-visible md:overflow-hidden">
+          <header className="sticky top-0 z-30 flex h-12 shrink-0 items-center gap-2 border-b border-border/45 bg-card max-md:bg-card md:bg-card/95 md:backdrop-blur-md md:supports-[backdrop-filter]:bg-card/80">
+            <div className="flex min-w-0 flex-1 items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1 size-11 shrink-0 touch-manipulation md:size-8" />
               <Separator
                 orientation="vertical"
-                className="mr-2 h-4 bg-border/60"
+                className="mr-2 hidden h-4 bg-border/60 sm:block"
               />
-              <p className="font-heading text-sm font-medium tracking-tight text-foreground">
+              <p className="min-w-0 truncate font-heading text-sm font-medium tracking-tight text-foreground">
                 {workspaceTitle}
               </p>
             </div>
           </header>
-          <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
+          <div className="relative z-0 flex-1 max-md:overflow-visible md:min-h-0 md:overflow-y-auto md:overscroll-y-contain">
+            {children}
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>

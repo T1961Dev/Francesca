@@ -3,6 +3,7 @@
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
+import { openExportUrl } from "@/lib/download/open-url"
 
 export function InvestorExportButtons({ jobId }: { jobId: string }) {
   const [busy, setBusy] = useState<"csv" | "pdf" | null>(null)
@@ -26,7 +27,10 @@ export function InvestorExportButtons({ jobId }: { jobId: string }) {
       const a = document.createElement("a")
       a.href = url
       a.download = `raisewise-investors-${jobId}.csv`
+      a.rel = "noopener"
+      document.body.appendChild(a)
       a.click()
+      a.remove()
       URL.revokeObjectURL(url)
     } catch {
       setError("Export failed")
@@ -48,7 +52,7 @@ export function InvestorExportButtons({ jobId }: { jobId: string }) {
         setError(json.error ?? "Export failed")
         return
       }
-      window.open(json.data.url, "_blank", "noopener")
+      openExportUrl(json.data.url)
     } catch {
       setError("Export failed")
     } finally {
@@ -57,14 +61,26 @@ export function InvestorExportButtons({ jobId }: { jobId: string }) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Button variant="outline" size="sm" onClick={exportCsv} disabled={busy !== null}>
+    <div className="relative z-20 flex shrink-0 flex-wrap items-center gap-2">
+      <Button
+        variant="outline"
+        size="sm"
+        className="touch-manipulation"
+        onClick={exportCsv}
+        disabled={busy !== null}
+      >
         {busy === "csv" ? "Exporting…" : "Export CSV"}
       </Button>
-      <Button variant="outline" size="sm" onClick={exportPdf} disabled={busy !== null}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="touch-manipulation"
+        onClick={exportPdf}
+        disabled={busy !== null}
+      >
         {busy === "pdf" ? "Exporting…" : "Export PDF"}
       </Button>
-      {error ? <p className="text-xs text-destructive">{error}</p> : null}
+      {error ? <p className="w-full text-xs text-destructive">{error}</p> : null}
     </div>
   )
 }

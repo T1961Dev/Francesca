@@ -5,11 +5,12 @@ import { DeckLockedView } from "@/components/deck/deck-locked-view"
 import { DeckProcessingState } from "@/components/deck/deck-processing-state"
 import { DeckInvestorMatchesSection } from "@/components/investors/deck-investor-matches-section"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { canViewFullDeckAnalysis, getUserPlan } from "@/lib/access"
+import { canGenerateTeaser, canViewFullDeckAnalysis, getUserPlan } from "@/lib/access"
 import { detectCurrencyFromRequest } from "@/lib/billing/currency.server"
 import { extractDimensionNames } from "@/lib/deck/preview"
 import { fetchDeckAnalysisById } from "@/lib/deck/queries.server"
 import { plans } from "@/lib/stripe/plans"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 
 type CategoryScore = { category: string; score: number; feedback: string }
 type SuggestedFix = { title?: string; explanation?: string; priority?: string }
@@ -42,7 +43,7 @@ export default async function DeckAnalysisResultPage({
 
   if (analysis.status !== "completed") {
     return (
-      <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+      <main className={dashboardPageMainClass}>
         <DeckProcessingState />
       </main>
     )
@@ -83,6 +84,7 @@ export default async function DeckAnalysisResultPage({
       ) : null}
       <DeckAnalysisSlideshow
         analysisId={id}
+        canGenerateTeaser={canGenerateTeaser(plan)}
         score={analysis.overall_score as number | null}
         summary={analysis.summary as string | null}
         investorReadiness={analysis.investor_readiness as string | null}

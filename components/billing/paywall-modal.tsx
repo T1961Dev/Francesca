@@ -94,7 +94,8 @@ export function PaywallModal({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-3xl">
+      <DialogContent className="flex max-h-[min(90dvh,900px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
+        <div className="overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>Unlock your full analysis</DialogTitle>
           <DialogDescription>
@@ -154,7 +155,7 @@ export function PaywallModal({
           })}
         </div>
 
-        <DialogFooter className="justify-center sm:justify-center">
+        <DialogFooter className="justify-center px-4 pb-4 sm:justify-center sm:px-6 sm:pb-6">
           <button
             type="button"
             onClick={() => handleOpenChange(false)}
@@ -163,6 +164,7 @@ export function PaywallModal({
             Maybe later
           </button>
         </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   )

@@ -35,7 +35,7 @@ export function ClickableTableRow({
       onClick={navigate}
       onKeyDown={onKeyDown}
       className={cn(
-        "cursor-pointer border-l-2 border-l-transparent transition-colors hover:border-l-primary hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "cursor-pointer touch-manipulation border-l-2 border-l-transparent transition-colors hover:border-l-primary hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:bg-muted/60",
         className
       )}
     >

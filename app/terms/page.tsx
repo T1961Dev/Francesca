@@ -4,8 +4,8 @@ export const metadata = { title: "Terms of Service · RaiseWise" }
 
 export default function TermsPage() {
   return (
-    <>
-      <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-background">
+      <div className="mx-auto max-w-3xl px-6 py-12">
         <h1 className="font-heading text-3xl font-medium tracking-tight">Terms of Service</h1>
         <div className="prose prose-sm mt-6 max-w-none">
           <p>
@@ -21,8 +21,8 @@ export default function TermsPage() {
             provided as-is within the limits permitted by law.
           </p>
         </div>
-      </main>
+      </div>
       <SiteFooter />
-    </>
+    </main>
   )
 }

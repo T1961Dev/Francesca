@@ -3,6 +3,7 @@
 import { useState, type ComponentType } from "react"
 import { Building2, Mail, MapPin } from "lucide-react"
 
+import { DeckTeaserExportButton } from "@/components/deck/deck-teaser-export-button"
 import { InvestorOutreachEditor } from "@/components/investors/investor-outreach-editor"
 import { InvestorIdentityCell } from "@/components/investors/investor-identity-cell"
 import { Badge } from "@/components/ui/badge"
@@ -19,12 +20,14 @@ import { Separator } from "@/components/ui/separator"
 type Match = Record<string, unknown>
 
 export function InvestorProfileDialog({
+  deckAnalysisId,
   jobId,
   match,
   open,
   onOpenChange,
   onMatchUpdated,
 }: {
+  deckAnalysisId?: string | null
   jobId?: string | null
   match: Match | null
   open: boolean
@@ -144,7 +147,26 @@ export function InvestorProfileDialog({
           {jobId ? (
             <>
               <Separator />
-              <div className="px-5 py-4">
+              <div className="space-y-4 px-5 py-4">
+                {deckAnalysisId ? (
+                  <div className="rounded-xl border border-border/60 bg-card p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-medium">Attach a one-page teaser</p>
+                        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                          Generate a branded PDF summary from the analysed deck, then attach it to
+                          your email instead of sending the full deck again.
+                        </p>
+                      </div>
+                      <DeckTeaserExportButton
+                        analysisId={deckAnalysisId}
+                        label="Download teaser"
+                        size="sm"
+                        variant="outline"
+                      />
+                    </div>
+                  </div>
+                ) : null}
                 <InvestorOutreachEditor
                   key={`${jobId}-${rank}`}
                   jobId={jobId}

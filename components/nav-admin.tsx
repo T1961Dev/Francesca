@@ -9,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
 
 export type AdminNavItem = {
@@ -19,6 +20,13 @@ export type AdminNavItem = {
 
 export function NavAdmin({ items }: { items: AdminNavItem[] }) {
   const pathname = usePathname()
+  const { setOpenMobile } = useSidebar()
+
+  function closeMobileNav() {
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setOpenMobile(false)
+    }
+  }
 
   function navItemIsActive(url: string) {
     if (url === "/admin") {
@@ -38,7 +46,7 @@ export function NavAdmin({ items }: { items: AdminNavItem[] }) {
           return (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild tooltip={item.title} isActive={routeActive}>
-                <Link href={item.url}>
+                <Link href={item.url} onClick={closeMobileNav}>
                   {item.icon}
                   <span>{item.title}</span>
                 </Link>

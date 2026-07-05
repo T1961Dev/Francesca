@@ -11,6 +11,7 @@ import { getProfile } from "@/lib/auth"
 import { detectCurrencyFromRequest } from "@/lib/billing/currency.server"
 import { fetchLifetimeInventory } from "@/lib/stripe/lifetime-inventory"
 import { getPlan, plans } from "@/lib/stripe/plans"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import type { Plan } from "@/types/app"
 
 const PLAN_RANK: Record<Plan, number> = {
@@ -41,7 +42,7 @@ export default async function BillingPage({
   })
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
         <div>
           <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
@@ -128,7 +129,7 @@ export default async function BillingPage({
         </div>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto pb-1">
+      <div className="pb-1">
         {upgradeOptions.length ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {upgradeOptions.map((option) => (

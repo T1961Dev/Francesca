@@ -11,6 +11,7 @@ import {
   limitInvestorMatchesForPlan,
 } from "@/lib/access"
 import { fetchInvestorMatchesForJob } from "@/lib/investors/queries.server"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { createClient } from "@/lib/supabase/server"
 
 export default async function InvestorMatchingResultPage({
@@ -55,7 +56,7 @@ export default async function InvestorMatchingResultPage({
   const jobStatus = String(job.status)
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="flex shrink-0 flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
@@ -81,8 +82,9 @@ export default async function InvestorMatchingResultPage({
         ) : null}
       </div>
       {matches.length ? (
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="flex min-h-[20rem] min-w-0 flex-col md:min-h-[28rem] md:flex-1">
           <InvestorMatchesPanel
+            deckAnalysisId={deckAnalysisId || null}
             jobId={id}
             matches={matches}
             title="Saved investor matches"

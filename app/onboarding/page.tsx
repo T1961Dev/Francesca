@@ -225,7 +225,7 @@ function Shell({
   children: React.ReactNode
 }) {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center gap-6 p-6">
+    <main className="flex h-svh flex-col items-center justify-center gap-6 overflow-y-auto p-6 py-10">
       <div className="w-full max-w-lg space-y-2">
         <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Step {step} of {TOTAL_STEPS}

@@ -4,9 +4,11 @@ import { type WheelEvent, useEffect, useMemo, useRef, useState } from "react"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
 import { DeckExportButton } from "@/components/deck/deck-export-button"
+import { DeckTeaserExportButton } from "@/components/deck/deck-teaser-export-button"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { dashboardSlideshowMainClass } from "@/lib/dashboard/page-classes"
 
 type CategoryScore = { category: string; score: number; feedback: string }
 type SuggestedFix = { title?: string; explanation?: string; priority?: string }
@@ -14,6 +16,7 @@ type PriorityAction = { action?: string; reason?: string; priority?: string }
 
 type DeckAnalysisSlideshowProps = {
   analysisId: string
+  canGenerateTeaser?: boolean
   score: number | null
   summary: string | null
   investorReadiness: string | null
@@ -83,7 +86,7 @@ function FeatureStepCard({
     <div className="relative flex min-h-[6.25rem] shrink-0 items-center overflow-hidden rounded-xl bg-[#070605] p-5 text-[#F7F0E6] ring-1 ring-black/5">
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
             "linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.74) 38%, rgba(0,0,0,.2) 100%), radial-gradient(42% 95% at 74% 24%, rgba(223,156,78,.96), transparent 60%), radial-gradient(34% 82% at 92% 68%, rgba(122,52,27,.86), transparent 68%), radial-gradient(30% 72% at 62% 18%, rgba(26,92,106,.72), transparent 64%), linear-gradient(90deg, #030303 0%, #0b0807 42%, #22140d 100%)",
@@ -92,7 +95,7 @@ function FeatureStepCard({
       />
       <div
         aria-hidden
-        className="absolute inset-0 opacity-20"
+        className="pointer-events-none absolute inset-0 opacity-20"
         style={{
           backgroundImage:
             "radial-gradient(circle at 20% 20%, rgba(255,255,255,.38) 0 1px, transparent 1px), radial-gradient(circle at 70% 40%, rgba(0,0,0,.18) 0 1px, transparent 1px)",
@@ -124,7 +127,7 @@ function ScoreOverview({
     value >= 80 ? "Strong" : value >= 60 ? "Needs refinement" : "Not ready yet"
 
   return (
-    <div className="grid h-full min-h-0 gap-4 lg:grid-cols-[0.42fr_0.58fr]">
+    <div className="grid min-h-0 gap-4 lg:h-full lg:grid-cols-[0.42fr_0.58fr]">
       <Card className="bg-muted/20">
         <CardHeader className="pb-2">
           <CardTitle>Investor-readiness score</CardTitle>
@@ -394,9 +397,9 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
   const isLast = stepIndex === slides.length - 1
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-3 overflow-hidden p-4 md:p-5">
-      <div className="flex shrink-0 items-center justify-between gap-4">
-        <div>
+    <main className={dashboardSlideshowMainClass}>
+      <div className="flex shrink-0 flex-wrap items-start justify-between gap-3 sm:items-center sm:gap-4">
+        <div className="min-w-0">
           <h1 className="font-heading text-3xl font-medium leading-none tracking-tight md:text-[2rem]">
             Deck analysis
           </h1>
@@ -404,7 +407,12 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
             Investor-readiness report.
           </p>
         </div>
-        <DeckExportButton analysisId={props.analysisId} />
+        <div className="flex flex-wrap items-center gap-2">
+          {props.canGenerateTeaser ? (
+            <DeckTeaserExportButton analysisId={props.analysisId} />
+          ) : null}
+          <DeckExportButton analysisId={props.analysisId} />
+        </div>
       </div>
 
       <FeatureStepCard
@@ -424,23 +432,27 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
       <section
         key={stepIndex}
         className={cn(
-          "min-h-0 flex-1 overflow-hidden p-1",
+          "min-h-0 flex-1 overflow-y-auto p-1 md:overflow-hidden",
           "animate-in fade-in slide-in-from-right-4 duration-300"
         )}
       >
         {step.content}
       </section>
 
-      <div className="flex shrink-0 items-center justify-between gap-3 border-t border-border/60 pt-3">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3">
         <Button
           type="button"
           variant="outline"
           disabled={isFirst}
+          className="shrink-0"
           onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
         >
           <ArrowLeftIcon data-icon="inline-start" />
           Back
         </Button>
+        <p className="order-first w-full text-center text-xs text-muted-foreground sm:order-none sm:w-auto sm:flex-1">
+          Step {stepIndex + 1} of {slides.length}
+        </p>
         <div className="hidden gap-1 sm:flex">
           {slides.map((slide, index) => (
             <button
@@ -456,6 +468,7 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
         <Button
           type="button"
           disabled={isLast}
+          className="shrink-0"
           onClick={() =>
             setStepIndex((index) => Math.min(slides.length - 1, index + 1))
           }

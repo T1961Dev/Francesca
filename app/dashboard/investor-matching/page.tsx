@@ -18,6 +18,7 @@ import { requireAuth } from "@/lib/auth"
 import { listDeckAnalyses } from "@/lib/deck/queries.server"
 import { getPlan } from "@/lib/stripe/plans"
 import { createClient } from "@/lib/supabase/server"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { fetchUsageState } from "@/lib/usage/track"
 import type { Plan } from "@/types/app"
 
@@ -81,7 +82,7 @@ export default async function InvestorMatchingPage() {
   const activeJob = jobs?.find((job) => !terminalStatuses.includes(String(job.status)))
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
         <PageIntro />
 
@@ -101,7 +102,7 @@ export default async function InvestorMatchingPage() {
         {(jobs ?? []).map((job) => (
           <div
             key={String(job.id)}
-            className="flex items-center justify-between rounded-lg border border-border/60 bg-muted/30 p-3"
+            className="flex flex-col gap-3 rounded-lg border border-border/60 bg-muted/30 p-3 sm:flex-row sm:items-center sm:justify-between"
           >
             <div>
               <p className="text-sm font-medium">
@@ -155,7 +156,7 @@ function JobActions({
   terminalStatuses: string[]
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       {String(job.status) === "failed" ? (
         <RetryInvestorJobButton jobId={String(job.id)} />
       ) : null}

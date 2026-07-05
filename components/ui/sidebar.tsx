@@ -9,13 +9,6 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -30,6 +23,7 @@ const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_WIDTH_ICON = "3rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
+const MOBILE_BREAKPOINT = 768
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed"
@@ -87,10 +81,15 @@ function SidebarProvider({
     [setOpenProp, open]
   )
 
-  // Helper to toggle the sidebar.
+  // Helper to toggle the sidebar — always check viewport at tap time (SSR/hydration safe).
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
-  }, [isMobile, setOpen, setOpenMobile])
+    const mobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`).matches
+    if (mobile) {
+      setOpenMobile((open) => !open)
+    } else {
+      setOpen((open) => !open)
+    }
+  }, [setOpen])
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
@@ -137,7 +136,7 @@ function SidebarProvider({
           } as React.CSSProperties
         }
         className={cn(
-          "group/sidebar-wrapper flex h-svh w-full overflow-hidden has-data-[variant=inset]:bg-transparent",
+          "group/sidebar-wrapper flex min-h-dvh w-full md:h-svh md:min-h-0 md:overflow-hidden has-data-[variant=inset]:bg-transparent",
           className
         )}
         {...props}
@@ -180,27 +179,15 @@ function Sidebar({
 
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetContent
-          dir={dir}
-          data-sidebar="sidebar"
-          data-slot="sidebar"
-          data-mobile="true"
-          className="w-(--sidebar-width) bg-transparent p-0 text-sidebar-foreground [&>button]:hidden"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
-          side={side}
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
-        </SheetContent>
-      </Sheet>
+      <MobileSidebar
+        open={openMobile}
+        onOpenChange={setOpenMobile}
+        side={side}
+        className={className}
+        {...props}
+      >
+        {children}
+      </MobileSidebar>
     )
   }
 
@@ -250,6 +237,79 @@ function Sidebar({
   )
 }
 
+function MobileSidebar({
+  open,
+  onOpenChange,
+  side = "left",
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  side?: "left" | "right"
+}) {
+  React.useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [open])
+
+  React.useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [open, onOpenChange])
+
+  if (!open) return null
+
+  const panelSide =
+    side === "right"
+      ? "right-0 border-l"
+      : "left-0 border-r"
+
+  return (
+    <div
+      className="fixed inset-0 z-50 md:hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 touch-manipulation bg-black/40"
+        aria-label="Close navigation menu"
+        onClick={() => onOpenChange(false)}
+      />
+      <div
+        data-sidebar="sidebar"
+        data-slot="sidebar"
+        data-mobile="true"
+        data-side={side}
+        className={cn(
+          "absolute inset-y-0 flex w-(--sidebar-width) flex-col bg-card text-sidebar-foreground shadow-xl",
+          panelSide,
+          className
+        )}
+        style={
+          {
+            "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+          } as React.CSSProperties
+        }
+        {...props}
+      >
+        <div className="flex h-full w-full flex-col">{children}</div>
+      </div>
+    </div>
+  )
+}
+
 function SidebarTrigger({
   className,
   onClick,
@@ -262,8 +322,9 @@ function SidebarTrigger({
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       variant="ghost"
-      size="icon-sm"
-      className={cn(className)}
+      size="icon"
+      type="button"
+      className={cn("touch-manipulation", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
@@ -514,7 +575,7 @@ function SidebarMenuButton({
     />
   )
 
-  if (!tooltip) {
+  if (!tooltip || isMobile) {
     return button
   }
 

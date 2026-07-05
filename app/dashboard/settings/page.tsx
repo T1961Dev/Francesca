@@ -5,6 +5,7 @@ import {
   FeatureEm,
   FeaturePhotoCard,
 } from "@/components/feature-photo-card"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { getProfile } from "@/lib/auth"
 import type { Plan } from "@/types/app"
 
@@ -36,7 +37,7 @@ export default async function SettingsPage({
   const errorRaw = queryParam(params.error)
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
         <div>
           <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
@@ -56,8 +57,7 @@ export default async function SettingsPage({
           description="Your saved profile powers deck analysis, models, and investor matching context across the app."
         />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto pb-6">
-        <div className="space-y-4">
+      <div className="space-y-4 pb-6">
           <ProfileForm
             profile={profile}
             saved={savedRaw === "1"}
@@ -72,7 +72,6 @@ export default async function SettingsPage({
             cancelsAt={profile?.plan_cancels_at ?? null}
           />
           <DangerZone />
-        </div>
       </div>
     </main>
   )

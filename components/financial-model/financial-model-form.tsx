@@ -168,9 +168,9 @@ export function FinancialModelForm({
   }
 
   return (
-    <Card className={cn("flex h-full min-h-0 flex-col bg-muted/20", className)}>
+    <Card className={cn("flex min-h-0 flex-col bg-muted/20 md:h-full", className)}>
       <CardHeader className="shrink-0">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between gap-4 max-sm:flex-col">
           <div>
             <CardTitle>Financial model inputs</CardTitle>
             <CardDescription>

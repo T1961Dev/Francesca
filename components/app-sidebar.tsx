@@ -76,6 +76,7 @@ export function AppSidebar({
       name: companyLabel,
       logo: "/brand/raisewise-icon.png",
       plan: planLabel,
+      tagline: "Your unfair advantage in fundraising.",
     },
   ]
 

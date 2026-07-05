@@ -6,14 +6,26 @@ import {
 } from "@/components/ui/accordion"
 
 const faqs = [
-  ["What file types are supported?", "PDF and PPTX pitch decks up to 50MB."],
+  [
+    "What file types are supported?",
+    "PDF and PowerPoint (.pptx). Upload your deck as-is; no need to reformat or convert anything.",
+  ],
   [
     "How does investor matching work?",
-    "The app uses your profile, deck analysis, Apify lead data, and OpenAI scoring to rank relevant investors.",
+    "We analyse your deck, your stage, sector, and funding goals, then rank the investors most likely to be relevant to your raise, not just anyone who's ever written a cheque, but funds and angels actively investing in companies like yours right now.",
   ],
-  ["Is my deck private?", "Decks are stored in private Supabase Storage buckets with owner-based access."],
-  ["Where does investor data come from?", "Investor leads come from configured Apify actors and are normalised before scoring."],
-  ["Do I need a paid plan?", "Free users see limited results. Paid plans unlock full reports, exports, and investor matching."],
+  [
+    "Is my deck private?",
+    "Yes. Your deck is private by default and only ever visible to you. We never share, sell, or expose your data to anyone, including other founders, investors, or third parties, without your explicit permission.",
+  ],
+  [
+    "Where does investor data come from?",
+    "We combine multiple verified live data sources and continuously refresh them, so the investors you see are active and relevant today, not a static list that goes stale the day you sign up.",
+  ],
+  [
+    "Do I need a paid plan?",
+    "No; you can get your free Fundraising Readiness Score with no payment required. Paid plans unlock your full report, financial model, investor matches, and outreach tools, and more.",
+  ],
 ]
 
 export function FaqSection() {

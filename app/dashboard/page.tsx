@@ -8,6 +8,7 @@ import {
   FeaturePhotoCard,
 } from "@/components/feature-photo-card"
 import { getProfile } from "@/lib/auth"
+import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 
 export default async function Page() {
   const profile = await getProfile()
@@ -36,9 +37,9 @@ export default async function Page() {
   ] as const
 
   return (
-    <main className="flex h-full min-h-0 flex-1 flex-col gap-4 overflow-hidden p-5 md:p-6">
+    <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
-        <div className="flex items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
               Welcome back, {firstName}
@@ -95,11 +96,11 @@ export default async function Page() {
         </div>
       </div>
 
-      <section className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden">
+      <section className="flex flex-col gap-4">
         <p className="shrink-0 text-[0.65rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
           Modules
         </p>
-        <div className="min-h-0 flex-1 overflow-y-auto pb-1">
+        <div className="pb-1">
           <div className="grid gap-4 md:grid-cols-3">
             {modules.map(([title, body, href]) => (
               <Card key={title}>
