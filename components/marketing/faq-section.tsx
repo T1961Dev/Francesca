@@ -8,37 +8,51 @@ import {
 const faqs = [
   [
     "What file types are supported?",
-    "PDF and PowerPoint (.pptx). Upload your deck as-is; no need to reformat or convert anything.",
+    "PDF and PowerPoint (.pptx). Simply upload your pitch deck as it is, there's no need to reformat or convert anything.",
   ],
   [
     "How does investor matching work?",
-    "We analyse your deck, your stage, sector, and funding goals, then rank the investors most likely to be relevant to your raise, not just anyone who's ever written a cheque, but funds and angels actively investing in companies like yours right now.",
+    "RaiseWise analyses your pitch deck, funding stage, sector and fundraising goals to identify investors who are actively investing in companies like yours. Instead of giving you a generic database, we provide a ranked shortlist based on relevance and investment fit.",
   ],
   [
-    "Is my deck private?",
-    "Yes. Your deck is private by default and only ever visible to you. We never share, sell, or expose your data to anyone, including other founders, investors, or third parties, without your explicit permission.",
+    "Is my pitch deck private?",
+    "Yes. Your pitch deck is private by default and only accessible to you. Your data is never shared, sold or made available to investors, other founders or third parties without your explicit permission. We take security seriously, using encryption and industry-standard safeguards to protect your information at every stage.",
   ],
   [
-    "Where does investor data come from?",
-    "We combine multiple verified live data sources and continuously refresh them, so the investors you see are active and relevant today, not a static list that goes stale the day you sign up.",
+    "Where does the investor data come from?",
+    "We combine multiple trusted, verified live data sources to deliver investor recommendations that are active, relevant and aligned with your fundraising goals, not static lists that become outdated the moment you download them.",
   ],
   [
     "Do I need a paid plan?",
-    "No; you can get your free Fundraising Readiness Score with no payment required. Paid plans unlock your full report, financial model, investor matches, and outreach tools, and more.",
+    "No. You can upload one pitch deck and receive your Fundraising Readiness Score completely free. Upgrade only when you want access to your full analysis, investor-ready financial model, investor matches and outreach tools.",
+  ],
+  [
+    "How long does the analysis take?",
+    "Most analyses are completed in just a few minutes, depending on the size and complexity of your pitch deck.",
+  ],
+  [
+    "Is RaiseWise suitable for first-time founders?",
+    "Absolutely. Whether you're raising your first pre-seed round or preparing for Series A, RaiseWise helps you understand what investors look for and prepare with greater confidence.",
+  ],
+  [
+    "Will RaiseWise guarantee funding?",
+    "No. No platform can guarantee investment. RaiseWise is designed to help you present your business more effectively, strengthen your fundraising materials and connect with investors who are a better fit for your company.",
   ],
 ]
 
 export function FaqSection() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-16">
-      <h2 className="font-heading mb-6 text-3xl font-medium tracking-tight md:text-4xl">
-        FAQ
+    <section id="faqs" className="mx-auto max-w-3xl scroll-mt-24 px-6 py-16">
+      <h2 className="font-heading mb-6 text-3xl font-normal tracking-tight md:text-4xl">
+        Questions founders ask before they raise.
       </h2>
       <Accordion type="single" collapsible>
         {faqs.map(([question, answer]) => (
           <AccordionItem key={question} value={question}>
             <AccordionTrigger>{question}</AccordionTrigger>
-            <AccordionContent>{answer}</AccordionContent>
+            <AccordionContent className="leading-relaxed text-muted-foreground">
+              {answer}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
