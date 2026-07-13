@@ -20,6 +20,22 @@ const protectedPrefixes = [
 
 const authRoutes = ["/login", "/signup"]
 
+function hasSupabaseAuthCookie(request: NextRequest) {
+  return request.cookies.getAll().some((cookie) => cookie.name.includes("-auth-token"))
+}
+
+function needsAuthLookup(request: NextRequest, pathname: string) {
+  if (protectedPrefixes.some((prefix) => pathname.startsWith(prefix))) {
+    return true
+  }
+
+  if (authRoutes.includes(pathname)) {
+    return true
+  }
+
+  return hasSupabaseAuthCookie(request)
+}
+
 /**
  * Paths that authenticated users may visit even if their onboarding is
  * incomplete. The onboarding form itself, its server action, auth callback,
@@ -80,29 +96,6 @@ function inferAuthCallbackType(request: NextRequest) {
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request })
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          response = NextResponse.next({ request })
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options)
-          })
-        },
-      },
-    }
-  )
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
   const pathname = request.nextUrl.pathname
 
   const legacyTarget = resolveLegacyPathRedirect(pathname)
@@ -157,6 +150,33 @@ export async function updateSession(request: NextRequest) {
   }
 
   rememberAuthReturnPage(request, response, pathname)
+
+  if (!needsAuthLookup(request, pathname)) {
+    return response
+  }
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+          response = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options)
+          })
+        },
+      },
+    }
+  )
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   const isProtected = protectedPrefixes.some((prefix) => pathname.startsWith(prefix))
   const isAuthRoute = authRoutes.includes(pathname)

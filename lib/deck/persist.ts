@@ -39,3 +39,18 @@ export function buildDeckAnalysisInsert(input: {
 }) {
   return buildDeckAnalysisRecord(input)
 }
+
+export function buildPendingDeckAnalysisInsert(input: {
+  id: string
+  userId: string
+  deckUploadId: string
+}) {
+  const { id, userId, deckUploadId } = input
+
+  return {
+    id,
+    user_id: userId,
+    deck_upload_id: deckUploadId,
+    status: "pending" as const,
+  }
+}

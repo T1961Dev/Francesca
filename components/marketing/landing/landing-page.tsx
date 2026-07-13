@@ -16,6 +16,7 @@ import {
   HeroReadinessShot,
   InvestorDiscoveryShot,
 } from "@/components/marketing/landing/landing-shots"
+import { LandingMobileNav } from "@/components/marketing/landing/landing-mobile-nav"
 import { LandingBrand, LandingEffects } from "@/components/marketing/landing/landing-shared"
 
 import "./landing.css"
@@ -85,6 +86,7 @@ export function LandingPage() {
               Analyse my deck
             </Link>
           </div>
+          <LandingMobileNav />
         </div>
       </header>
 

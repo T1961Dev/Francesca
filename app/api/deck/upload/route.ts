@@ -1,16 +1,13 @@
-import { NextResponse } from "next/server"
+import { NextResponse, after } from "next/server"
 
 import { extractTextFromPdf, extractTextFromPptx, validateUploadFile } from "@/lib/file-extraction"
-import { buildDeckAnalysisInsert, buildDeckAnalysisRecord } from "@/lib/deck/persist"
-import { enqueueInvestorMatching, hasActiveInvestorJobForDeck } from "@/lib/investors/enqueue"
-import { analyseDeckText } from "@/lib/openai/deck-analysis"
+import { buildPendingDeckAnalysisInsert } from "@/lib/deck/persist"
+import { runDeckAnalysisPipeline } from "@/lib/deck/run-analysis"
 import { captureServerEvent } from "@/lib/posthog/server"
-import { sendScoreReadyEmail } from "@/lib/resend/emails"
 import { captureError } from "@/lib/sentry/capture"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { createClient } from "@/lib/supabase/server"
 import { attemptUsageIncrement, rollbackUsageIncrement } from "@/lib/usage/track"
-import { logOpenAiCost } from "@/lib/costs/track"
 import {
   lookupIdempotencyKey,
   storeIdempotentResponse,
@@ -21,6 +18,7 @@ export async function POST(request: Request) {
   let supabase: Awaited<ReturnType<typeof createClient>> | null = null
   let deckUploadId: string | null = null
   let userId: string | null = null
+  let analysisId: string | null = null
 
   try {
     supabase = await createClient()
@@ -48,7 +46,6 @@ export async function POST(request: Request) {
 
     validateUploadFile(file)
 
-    // Resolve plan + atomic usage gate BEFORE we touch storage, OCR, or OpenAI.
     const { data: planRow } = await supabase
       .from("profiles")
       .select("plan")
@@ -69,6 +66,7 @@ export async function POST(request: Request) {
     }
 
     deckUploadId = crypto.randomUUID()
+    analysisId = crypto.randomUUID()
     const filePath = `${user.id}/${deckUploadId}/${file.name}`
     const buffer = Buffer.from(await file.arrayBuffer())
 
@@ -89,7 +87,7 @@ export async function POST(request: Request) {
         file_size: file.size,
         status: "extracting",
       })
-      .select("*")
+      .select("id")
       .single()
 
     if (uploadInsertError) throw uploadInsertError
@@ -109,133 +107,28 @@ export async function POST(request: Request) {
 
     if (dbError) throw dbError
 
-    await supabase
-      .from("deck_uploads")
-      .update({ status: "analysing" })
-      .eq("id", uploadRow.id)
-      .eq("user_id", user.id)
+    const pendingRow = buildPendingDeckAnalysisInsert({
+      id: analysisId,
+      userId: user.id,
+      deckUploadId: uploadRow.id as string,
+    })
+
+    const { error: pendingError } = await createAdminClient()
+      .from("deck_analyses")
+      .insert(pendingRow)
+
+    if (pendingError) throw pendingError
 
     await captureServerEvent("deck_analysis_started", user.id, { deckUploadId })
-    const analysis = await analyseDeckText(text)
-
-    const analysisId = crypto.randomUUID()
-    const insertRow = buildDeckAnalysisInsert({
-      id: analysisId,
-      userId: user.id,
-      deckUploadId: uploadRow.id as string,
-      analysis,
-    })
-
-    const { error: analysisError } = await createAdminClient()
-      .from("deck_analyses")
-      .insert(insertRow)
-
-    if (analysisError) throw analysisError
-
-    const analysisRow = buildDeckAnalysisRecord({
-      id: analysisId,
-      userId: user.id,
-      deckUploadId: uploadRow.id as string,
-      analysis,
-    })
-
-    await logOpenAiCost({
-      userId: user.id,
-      runId: analysisId,
-      runType: "deck_analysis",
-      model:
-        (analysis.raw as { model?: string } | undefined)?.model ??
-        process.env.OPENAI_DECK_MODEL ??
-        "gpt-4o-mini",
-      usage: (analysis.raw as { usage?: Record<string, number> } | undefined)?.usage,
-    })
-
-    await supabase
-      .from("deck_uploads")
-      .update({ status: "completed" })
-      .eq("id", uploadRow.id)
-      .eq("user_id", user.id)
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .maybeSingle()
-
-    // Auto-trigger investor matching only if the user can use it AND has quota.
-    // Silent skip otherwise — the spec explicitly asks for no UI noise here.
-    const planForMatching = (profile?.plan as Plan | undefined) ?? plan
-    const { canUseInvestorMatching } = await import("@/lib/access")
-
-    let investorMatching:
-      | { started: true; jobId: string }
-      | { started: false; reason: string } = {
-        started: false,
-        reason: "not_eligible",
-      }
-
-    if (!canUseInvestorMatching(planForMatching)) {
-      investorMatching = {
-        started: false,
-        reason: "Investor matching requires a Pro or Lifetime plan.",
-      }
-    } else if (await hasActiveInvestorJobForDeck(supabase, analysisId)) {
-      investorMatching = {
-        started: false,
-        reason: "A matching job is already running for this deck.",
-      }
-    } else {
-      const matchGate = await attemptUsageIncrement({
-        userId: user.id,
-        plan: planForMatching,
-        action: "investor_match_run",
-      })
-
-      if (!matchGate.ok) {
-        investorMatching = {
-          started: false,
-          reason: `Monthly investor match limit reached (${matchGate.reason.max}).`,
-        }
-      } else {
-        try {
-          const job = await enqueueInvestorMatching({
-            supabase,
-            userId: user.id,
-            deckAnalysisId: analysisId,
-            profile: profile ?? {},
-            deckAnalysis: analysisRow,
-          })
-          investorMatching = { started: true, jobId: String(job.id) }
-        } catch (error) {
-          await rollbackUsageIncrement({
-            userId: user.id,
-            action: "investor_match_run",
-          })
-          captureError(error, { route: "deck-upload-investor-matching" })
-          investorMatching = {
-            started: false,
-            reason:
-              error instanceof Error ? error.message : "Could not start investor matching",
-          }
-        }
-      }
-    }
-
-    await captureServerEvent("deck_analysis_completed", user.id, { analysisId })
-
-    if (user.email) {
-      await sendScoreReadyEmail({
-        userId: user.id,
-        to: user.email,
-        score: analysis.parsed.overallScore,
-        analysisId,
-      }).catch((error) => captureError(error, { route: "deck-upload-score-email" }))
-    }
 
     const responseBody = {
       success: true,
-      data: { analysisId, investorMatching },
+      data: {
+        analysisId,
+        investorMatching: { started: false, reason: "processing" } as const,
+      },
     }
+
     if (idempotencyKey) {
       await storeIdempotentResponse({
         key: `deck-upload:${user.id}:${idempotencyKey}`,
@@ -244,8 +137,39 @@ export async function POST(request: Request) {
         response: responseBody,
       })
     }
+
+    const resolvedAnalysisId = analysisId
+    const resolvedDeckUploadId = uploadRow.id as string
+
+    after(async () => {
+      try {
+        await runDeckAnalysisPipeline({
+          userId: user.id,
+          userEmail: user.email ?? null,
+          analysisId: resolvedAnalysisId,
+          deckUploadId: resolvedDeckUploadId,
+          text,
+          plan,
+        })
+      } catch (error) {
+        captureError(error, { route: "deck-upload-after" })
+      }
+    })
+
     return NextResponse.json(responseBody)
   } catch (error) {
+    if (analysisId && userId) {
+      try {
+        await createAdminClient()
+          .from("deck_analyses")
+          .update({ status: "failed" })
+          .eq("id", analysisId)
+          .eq("user_id", userId)
+      } catch {
+        // Preserve the original upload error for the response.
+      }
+    }
+
     if (supabase && deckUploadId && userId) {
       try {
         await supabase
@@ -263,7 +187,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // Refund the usage slot — the user shouldn't pay quota for a failed pipeline.
     if (userId) {
       await rollbackUsageIncrement({ userId, action: "deck_upload" })
     }

@@ -177,7 +177,7 @@ function Sidebar({
     )
   }
 
-  if (isMobile) {
+  if (isMobile || openMobile) {
     return (
       <MobileSidebar
         open={openMobile}

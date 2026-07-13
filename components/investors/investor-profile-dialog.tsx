@@ -80,8 +80,8 @@ export function InvestorProfileDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[min(90vh,860px)] w-full max-w-2xl flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl">
-        <div className="shrink-0 border-b bg-muted/20 px-5 py-5">
+      <DialogContent className="flex max-h-[min(90dvh,860px)] w-full max-w-[calc(100%-1rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl">
+        <div className="shrink-0 border-b bg-muted/20 px-4 py-4 sm:px-5 sm:py-5">
           <DialogHeader className="gap-3 text-left">
             <div className="flex flex-wrap items-center gap-2">
               {gptScore != null ? (
@@ -133,7 +133,7 @@ export function InvestorProfileDialog({
 
           <Separator />
 
-          <section className="space-y-4 px-5 py-4">
+          <section className="space-y-4 px-4 py-4 sm:px-5">
             <InsightBlock
               title="Match rationale"
               body={String(match.matchRationale ?? match.whyThisInvestor ?? "Unavailable")}
@@ -147,7 +147,7 @@ export function InvestorProfileDialog({
           {jobId ? (
             <>
               <Separator />
-              <div className="space-y-4 px-5 py-4">
+              <div className="space-y-4 px-4 py-4 sm:px-5">
                 {deckAnalysisId ? (
                   <div className="rounded-xl border border-border/60 bg-card p-4">
                     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -181,9 +181,10 @@ export function InvestorProfileDialog({
         </div>
 
         {jobId ? (
-          <div className="flex shrink-0 flex-wrap items-center gap-2 border-t bg-muted/15 px-5 py-4">
+          <div className="flex shrink-0 flex-wrap items-center gap-2 border-t bg-muted/15 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5">
             <Button
               size="sm"
+              className="min-h-10 touch-manipulation"
               variant={sentAt ? "secondary" : "default"}
               onClick={toggleSent}
               disabled={pending}
@@ -219,14 +220,14 @@ function ProfileMetaGrid({
   firmName: string
 }) {
   return (
-    <div className="grid gap-3 px-5 py-4 sm:grid-cols-2">
+    <div className="grid gap-3 px-4 py-4 sm:grid-cols-2 sm:px-5">
       <MetaItem icon={MapPin} label="Location" value={location} />
       <MetaItem icon={Building2} label="Firm" value={firmName || "-"} />
       <MetaItem label="Stage focus" value={stages.length ? stages.join(", ") : "-"} />
       <MetaItem label="Sector focus" value={sectors.length ? sectors.join(", ") : "-"} />
       <MetaItem label="Cheque fit" value={chequeFit || "Unknown"} />
       {email ? (
-        <MetaItem icon={Mail} label="Email" value={email} className="sm:col-span-2" />
+        <MetaItem icon={Mail} label="Email" value={email} className="break-all sm:col-span-2" />
       ) : null}
     </div>
   )

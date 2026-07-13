@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   description:
     "Your unfair advantage in fundraising.",
   icons: {
-    icon: "/brand/raisewise-icon.png",
-    apple: "/brand/raisewise-icon.png",
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
   },
 };
 

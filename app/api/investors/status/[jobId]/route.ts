@@ -20,7 +20,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ jobId: str
 
     const { data: job } = await supabase
       .from("investor_matching_jobs")
-      .select("*")
+      .select("id, status, error, created_at")
       .eq("id", jobId)
       .maybeSingle()
 

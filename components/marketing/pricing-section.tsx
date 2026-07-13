@@ -26,7 +26,7 @@ export async function PricingSection() {
   const lifetimePlan = getPlan("lifetime")
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16">
+    <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="mb-8 space-y-2">
         <h2 className="font-heading text-3xl font-medium tracking-tight md:text-4xl">
           Pricing

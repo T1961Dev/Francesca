@@ -36,6 +36,8 @@ export function MatchProgress({
   useEffect(() => {
     if (status === "completed" || status === "failed" || status === "cancelled") return
 
+    let refreshed = false
+
     const interval = window.setInterval(async () => {
       const response = await fetch(`/api/investors/status/${runId}`, { cache: "no-store" })
       const json = await response.json().catch(() => null)
@@ -47,7 +49,11 @@ export function MatchProgress({
         setErrorMessage(String(job.error))
       }
 
-      if (nextStatus === "completed" || nextStatus === "failed" || nextStatus === "cancelled") {
+      if (
+        !refreshed &&
+        (nextStatus === "completed" || nextStatus === "failed" || nextStatus === "cancelled")
+      ) {
+        refreshed = true
         router.refresh()
       }
     }, 3000)

@@ -1,6 +1,9 @@
 import { DashboardShell } from "@/components/dashboard/dashboard-shell"
-import { requireAuth } from "@/lib/auth"
+import { ensureProfile, requireAuth } from "@/lib/auth"
 import { isAdminEmail } from "@/lib/admin/auth"
+import { captureError } from "@/lib/sentry/capture"
+import { queueWelcomeEmailIfNeeded } from "@/lib/resend/emails"
+import { createClient } from "@/lib/supabase/server"
 
 export default async function DashboardLayout({
   children,
@@ -8,14 +11,41 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   const user = await requireAuth()
+  const profile = await ensureProfile(undefined, { user })
+  const authEmail = user.email?.trim() ?? ""
+
+  if (profile && authEmail && profile.email?.trim() !== authEmail) {
+    const supabase = await createClient()
+    await supabase.from("profiles").update({ email: authEmail }).eq("id", user.id)
+    profile.email = authEmail
+  }
+
+  if (profile && !profile.welcome_email_sent && authEmail) {
+    try {
+      await queueWelcomeEmailIfNeeded({
+        userId: user.id,
+        email: authEmail,
+        name: profile.full_name ?? user.user_metadata?.full_name ?? null,
+        welcomeEmailSent: profile.welcome_email_sent,
+      })
+    } catch (error) {
+      captureError(error, { route: "dashboard-welcome-email" })
+    }
+  }
 
   return (
     <DashboardShell
       isAdmin={isAdminEmail(user.email)}
       initialUser={{
         id: user.id,
-        email: user.email?.trim() ?? "",
+        email: authEmail,
         userMetadata: user.user_metadata ?? null,
+      }}
+      initialProfile={{
+        full_name: profile.full_name ?? null,
+        company_name: profile.company_name ?? null,
+        plan: profile.plan ?? "free",
+        email: profile.email ?? authEmail ?? null,
       }}
     >
       {children}

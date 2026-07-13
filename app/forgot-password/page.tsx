@@ -17,7 +17,7 @@ export default async function ForgotPasswordPage({
   const callbackError = params.error?.trim() || null
 
   return (
-    <main className="flex h-svh flex-col items-center justify-center overflow-y-auto p-6 py-10">
+    <main className="flex min-h-svh flex-col items-center justify-center overflow-y-auto p-4 py-8 sm:p-6">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Reset your password</CardTitle>

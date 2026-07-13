@@ -94,7 +94,7 @@ export function PaywallModal({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="flex max-h-[min(90dvh,900px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
+      <DialogContent className="flex max-h-[min(90dvh,900px)] w-full max-w-[calc(100%-1rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
         <div className="overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>Unlock your full analysis</DialogTitle>

@@ -1,9 +1,16 @@
 "use client"
 
 import { type ReactNode, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
-import { FinancialChartsGrid } from "@/components/financial-model/financial-chart-card"
+const FinancialChartsGrid = dynamic(
+  () =>
+    import("@/components/financial-model/financial-chart-card").then(
+      (mod) => mod.FinancialChartsGrid
+    ),
+  { loading: () => null }
+)
 import { FinancialExportButton } from "@/components/financial-model/financial-export-button"
 import {
   buildFinancialKpis,
@@ -103,13 +110,13 @@ function UseOfFundsStrip({ items }: { items: UseOfFundsItem[] }) {
   }
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-1">
+    <div className="grid gap-3 sm:grid-cols-2 lg:flex lg:overflow-x-auto lg:pb-1">
       {items.map((item) => {
         const share = total > 0 ? Math.round((item.amount / total) * 100) : 0
         return (
           <div
             key={item.category}
-            className="flex min-w-[14rem] max-w-[16rem] flex-col rounded-lg bg-muted/35 p-3 ring-1 ring-border/55"
+            className="flex min-w-0 flex-col rounded-lg bg-muted/35 p-3 ring-1 ring-border/55 lg:min-w-[14rem] lg:max-w-[16rem] lg:shrink-0"
           >
             <div className="flex items-start justify-between gap-2">
               <p className="text-sm font-medium">{item.category}</p>
@@ -230,7 +237,7 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
     <main className={dashboardSlideshowMainClass}>
       <div className="flex shrink-0 flex-wrap items-start justify-between gap-3 sm:items-center sm:gap-4">
         <div className="min-w-0">
-          <h1 className="font-heading text-3xl font-medium leading-none tracking-tight md:text-[2rem]">
+          <h1 className="font-heading text-2xl font-medium leading-none tracking-tight sm:text-3xl md:text-[2rem]">
             Financial model
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -265,12 +272,12 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
         <div className="min-h-0 flex-1 overflow-y-auto md:overflow-hidden">{step.content}</div>
       </section>
 
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3">
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3 pb-[env(safe-area-inset-bottom)]">
         <Button
           type="button"
           variant="outline"
           disabled={isFirst}
-          className="shrink-0"
+          className="min-h-11 shrink-0 touch-manipulation sm:min-h-8"
           onClick={() => setStepIndex((index) => Math.max(0, index - 1))}
         >
           <ArrowLeftIcon data-icon="inline-start" />
@@ -279,14 +286,14 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
         <p className="order-first w-full text-center text-xs text-muted-foreground sm:order-none sm:w-auto sm:flex-1">
           Step {stepIndex + 1} of {slides.length}
         </p>
-        <div className="hidden gap-1 sm:flex">
+        <div className="hidden gap-1.5 sm:flex">
           {slides.map((slide, index) => (
             <button
               key={slide.eyebrow}
               type="button"
               aria-label={`Go to ${slide.eyebrow}`}
               onClick={() => setStepIndex(index)}
-              className="h-1.5 w-6 rounded-full bg-secondary transition-colors data-[active=true]:bg-foreground"
+              className="h-2.5 min-w-8 touch-manipulation rounded-full bg-secondary transition-colors data-[active=true]:bg-foreground"
               data-active={index === stepIndex}
             />
           ))}
@@ -294,7 +301,7 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
         <Button
           type="button"
           disabled={isLast}
-          className="shrink-0"
+          className="min-h-11 shrink-0 touch-manipulation sm:min-h-8"
           onClick={() =>
             setStepIndex((index) => Math.min(slides.length - 1, index + 1))
           }

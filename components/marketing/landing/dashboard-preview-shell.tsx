@@ -12,10 +12,10 @@ import {
 } from "lucide-react"
 
 export const PREVIEW_FOUNDER = {
-  name: "Sarah Chen",
-  email: "sarah@northline.io",
-  initials: "SC",
-  company: "Northline Systems",
+  name: "Lucille G. Kellogg",
+  email: "LucilleGKellogg@noname.com",
+  initials: "LK",
+  company: "Anonymised 789",
 }
 
 const iconCls = "size-3.5 shrink-0 stroke-[1.5]"
@@ -44,8 +44,8 @@ export function DashboardPreviewShell({
     <div
       className={`dashboard-preview-root overflow-hidden rounded-[22px] border border-border/60 bg-background text-foreground shadow-[var(--shell-shadow)] ${className ?? ""}`}
     >
-      <div className="flex min-h-[420px]">
-        <aside className="hidden w-[188px] shrink-0 flex-col border-r border-border/45 bg-card/40 sm:flex">
+      <div className="flex min-h-[340px] sm:min-h-[420px]">
+        <aside className="hidden w-[188px] shrink-0 flex-col border-r border-border/45 bg-card/40 md:flex">
           <div className="border-b border-border/45 p-3">
             <div className="flex items-start gap-2.5">
               <Image
@@ -111,10 +111,17 @@ export function DashboardPreviewShell({
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex h-10 shrink-0 items-center gap-2 border-b border-border/45 bg-card/80 px-3">
-            <PanelLeftIcon className="size-4 text-muted-foreground" />
-            <p className="truncate font-heading text-xs text-muted-foreground">{breadcrumb}</p>
+            <PanelLeftIcon className="size-4 shrink-0 text-muted-foreground" />
+            <p className="min-w-0 flex-1 truncate font-heading text-xs text-muted-foreground">
+              {breadcrumb}
+            </p>
+            <div className="flex shrink-0 items-center gap-1.5 sm:hidden">
+              <div className="flex size-6 items-center justify-center rounded-md bg-primary text-[0.55rem] font-semibold text-primary-foreground">
+                {PREVIEW_FOUNDER.initials}
+              </div>
+            </div>
           </header>
-          <div className="min-h-0 flex-1 overflow-hidden bg-background p-3 sm:p-4">{children}</div>
+          <div className="min-h-0 flex-1 overflow-hidden bg-background p-2.5 sm:p-4">{children}</div>
         </div>
       </div>
     </div>

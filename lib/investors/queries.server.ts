@@ -7,7 +7,7 @@ export async function fetchLatestInvestorMatchesForDeck(deckAnalysisId: string) 
 
   const { data: matchRow } = await supabase
     .from("investor_matches")
-    .select("*")
+    .select("job_id, matches, created_at")
     .eq("deck_analysis_id", deckAnalysisId)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -51,7 +51,7 @@ export async function fetchInvestorMatchesForJob(jobId: string) {
 
   const { data: result } = await supabase
     .from("investor_matches")
-    .select("*")
+    .select("matches")
     .eq("job_id", jobId)
     .maybeSingle()
 

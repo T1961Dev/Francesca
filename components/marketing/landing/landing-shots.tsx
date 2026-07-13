@@ -37,16 +37,16 @@ export function HeroReadinessShot() {
         breadcrumb="Your fundraising workspace"
       >
         <div className="space-y-3">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h3 className="font-heading text-lg font-medium tracking-tight">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div className="min-w-0">
+              <h3 className="font-heading text-base font-medium tracking-tight sm:text-lg">
                 Welcome back, {PREVIEW_FOUNDER.name.split(" ")[0]}
               </h3>
               <p className="text-[0.7rem] text-muted-foreground">
                 Deck analysis · {PREVIEW_FOUNDER.company}
               </p>
             </div>
-            <Badge>pro</Badge>
+            <Badge className="shrink-0">pro</Badge>
           </div>
 
           <div className="grid gap-3 lg:grid-cols-[0.42fr_0.58fr]">
@@ -243,14 +243,18 @@ export function InvestorDiscoveryShot() {
     <div className="shot">
       <DashboardPreviewShell active="investors" breadcrumb="Investor matching">
         <div className="space-y-3">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h3 className="font-heading text-lg font-medium tracking-tight">Investor shortlist</h3>
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div className="min-w-0">
+              <h3 className="font-heading text-base font-medium tracking-tight sm:text-lg">
+                Investor shortlist
+              </h3>
               <p className="text-[0.7rem] text-muted-foreground">
                 Ranked for {PREVIEW_FOUNDER.company}
               </p>
             </div>
-            <Badge variant="secondary">25 matches</Badge>
+            <Badge variant="secondary" className="shrink-0">
+              25 matches
+            </Badge>
           </div>
 
           <div className="space-y-2">
@@ -258,18 +262,24 @@ export function InvestorDiscoveryShot() {
               <Card key={investor.rank} className="bg-card/95">
                 <CardContent className="px-3 py-3">
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[0.62rem] font-semibold text-muted-foreground">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span className="shrink-0 text-[0.62rem] font-semibold text-muted-foreground">
                           #{investor.rank}
                         </span>
-                        <p className="truncate text-[0.78rem] font-medium">{investor.name}</p>
+                        <p
+                          className="truncate text-[0.78rem] font-medium blur-[5px] select-none"
+                          aria-hidden
+                        >
+                          {investor.name}
+                        </p>
+                        <span className="sr-only">Investor name hidden</span>
                       </div>
                       <p className="mt-0.5 text-[0.65rem] text-muted-foreground">
                         {investor.location} · {investor.stage}
                       </p>
                     </div>
-                    <div className="text-right">
+                    <div className="shrink-0 text-right">
                       <p className="font-heading text-xl leading-none">{investor.score}</p>
                       <p className="text-[0.58rem] text-muted-foreground">fit score</p>
                     </div>

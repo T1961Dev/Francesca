@@ -19,15 +19,15 @@ export function DeckCategoryTable({
         </p>
       </CardHeader>
       <CardContent className="min-h-0 overflow-hidden pb-3">
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="grid gap-2 sm:grid-cols-2 lg:flex lg:gap-2 lg:overflow-x-auto lg:pb-1">
           {enriched.map((item) => (
             <div
               key={item.category}
-              className="min-w-[14rem] rounded-lg bg-muted/35 p-3 ring-1 ring-border/55"
+              className="min-w-0 rounded-lg bg-muted/35 p-3 ring-1 ring-border/55 lg:min-w-[14rem] lg:shrink-0"
             >
               <div className="flex items-start justify-between gap-3">
                 <p className="text-sm font-medium">{item.category}</p>
-                <div className="text-right">
+                <div className="shrink-0 text-right">
                   <span className="font-heading text-lg leading-none">
                     {item.score}
                   </span>
@@ -42,7 +42,7 @@ export function DeckCategoryTable({
                   style={{ width: `${Math.max(0, Math.min(100, item.score))}%` }}
                 />
               </div>
-              <p className="mt-2 h-11 overflow-hidden text-xs leading-relaxed text-muted-foreground">
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground lg:line-clamp-3">
                 {item.feedback}
               </p>
             </div>

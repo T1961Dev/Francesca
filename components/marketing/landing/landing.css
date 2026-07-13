@@ -149,6 +149,72 @@
   gap: 22px;
 }
 
+.landing-page .mobile-nav {
+  display: none;
+}
+
+.landing-page .mobile-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.landing-page .mobile-nav-panel {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 22px;
+  background: rgba(247, 245, 239, 0.98);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(26, 60, 42, 0.08);
+}
+
+.landing-page .mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.landing-page .mobile-nav-links a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.landing-page .mobile-nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.landing-page .mobile-nav-actions .login {
+  color: var(--body);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
 .landing-page .nav-actions .login {
   color: var(--body);
   text-decoration: none;
@@ -1440,17 +1506,14 @@
 
   .landing-page .steps,
   .landing-page .inv-grid,
-  .landing-page .plans {
-    grid-template-columns: 1fr 1fr;
+  .landing-page .plans,
+  .landing-page .kpis {
+    grid-template-columns: 1fr;
   }
 
   .landing-page .plan.featured {
     transform: none;
     padding: 32px 28px;
-  }
-
-  .landing-page .kpis {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   .landing-page .trust-card {
@@ -1463,14 +1526,37 @@
     grid-template-columns: 1fr;
   }
 
-  .landing-page nav.menu {
+  .landing-page nav.menu,
+  .landing-page .nav-actions {
+    display: none;
+  }
+
+  .landing-page .mobile-nav {
+    display: block;
+  }
+
+  .landing-page .nav {
+    height: 72px;
+    position: relative;
+  }
+
+  .landing-page .brand-text .payoff {
     display: none;
   }
 }
 
 @media (max-width: 640px) {
   .landing-page .wrap {
-    padding: 0 22px;
+    padding: 0 18px;
+  }
+
+  .landing-page .shot,
+  .landing-page .dashboard-preview-root {
+    border-radius: 16px;
+  }
+
+  .landing-page .float-anim {
+    animation: none;
   }
 
   .landing-page .steps,
@@ -1481,7 +1567,22 @@
   }
 
   .landing-page .hero {
-    padding: 64px 0 56px;
+    padding: 48px 0 44px;
+  }
+
+  .landing-page .hero h1 {
+    font-size: clamp(34px, 10vw, 48px);
+  }
+
+  .landing-page .hero .sub {
+    font-size: 15.5px;
+  }
+
+  .landing-page .hero .btn,
+  .landing-page .cta-card .btn,
+  .landing-page .mobile-nav-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .landing-page .readiness {
@@ -1494,7 +1595,7 @@
 
   .landing-page .why-card,
   .landing-page .cta-card {
-    padding: 44px 26px;
+    padding: 36px 22px;
   }
 
   .landing-page .cta-card {
@@ -1516,5 +1617,10 @@
 
   .landing-page .app-tabs {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .landing-page .mobile-nav-panel {
+    padding: 18px;
   }
 }

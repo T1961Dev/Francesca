@@ -44,17 +44,16 @@ export default async function DeckAnalysisResultPage({
   if (analysis.status !== "completed") {
     return (
       <main className={dashboardPageMainClass}>
-        <DeckProcessingState />
+        <DeckProcessingState analysisId={id} />
       </main>
     )
   }
 
-  const plan = await getUserPlan()
+  const [plan, currency] = await Promise.all([getUserPlan(), detectCurrencyFromRequest()])
   const checkoutSuccess = checkout === "success"
 
   if (!canViewFullDeckAnalysis(plan)) {
     const dimensionNames = extractDimensionNames(analysis.category_scores)
-    const currency = await detectCurrencyFromRequest()
     return (
       <DeckLockedView
         analysisId={id}

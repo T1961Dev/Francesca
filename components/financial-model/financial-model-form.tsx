@@ -205,7 +205,7 @@ export function FinancialModelForm({
           ) : null}
 
           <div className="grid gap-3 md:grid-cols-[0.58fr_1.42fr]">
-            <aside className="space-y-2">
+            <aside className="hidden space-y-2 md:block">
               {steps.map((item, index) => (
                 <button
                   key={item.title}
@@ -222,6 +222,22 @@ export function FinancialModelForm({
                 </button>
               ))}
             </aside>
+
+            <div className="flex gap-2 overflow-x-auto pb-1 md:hidden">
+              {steps.map((item, index) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  disabled={loading}
+                  onClick={() => setStepIndex(index)}
+                  className="min-h-10 shrink-0 touch-manipulation rounded-lg px-3 py-2 text-left text-sm transition-colors data-[active=true]:bg-sidebar-accent data-[active=false]:bg-muted/50"
+                  data-active={index === stepIndex}
+                >
+                  <span className="text-xs text-muted-foreground">{index + 1}. </span>
+                  {item.title}
+                </button>
+              ))}
+            </div>
 
             <section className="rounded-xl bg-card p-3.5 ring-1 ring-border/55">
               <div className="mb-3">

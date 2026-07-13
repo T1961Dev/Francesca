@@ -138,7 +138,7 @@ export default async function OnboardingPage({
             ) : null}
 
             {step === 4 ? (
-              <div className="grid grid-cols-[1fr_auto] gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto]">
                 <div className="space-y-2">
                   <Label htmlFor="target_raise">Target raise</Label>
                   <Input
@@ -153,13 +153,13 @@ export default async function OnboardingPage({
                     required
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 sm:w-[7.5rem]">
                   <Label htmlFor="target_raise_currency">Currency</Label>
                   <Select
                     name="target_raise_currency"
                     defaultValue={profile?.target_raise_currency ?? "gbp"}
                   >
-                    <SelectTrigger id="target_raise_currency">
+                    <SelectTrigger id="target_raise_currency" className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -225,7 +225,7 @@ function Shell({
   children: React.ReactNode
 }) {
   return (
-    <main className="flex h-svh flex-col items-center justify-center gap-6 overflow-y-auto p-6 py-10">
+    <main className="flex min-h-svh flex-col items-center justify-center gap-6 overflow-y-auto p-4 py-8 sm:p-6">
       <div className="w-full max-w-lg space-y-2">
         <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Step {step} of {TOTAL_STEPS}
