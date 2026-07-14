@@ -63,7 +63,19 @@ export function DashboardShell({
 
   const workspaceTitle = pathname.startsWith("/admin")
     ? "Admin workspace"
-    : "Your fundraising workspace"
+    : pathname === "/dashboard" || pathname === "/dashboard/"
+      ? "Workspace"
+      : pathname.startsWith("/dashboard/deck-analyser")
+        ? "Pitch Deck Review"
+        : pathname.startsWith("/dashboard/financial-model")
+          ? "Financials"
+          : pathname.startsWith("/dashboard/investor-matching")
+            ? "Investors"
+            : pathname.startsWith("/dashboard/billing")
+              ? "Billing"
+              : pathname.startsWith("/dashboard/settings")
+                ? "Settings"
+                : "Workspace"
 
   return (
     <TooltipProvider>

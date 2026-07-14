@@ -127,11 +127,10 @@ function PageIntro() {
     <>
       <div>
         <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
-          Investor Matching
+          Investors
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Rank investors from a deck analysis, or let matching start automatically after upload on
-          Pro and Lifetime. Searches active VC partners worldwide.
+          Discover investors who actively invest in companies like yours.
         </p>
       </div>
       <FeaturePhotoCard

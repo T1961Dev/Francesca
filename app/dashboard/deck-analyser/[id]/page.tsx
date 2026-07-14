@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation"
 
 import { DeckAnalysisSlideshow } from "@/components/deck/deck-analysis-slideshow"
+import {
+  DeckImproveFirstView,
+  pickFirstInvestorChallenge,
+} from "@/components/deck/deck-improve-first-view"
 import { DeckLockedView } from "@/components/deck/deck-locked-view"
 import { DeckProcessingState } from "@/components/deck/deck-processing-state"
 import { DeckInvestorMatchesSection } from "@/components/investors/deck-investor-matches-section"
@@ -33,10 +37,10 @@ export default async function DeckAnalysisResultPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ checkout?: string }>
+  searchParams: Promise<{ checkout?: string; view?: string }>
 }) {
   const { id } = await params
-  const { checkout } = await searchParams
+  const { checkout, view } = await searchParams
   const analysis = await fetchDeckAnalysisById(id)
 
   if (!analysis) notFound()
@@ -65,10 +69,26 @@ export default async function DeckAnalysisResultPage({
     )
   }
 
-  const categories = ((analysis.category_scores as CategoryScore[] | null) ?? [])
-    .filter((item) => item?.category)
+  const categories = ((analysis.category_scores as CategoryScore[] | null) ?? []).filter(
+    (item) => item?.category
+  )
   const suggestedFixes = cardItems(analysis.suggested_fixes) as SuggestedFix[]
   const priorityActions = cardItems(analysis.priority_actions) as PriorityAction[]
+  const weaknesses = stringArray(analysis.weaknesses)
+
+  if (view !== "full") {
+    return (
+      <DeckImproveFirstView
+        analysisId={id}
+        score={analysis.overall_score as number | null}
+        challenge={pickFirstInvestorChallenge({
+          priorityActions,
+          weaknesses,
+          categories,
+        })}
+      />
+    )
+  }
 
   return (
     <>
@@ -89,7 +109,7 @@ export default async function DeckAnalysisResultPage({
         investorReadiness={analysis.investor_readiness as string | null}
         categories={categories}
         strengths={stringArray(analysis.strengths)}
-        weaknesses={stringArray(analysis.weaknesses)}
+        weaknesses={weaknesses}
         missingSections={stringArray(analysis.missing_sections)}
         fundraisingRisks={stringArray(analysis.fundraising_risks)}
         suggestedFixes={suggestedFixes}

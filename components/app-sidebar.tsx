@@ -82,22 +82,22 @@ export function AppSidebar({
 
   const navMain = [
     {
-      title: "Dashboard",
+      title: "Workspace",
       url: "/dashboard",
       icon: <AudioLinesIcon className={iconCls} />,
     },
     {
-      title: "Deck Analyser",
+      title: "Pitch Deck",
       url: "/dashboard/deck-analyser",
       icon: <FileTextIcon className={iconCls} />,
     },
     {
-      title: "Financial Model",
+      title: "Financials",
       url: "/dashboard/financial-model",
       icon: <LineChartIcon className={iconCls} />,
     },
     {
-      title: "Investor Matching",
+      title: "Investors",
       url: "/dashboard/investor-matching",
       icon: <TargetIcon className={iconCls} />,
     },

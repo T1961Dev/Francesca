@@ -103,7 +103,7 @@ export function InvestorMatchLauncher({
           />
         ) : (
           <p className="text-sm text-muted-foreground">
-            No completed deck analyses yet. Upload a deck in the Deck Analyser first.
+            No completed deck analyses yet. Upload a deck in Pitch Deck first.
           </p>
         )}
 

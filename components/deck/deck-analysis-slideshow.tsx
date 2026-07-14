@@ -401,10 +401,10 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
       <div className="flex shrink-0 flex-wrap items-start justify-between gap-3 sm:items-center sm:gap-4">
         <div className="min-w-0">
           <h1 className="font-heading text-2xl font-medium leading-none tracking-tight sm:text-3xl md:text-[2rem]">
-            Deck analysis
+            Pitch Deck Review
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Investor-readiness report.
+            Investor-readiness report and priority improvements.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

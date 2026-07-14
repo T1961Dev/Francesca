@@ -21,10 +21,10 @@ export const PREVIEW_FOUNDER = {
 const iconCls = "size-3.5 shrink-0 stroke-[1.5]"
 
 const navItems = [
-  { title: "Dashboard", icon: AudioLinesIcon, active: false },
-  { title: "Deck Analyser", icon: FileTextIcon, activeKey: "deck" as const },
-  { title: "Financial Model", icon: LineChartIcon, activeKey: "financial" as const },
-  { title: "Investor Matching", icon: TargetIcon, activeKey: "investors" as const },
+  { title: "Workspace", icon: AudioLinesIcon, active: false },
+  { title: "Pitch Deck", icon: FileTextIcon, activeKey: "deck" as const },
+  { title: "Financials", icon: LineChartIcon, activeKey: "financial" as const },
+  { title: "Investors", icon: TargetIcon, activeKey: "investors" as const },
   { title: "Billing", icon: CreditCardIcon, active: false },
   { title: "Settings", icon: Settings2Icon, active: false },
 ]
@@ -75,7 +75,7 @@ export function DashboardPreviewShell({
               {navItems.map((item) => {
                 const isActive =
                   item.activeKey === active ||
-                  (item.title === "Dashboard" && active === "dashboard")
+                  (item.title === "Workspace" && active === "dashboard")
                 const Icon = item.icon
                 return (
                   <div

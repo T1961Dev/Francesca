@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation"
 
 import { FinancialModelSlideshow } from "@/components/financial-model/financial-model-slideshow"
+import {
+  FinancialModelCompleteView,
+  buildFinancialModelCompletionSummary,
+} from "@/components/financial-model/financial-model-complete-view"
 import { buildFinancialKpis } from "@/components/financial-model/financial-kpi-cards"
 import {
   findBreakEvenMonth,
@@ -39,10 +43,13 @@ function buildChartsFromProjection(projection: ReturnType<typeof parseProjection
 
 export default async function FinancialModelResultPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ view?: string }>
 }) {
   const { id } = await params
+  const { view } = await searchParams
   const plan = await getUserPlan()
   if (!canUseFinancialModel(plan)) {
     redirect("/pricing")
@@ -65,6 +72,20 @@ export default async function FinancialModelResultPage({
     : buildChartsFromProjection(projection)
   const breakEvenMonth = findBreakEvenMonth(projection)
   const companyName = String(inputs.companyName ?? "Your company")
+
+  if (view !== "full") {
+    const summary = buildFinancialModelCompletionSummary({ projection, inputs })
+    return (
+      <FinancialModelCompleteView
+        modelId={id}
+        confidence={summary.confidence}
+        runwayMonths={summary.runwayMonths}
+        recommendedRaise={summary.recommendedRaise}
+        projectedArr={summary.projectedArr}
+        seriesTiming={summary.seriesTiming}
+      />
+    )
+  }
 
   return (
     <FinancialModelSlideshow

@@ -3,14 +3,18 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { FundraisingJourneyTracker } from "@/components/dashboard/fundraising-journey-tracker"
 import {
-  FeatureEm,
-  FeaturePhotoCard,
-} from "@/components/feature-photo-card"
-import { getProfile } from "@/lib/auth"
+  NextStepActions,
+  WorkspaceProgressCard,
+} from "@/components/dashboard/workspace-progress"
+import { getProfile, requireAuth } from "@/lib/auth"
+import { getWorkspaceJourney } from "@/lib/dashboard/journey"
 import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
+import { cn } from "@/lib/utils"
 
 export default async function Page() {
+  const user = await requireAuth()
   const profile = await getProfile()
   const plan = profile?.plan ?? "free"
   const firstName =
@@ -18,20 +22,22 @@ export default async function Page() {
     profile?.company_name?.trim() ||
     "founder"
 
+  const journey = await getWorkspaceJourney(user.id, profile)
+
   const modules = [
     [
-      "Deck Analyser",
-      "Upload and score your investor deck.",
+      "Pitch Deck",
+      "Analyse your pitch deck and receive a detailed fundraising assessment.",
       "/dashboard/deck-analyser",
     ],
     [
-      "Financial Model",
-      "Generate a 36-month funding model.",
+      "Financials",
+      "Build an investor-ready financial model tailored to your raise.",
       "/dashboard/financial-model",
     ],
     [
-      "Investor Matching",
-      "Rank relevant investors and outreach.",
+      "Investors",
+      "Discover investors who actively invest in companies like yours.",
       "/dashboard/investor-matching",
     ],
   ] as const
@@ -40,59 +46,71 @@ export default async function Page() {
     <main className={dashboardPageMainClass}>
       <div className="shrink-0 space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+          <div className="min-w-0">
             <h1 className="font-heading text-3xl font-medium tracking-tight md:text-[2.125rem]">
               Welcome back, {firstName}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              Analyse your deck, model your raise, and match with investors.
+              Let&apos;s get you investor-ready. Complete each step to prepare your raise with
+              confidence.
             </p>
           </div>
           <Badge variant={plan === "free" ? "accent" : "default"}>{plan}</Badge>
         </div>
 
+        <FundraisingJourneyTracker
+          steps={journey.steps}
+          currentStepId={journey.currentStepId}
+        />
+
         <div className="grid gap-4 lg:grid-cols-[1.7fr_1fr]">
-          <FeaturePhotoCard
-            eyebrow="Today"
-            title={
-              <>
-                Make your raise sound like <FeatureEm>you.</FeatureEm>
-              </>
-            }
-            description="Upload your deck and we will score readiness, missing sections, and the strongest narrative angle for your stage."
-            cta={{ label: "Analyse a deck", href: "/dashboard/deck-analyser" }}
-          />
-          <Card size="sm" className="justify-between">
-            <CardContent className="space-y-5 p-5">
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                <div className="space-y-1">
-                  <p className="font-heading text-[2rem] leading-none">36 mo</p>
-                  <p className="text-xs text-muted-foreground">funding model</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="font-heading text-[2rem] leading-none">~150</p>
-                  <p className="text-xs text-muted-foreground">investor leads</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="font-heading text-[2rem] leading-none">PDF</p>
-                  <p className="text-xs text-muted-foreground">
-                    exportable reports
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-            <div className="mx-5 mb-5 rounded-lg border border-accent-foreground/10 bg-accent p-4">
-              <p className="text-[0.8rem] font-medium text-foreground">
-                Founder profile ready
+          <div
+            className={cn(
+              "relative flex min-h-[8.5rem] items-center overflow-hidden rounded-xl bg-[#070605] p-6 text-[#F7F0E6] ring-1 ring-black/5 md:p-7"
+            )}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(0,0,0,.95) 0%, rgba(0,0,0,.78) 35%, rgba(0,0,0,.18) 100%), radial-gradient(42% 95% at 74% 24%, rgba(201,168,76,.92), transparent 60%), radial-gradient(34% 82% at 92% 68%, rgba(26,60,42,.88), transparent 68%), radial-gradient(30% 72% at 62% 18%, rgba(85,112,95,.72), transparent 64%), radial-gradient(72% 72% at 24% 105%, rgba(26,60,42,.86), transparent 73%), linear-gradient(90deg, #07120d 0%, #0f1f17 42%, #1a3c2a 100%)",
+                backgroundBlendMode: "normal, screen, multiply, screen, screen, normal",
+                filter: "saturate(1.05) contrast(1.05)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0 opacity-20"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 20% 20%, rgba(255,255,255,.38) 0 1px, transparent 1px), radial-gradient(circle at 70% 40%, rgba(0,0,0,.18) 0 1px, transparent 1px)",
+                backgroundSize: "10px 10px, 16px 16px",
+              }}
+            />
+            <div className="relative z-10 min-w-0">
+              <p className="mb-2 text-xs font-medium tracking-[0.18em] text-[#F7F0E6]/70 uppercase">
+                {journey.next.eyebrow}
               </p>
-              <p className="mt-0.5 text-xs leading-relaxed text-accent-foreground/85">
-                Keep reports, models, and investor matching aligned to your raise.
+              <h3 className="font-heading text-[1.55rem] font-normal leading-tight tracking-tight text-[#F7F0E6] md:text-[1.85rem]">
+                {journey.next.title}
+              </h3>
+              <p className="mt-2 max-w-xl text-sm text-[#F7F0E6]/75 md:text-[0.9375rem]">
+                {journey.next.description}
               </p>
-              <Button asChild size="xs" className="mt-2.5">
-                <Link href="/dashboard/settings">Review profile</Link>
-              </Button>
+              {journey.next.detail ? (
+                <p className="mt-2 max-w-xl rounded-lg bg-white/10 px-3 py-2 text-sm leading-relaxed text-[#F7F0E6]">
+                  {journey.next.detail}
+                </p>
+              ) : null}
+              <NextStepActions action={journey.next} />
             </div>
-          </Card>
+          </div>
+
+          <WorkspaceProgressCard
+            items={journey.checklist}
+            profileComplete={journey.checklist.find((item) => item.id === "profile")?.done ?? false}
+          />
         </div>
       </div>
 
