@@ -30,7 +30,7 @@ export async function DeckInvestorMatchesSection({
   if (!canView && !isRunning) return null
 
   return (
-    <section className="px-5 pb-5 md:px-6 md:pb-6">
+    <section className="border-t border-border/60 px-5 pt-6 pb-5 md:px-6 md:pt-8 md:pb-6">
       <div className="space-y-4">
         {isRunning ? (
           <Card>

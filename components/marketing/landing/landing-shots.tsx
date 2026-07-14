@@ -31,14 +31,14 @@ const categories = [
 
 export function HeroReadinessShot() {
   return (
-    <div className="shot float-anim" id="heroShot">
+    <div className="shot float-anim min-w-0 max-w-full" id="heroShot">
       <DashboardPreviewShell
         active="deck"
         breadcrumb="Your fundraising workspace"
       >
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-end justify-between gap-2">
-            <div className="min-w-0">
+        <div className="min-w-0 space-y-3">
+          <div className="flex min-w-0 flex-wrap items-end justify-between gap-2">
+            <div className="min-w-0 flex-1">
               <h3 className="font-heading text-base font-medium tracking-tight sm:text-lg">
                 Welcome back, {PREVIEW_FOUNDER.name.split(" ")[0]}
               </h3>
@@ -49,13 +49,13 @@ export function HeroReadinessShot() {
             <Badge className="shrink-0">pro</Badge>
           </div>
 
-          <div className="grid gap-3 lg:grid-cols-[0.42fr_0.58fr]">
-            <Card className="bg-muted/20">
+          <div className="grid min-w-0 gap-3 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]">
+            <Card className="min-w-0 bg-muted/20">
               <CardHeader className="px-3 pb-1 pt-3">
                 <CardTitle className="text-sm">Investor-readiness score</CardTitle>
               </CardHeader>
-              <CardContent className="px-3 pb-3">
-                <div className="rounded-xl bg-card p-3 ring-1 ring-border/55">
+              <CardContent className="min-w-0 px-3 pb-3">
+                <div className="min-w-0 rounded-xl bg-card p-3 ring-1 ring-border/55">
                   <p className="bg-gradient-to-r from-[#070605] to-[#DF9C4E] bg-clip-text font-heading text-4xl leading-none text-transparent">
                     <span id="scoreNum">0</span>
                     <span className="ml-1 font-sans text-xs text-muted-foreground [-webkit-text-fill-color:currentColor]">
@@ -65,7 +65,7 @@ export function HeroReadinessShot() {
                   <p className="mt-1 bg-gradient-to-r from-[#070605] to-[#DF9C4E] bg-clip-text text-[0.65rem] font-medium text-transparent">
                     Strong
                   </p>
-                  <PreviewGradientBar value={87} className="preview-score-bar mt-2" animate />
+                  <PreviewGradientBar value={87} className="preview-score-bar mt-2 max-w-full" animate />
                 </div>
               </CardContent>
             </Card>
@@ -88,22 +88,35 @@ export function HeroReadinessShot() {
               <CardTitle className="text-sm">Category breakdown</CardTitle>
             </CardHeader>
             <CardContent className="px-3 pb-3">
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {categories.map((item) => (
-                  <div
-                    key={item.category}
-                    className="min-w-[9.5rem] shrink-0 rounded-lg bg-muted/35 p-2.5 ring-1 ring-border/55"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="text-[0.68rem] font-medium leading-snug">{item.category}</p>
-                      <span className="font-heading text-lg leading-none">{item.score}</span>
+              <div className="relative min-w-0">
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-card to-transparent sm:hidden"
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-card to-transparent sm:hidden"
+                />
+                <div
+                  className="flex max-w-full gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  aria-label="Category scores — swipe to see more"
+                >
+                  {categories.map((item) => (
+                    <div
+                      key={item.category}
+                      className="min-w-[9.5rem] shrink-0 rounded-lg bg-muted/35 p-2.5 ring-1 ring-border/55"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="text-[0.68rem] font-medium leading-snug">{item.category}</p>
+                        <span className="font-heading text-lg leading-none">{item.score}</span>
+                      </div>
+                      <PreviewGradientBar value={item.score} className="mt-2" />
+                      <p className="mt-2 line-clamp-3 text-[0.62rem] leading-relaxed text-muted-foreground">
+                        {item.feedback}
+                      </p>
                     </div>
-                    <PreviewGradientBar value={item.score} className="mt-2" />
-                    <p className="mt-2 line-clamp-3 text-[0.62rem] leading-relaxed text-muted-foreground">
-                      {item.feedback}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -122,7 +135,7 @@ export function FinancialDashboardShot() {
   ]
 
   return (
-    <div className="shot">
+    <div className="shot min-w-0 max-w-full">
       <DashboardPreviewShell active="financial" breadcrumb="Financial model">
         <div className="space-y-3">
           <div>
@@ -240,7 +253,7 @@ const investors = [
 
 export function InvestorDiscoveryShot() {
   return (
-    <div className="shot">
+    <div className="shot min-w-0 max-w-full">
       <DashboardPreviewShell active="investors" breadcrumb="Investor matching">
         <div className="space-y-3">
           <div className="flex flex-wrap items-end justify-between gap-2">

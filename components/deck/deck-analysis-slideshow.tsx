@@ -177,6 +177,12 @@ function CategoryBreakdown({ categories }: { categories: CategoryScore[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null)
 
   function onWheel(event: WheelEvent<HTMLDivElement>) {
+    // Only hijack vertical→horizontal wheel on md+ where the strip is horizontal.
+    // Tablets and phones keep natural document scroll.
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches) {
+      return
+    }
+
     const scroller = scrollerRef.current
     if (!scroller) return
 
@@ -439,7 +445,13 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
         {step.content}
       </section>
 
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3 pb-[env(safe-area-inset-bottom)]">
+      <div
+        className={cn(
+          "flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3",
+          "max-md:sticky max-md:bottom-0 max-md:z-10 max-md:-mx-3 max-md:bg-background max-md:px-3",
+          "pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+        )}
+      >
         <Button
           type="button"
           variant="outline"

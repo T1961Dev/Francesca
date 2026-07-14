@@ -42,9 +42,9 @@ export function DashboardPreviewShell({
 }) {
   return (
     <div
-      className={`dashboard-preview-root overflow-hidden rounded-[22px] border border-border/60 bg-background text-foreground shadow-[var(--shell-shadow)] ${className ?? ""}`}
+      className={`dashboard-preview-root min-w-0 max-w-full overflow-hidden rounded-[22px] border border-border/60 bg-background text-foreground shadow-[var(--shell-shadow)] ${className ?? ""}`}
     >
-      <div className="flex min-h-[340px] sm:min-h-[420px]">
+      <div className="flex min-h-[340px] min-w-0 sm:min-h-[420px]">
         <aside className="hidden w-[188px] shrink-0 flex-col border-r border-border/45 bg-card/40 md:flex">
           <div className="border-b border-border/45 p-3">
             <div className="flex items-start gap-2.5">
@@ -121,7 +121,7 @@ export function DashboardPreviewShell({
               </div>
             </div>
           </header>
-          <div className="min-h-0 flex-1 overflow-hidden bg-background p-2.5 sm:p-4">{children}</div>
+          <div className="min-h-0 min-w-0 flex-1 overflow-hidden bg-background p-2.5 sm:p-4">{children}</div>
         </div>
       </div>
     </div>
@@ -140,9 +140,9 @@ export function PreviewGradientBar({
   animate?: boolean
 }) {
   return (
-    <div className={`h-1.5 overflow-hidden rounded-sm bg-secondary ${className ?? ""}`}>
+    <div className={`h-1.5 max-w-full overflow-hidden rounded-sm bg-secondary ${className ?? ""}`}>
       <div
-        className={`preview-score-bar-inner h-full bg-gradient-to-r from-[#070605] to-[#DF9C4E] ${innerClassName ?? ""}`}
+        className={`preview-score-bar-inner h-full max-w-full bg-gradient-to-r from-[#070605] to-[#DF9C4E] ${innerClassName ?? ""}`}
         data-w={animate ? value : undefined}
         style={animate ? { width: 0 } : { width: `${value}%` }}
       />

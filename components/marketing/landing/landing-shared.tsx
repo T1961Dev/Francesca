@@ -99,11 +99,13 @@ export function LandingEffects() {
       const open = qa.classList.contains("open")
       document.querySelectorAll(".landing-page .qa.open").forEach((item) => {
         item.classList.remove("open")
+        item.querySelector("button")?.setAttribute("aria-expanded", "false")
         const panel = item.querySelector<HTMLElement>(".ans")
         if (panel) panel.style.maxHeight = ""
       })
       if (!open) {
         qa.classList.add("open")
+        btn.setAttribute("aria-expanded", "true")
         ans.style.maxHeight = `${ans.scrollHeight}px`
       }
     }

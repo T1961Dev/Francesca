@@ -21,6 +21,16 @@
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  box-sizing: border-box;
+}
+
+.landing-page *,
+.landing-page *::before,
+.landing-page *::after {
+  box-sizing: border-box;
 }
 
 .landing-page ::selection {
@@ -33,9 +43,11 @@
 }
 
 .landing-page .wrap {
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 40px;
+  box-sizing: border-box;
 }
 
 .landing-page section {
@@ -154,6 +166,8 @@
 }
 
 .landing-page .mobile-nav-toggle {
+  position: relative;
+  z-index: 70;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -163,6 +177,20 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.72);
   color: var(--ink);
+  cursor: pointer;
+}
+
+.landing-page .mobile-nav-backdrop {
+  position: fixed;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(26, 60, 42, 0.28);
   cursor: pointer;
 }
 
@@ -179,6 +207,7 @@
   background: rgba(247, 245, 239, 0.98);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 18px 40px rgba(26, 60, 42, 0.08);
+  outline: none;
 }
 
 .landing-page .mobile-nav-links {
@@ -226,6 +255,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  max-width: 100%;
   background: var(--forest);
   color: #fff;
   border: none;
@@ -291,9 +321,14 @@
 
 .landing-page .hero .wrap {
   display: grid;
-  grid-template-columns: 1fr 1.08fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
   gap: 64px;
   align-items: center;
+}
+
+.landing-page .hero .wrap > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .landing-page .hero h1 {
@@ -336,7 +371,10 @@
   border: none;
   border-radius: 22px;
   box-shadow: none;
-  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .landing-page .preview-score-bar-inner {
@@ -344,6 +382,9 @@
 }
 
 .landing-page .dashboard-preview-root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   font-family: var(--font-geist-sans), "Inter", -apple-system, sans-serif;
 }
 
@@ -1479,8 +1520,8 @@
 }
 
 .landing-page .soc {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--line);
   display: flex;
@@ -1499,16 +1540,43 @@
 }
 
 @media (max-width: 1020px) {
+  .landing-page .wrap {
+    padding: 0 28px;
+  }
+
+  .landing-page .hero {
+    padding: 72px 0 64px;
+  }
+
   .landing-page .hero .wrap {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 56px;
+  }
+
+  .landing-page .why {
+    padding: 64px 0;
+  }
+
+  .landing-page .why-card {
+    padding: 56px 40px 48px;
+  }
+
+  .landing-page .cta-band {
+    padding: 0 0 72px;
+  }
+
+  .landing-page .cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px 40px;
+    gap: 28px;
   }
 
   .landing-page .steps,
   .landing-page .inv-grid,
   .landing-page .plans,
   .landing-page .kpis {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .landing-page .plan.featured {
@@ -1517,13 +1585,13 @@
   }
 
   .landing-page .trust-card {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
     padding: 44px;
   }
 
   .landing-page .dash-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .landing-page nav.menu,
@@ -1547,7 +1615,7 @@
 
 @media (max-width: 640px) {
   .landing-page .wrap {
-    padding: 0 18px;
+    padding: 0 16px;
   }
 
   .landing-page .shot,
@@ -1563,7 +1631,7 @@
   .landing-page .inv-grid,
   .landing-page .plans,
   .landing-page .kpis {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .landing-page .hero {
@@ -1571,36 +1639,36 @@
   }
 
   .landing-page .hero h1 {
-    font-size: clamp(34px, 10vw, 48px);
+    font-size: clamp(32px, 9vw, 44px);
+    overflow-wrap: anywhere;
   }
 
   .landing-page .hero .sub {
     font-size: 15.5px;
+    max-width: none;
   }
 
   .landing-page .hero .btn,
   .landing-page .cta-card .btn,
   .landing-page .mobile-nav-actions .btn {
+    display: flex;
     width: 100%;
+    max-width: 100%;
     justify-content: center;
+    box-sizing: border-box;
   }
 
   .landing-page .readiness {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .landing-page .shot-foot {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .landing-page .why-card,
   .landing-page .cta-card {
     padding: 36px 22px;
-  }
-
-  .landing-page .cta-card {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .landing-page .brand-text .payoff {

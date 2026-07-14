@@ -849,7 +849,7 @@ export function FinancialModelForm({
               ) : null}
             </section>
 
-            <aside className="space-y-3">
+            <aside className="hidden space-y-3 lg:block">
               {stepIndex === 0 ? (
                 <InsightCard
                   title="Progress"
@@ -896,8 +896,14 @@ export function FinancialModelForm({
           Back
         </Button>
         {isLast ? (
-          <Button type="button" disabled={loading} onClick={submit}>
-            Generate Financial Model
+          <Button
+            type="button"
+            disabled={loading}
+            onClick={submit}
+            className="max-sm:h-auto max-sm:min-h-11 max-sm:whitespace-normal max-sm:px-3 max-sm:py-2"
+          >
+            <span className="sm:hidden">Generate model</span>
+            <span className="hidden sm:inline">Generate Financial Model</span>
           </Button>
         ) : (
           <Button

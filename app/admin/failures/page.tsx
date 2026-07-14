@@ -80,47 +80,82 @@ export default async function AdminFailuresPage() {
           <CardTitle>{failures.length} failed runs</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>When</TableHead>
-                <TableHead>User</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Error</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {failures.length ? (
-                failures.map((row) => {
-                  const userId = row.user_id ? String(row.user_id) : null
-                  const profile = userId ? profileMap.get(userId) : null
+          <div className="space-y-2 md:hidden">
+            {failures.length ? (
+              failures.map((row) => {
+                const userId = row.user_id ? String(row.user_id) : null
+                const profile = userId ? profileMap.get(userId) : null
 
-                  return (
-                    <TableRow key={`${row.kind}-${String(row.id)}`}>
-                      <TableCell className="whitespace-nowrap text-muted-foreground">
-                        {new Date(String(row.created_at)).toLocaleString("en-GB")}
-                      </TableCell>
-                      <TableCell>
+                return (
+                  <div
+                    key={`${row.kind}-${String(row.id)}`}
+                    className="rounded-lg border border-border/60 bg-card p-3"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
                         <AdminUserLink profile={profile} userId={userId} />
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{KIND_LABEL[row.kind] ?? row.kind}</Badge>
-                      </TableCell>
-                      <TableCell className="max-w-lg">
-                        <p className="line-clamp-2 text-sm">{String(row.error ?? "—")}</p>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })
-              ) : (
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {new Date(String(row.created_at)).toLocaleString("en-GB")}
+                        </p>
+                      </div>
+                      <Badge variant="outline" className="shrink-0">
+                        {KIND_LABEL[row.kind] ?? row.kind}
+                      </Badge>
+                    </div>
+                    <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
+                      {String(row.error ?? "—")}
+                    </p>
+                  </div>
+                )
+              })
+            ) : (
+              <p className="py-4 text-sm text-muted-foreground">No failures in this period.</p>
+            )}
+          </div>
+
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={4} className="text-muted-foreground">
-                    No failures in this period.
-                  </TableCell>
+                  <TableHead>When</TableHead>
+                  <TableHead>User</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Error</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {failures.length ? (
+                  failures.map((row) => {
+                    const userId = row.user_id ? String(row.user_id) : null
+                    const profile = userId ? profileMap.get(userId) : null
+
+                    return (
+                      <TableRow key={`${row.kind}-${String(row.id)}`}>
+                        <TableCell className="whitespace-nowrap text-muted-foreground">
+                          {new Date(String(row.created_at)).toLocaleString("en-GB")}
+                        </TableCell>
+                        <TableCell>
+                          <AdminUserLink profile={profile} userId={userId} />
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline">{KIND_LABEL[row.kind] ?? row.kind}</Badge>
+                        </TableCell>
+                        <TableCell className="max-w-lg">
+                          <p className="line-clamp-2 text-sm">{String(row.error ?? "—")}</p>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-muted-foreground">
+                      No failures in this period.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -95,67 +95,68 @@ export function PaywallModal({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="flex max-h-[min(90dvh,900px)] w-full max-w-[calc(100%-1rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
-        <div className="overflow-y-auto p-4 sm:p-6">
-        <DialogHeader>
-          <DialogTitle>Unlock your full analysis</DialogTitle>
-          <DialogDescription>
-            See exactly what investors will question.
-          </DialogDescription>
-        </DialogHeader>
+        <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
+          <DialogHeader>
+            <DialogTitle>Unlock your full analysis</DialogTitle>
+            <DialogDescription>
+              See exactly what investors will question.
+            </DialogDescription>
+          </DialogHeader>
 
-        {error ? (
-          <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            {error}
-          </p>
-        ) : null}
+          {error ? (
+            <p className="mt-4 rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {error}
+            </p>
+          ) : null}
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {visiblePlans.map((plan) => {
-            const price = plan.prices[currency]
-            const suffix = plan.mode === "subscription" ? "/mo" : " once"
-            const lifetimeBadge =
-              plan.id === "lifetime" && lifetime
-                ? `${lifetime.remaining} of ${lifetime.maxCount} remaining`
-                : null
-            return (
-              <div
-                key={plan.id}
-                className={`rounded-lg border p-4 ${
-                  plan.id === "pro" ? "ring-2 ring-primary/40" : "border-border/60"
-                }`}
-              >
-                <p className="text-sm font-medium">{plan.name}</p>
-                <p className="mt-1 text-2xl font-medium">
-                  {formatPrice(price, currency)}
-                  <span className="text-xs font-normal text-muted-foreground">
-                    {suffix}
-                  </span>
-                </p>
-                {lifetimeBadge ? (
-                  <p className="text-[11px] text-muted-foreground">{lifetimeBadge}</p>
-                ) : null}
-                <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
-                  {plan.features.slice(0, 4).map((feature) => (
-                    <li key={feature} className="flex items-start gap-1.5">
-                      <CheckIcon className="mt-0.5 size-3 stroke-[2]" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  className="mt-4 w-full"
-                  size="sm"
-                  disabled={busyId !== null}
-                  onClick={() => choose(plan.id)}
+          <div className="mt-4 grid gap-4 lg:grid-cols-3">
+            {visiblePlans.map((plan) => {
+              const price = plan.prices[currency]
+              const suffix = plan.mode === "subscription" ? "/mo" : " once"
+              const lifetimeBadge =
+                plan.id === "lifetime" && lifetime
+                  ? `${lifetime.remaining} of ${lifetime.maxCount} remaining`
+                  : null
+              return (
+                <div
+                  key={plan.id}
+                  className={`rounded-lg border p-4 ${
+                    plan.id === "pro" ? "ring-2 ring-primary/40" : "border-border/60"
+                  }`}
                 >
-                  {busyId === plan.id ? "Loading…" : `Choose ${plan.name}`}
-                </Button>
-              </div>
-            )
-          })}
+                  <p className="text-sm font-medium">{plan.name}</p>
+                  <p className="mt-1 text-2xl font-medium">
+                    {formatPrice(price, currency)}
+                    <span className="text-xs font-normal text-muted-foreground">
+                      {suffix}
+                    </span>
+                  </p>
+                  {lifetimeBadge ? (
+                    <p className="text-[11px] text-muted-foreground">{lifetimeBadge}</p>
+                  ) : null}
+                  <ul className="mt-3 space-y-1.5 text-xs text-muted-foreground">
+                    {plan.features.slice(0, 4).map((feature) => (
+                      <li key={feature} className="flex items-start gap-1.5">
+                        <CheckIcon className="mt-0.5 size-3 stroke-[2]" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button
+                    className="mt-4 w-full"
+                    size="sm"
+                    disabled={busyId !== null}
+                    onClick={() => choose(plan.id)}
+                  >
+                    {busyId === plan.id ? "Loading…" : `Choose ${plan.name}`}
+                  </Button>
+                </div>
+              )
+            })}
+          </div>
         </div>
 
-        <DialogFooter className="justify-center px-4 pb-4 sm:justify-center sm:px-6 sm:pb-6">
+        <DialogFooter className="shrink-0 justify-center border-t border-border/60 px-4 py-3 sm:justify-center sm:px-6">
           <button
             type="button"
             onClick={() => handleOpenChange(false)}
@@ -164,7 +165,6 @@ export function PaywallModal({
             Maybe later
           </button>
         </DialogFooter>
-        </div>
       </DialogContent>
     </Dialog>
   )

@@ -22,7 +22,7 @@ export default async function AdminLifetimePage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
+          <Table className="min-w-[20rem]">
             <TableHeader>
               <TableRow>
                 <TableHead>Email</TableHead>

@@ -297,7 +297,7 @@ export function LandingPage() {
           <div className="faq-list reveal">
             {faqs.map(([question, answer]) => (
               <div className="qa" key={question}>
-                <button type="button">
+                <button type="button" aria-expanded="false">
                   {question}
                   <span className="chev">
                     <PlusIcon />

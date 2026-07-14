@@ -1,10 +1,12 @@
+import { LandingHeader } from "@/components/marketing/landing-header"
 import { SiteFooter } from "@/components/layout/footer"
 
 export const metadata = { title: "About · RaiseWise" }
 
 export default function AboutPage() {
   return (
-    <main className="fixed inset-0 overflow-y-auto overscroll-y-contain bg-background">
+    <main className="md:fixed md:inset-0 md:overflow-y-auto md:overscroll-y-contain bg-background">
+      <LandingHeader />
       <div className="mx-auto max-w-3xl px-6 py-12">
         <h1 className="font-heading text-3xl font-medium tracking-tight">About RaiseWise</h1>
         <div className="prose prose-sm mt-6 max-w-none">

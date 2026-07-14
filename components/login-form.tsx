@@ -67,12 +67,12 @@ export function LoginForm({
                 />
               </Field>
               <Field>
-                <div className="flex items-center">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 max-[360px]:flex-col max-[360px]:items-start">
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <Link
                     prefetch
                     href="/forgot-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline max-[360px]:ml-0"
                   >
                     Forgot your password?
                   </Link>

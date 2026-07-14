@@ -183,7 +183,7 @@ export default async function AdminRevenuePage() {
           <CardTitle>Recent billing events (30d)</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
+          <Table className="min-w-[22rem]">
             <TableHeader>
               <TableRow>
                 <TableHead>When</TableHead>

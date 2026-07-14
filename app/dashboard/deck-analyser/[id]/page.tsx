@@ -91,7 +91,7 @@ export default async function DeckAnalysisResultPage({
   }
 
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col">
       {checkoutSuccess ? (
         <div className="px-5 pt-5 md:px-6">
           <Alert className="border-[#1A3C2A]/25 bg-[#E8F0EB] text-[#1A3C2A]">
@@ -115,7 +115,8 @@ export default async function DeckAnalysisResultPage({
         suggestedFixes={suggestedFixes}
         priorityActions={priorityActions}
       />
+      {/* Matches live below the slideshow so sticky Back/Next never covers this section. */}
       <DeckInvestorMatchesSection deckAnalysisId={id} />
-    </>
+    </div>
   )
 }

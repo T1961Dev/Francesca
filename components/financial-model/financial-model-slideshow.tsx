@@ -272,7 +272,13 @@ export function FinancialModelSlideshow(props: FinancialModelSlideshowProps) {
         <div className="min-h-0 flex-1 overflow-y-auto md:overflow-hidden">{step.content}</div>
       </section>
 
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3 pb-[env(safe-area-inset-bottom)]">
+      <div
+        className={cn(
+          "flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-3",
+          "max-md:sticky max-md:bottom-0 max-md:z-10 max-md:-mx-3 max-md:bg-background max-md:px-3",
+          "pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+        )}
+      >
         <Button
           type="button"
           variant="outline"

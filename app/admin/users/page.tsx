@@ -69,39 +69,75 @@ export default async function AdminUsersPage({
           </form>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Company</TableHead>
-                <TableHead>Plan</TableHead>
-                <TableHead>Joined</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {(users ?? []).map((user) => (
-                <ClickableTableRow key={String(user.id)} href={`/admin/users/${user.id}`}>
-                  <TableCell className="font-medium">{String(user.email ?? "—")}</TableCell>
-                  <TableCell>{String(user.full_name ?? "—")}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {String(user.company_name ?? "—")}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={user.plan === "free" ? "neutral" : "default"}>{String(user.plan)}</Badge>
-                    {user.deleted_at ? (
-                      <Badge variant="destructive" className="ml-2">
-                        Deleted
+          <div className="space-y-2 md:hidden">
+            {(users ?? []).map((user) => (
+              <Link
+                key={String(user.id)}
+                href={`/admin/users/${user.id}`}
+                className="block rounded-lg border border-border/60 bg-card p-3 transition-colors hover:bg-muted/40"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{String(user.email ?? "—")}</p>
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      {String(user.full_name ?? "—")}
+                      {user.company_name ? ` · ${String(user.company_name)}` : ""}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 flex-wrap justify-end gap-1">
+                    <Badge variant={user.plan === "free" ? "neutral" : "default"}>
+                      {String(user.plan)}
+                    </Badge>
+                    {user.deleted_at ? <Badge variant="destructive">Deleted</Badge> : null}
+                  </div>
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Joined {new Date(String(user.created_at)).toLocaleDateString("en-GB")}
+                </p>
+              </Link>
+            ))}
+            {(users ?? []).length === 0 ? (
+              <p className="py-4 text-sm text-muted-foreground">No users found.</p>
+            ) : null}
+          </div>
+
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Company</TableHead>
+                  <TableHead>Plan</TableHead>
+                  <TableHead>Joined</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {(users ?? []).map((user) => (
+                  <ClickableTableRow key={String(user.id)} href={`/admin/users/${user.id}`}>
+                    <TableCell className="font-medium">{String(user.email ?? "—")}</TableCell>
+                    <TableCell>{String(user.full_name ?? "—")}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {String(user.company_name ?? "—")}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={user.plan === "free" ? "neutral" : "default"}>
+                        {String(user.plan)}
                       </Badge>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {new Date(String(user.created_at)).toLocaleDateString("en-GB")}
-                  </TableCell>
-                </ClickableTableRow>
-              ))}
-            </TableBody>
-          </Table>
+                      {user.deleted_at ? (
+                        <Badge variant="destructive" className="ml-2">
+                          Deleted
+                        </Badge>
+                      ) : null}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {new Date(String(user.created_at)).toLocaleDateString("en-GB")}
+                    </TableCell>
+                  </ClickableTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
           {count && count > PAGE_SIZE ? (
             <div className="mt-4 flex items-center justify-between text-sm">
               <p className="text-muted-foreground">
