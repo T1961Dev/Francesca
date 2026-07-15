@@ -37,28 +37,57 @@ export function MatchProgress({
     if (status === "completed" || status === "failed" || status === "cancelled") return
 
     let refreshed = false
+    let cancelled = false
+    let delay = 3000
+    let timeoutId: ReturnType<typeof setTimeout>
 
-    const interval = window.setInterval(async () => {
-      const response = await fetch(`/api/investors/status/${runId}`, { cache: "no-store" })
-      const json = await response.json().catch(() => null)
-      const job = json?.data?.job as { status?: string; error?: string | null } | undefined
-      const nextStatus = String(job?.status ?? status)
-      setStatus(nextStatus)
-
-      if (nextStatus === "failed" && job?.error) {
-        setErrorMessage(String(job.error))
+    async function poll() {
+      if (cancelled) return
+      if (document.hidden) {
+        timeoutId = setTimeout(poll, delay)
+        return
       }
 
-      if (
-        !refreshed &&
-        (nextStatus === "completed" || nextStatus === "failed" || nextStatus === "cancelled")
-      ) {
-        refreshed = true
-        router.refresh()
-      }
-    }, 3000)
+      try {
+        const response = await fetch(`/api/investors/status/${runId}`, { cache: "no-store" })
+        const json = await response.json().catch(() => null)
+        const job = json?.data?.job as { status?: string; error?: string | null } | undefined
+        const nextStatus = String(job?.status ?? status)
+        setStatus(nextStatus)
 
-    return () => window.clearInterval(interval)
+        if (nextStatus === "failed" && job?.error) {
+          setErrorMessage(String(job.error))
+        }
+
+        if (
+          !refreshed &&
+          (nextStatus === "completed" || nextStatus === "failed" || nextStatus === "cancelled")
+        ) {
+          refreshed = true
+          router.refresh()
+          return
+        }
+      } catch {
+        delay = Math.min(delay * 1.5, 15000)
+      }
+
+      timeoutId = setTimeout(poll, delay)
+    }
+
+    void poll()
+
+    function onVisibilityChange() {
+      if (!document.hidden) {
+        delay = 3000
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange)
+
+    return () => {
+      cancelled = true
+      clearTimeout(timeoutId)
+      document.removeEventListener("visibilitychange", onVisibilityChange)
+    }
   }, [router, runId, status])
 
   if (status === "failed") {

@@ -33,37 +33,60 @@ export function DeckProcessingState({ analysisId }: { analysisId: string }) {
     if (status === "completed" || status === "failed") return
 
     let cancelled = false
+    let delay = 3000
+    let timeoutId: ReturnType<typeof setTimeout>
 
     async function poll() {
-      const response = await fetch(`/api/deck/status/${analysisId}`, { cache: "no-store" })
-      const json = await response.json().catch(() => null)
-      if (cancelled || !json?.success) return
-
-      const nextStatus = String(json.data?.status ?? status)
-      setStatus(nextStatus)
-
-      if (nextStatus === "failed") {
-        setErrorMessage(
-          String(json.data?.error ?? "Something went wrong while reviewing your deck.")
-        )
+      if (cancelled) return
+      if (document.hidden) {
+        timeoutId = setTimeout(poll, delay)
         return
       }
 
-      if (nextStatus === "completed") {
-        setReviewTick(REVIEW_STEPS.length)
-        // Stay on this analysis so founders see score-first guidance.
-        router.refresh()
+      try {
+        const response = await fetch(`/api/deck/status/${analysisId}`, { cache: "no-store" })
+        const json = await response.json().catch(() => null)
+        if (cancelled || !json?.success) {
+          delay = Math.min(delay * 1.5, 15000)
+          timeoutId = setTimeout(poll, delay)
+          return
+        }
+
+        const nextStatus = String(json.data?.status ?? status)
+        setStatus(nextStatus)
+
+        if (nextStatus === "failed") {
+          setErrorMessage(
+            String(json.data?.error ?? "Something went wrong while reviewing your deck.")
+          )
+          return
+        }
+
+        if (nextStatus === "completed") {
+          setReviewTick(REVIEW_STEPS.length)
+          router.refresh()
+          return
+        }
+      } catch {
+        delay = Math.min(delay * 1.5, 15000)
       }
+
+      timeoutId = setTimeout(poll, delay)
     }
 
     void poll()
-    const interval = window.setInterval(() => {
-      void poll()
-    }, 3000)
+
+    function onVisibilityChange() {
+      if (!document.hidden) {
+        delay = 3000
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange)
 
     return () => {
       cancelled = true
-      window.clearInterval(interval)
+      clearTimeout(timeoutId)
+      document.removeEventListener("visibilitychange", onVisibilityChange)
     }
   }, [analysisId, router, status])
 

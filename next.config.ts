@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
     "stripe",
   ],
   experimental: {
-    optimizePackageImports: ["radix-ui"],
+    optimizePackageImports: ["radix-ui", "lucide-react", "recharts"],
   },
 };
 

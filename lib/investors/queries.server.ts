@@ -5,20 +5,27 @@ import { createClient } from "@/lib/supabase/server"
 export async function fetchLatestInvestorMatchesForDeck(deckAnalysisId: string) {
   const supabase = await createClient()
 
-  const { data: matchRow } = await supabase
-    .from("investor_matches")
-    .select("job_id, matches, created_at")
-    .eq("deck_analysis_id", deckAnalysisId)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle()
-
-  if (matchRow) {
-    const { data: job } = await supabase
+  const [{ data: matchRow }, { data: latestJob }] = await Promise.all([
+    supabase
+      .from("investor_matches")
+      .select("job_id, matches, created_at")
+      .eq("deck_analysis_id", deckAnalysisId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
       .from("investor_matching_jobs")
       .select("id, status, error, created_at")
-      .eq("id", String(matchRow.job_id))
-      .maybeSingle()
+      .eq("deck_analysis_id", deckAnalysisId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ])
+
+  if (matchRow) {
+    const job = latestJob && String(latestJob.id) === String(matchRow.job_id)
+      ? latestJob
+      : null
 
     return {
       jobId: String(matchRow.job_id),
@@ -28,20 +35,12 @@ export async function fetchLatestInvestorMatchesForDeck(deckAnalysisId: string) 
     }
   }
 
-  const { data: job } = await supabase
-    .from("investor_matching_jobs")
-    .select("id, status, error, created_at")
-    .eq("deck_analysis_id", deckAnalysisId)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle()
-
-  if (!job) return null
+  if (!latestJob) return null
 
   return {
-    jobId: String(job.id),
-    jobStatus: String(job.status),
-    jobError: job.error as string | null,
+    jobId: String(latestJob.id),
+    jobStatus: String(latestJob.status),
+    jobError: latestJob.error as string | null,
     matches: [] as Record<string, unknown>[],
   }
 }

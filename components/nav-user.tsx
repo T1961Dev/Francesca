@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -24,7 +25,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { createClient } from "@/lib/supabase/client"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon, LoaderCircleIcon } from "lucide-react"
 
 function initialsFromName(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -48,12 +49,19 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
+  const [signingOut, setSigningOut] = useState(false)
   const fallback = initialsFromName(user.name || user.email || "?")
 
   async function signOut() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.replace("/login")
+    if (signingOut) return
+    setSigningOut(true)
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.replace("/login")
+    } catch {
+      setSigningOut(false)
+    }
   }
 
   return (
@@ -127,9 +135,9 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut}>
-              <LogOutIcon />
-              Log out
+            <DropdownMenuItem onClick={signOut} disabled={signingOut}>
+              {signingOut ? <LoaderCircleIcon className="animate-spin" /> : <LogOutIcon />}
+              {signingOut ? "Signing out…" : "Log out"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

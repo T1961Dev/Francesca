@@ -197,30 +197,38 @@ export async function updateSession(request: NextRequest) {
 
   const isAppPage = pathname.startsWith("/dashboard") || pathname.startsWith("/admin")
 
-  // Force onboarding only on app pages. Skipping this DB check for API calls
-  // keeps button clicks and background requests fast.
   if (user && isAppPage && !isExemptFromOnboarding(pathname)) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select(
-        "company_name, sector, stage, target_raise, target_raise_currency, geography, industry, funding_stage, location, deleted_at"
-      )
-      .eq("id", user.id)
-      .maybeSingle()
+    const onboardedCookie = request.cookies.get("rw_onboarded")?.value
+    if (onboardedCookie !== "1") {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select(
+          "company_name, sector, stage, target_raise, target_raise_currency, geography, industry, funding_stage, location, deleted_at"
+        )
+        .eq("id", user.id)
+        .maybeSingle()
 
-    if (profile?.deleted_at) {
-      await supabase.auth.signOut()
-      const url = request.nextUrl.clone()
-      url.pathname = "/login"
-      url.searchParams.set("error", "Account deleted")
-      return NextResponse.redirect(url)
-    }
+      if (profile?.deleted_at) {
+        await supabase.auth.signOut()
+        const url = request.nextUrl.clone()
+        url.pathname = "/login"
+        url.searchParams.set("error", "Account deleted")
+        return NextResponse.redirect(url)
+      }
 
-    if (!isOnboardingComplete(profile)) {
-      const url = request.nextUrl.clone()
-      url.pathname = "/onboarding"
-      url.search = ""
-      return NextResponse.redirect(url)
+      if (!isOnboardingComplete(profile)) {
+        const url = request.nextUrl.clone()
+        url.pathname = "/onboarding"
+        url.search = ""
+        return NextResponse.redirect(url)
+      }
+
+      response.cookies.set("rw_onboarded", "1", {
+        path: "/",
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 90,
+      })
     }
   }
 

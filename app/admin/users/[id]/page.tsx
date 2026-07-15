@@ -15,6 +15,7 @@ import { grantPlan, resetUsage, rerunFailedJob, softDeleteUser } from "@/lib/adm
 import { AdminKpi } from "@/components/admin/admin-kpi"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { SubmitButton } from "@/components/ui/submit-button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { CURRENCY_LABEL, STAGE_LABEL, isOnboardingComplete } from "@/lib/onboarding"
@@ -314,32 +315,22 @@ export default async function AdminUserDetailPage({
             <CardContent className="space-y-3">
               <div className="flex flex-wrap gap-2">
                 <form action={grantFree}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Grant Free
-                  </Button>
+                  <SubmitButton idleText="Grant Free" pendingText="Granting…" variant="outline" size="sm" />
                 </form>
                 <form action={grantStarter}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Grant Starter
-                  </Button>
+                  <SubmitButton idleText="Grant Starter" pendingText="Granting…" variant="outline" size="sm" />
                 </form>
                 <form action={grantPro}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Grant Pro
-                  </Button>
+                  <SubmitButton idleText="Grant Pro" pendingText="Granting…" variant="outline" size="sm" />
                 </form>
                 <form action={grantLifetime}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Grant Lifetime
-                  </Button>
+                  <SubmitButton idleText="Grant Lifetime" pendingText="Granting…" variant="outline" size="sm" />
                 </form>
               </div>
               <Separator />
               <div className="flex flex-wrap gap-2">
                 <form action={reset}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Reset usage
-                  </Button>
+                  <SubmitButton idleText="Reset usage" pendingText="Resetting…" variant="outline" size="sm" />
                 </form>
                 <a
                   href={`/api/admin/users/${id}/export`}
@@ -348,9 +339,7 @@ export default async function AdminUserDetailPage({
                   Export data
                 </a>
                 <form action={softDelete}>
-                  <Button type="submit" variant="destructive" size="sm">
-                    Soft delete
-                  </Button>
+                  <SubmitButton idleText="Soft delete" pendingText="Deleting…" variant="destructive" size="sm" />
                 </form>
               </div>
             </CardContent>
@@ -369,9 +358,7 @@ export default async function AdminUserDetailPage({
                     </p>
                     <p className="mt-1 line-clamp-4 text-sm">{String(job.error ?? "Unknown error")}</p>
                     <form action={rerunFailedJob.bind(null, String(job.id))} className="mt-2">
-                      <Button type="submit" size="sm" variant="outline">
-                        Re-run pipeline
-                      </Button>
+                      <SubmitButton idleText="Re-run pipeline" pendingText="Re-running…" size="sm" variant="outline" />
                     </form>
                   </div>
                 ))

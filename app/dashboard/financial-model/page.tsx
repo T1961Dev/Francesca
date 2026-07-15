@@ -9,23 +9,25 @@ import { requireAuth, getProfile } from "@/lib/auth"
 import { buildFinancialModelPrefill } from "@/lib/profile/prefill"
 import { buildFinancialPrefillFromDeckSignals } from "@/lib/financial/deck-prefill"
 import { DeckFinancialSignalsSchema } from "@/lib/openai/schemas"
-import { canUseFinancialModel, getUserPlan } from "@/lib/access"
+import { canUseFinancialModel } from "@/lib/access"
 import { getWorkspaceJourney } from "@/lib/dashboard/journey"
 import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { redirect } from "next/navigation"
+import type { Plan } from "@/types/app"
 
 export default async function FinancialModelPage() {
   const user = await requireAuth()
   const profile = await getProfile()
-  const [plan, deckPrefill, journey] = await Promise.all([
-    getUserPlan(),
-    fetchLatestDeckFinancialPrefill(),
-    getWorkspaceJourney(user.id, profile),
-  ])
+  const plan = (profile?.plan as Plan | undefined) ?? "free"
 
   if (!canUseFinancialModel(plan)) {
     redirect("/pricing")
   }
+
+  const [deckPrefill, journey] = await Promise.all([
+    fetchLatestDeckFinancialPrefill(),
+    getWorkspaceJourney(user.id, profile),
+  ])
 
   const profileValues = buildFinancialModelPrefill(profile)
   const parsedSignals = deckPrefill?.financialSignals

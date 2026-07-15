@@ -1,6 +1,7 @@
 "use client"
 
-import { CheckIcon } from "lucide-react"
+import { useState } from "react"
+import { CheckIcon, LoaderCircleIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -25,19 +26,28 @@ export function PlanCard({
   current?: boolean
   highlighted?: boolean
 }) {
+  const [busy, setBusy] = useState(false)
+
   async function checkout() {
-    const response = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan: plan.id, currency }),
-    })
-    const json = await response.json()
-    if (json.success && json.data?.url) {
-      window.location.href = json.data.url
-      return
-    }
-    if (json.error) {
-      window.alert(json.error)
+    if (busy) return
+    setBusy(true)
+    try {
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: plan.id, currency }),
+      })
+      const json = await response.json()
+      if (json.success && json.data?.url) {
+        window.location.href = json.data.url
+        return
+      }
+      if (json.error) {
+        window.alert(json.error)
+      }
+      setBusy(false)
+    } catch {
+      setBusy(false)
     }
   }
 
@@ -90,10 +100,19 @@ export function PlanCard({
         <Button
           className="w-full"
           onClick={checkout}
-          disabled={current}
+          disabled={current || busy}
           variant={current ? "secondary" : "default"}
         >
-          {current ? "Current plan" : `Choose ${plan.name}`}
+          {busy ? (
+            <>
+              <LoaderCircleIcon className="size-4 animate-spin" />
+              Loading…
+            </>
+          ) : current ? (
+            "Current plan"
+          ) : (
+            `Choose ${plan.name}`
+          )}
         </Button>
       </CardFooter>
     </Card>

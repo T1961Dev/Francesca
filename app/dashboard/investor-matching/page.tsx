@@ -13,8 +13,7 @@ import { MatchProgress } from "@/components/investors/match-progress"
 import { RetryInvestorJobButton } from "@/components/investors/retry-investor-job-button"
 import { Button } from "@/components/ui/button"
 import { ScrollableListCard } from "@/components/ui/scrollable-list-card"
-import { getUserPlan } from "@/lib/access"
-import { requireAuth } from "@/lib/auth"
+import { requireAuth, getProfile } from "@/lib/auth"
 import { listDeckAnalyses } from "@/lib/deck/queries.server"
 import { getPlan } from "@/lib/stripe/plans"
 import { createClient } from "@/lib/supabase/server"
@@ -38,13 +37,11 @@ function deckLabel(analysis: Record<string, unknown>) {
 
 export default async function InvestorMatchingPage() {
   const user = await requireAuth()
-  const plan = (await getUserPlan()) as Plan
-  const usage = await fetchUsageState(user.id)
-  const planMeta = getPlan(plan)
-  const matchesLimit = planMeta?.limits.investorMatchRunsPerMonth ?? 0
-
   const supabase = await createClient()
-  const [{ data: jobs }, analyses] = await Promise.all([
+
+  const [profile, usage, { data: jobs }, analyses] = await Promise.all([
+    getProfile(),
+    fetchUsageState(user.id),
     supabase
       .from("investor_matching_jobs")
       .select("id, status, deck_analysis_id, limited_data, created_at")
@@ -52,6 +49,10 @@ export default async function InvestorMatchingPage() {
       .limit(10),
     listDeckAnalyses(20),
   ])
+
+  const plan = (profile?.plan as Plan | undefined) ?? "free"
+  const planMeta = getPlan(plan)
+  const matchesLimit = planMeta?.limits.investorMatchRunsPerMonth ?? 0
 
   const deckLabelById = new Map(
     analyses.map((analysis) => [String(analysis.id), deckLabel(analysis)])

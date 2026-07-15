@@ -63,18 +63,11 @@ export async function ensureProfile(input?: {
   user?: User
 }) {
   const user = opts?.user ?? await requireAuth()
+
+  const cached = await getProfileCached()
+  if (cached) return cached
+
   const supabase = await createClient()
-
-  const { data: existing } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .maybeSingle()
-
-  if (existing) {
-    return existing
-  }
-
   const { data, error } = await supabase
     .from("profiles")
     .insert({

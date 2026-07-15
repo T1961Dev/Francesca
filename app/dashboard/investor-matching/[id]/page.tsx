@@ -7,12 +7,13 @@ import { InvestorStatusCard } from "@/components/investors/investor-status-card"
 import { MatchProgress } from "@/components/investors/match-progress"
 import {
   canViewInvestorOutreachTemplates,
-  getUserPlan,
   limitInvestorMatchesForPlan,
 } from "@/lib/access"
+import { getProfile } from "@/lib/auth"
 import { fetchInvestorMatchesForJob } from "@/lib/investors/queries.server"
 import { dashboardPageMainClass } from "@/lib/dashboard/page-classes"
 import { createClient } from "@/lib/supabase/server"
+import type { Plan } from "@/types/app"
 
 export default async function InvestorMatchingResultPage({
   params,
@@ -20,8 +21,13 @@ export default async function InvestorMatchingResultPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const supabase = await createClient()
-  const plan = await getUserPlan()
+
+  const [profile, supabase] = await Promise.all([
+    getProfile(),
+    createClient(),
+  ])
+  const plan = (profile?.plan as Plan | undefined) ?? "free"
+
   const { data: job } = await supabase
     .from("investor_matching_jobs")
     .select("*")
@@ -33,16 +39,21 @@ export default async function InvestorMatchingResultPage({
   const deckAnalysisId = String(job.deck_analysis_id ?? "")
   let deckLabel = "Pitch deck"
 
-  if (deckAnalysisId) {
-    const { data: deckAnalysis } = await supabase
-      .from("deck_analyses")
-      .select("deck_uploads(file_name)")
-      .eq("id", deckAnalysisId)
-      .maybeSingle()
+  const [deckResult, matchResult] = await Promise.all([
+    deckAnalysisId
+      ? supabase
+          .from("deck_analyses")
+          .select("deck_uploads(file_name)")
+          .eq("id", deckAnalysisId)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
+    fetchInvestorMatchesForJob(id),
+  ])
 
-    const upload = Array.isArray(deckAnalysis?.deck_uploads)
-      ? deckAnalysis?.deck_uploads[0]
-      : deckAnalysis?.deck_uploads
+  if (deckResult.data) {
+    const upload = Array.isArray(deckResult.data.deck_uploads)
+      ? deckResult.data.deck_uploads[0]
+      : deckResult.data.deck_uploads
     const fileName =
       upload && typeof upload === "object" && "file_name" in upload
         ? String((upload as { file_name?: string }).file_name ?? "")
@@ -50,8 +61,7 @@ export default async function InvestorMatchingResultPage({
     if (fileName) deckLabel = fileName
   }
 
-  const { matches: savedMatches } = await fetchInvestorMatchesForJob(id)
-  const matches = limitInvestorMatchesForPlan(savedMatches, plan)
+  const matches = limitInvestorMatchesForPlan(matchResult.matches, plan)
   const canExport = canViewInvestorOutreachTemplates(plan)
   const jobStatus = String(job.status)
 

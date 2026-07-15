@@ -19,9 +19,17 @@ export function CancelInvestorJobButton({
     if (cancelling) return
     setCancelling(true)
 
-    await fetch(`/api/investors/cancel/${jobId}`, {
-      method: "POST",
-    }).catch(() => null)
+    try {
+      const res = await fetch(`/api/investors/cancel/${jobId}`, {
+        method: "POST",
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        window.alert(body?.error ?? "Failed to cancel job. Please try again.")
+      }
+    } catch {
+      window.alert("Network error. Please check your connection and try again.")
+    }
 
     router.refresh()
     setCancelling(false)

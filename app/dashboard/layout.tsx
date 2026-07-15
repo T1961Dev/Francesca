@@ -1,3 +1,5 @@
+import { after } from "next/server"
+
 import { DashboardShell } from "@/components/dashboard/dashboard-shell"
 import { ensureProfile, requireAuth } from "@/lib/auth"
 import { isAdminEmail } from "@/lib/admin/auth"
@@ -14,24 +16,24 @@ export default async function DashboardLayout({
   const profile = await ensureProfile(undefined, { user })
   const authEmail = user.email?.trim() ?? ""
 
-  if (profile && authEmail && profile.email?.trim() !== authEmail) {
-    const supabase = await createClient()
-    await supabase.from("profiles").update({ email: authEmail }).eq("id", user.id)
-    profile.email = authEmail
-  }
-
-  if (profile && !profile.welcome_email_sent && authEmail) {
+  after(async () => {
     try {
-      await queueWelcomeEmailIfNeeded({
-        userId: user.id,
-        email: authEmail,
-        name: profile.full_name ?? user.user_metadata?.full_name ?? null,
-        welcomeEmailSent: profile.welcome_email_sent,
-      })
+      if (profile && authEmail && profile.email?.trim() !== authEmail) {
+        const supabase = await createClient()
+        await supabase.from("profiles").update({ email: authEmail }).eq("id", user.id)
+      }
+      if (profile && !profile.welcome_email_sent && authEmail) {
+        await queueWelcomeEmailIfNeeded({
+          userId: user.id,
+          email: authEmail,
+          name: profile.full_name ?? user.user_metadata?.full_name ?? null,
+          welcomeEmailSent: profile.welcome_email_sent,
+        })
+      }
     } catch (error) {
-      captureError(error, { route: "dashboard-welcome-email" })
+      captureError(error, { route: "dashboard-email-sync" })
     }
-  }
+  })
 
   return (
     <DashboardShell

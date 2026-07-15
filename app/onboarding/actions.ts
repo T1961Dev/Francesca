@@ -51,6 +51,15 @@ export async function saveOnboardingStep(formData: FormData) {
   }
 
   if (step === "5") {
+    const { cookies } = await import("next/headers")
+    const jar = await cookies()
+    jar.set("rw_onboarded", "1", {
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 90,
+    })
+
     const email = user.email?.trim() ?? ""
     const { data: profileRow } = await supabase
       .from("profiles")
