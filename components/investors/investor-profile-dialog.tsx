@@ -3,7 +3,8 @@
 import { useState, type ComponentType } from "react"
 import { Building2, Mail, MapPin } from "lucide-react"
 
-import { DeckTeaserExportButton } from "@/components/deck/deck-teaser-export-button"
+import Link from "next/link"
+
 import { InvestorOutreachEditor } from "@/components/investors/investor-outreach-editor"
 import { InvestorIdentityCell } from "@/components/investors/investor-identity-cell"
 import { Badge } from "@/components/ui/badge"
@@ -152,18 +153,19 @@ export function InvestorProfileDialog({
                   <div className="rounded-xl border border-border/60 bg-card p-4">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <p className="text-sm font-medium">Attach a one-page teaser</p>
+                        <p className="text-sm font-medium">Create a Raise Brief</p>
                         <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                          Generate a branded PDF summary from the analysed deck, then attach it to
-                          your email instead of sending the full deck again.
+                          Build a strategic one-page investor teaser and coordinated email —
+                          designed to earn the meeting without giving away the full pitch.
                         </p>
                       </div>
-                      <DeckTeaserExportButton
-                        analysisId={deckAnalysisId}
-                        label="Download teaser"
-                        size="sm"
-                        variant="outline"
-                      />
+                      <Button asChild size="sm" variant="outline">
+                        <Link
+                          href={`/dashboard/raise-brief?deck=${deckAnalysisId}${jobId ? `&job=${jobId}` : ""}`}
+                        >
+                          Open Raise Brief
+                        </Link>
+                      </Button>
                     </div>
                   </div>
                 ) : null}

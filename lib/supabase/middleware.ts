@@ -13,6 +13,7 @@ const protectedPrefixes = [
   "/api/deck",
   "/api/financial-model",
   "/api/investors",
+  "/api/raise-brief",
   "/api/stripe/checkout",
   "/api/stripe/portal",
   "/api/resend",

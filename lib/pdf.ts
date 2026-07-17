@@ -3,6 +3,7 @@ import "server-only"
 import { createRequire } from "node:module"
 
 import { buildTeaserContent } from "@/lib/deck/teaser-content"
+import type { RaiseBriefContent } from "@/lib/raise-brief/schemas"
 
 const require = createRequire(import.meta.url)
 const PDFDocument = require("pdfkit/js/pdfkit.standalone.js")
@@ -234,6 +235,141 @@ export async function renderDeckTeaserPdf(input: {
         width: 120,
         align: "right",
       })
+
+    doc.end()
+  })
+}
+
+export async function renderRaiseBriefPdf(brief: RaiseBriefContent) {
+  return new Promise<Buffer>((resolve, reject) => {
+    const doc = new PDFDocument({ size: "A4", margin: 0 })
+    const chunks: Buffer[] = []
+
+    doc.on("data", (chunk: Buffer) => chunks.push(chunk))
+    doc.on("end", () => resolve(Buffer.concat(chunks)))
+    doc.on("error", reject)
+
+    const pageWidth = doc.page.width
+    const pageHeight = doc.page.height
+    const margin = 40
+    const contentWidth = pageWidth - margin * 2
+    const columnGap = 14
+    const columnWidth = (contentWidth - columnGap) / 2
+    const cream = "#FFFDF7"
+    const pale = "#F7F4ED"
+    const green = "#1A3C2A"
+    const gold = "#C9A84C"
+    const muted = "#5C6F63"
+    const dark = "#12100B"
+    const border = "#D8E2DB"
+    const preparedDate = new Date().toLocaleDateString("en-GB")
+
+    const meta = [
+      brief.company_category,
+      brief.transaction_overview.round_stage,
+    ]
+      .filter(Boolean)
+      .join(" · ")
+
+    doc.rect(0, 0, pageWidth, pageHeight).fill(cream)
+    doc.rect(0, 0, pageWidth, 108).fill(green)
+
+    doc.fillColor("#DCE8E1").fontSize(8).text("CONFIDENTIAL · RAISE BRIEF", margin, 24, {
+      characterSpacing: 1.2,
+    })
+    doc.fillColor("#FFFFFF").fontSize(24).text(brief.company_name, margin, 42, {
+      width: contentWidth - 170,
+      lineGap: 1,
+    })
+    doc.fillColor("#E8F0EB").fontSize(10).text(meta || "Investor teaser", margin, 78, {
+      width: contentWidth - 170,
+    })
+
+    doc.roundedRect(pageWidth - margin - 150, 30, 150, 52, 10).fill("#FFFFFF")
+    doc.fillColor(muted).fontSize(7).text("RAISING", pageWidth - margin - 138, 40, {
+      characterSpacing: 0.8,
+    })
+    doc.fillColor(green).fontSize(14).text(brief.transaction_overview.raise_target || "—", pageWidth - margin - 138, 54, {
+      width: 126,
+    })
+
+    let y = 124
+    doc.fillColor(dark).fontSize(13).text(brief.headline, margin, y, {
+      width: contentWidth,
+      lineGap: 3,
+    })
+    y += measureTextHeight(doc, brief.headline, contentWidth, 13, 3) + 14
+
+    teaserSectionLabel(doc, "Transaction overview", margin, y, gold, green)
+    y += 18
+    const tx = [
+      brief.transaction_overview.round_stage,
+      brief.transaction_overview.use_of_funds,
+      brief.transaction_overview.target_milestone,
+    ]
+      .filter(Boolean)
+      .join(" · ")
+    doc.fillColor(dark).fontSize(9).text(tx, margin, y, { width: contentWidth, lineGap: 3 })
+    y += measureTextHeight(doc, tx, contentWidth, 9, 3) + 12
+
+    const leftHighlights = drawTeaserBlock(doc, {
+      x: margin,
+      y,
+      width: columnWidth,
+      title: "Investment highlights",
+      bullets: brief.investment_highlights.slice(0, 5),
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+
+    const snapshotLines = brief.financial_snapshot
+      .slice(0, 4)
+      .map((item) => `${item.label}: ${item.value}${item.type === "projected" ? " (projected)" : ""}`)
+    const rightSnapshot = drawTeaserBlock(doc, {
+      x: margin + columnWidth + columnGap,
+      y,
+      width: columnWidth,
+      title: "Financial snapshot",
+      bullets: snapshotLines,
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    y += Math.max(leftHighlights, rightSnapshot) + 12
+
+    const marketBlock = drawTeaserBlock(doc, {
+      x: margin,
+      y,
+      width: columnWidth,
+      title: "Market",
+      body: clampWords(brief.market, 70),
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    const contextBlock = drawTeaserBlock(doc, {
+      x: margin + columnWidth + columnGap,
+      y,
+      width: columnWidth,
+      title: "Company context",
+      body: clampWords(brief.company_context, 70),
+      colors: { green, gold, fill: pale, border, dark, muted },
+    })
+    y += Math.max(marketBlock, contextBlock) + 12
+
+    teaserSectionLabel(doc, "Team credibility", margin, y, gold, green)
+    y += 18
+    doc.fillColor(dark).fontSize(9).text(clampWords(brief.team_credibility, 40), margin, y, {
+      width: contentWidth,
+      lineGap: 3,
+    })
+    y += measureTextHeight(doc, clampWords(brief.team_credibility, 40), contentWidth, 9, 3) + 10
+
+    const footerY = Math.min(y + 8, pageHeight - 64)
+    doc.moveTo(margin, footerY).lineTo(pageWidth - margin, footerY).strokeColor(border).stroke()
+    doc.fillColor(green).fontSize(9).text(brief.next_step || "Full investment presentation available through a founder-led discussion.", margin, footerY + 10, {
+      width: contentWidth - 130,
+      lineGap: 2,
+    })
+    doc.fillColor(muted).fontSize(7).text(`Prepared ${preparedDate} · RaiseWise`, pageWidth - margin - 120, footerY + 12, {
+      width: 120,
+      align: "right",
+    })
 
     doc.end()
   })

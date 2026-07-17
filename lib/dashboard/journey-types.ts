@@ -6,6 +6,7 @@ export type JourneyStepId =
   | "financial"
   | "profile"
   | "investors"
+  | "raise_brief"
   | "outreach"
 
 export type JourneyStep = {
@@ -17,7 +18,7 @@ export type JourneyStep = {
 }
 
 export type WorkspaceChecklistItem = {
-  id: "pitch" | "financial" | "profile" | "investors" | "outreach"
+  id: "pitch" | "financial" | "profile" | "investors" | "raise_brief" | "outreach"
   label: string
   done: boolean
   href: string

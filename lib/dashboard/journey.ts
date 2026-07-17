@@ -48,28 +48,39 @@ export async function getWorkspaceJourney(
   const jar = await cookies()
   const improveAcknowledged = jar.get(DECK_IMPROVED_COOKIE)?.value === "1"
 
-  const [{ data: decks }, { data: models }, { data: matchRows }, { data: jobs }] =
-    await Promise.all([
-      supabase.rpc("list_deck_analysis_rows", { p_limit: 5 }),
-      admin
-        .from("financial_models")
-        .select("id, status, created_at")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false })
-        .limit(5),
-      admin
-        .from("investor_matches")
-        .select("id, matches, created_at")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false })
-        .limit(3),
-      admin
-        .from("investor_matching_jobs")
-        .select("id, status, deck_analysis_id")
-        .eq("user_id", userId)
-        .order("created_at", { ascending: false })
-        .limit(3),
-    ])
+  const [
+    { data: decks },
+    { data: models },
+    { data: matchRows },
+    { data: jobs },
+    { data: raiseBriefs },
+  ] = await Promise.all([
+    supabase.rpc("list_deck_analysis_rows", { p_limit: 5 }),
+    admin
+      .from("financial_models")
+      .select("id, status, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(5),
+    admin
+      .from("investor_matches")
+      .select("id, matches, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(3),
+    admin
+      .from("investor_matching_jobs")
+      .select("id, status, deck_analysis_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(3),
+    admin
+      .from("raise_briefs")
+      .select("id, status")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(5),
+  ])
 
   const deckList = Array.isArray(decks) ? (decks as Record<string, unknown>[]) : []
   const completedDeck = deckList.find((row) => String(row.status) === "completed") ?? null
@@ -119,6 +130,7 @@ export async function getWorkspaceJourney(
   }).length
 
   const hasOutreach = shortlistedCount > 0
+  const hasRaiseBrief = (raiseBriefs ?? []).some((row) => String(row.status) === "ready")
 
   const strongDeck = score != null && Number.isFinite(score) && score >= 80
   const improveDone =
@@ -164,6 +176,13 @@ export async function getWorkspaceJourney(
       href: "/dashboard/investor-matching",
     },
     {
+      id: "raise_brief",
+      label: "Raise Brief",
+      shortLabel: "Brief",
+      done: hasRaiseBrief,
+      href: "/dashboard/raise-brief",
+    },
+    {
       id: "outreach",
       label: "Outreach Ready",
       shortLabel: "Outreach",
@@ -196,6 +215,12 @@ export async function getWorkspaceJourney(
       label: "Investor Matching",
       done: hasInvestorMatches,
       href: "/dashboard/investor-matching",
+    },
+    {
+      id: "raise_brief",
+      label: "Raise Brief",
+      done: hasRaiseBrief,
+      href: "/dashboard/raise-brief",
     },
     {
       id: "outreach",
@@ -330,6 +355,15 @@ function buildNextAction(input: {
             ? "/dashboard/investor-matching"
             : "/dashboard/deck-analyser",
         },
+      }
+
+    case "raise_brief":
+      return {
+        eyebrow: "Your next step",
+        title: "Create your Raise Brief.",
+        description:
+          "Generate a strategic one-page investor teaser and coordinated email — designed to earn the meeting without giving away your full pitch.",
+        cta: { label: "Open Raise Brief", href: "/dashboard/raise-brief" },
       }
 
     case "outreach":

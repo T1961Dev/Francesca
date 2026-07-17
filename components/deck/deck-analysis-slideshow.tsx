@@ -4,7 +4,7 @@ import { type WheelEvent, useEffect, useMemo, useRef, useState } from "react"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
 import { DeckExportButton } from "@/components/deck/deck-export-button"
-import { DeckTeaserExportButton } from "@/components/deck/deck-teaser-export-button"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
@@ -415,7 +415,11 @@ export function DeckAnalysisSlideshow(props: DeckAnalysisSlideshowProps) {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {props.canGenerateTeaser ? (
-            <DeckTeaserExportButton analysisId={props.analysisId} />
+            <Button asChild variant="outline" size="sm">
+              <Link href={`/dashboard/raise-brief?deck=${props.analysisId}`}>
+                Create Raise Brief
+              </Link>
+            </Button>
           ) : null}
           <DeckExportButton analysisId={props.analysisId} />
         </div>

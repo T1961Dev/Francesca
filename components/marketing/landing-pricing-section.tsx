@@ -46,7 +46,7 @@ const proFeatures = [
   "Everything in Starter",
   "Ranked investor shortlist",
   "Personalised outreach emails",
-  "Investor one-pager",
+  "Raise Brief",
   "Export investor database",
 ]
 

@@ -53,6 +53,7 @@ export type Database = {
       email_events: GenericTable
       billing_events: GenericTable
       pdf_exports: GenericTable
+      raise_briefs: GenericTable
     }
   }
 }

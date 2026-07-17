@@ -117,7 +117,7 @@ export async function LandingPricingBlock() {
                 </li>
                 <li>
                   <CheckIcon />
-                  Investor one-pager
+                  Raise Brief
                 </li>
                 <li>
                   <CheckIcon />

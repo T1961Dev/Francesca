@@ -24,6 +24,7 @@ import {
   GemIcon,
   LineChartIcon,
   ReceiptIcon,
+  ScrollTextIcon,
   Settings2Icon,
   TargetIcon,
   TrendingUpIcon,
@@ -100,6 +101,11 @@ export function AppSidebar({
       title: "Investors",
       url: "/dashboard/investor-matching",
       icon: <TargetIcon className={iconCls} />,
+    },
+    {
+      title: "Raise Brief",
+      url: "/dashboard/raise-brief",
+      icon: <ScrollTextIcon className={iconCls} />,
     },
     {
       title: "Billing",
